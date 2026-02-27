@@ -2426,11 +2426,10 @@ html, body {
 
 .dyo-shell-win.open { display: flex; }
 
-/* 최소화: 타이틀바만 보임 (overflow: hidden으로 나머지 잘림) */
+/* 최소화: 완전히 숨김 (태스크바에만 표시) */
 .dyo-shell-win.minimized {
-  height: 40px !important;
+  display: none !important;
 }
-.dyo-shell-win.minimized .dyo-term-body { display: none; }
 
 /* 최대화: 콘텐츠 영역 전체 */
 .dyo-shell-win.maximized {
@@ -2458,7 +2457,6 @@ html, body {
 }
 
 .dyo-shell-win.maximized .dyo-shell-titlebar { cursor: default; }
-.dyo-shell-win.minimized .dyo-shell-titlebar { cursor: move; border-bottom: none; }
 
 .dyo-shell-title {
   flex: 1;
@@ -2900,9 +2898,8 @@ html, body {
 .dyo-browser-win.open { display: flex; }
 
 .dyo-browser-win.minimized {
-  height: 40px !important;
+  display: none !important;
 }
-.dyo-browser-win.minimized .dyo-browser-frame { display: none; }
 
 .dyo-browser-win.maximized {
   top: 0 !important;
@@ -2941,12 +2938,9 @@ html, body {
 .dyo-brs-handle.w  { top: 8px;  left: 0;    bottom: 8px; width: 5px;  cursor: w-resize; }
 .dyo-brs-handle.nw { top: 0;    left: 0;    width: 10px; height: 10px; cursor: nw-resize; }
 .dyo-browser-win.maximized .dyo-brs-handle,
-.dyo-browser-win.minimized .dyo-brs-handle,
-.dyo-shell-win.maximized .dyo-brs-handle,
-.dyo-shell-win.minimized .dyo-brs-handle { display: none; }
+.dyo-shell-win.maximized .dyo-brs-handle { display: none; }
 
 .dyo-browser-win.maximized .dyo-browser-titlebar { cursor: default; }
-.dyo-browser-win.minimized .dyo-browser-titlebar { cursor: move; border-bottom: none; }
 
 .dyo-browser-navarea {
   flex: 1;
@@ -3014,6 +3008,63 @@ html, body {
     left: 0 !important;
     top: 0 !important;
   }
+}
+
+
+/* ============================================
+   WINDOW ANIMATIONS (open / close / minimize)
+   ============================================ */
+
+/* 열기: 아이콘에서 자연스럽게 팝, 바운스 없음 */
+@keyframes dyo-win-pop {
+  0%   { opacity: 0; transform: scale(0.86); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.dyo-win-pop {
+  animation: dyo-win-pop 0.18s ease-out forwards !important;
+  pointer-events: none;
+}
+
+/* 닫기: 가볍게 줄어들며 페이드아웃 */
+@keyframes dyo-win-dismiss {
+  0%   { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(0.92) translateY(6px); }
+}
+.dyo-win-dismissing {
+  animation: dyo-win-dismiss 0.15s ease-in forwards !important;
+  pointer-events: none;
+}
+
+/* 최대화: 살짝 작은 상태에서 확장 */
+@keyframes dyo-win-zoom-in {
+  0%   { opacity: 0.72; transform: scale(0.92); }
+  100% { opacity: 1;    transform: scale(1);    }
+}
+.dyo-win-zoom-in {
+  animation: dyo-win-zoom-in 0.2s ease-out forwards !important;
+  transform-origin: center center !important;
+}
+
+/* 최대화 복원: 가볍게 튀어오르며 자리 잡음 */
+@keyframes dyo-win-zoom-out {
+  0%   { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1);    opacity: 1;   }
+}
+.dyo-win-zoom-out {
+  animation: dyo-win-zoom-out 0.18s ease-out forwards !important;
+  transform-origin: center center !important;
+}
+
+/* 최소화: 태스크바 버튼으로 날아가며 사라짐 */
+@keyframes dyo-win-minimize {
+  0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+  60%  { opacity: 0.5; }
+  100% { opacity: 0; transform: translate(var(--min-tx, 0px), var(--min-ty, 80px)) scale(0.08); }
+}
+.dyo-win-minimizing {
+  animation: dyo-win-minimize 0.28s cubic-bezier(0.4, 0, 0.8, 0.6) forwards !important;
+  pointer-events: none;
+  transform-origin: center center !important;
 }
 
 
@@ -3366,15 +3417,14 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 
 /* ── Properties Window ── */
 .dyo-props-win { background: #0d1117; }
-.dyo-props-win.minimized { height: 40px !important; }
-.dyo-props-win.minimized .dyo-props-body { display: none; }
+.dyo-props-win.minimized { display: none !important; }
 
 .dyo-props-body {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
   background: #0d1117;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 12px;
 }
 .dyo-props-body::-webkit-scrollbar { width: 5px; }
@@ -3397,7 +3447,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-weight: 700;
   box-shadow: 0 4px 14px rgba(0,0,0,0.55);
   flex-shrink: 0;
@@ -3444,10 +3494,8 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 
 /* ── File Explorer Window ── */
 .dyo-explorer-win { background: #0d1117; }
-.dyo-explorer-win.minimized { height: 40px !important; }
-.dyo-explorer-win.minimized .dyo-explorer-body { display: none; }
-.dyo-explorer-win.maximized .dyo-brs-handle,
-.dyo-explorer-win.minimized .dyo-brs-handle { display: none; }
+.dyo-explorer-win.minimized { display: none !important; }
+.dyo-explorer-win.maximized .dyo-brs-handle { display: none; }
 .dyo-explorer-win.maximized .dyo-shell-titlebar { cursor: default; }
 
 .dyo-explorer-body {

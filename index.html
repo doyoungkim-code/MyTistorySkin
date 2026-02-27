@@ -883,6 +883,7 @@
       var iconReadme = document.getElementById('desktopIconReadme');
       if (iconReadme) {
         iconReadme.addEventListener('click', function() {
+          window._dyoAnimSrc = this;
           if (window.dyoOpenReadme) window.dyoOpenReadme();
         });
       }
@@ -891,6 +892,7 @@
       var iconShell = document.getElementById('desktopIconShell');
       if (iconShell) {
         iconShell.addEventListener('click', function() {
+          window._dyoAnimSrc = this;
           if (window.dyoOpenShell) window.dyoOpenShell();
         });
       }
@@ -899,6 +901,7 @@
       var iconBlog = document.getElementById('desktopIconBlog');
       if (iconBlog) {
         iconBlog.addEventListener('click', function() {
+          window._dyoAnimSrc = this;
           if (window.dyoOpenBrowser) window.dyoOpenBrowser('/category');
         });
       }
@@ -907,6 +910,7 @@
       var iconGuest = document.getElementById('desktopIconGuest');
       if (iconGuest) {
         iconGuest.addEventListener('click', function() {
+          window._dyoAnimSrc = this;
           if (window.dyoOpenGuest) window.dyoOpenGuest();
         });
       }
@@ -923,6 +927,7 @@
       var iconExplorer = document.getElementById('desktopIconExplorer');
       if (iconExplorer) {
         iconExplorer.addEventListener('click', function() {
+          window._dyoAnimSrc = this;
           if (window.dyoOpenExplorer) window.dyoOpenExplorer();
         });
       }
@@ -1327,7 +1332,8 @@
 
       // ── 창 열기/닫기/최소화/최대화 ──
       function openWindow() {
-        if (!win.classList.contains('open')) {
+        var wasOpen = win.classList.contains('open');
+        if (!wasOpen) {
           var W = 680, H = 440;
           win.style.left   = Math.round((window.innerWidth  - W) / 2) + 'px';
           win.style.top    = Math.round((window.innerHeight - H) / 2) + 'px';
@@ -1339,22 +1345,33 @@
         btnShell.classList.add('active');
         window._dyoZTop = (window._dyoZTop || 9000) + 1;
         win.style.zIndex = window._dyoZTop;
+        if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(win);
         setTimeout(function() {
           termInput && termInput.focus();
           output.scrollTop = output.scrollHeight;
         }, 50);
       }
       function closeWindow() {
-        win.classList.remove('open', 'minimized', 'maximized');
-        btnShell.classList.remove('active');
-        savedPos = null;
+        if (window.dyoAnimDismiss) {
+          window.dyoAnimDismiss(win, function() {
+            win.classList.remove('open', 'minimized', 'maximized');
+            btnShell.classList.remove('active');
+            savedPos = null;
+          });
+        } else {
+          win.classList.remove('open', 'minimized', 'maximized');
+          btnShell.classList.remove('active');
+          savedPos = null;
+        }
       }
       function minimizeWindow() {
         if (win.classList.contains('minimized')) {
+          var tb = document.querySelector('.dyo-taskbtn[data-win-id="dyoShellWin"]');
+          window._dyoAnimSrc = tb || null;
           win.classList.remove('minimized');
-          setTimeout(function(){ termInput && termInput.focus(); }, 50);
+          if (window.dyoAnimOpen) window.dyoAnimOpen(win);
+          setTimeout(function(){ termInput && termInput.focus(); }, 200);
         } else {
-          // 최대화 상태라면 먼저 복원
           if (win.classList.contains('maximized')) {
             win.classList.remove('maximized');
             if (savedPos) {
@@ -1364,12 +1381,15 @@
               savedPos = null;
             }
           }
-          win.classList.add('minimized');
+          if (window.dyoAnimMinimize) {
+            window.dyoAnimMinimize(win, function() { win.classList.add('minimized'); });
+          } else {
+            win.classList.add('minimized');
+          }
         }
       }
       function maximizeWindow() {
         if (win.classList.contains('maximized')) {
-          // 복원
           win.classList.remove('maximized');
           if (savedPos) {
             win.style.left   = savedPos.left;
@@ -1380,17 +1400,18 @@
             win.style.height = savedPos.height;
             savedPos = null;
           }
+          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(win);
         } else {
-          // 현재 위치 저장
+          win.classList.remove('minimized');
           savedPos = {
             left: win.style.left, top: win.style.top,
             right: win.style.right, bottom: win.style.bottom,
             width: win.style.width, height: win.style.height
           };
           win.classList.add('maximized');
-          // 최대화 시 인라인 스타일 초기화 (CSS로 제어)
           win.style.left = win.style.top = win.style.right =
           win.style.bottom = win.style.width = win.style.height = '';
+          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(win);
         }
         setTimeout(function(){ termInput && termInput.focus(); }, 50);
       }
@@ -1406,7 +1427,12 @@
       win.addEventListener('mousedown', bringToFront);
 
       btnShell.addEventListener('click', function() {
-        win.classList.contains('open') ? closeWindow() : openWindow();
+        if (win.classList.contains('open')) {
+          closeWindow();
+        } else {
+          window._dyoAnimSrc = btnShell;
+          openWindow();
+        }
       });
       if (closeBtn) closeBtn.addEventListener('click', closeWindow);
       if (minBtn)   minBtn.addEventListener('click',   minimizeWindow);
@@ -1584,7 +1610,8 @@
         var fullUrl = url.startsWith('http') ? url : (window.location.origin + url);
         bFrame.src = fullUrl;
         bUrlBar.textContent = window.location.hostname + (url.startsWith('/') ? url : '/' + url);
-        if (!bwin.classList.contains('open')) {
+        var wasOpen = bwin.classList.contains('open');
+        if (!wasOpen) {
           var W = Math.min(1200, window.innerWidth  - 40);
           var H = Math.min(700,  window.innerHeight - 40);
           bwin.style.width  = W + 'px';
@@ -1598,17 +1625,38 @@
         bwin.classList.remove('minimized');
         window._dyoZTop = (window._dyoZTop || 9000) + 1;
         bwin.style.zIndex = window._dyoZTop;
+        if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(bwin);
       }
 
       function closeBrowser() {
-        bwin.classList.remove('open', 'minimized', 'maximized');
-        bFrame.src = 'about:blank';
-        bUrlBar.textContent = 'about:blank';
-        savedPos = null;
+        if (window.dyoAnimDismiss) {
+          window.dyoAnimDismiss(bwin, function() {
+            bwin.classList.remove('open', 'minimized', 'maximized');
+            bFrame.src = 'about:blank';
+            bUrlBar.textContent = 'about:blank';
+            savedPos = null;
+          });
+        } else {
+          bwin.classList.remove('open', 'minimized', 'maximized');
+          bFrame.src = 'about:blank';
+          bUrlBar.textContent = 'about:blank';
+          savedPos = null;
+        }
       }
 
       function minimizeBrowser() {
-        bwin.classList.toggle('minimized');
+        if (bwin.classList.contains('minimized')) {
+          var tb = document.querySelector('.dyo-taskbtn[data-win-id="dyoBrowserWin"]');
+          window._dyoAnimSrc = tb || null;
+          bwin.classList.remove('minimized');
+          if (window.dyoAnimOpen) window.dyoAnimOpen(bwin);
+        } else {
+          if (window.dyoAnimMinimize) {
+            window.dyoAnimMinimize(bwin, function() { bwin.classList.add('minimized'); });
+          } else {
+            bwin.classList.add('minimized');
+          }
+        }
       }
 
       function maximizeBrowser() {
@@ -1623,7 +1671,9 @@
             bwin.style.height = savedPos.height;
             savedPos = null;
           }
+          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(bwin);
         } else {
+          bwin.classList.remove('minimized');
           savedPos = {
             left: bwin.style.left, top: bwin.style.top,
             right: bwin.style.right, bottom: bwin.style.bottom,
@@ -1632,6 +1682,7 @@
           bwin.classList.add('maximized');
           bwin.style.left = bwin.style.top = bwin.style.right =
           bwin.style.bottom = bwin.style.width = bwin.style.height = '';
+          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(bwin);
         }
       }
 
@@ -1777,7 +1828,8 @@
       var savedPos = null;
 
       function openReadme() {
-        if (!w.classList.contains('open')) {
+        var wasOpen = w.classList.contains('open');
+        if (!wasOpen) {
           var W = Math.min(700, window.innerWidth  - 40);
           var H = Math.min(480, window.innerHeight - 40);
           w.style.width  = W + 'px';
@@ -1791,14 +1843,25 @@
         w.classList.remove('minimized');
         window._dyoZTop = (window._dyoZTop || 9000) + 1;
         w.style.zIndex = window._dyoZTop;
+        if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(w);
       }
       function closeReadme() {
-        w.classList.remove('open', 'minimized', 'maximized');
-        savedPos = null;
+        if (window.dyoAnimDismiss) {
+          window.dyoAnimDismiss(w, function() {
+            w.classList.remove('open', 'minimized', 'maximized');
+            savedPos = null;
+          });
+        } else {
+          w.classList.remove('open', 'minimized', 'maximized');
+          savedPos = null;
+        }
       }
       function minimizeReadme() {
         if (w.classList.contains('minimized')) {
+          var tb = document.querySelector('.dyo-taskbtn[data-win-id="dyoReadmeWin"]');
+          window._dyoAnimSrc = tb || null;
           w.classList.remove('minimized');
+          if (window.dyoAnimOpen) window.dyoAnimOpen(w);
         } else {
           if (w.classList.contains('maximized')) {
             w.classList.remove('maximized');
@@ -1809,7 +1872,11 @@
               savedPos = null;
             }
           }
-          w.classList.add('minimized');
+          if (window.dyoAnimMinimize) {
+            window.dyoAnimMinimize(w, function() { w.classList.add('minimized'); });
+          } else {
+            w.classList.add('minimized');
+          }
         }
       }
       function maximizeReadme() {
@@ -1824,7 +1891,9 @@
             w.style.height = savedPos.height;
             savedPos = null;
           }
+          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(w);
         } else {
+          w.classList.remove('minimized');
           savedPos = {
             left: w.style.left, top: w.style.top,
             right: w.style.right, bottom: w.style.bottom,
@@ -1833,6 +1902,7 @@
           w.classList.add('maximized');
           w.style.left = w.style.top = w.style.right =
           w.style.bottom = w.style.width = w.style.height = '';
+          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(w);
         }
       }
 
@@ -2255,7 +2325,8 @@
 
       // ── 창 열기/닫기/최소화/최대화 ──
       function openGuest() {
-        if (!w.classList.contains('open')) {
+        var wasOpen = w.classList.contains('open');
+        if (!wasOpen) {
           var W = Math.min(360, window.innerWidth  - 40);
           var H = Math.min(580, window.innerHeight - 40);
           w.style.width  = W + 'px';
@@ -2269,15 +2340,26 @@
         w.classList.remove('minimized');
         window._dyoZTop = (window._dyoZTop || 9000) + 1;
         w.style.zIndex = window._dyoZTop;
+        if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(w);
         if (!loaded) loadGuest();
       }
       function closeGuest() {
-        w.classList.remove('open','minimized','maximized');
-        savedPos = null;
+        if (window.dyoAnimDismiss) {
+          window.dyoAnimDismiss(w, function() {
+            w.classList.remove('open','minimized','maximized');
+            savedPos = null;
+          });
+        } else {
+          w.classList.remove('open','minimized','maximized');
+          savedPos = null;
+        }
       }
       function minimizeGuest() {
         if (w.classList.contains('minimized')) {
+          var tb = document.querySelector('.dyo-taskbtn[data-win-id="dyoGuestWin"]');
+          window._dyoAnimSrc = tb || null;
           w.classList.remove('minimized');
+          if (window.dyoAnimOpen) window.dyoAnimOpen(w);
         } else {
           if (w.classList.contains('maximized')) {
             w.classList.remove('maximized');
@@ -2288,7 +2370,11 @@
               savedPos=null;
             }
           }
-          w.classList.add('minimized');
+          if (window.dyoAnimMinimize) {
+            window.dyoAnimMinimize(w, function() { w.classList.add('minimized'); });
+          } else {
+            w.classList.add('minimized');
+          }
         }
       }
       function maximizeGuest() {
@@ -2300,11 +2386,14 @@
             w.style.width=savedPos.width; w.style.height=savedPos.height;
             savedPos=null;
           }
+          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(w);
         } else {
+          w.classList.remove('minimized');
           savedPos = { left:w.style.left, top:w.style.top, right:w.style.right,
                        bottom:w.style.bottom, width:w.style.width, height:w.style.height };
           w.classList.add('maximized');
           w.style.left=w.style.top=w.style.right=w.style.bottom=w.style.width=w.style.height='';
+          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(w);
         }
       }
 
@@ -2453,6 +2542,108 @@
     })();
 
     // ============================================================
+    // 창 팝업 애니메이션 헬퍼
+    // ============================================================
+    (function() {
+      // 아이콘 → 창이 튀어나오는 팝 애니메이션
+      // 사용법: 각 open 함수에서 window.dyoAnimOpen(winEl) 호출
+      //         아이콘 클릭 시 window._dyoAnimSrc = iconEl; 설정
+      // 닫기/숨김: 페이드아웃 후 콜백
+      window.dyoAnimDismiss = function(winEl, cb) {
+        // 최소화 상태(display:none)면 animation이 실행 안 되므로 즉시 콜백
+        if (winEl.classList.contains('minimized') || !winEl.offsetParent) {
+          if (cb) cb();
+          return;
+        }
+        winEl.classList.add('dyo-win-dismissing');
+        winEl.addEventListener('animationend', function() {
+          winEl.classList.remove('dyo-win-dismissing');
+          if (cb) cb();
+        }, { once: true });
+      };
+
+      // 최소화: 태스크바 버튼 위치로 날아가며 사라짐
+      window.dyoAnimMinimize = function(winEl, cb) {
+        // 이미 최소화 애니메이션 중이면 즉시 처리
+        if (winEl.classList.contains('dyo-win-minimizing')) {
+          winEl.classList.remove('dyo-win-minimizing');
+          winEl.style.removeProperty('--min-tx');
+          winEl.style.removeProperty('--min-ty');
+          if (cb) cb();
+          return;
+        }
+        var taskBtn = document.querySelector('.dyo-taskbtn[data-win-id="' + winEl.id + '"]');
+        var wr = winEl.getBoundingClientRect();
+        var wx = wr.left + wr.width  / 2;
+        var wy = wr.top  + wr.height / 2;
+        var tx = 0, ty = 80;
+        if (taskBtn) {
+          var tr = taskBtn.getBoundingClientRect();
+          tx = (tr.left + tr.width  / 2) - wx;
+          ty = (tr.top  + tr.height / 2) - wy;
+        }
+        winEl.style.setProperty('--min-tx', tx + 'px');
+        winEl.style.setProperty('--min-ty', ty + 'px');
+        winEl.classList.add('dyo-win-minimizing');
+        winEl.addEventListener('animationend', function() {
+          if (cb) cb();
+          winEl.classList.remove('dyo-win-minimizing');
+          winEl.style.removeProperty('--min-tx');
+          winEl.style.removeProperty('--min-ty');
+        }, { once: true });
+      };
+
+      // 최대화 진입 애니메이션
+      window.dyoAnimMaximizeIn = function(winEl) {
+        winEl.classList.remove('dyo-win-zoom-in');
+        void winEl.offsetWidth;
+        winEl.classList.add('dyo-win-zoom-in');
+        winEl.addEventListener('animationend', function() {
+          winEl.classList.remove('dyo-win-zoom-in');
+        }, { once: true });
+      };
+
+      // 최대화 복원 애니메이션
+      window.dyoAnimMaximizeOut = function(winEl) {
+        winEl.classList.remove('dyo-win-zoom-out');
+        void winEl.offsetWidth;
+        winEl.classList.add('dyo-win-zoom-out');
+        winEl.addEventListener('animationend', function() {
+          winEl.classList.remove('dyo-win-zoom-out');
+        }, { once: true });
+      };
+
+      window.dyoAnimOpen = function(winEl) {
+        var src = window._dyoAnimSrc || null;
+        window._dyoAnimSrc = null;
+
+        // 기준점(transform-origin) 계산: 아이콘 중심 → 창 기준 상대 좌표
+        var wr = winEl.getBoundingClientRect();
+        var ox, oy;
+        if (src) {
+          var sr = src.getBoundingClientRect();
+          ox = sr.left + sr.width  / 2;
+          oy = sr.top  + sr.height / 2;
+        } else {
+          ox = window.innerWidth  / 2;
+          oy = window.innerHeight / 2;
+        }
+        var tx = ox - wr.left;
+        var ty = oy - wr.top;
+
+        winEl.style.transformOrigin = tx + 'px ' + ty + 'px';
+        winEl.classList.remove('dyo-win-pop');
+        void winEl.offsetWidth; // reflow
+        winEl.classList.add('dyo-win-pop');
+
+        winEl.addEventListener('animationend', function() {
+          winEl.classList.remove('dyo-win-pop');
+          winEl.style.transformOrigin = '';
+        }, { once: true });
+      };
+    })();
+
+    // ============================================================
     // 전체화면 토글 버튼
     // ============================================================
     (function() {
@@ -2536,10 +2727,19 @@
         btn.addEventListener('click', function() {
           if (!winEl.classList.contains('open')) {
             def.open();
-          } else {
+          } else if (winEl.classList.contains('minimized')) {
+            window._dyoAnimSrc = btn;
             winEl.classList.remove('minimized');
             window._dyoZTop = (window._dyoZTop || 9000) + 1;
             winEl.style.zIndex = window._dyoZTop;
+            if (window.dyoAnimOpen) window.dyoAnimOpen(winEl);
+          } else {
+            // 이미 열려있고 최소화 아님 → 최소화
+            if (window.dyoAnimMinimize) {
+              window.dyoAnimMinimize(winEl, function() { winEl.classList.add('minimized'); });
+            } else {
+              winEl.classList.add('minimized');
+            }
           }
         });
 
@@ -2758,16 +2958,31 @@
           // 태스크바
           case 'task-front':
             if (ctx && ctx.winEl) {
+              var tb2 = document.querySelector('.dyo-taskbtn[data-win-id="' + ctx.winEl.id + '"]');
+              window._dyoAnimSrc = tb2 || null;
               ctx.winEl.classList.remove('minimized');
               window._dyoZTop = (window._dyoZTop || 9000) + 1;
               ctx.winEl.style.zIndex = window._dyoZTop;
+              if (window.dyoAnimOpen) window.dyoAnimOpen(ctx.winEl);
             }
             break;
           case 'task-minimize':
-            if (ctx && ctx.winEl) ctx.winEl.classList.add('minimized');
+            if (ctx && ctx.winEl) {
+              if (window.dyoAnimMinimize) {
+                window.dyoAnimMinimize(ctx.winEl, function() { ctx.winEl.classList.add('minimized'); });
+              } else {
+                ctx.winEl.classList.add('minimized');
+              }
+            }
             break;
           case 'task-close':
-            if (ctx && ctx.winEl) ctx.winEl.classList.remove('open', 'minimized', 'maximized');
+            if (ctx && ctx.winEl) {
+              if (window.dyoAnimDismiss) {
+                window.dyoAnimDismiss(ctx.winEl, function() { ctx.winEl.classList.remove('open', 'minimized', 'maximized'); });
+              } else {
+                ctx.winEl.classList.remove('open', 'minimized', 'maximized');
+              }
+            }
             break;
           // 배경
           case 'terminal':  if (window.dyoOpenShell)    window.dyoOpenShell();              break;
@@ -2856,16 +3071,37 @@
       }
 
       function openProps(meta) {
+        var wasOpen = w.classList.contains('open');
         window._dyoLastPropsMeta = meta;
         titleEl.textContent = meta.name + ' — Properties';
         bodyEl.innerHTML = buildContent(meta);
         w.classList.remove('minimized', 'maximized');
         w.classList.add('open');
         bringToFront();
+        if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(w);
       }
 
-      function closeProps()    { w.classList.remove('open', 'minimized', 'maximized'); }
-      function minimizeProps() { w.classList.toggle('minimized'); }
+      function closeProps() {
+        if (window.dyoAnimDismiss) {
+          window.dyoAnimDismiss(w, function() { w.classList.remove('open', 'minimized', 'maximized'); });
+        } else {
+          w.classList.remove('open', 'minimized', 'maximized');
+        }
+      }
+      function minimizeProps() {
+        if (w.classList.contains('minimized')) {
+          var tb = document.querySelector('.dyo-taskbtn[data-win-id="dyoPropsWin"]');
+          window._dyoAnimSrc = tb || null;
+          w.classList.remove('minimized');
+          if (window.dyoAnimOpen) window.dyoAnimOpen(w);
+        } else {
+          if (window.dyoAnimMinimize) {
+            window.dyoAnimMinimize(w, function() { w.classList.add('minimized'); });
+          } else {
+            w.classList.add('minimized');
+          }
+        }
+      }
       function maximizeProps() {
         if (w.classList.contains('maximized')) {
           if (prevRect) {
@@ -2873,11 +3109,14 @@
             w.style.width = prevRect.w + 'px'; w.style.height = prevRect.h + 'px';
           }
           w.classList.remove('maximized');
+          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(w);
         } else {
+          w.classList.remove('minimized');
           var r = w.getBoundingClientRect();
           prevRect = { l: r.left, t: r.top, w: r.width, h: r.height };
           w.style.left = ''; w.style.top = ''; w.style.width = ''; w.style.height = '';
           w.classList.add('maximized');
+          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(w);
         }
       }
       function bringToFront() {
@@ -3119,24 +3358,47 @@
       }
 
       function openExplorer() {
-        var W = 680, H = 480;
-        var left = Math.max(10, Math.round((window.innerWidth  - W) / 2));
-        var top  = Math.max(10, Math.round((window.innerHeight - H) / 2));
-        w.style.width  = W + 'px';
-        w.style.height = H + 'px';
-        w.style.left   = left + 'px';
-        w.style.top    = top  + 'px';
+        var wasOpen = w.classList.contains('open');
+        if (!wasOpen) {
+          var W = 680, H = 480;
+          var left = Math.max(10, Math.round((window.innerWidth  - W) / 2));
+          var top  = Math.max(10, Math.round((window.innerHeight - H) / 2));
+          w.style.width  = W + 'px';
+          w.style.height = H + 'px';
+          w.style.left   = left + 'px';
+          w.style.top    = top  + 'px';
+        }
         w.classList.remove('minimized', 'maximized');
         w.classList.add('open');
         bringToFront();
         buildTree();
+        if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(w);
       }
 
       window.dyoOpenExplorer = openExplorer;
 
       w.addEventListener('mousedown', bringToFront);
-      if (closeBtn) closeBtn.addEventListener('click', function() { w.classList.remove('open', 'minimized', 'maximized'); });
-      if (minBtn)   minBtn.addEventListener('click', function() { w.classList.toggle('minimized'); });
+      if (closeBtn) closeBtn.addEventListener('click', function() {
+        if (window.dyoAnimDismiss) {
+          window.dyoAnimDismiss(w, function() { w.classList.remove('open', 'minimized', 'maximized'); });
+        } else {
+          w.classList.remove('open', 'minimized', 'maximized');
+        }
+      });
+      if (minBtn) minBtn.addEventListener('click', function() {
+        if (w.classList.contains('minimized')) {
+          var tb = document.querySelector('.dyo-taskbtn[data-win-id="dyoExplorerWin"]');
+          window._dyoAnimSrc = tb || null;
+          w.classList.remove('minimized');
+          if (window.dyoAnimOpen) window.dyoAnimOpen(w);
+        } else {
+          if (window.dyoAnimMinimize) {
+            window.dyoAnimMinimize(w, function() { w.classList.add('minimized'); });
+          } else {
+            w.classList.add('minimized');
+          }
+        }
+      });
       if (maxBtn)   maxBtn.addEventListener('click', function() {
         if (w.classList.contains('maximized')) {
           if (prevRect) {
@@ -3144,11 +3406,14 @@
             w.style.width = prevRect.w + 'px'; w.style.height = prevRect.h + 'px';
           }
           w.classList.remove('maximized');
+          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(w);
         } else {
+          w.classList.remove('minimized');
           var r = w.getBoundingClientRect();
           prevRect = { l: r.left, t: r.top, w: r.width, h: r.height };
           w.style.left = ''; w.style.top = ''; w.style.width = ''; w.style.height = '';
           w.classList.add('maximized');
+          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(w);
         }
       });
 
