@@ -79,7 +79,7 @@
           <div class="tit_post">
             <a href="/" class="link_post">[##_title_##]</a>
           </div>
-          <a href="/" class="thumb_profile">
+          <a href="/category" class="thumb_profile">
             <img src="[##_image_##]" class="img_profile" alt="프로필사진">
           </a>
           <span class="txt_profile">[##_blogger_##]</span>
@@ -473,6 +473,21 @@
     <div class="dyo-desktop" id="dyoDesktop">
       <div class="dyo-desktop-grid">
 
+        <!-- README 아이콘 -->
+        <div class="dyo-desktop-icon" id="desktopIconReadme" title="README">
+          <div class="dyo-di-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="#3b82f6" opacity="0.15"/>
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linejoin="round"/>
+              <polyline points="14 2 14 8 20 8" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linejoin="round"/>
+              <line x1="8" y1="12" x2="16" y2="12" stroke="#3b82f6" stroke-width="1.4"/>
+              <line x1="8" y1="15" x2="16" y2="15" stroke="#3b82f6" stroke-width="1.4" opacity="0.65"/>
+              <line x1="8" y1="18" x2="13" y2="18" stroke="#3b82f6" stroke-width="1.4" opacity="0.4"/>
+            </svg>
+          </div>
+          <span class="dyo-di-label">README</span>
+        </div>
+
         <!-- Terminal 아이콘 (Windows CMD 스타일) -->
         <div class="dyo-desktop-icon" id="desktopIconShell" title="Terminal">
           <div class="dyo-di-wrap">
@@ -587,6 +602,55 @@
       <div class="dyo-brs-handle nw" data-dir="nw"></div>
     </div>
 
+    <!-- README 창 -->
+    <div class="dyo-shell-win" id="dyoReadmeWin">
+      <div class="dyo-shell-titlebar" id="dyoReadmeTitlebar">
+        <span class="dyo-term-dot red"    id="dyoReadmeClose" title="닫기"></span>
+        <span class="dyo-term-dot yellow" id="dyoReadmeMin"   title="최소화"></span>
+        <span class="dyo-term-dot green"  id="dyoReadmeMax"   title="최대화"></span>
+        <span class="dyo-shell-title">README.md</span>
+      </div>
+      <div class="dyo-term-body" style="overflow-y:auto;padding:20px 28px"><pre style="margin:0;font-family:inherit;font-size:13px;line-height:1.8;color:#abb2bf;white-space:pre-wrap"># doyoucode Blog  -  README
+
+## 개요
+  doyoucode는 개발자 테마의 Tistory 블로그입니다.
+  데스크탑 스타일 UI와 터미널 인터페이스를 제공합니다.
+
+## 데스크탑 아이콘
+  README         - 이 도움말 페이지
+  Command Prompt - 터미널 창 열기
+  Dev Blog       - 전체 포스트 보기 (브라우저 창)
+  GitHub         - GitHub 프로필 새 탭으로 열기
+
+## 터미널 명령어
+  help           - 사용 가능한 명령어 목록
+  about/whoami   - 블로그 소개
+  ls             - 카테고리 목록
+  cd [category]  - 카테고리로 이동
+  search [word]  - 포스트 검색
+  date           - 현재 날짜/시간
+  github         - GitHub 열기
+  clear          - 터미널 초기화
+
+## 브라우저 창
+  - 드래그로 이동, 모서리로 크기 조절
+  - 닫기(빨강) / 최소화(노랑) / 최대화(초록)
+  - 뒤로 / 앞으로 / 새로고침 지원
+
+## 관리자 메뉴  (우하단, 메인화면에서만 표시)
+  글쓰기 - 새 포스트 작성
+  관리   - Tistory 관리 페이지</pre>
+      </div>
+      <div class="dyo-brs-handle n"  data-dir="n"></div>
+      <div class="dyo-brs-handle ne" data-dir="ne"></div>
+      <div class="dyo-brs-handle e"  data-dir="e"></div>
+      <div class="dyo-brs-handle se" data-dir="se"></div>
+      <div class="dyo-brs-handle s"  data-dir="s"></div>
+      <div class="dyo-brs-handle sw" data-dir="sw"></div>
+      <div class="dyo-brs-handle w"  data-dir="w"></div>
+      <div class="dyo-brs-handle nw" data-dir="nw"></div>
+    </div>
+
     <!-- 관리자 빠른 메뉴바 -->
     <div class="dyo-admin-bar">
       <a href="/manage/newpost/?type=post&returnURL=%2Fmanage%2Fposts%2F" class="dyo-admin-btn" title="글쓰기">
@@ -670,6 +734,14 @@
       }
       updateClock();
       setInterval(updateClock, 1000);
+
+      // README 아이콘 클릭
+      var iconReadme = document.getElementById('desktopIconReadme');
+      if (iconReadme) {
+        iconReadme.addEventListener('click', function() {
+          if (window.dyoOpenReadme) window.dyoOpenReadme();
+        });
+      }
 
       // Terminal 아이콘 클릭 → 터미널 창 열기
       var iconShell = document.getElementById('desktopIconShell');
@@ -1353,6 +1425,9 @@
       var bUrlBar  = document.getElementById('dyoBrowserUrl');
       var bFrame   = document.getElementById('dyoBrowserFrame');
       if (!bwin || !bFrame) return;
+      window._dyoBWin = bwin;
+      window._dyoBFrame = bFrame;
+      window._dyoBUrlBar = bUrlBar;
 
       var dragging = false, dragOX = 0, dragOY = 0;
       var resizing = false, resizeDir = '', resizeSX = 0, resizeSY = 0, resizeSRect = null;
@@ -1418,7 +1493,7 @@
       bFrame.addEventListener('load', function() {
         try {
           var loc = bFrame.contentWindow.location.href;
-          if (loc && loc !== 'about:blank') {
+          if (loc && loc !== 'about:blank' && loc !== 'about:srcdoc') {
             bUrlBar.textContent = loc.replace(/^https?:\/\//, '');
           }
         } catch(e) { /* cross-origin: 무시 */ }
@@ -1538,6 +1613,170 @@
       }, { passive: true });
 
       document.addEventListener('touchend', function() { dragging = false; });
+    })();
+  </script>
+
+  <script>
+    (function() {
+      var w        = document.getElementById('dyoReadmeWin');
+      var titlebar = document.getElementById('dyoReadmeTitlebar');
+      var closeBtn = document.getElementById('dyoReadmeClose');
+      var minBtn   = document.getElementById('dyoReadmeMin');
+      var maxBtn   = document.getElementById('dyoReadmeMax');
+      if (!w) return;
+
+      var dragging = false, dragOX = 0, dragOY = 0;
+      var resizing = false, resizeDir = '', resizeSX = 0, resizeSY = 0, resizeSRect = null;
+      var MIN_W = 360, MIN_H = 180;
+      var savedPos = null;
+
+      function openReadme() {
+        if (!w.classList.contains('open')) {
+          var W = Math.min(700, window.innerWidth  - 40);
+          var H = Math.min(480, window.innerHeight - 40);
+          w.style.width  = W + 'px';
+          w.style.height = H + 'px';
+          w.style.left   = Math.round((window.innerWidth  - W) / 2) + 'px';
+          w.style.top    = Math.round((window.innerHeight - H) / 2) + 'px';
+          w.style.right  = 'auto';
+          w.style.bottom = 'auto';
+        }
+        w.classList.add('open');
+        w.classList.remove('minimized');
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+      }
+      function closeReadme() {
+        w.classList.remove('open', 'minimized', 'maximized');
+        savedPos = null;
+      }
+      function minimizeReadme() {
+        if (w.classList.contains('minimized')) {
+          w.classList.remove('minimized');
+        } else {
+          if (w.classList.contains('maximized')) {
+            w.classList.remove('maximized');
+            if (savedPos) {
+              w.style.left = savedPos.left; w.style.top = savedPos.top;
+              w.style.right = savedPos.right; w.style.bottom = savedPos.bottom;
+              w.style.width = savedPos.width; w.style.height = savedPos.height;
+              savedPos = null;
+            }
+          }
+          w.classList.add('minimized');
+        }
+      }
+      function maximizeReadme() {
+        if (w.classList.contains('maximized')) {
+          w.classList.remove('maximized');
+          if (savedPos) {
+            w.style.left   = savedPos.left;
+            w.style.top    = savedPos.top;
+            w.style.right  = savedPos.right;
+            w.style.bottom = savedPos.bottom;
+            w.style.width  = savedPos.width;
+            w.style.height = savedPos.height;
+            savedPos = null;
+          }
+        } else {
+          savedPos = {
+            left: w.style.left, top: w.style.top,
+            right: w.style.right, bottom: w.style.bottom,
+            width: w.style.width, height: w.style.height
+          };
+          w.classList.add('maximized');
+          w.style.left = w.style.top = w.style.right =
+          w.style.bottom = w.style.width = w.style.height = '';
+        }
+      }
+
+      window.dyoOpenReadme = openReadme;
+
+      w.addEventListener('mousedown', function() {
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+      });
+      if (closeBtn) closeBtn.addEventListener('click', closeReadme);
+      if (minBtn)   minBtn.addEventListener('click',   minimizeReadme);
+      if (maxBtn)   maxBtn.addEventListener('click',   maximizeReadme);
+
+      // 타이틀바 더블클릭 → 최대화 토글
+      if (titlebar) {
+        titlebar.addEventListener('dblclick', function(e) {
+          if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+          maximizeReadme();
+        });
+
+        // 드래그
+        titlebar.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized')) return;
+          if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+          var rect = w.getBoundingClientRect();
+          w.style.left = rect.left + 'px'; w.style.top = rect.top + 'px';
+          w.style.right = 'auto'; w.style.bottom = 'auto';
+          dragging = true;
+          dragOX = e.clientX - rect.left;
+          dragOY = e.clientY - rect.top;
+          e.preventDefault();
+        });
+
+        // 터치 드래그
+        titlebar.addEventListener('touchstart', function(e) {
+          if (w.classList.contains('maximized')) return;
+          var t = e.touches[0];
+          var rect = w.getBoundingClientRect();
+          w.style.left = rect.left + 'px'; w.style.top = rect.top + 'px';
+          w.style.right = 'auto'; w.style.bottom = 'auto';
+          dragging = true;
+          dragOX = t.clientX - rect.left;
+          dragOY = t.clientY - rect.top;
+        }, { passive: true });
+      }
+
+      document.addEventListener('mousemove', function(e) {
+        if (dragging) {
+          var x = Math.max(0, Math.min(window.innerWidth  - w.offsetWidth,  e.clientX - dragOX));
+          var y = Math.max(0, Math.min(window.innerHeight - 40, e.clientY - dragOY));
+          w.style.left = x + 'px'; w.style.top = y + 'px';
+        }
+        if (resizing) {
+          var dx = e.clientX - resizeSX;
+          var dy = e.clientY - resizeSY;
+          var r = resizeSRect;
+          var nL = r.left, nT = r.top, nW = r.width, nH = r.height;
+          if (resizeDir.indexOf('e') !== -1) nW = Math.max(MIN_W, r.width + dx);
+          if (resizeDir.indexOf('s') !== -1) nH = Math.max(MIN_H, r.height + dy);
+          if (resizeDir.indexOf('w') !== -1) { nW = Math.max(MIN_W, r.width - dx); nL = r.left + r.width - nW; }
+          if (resizeDir.indexOf('n') !== -1) { nH = Math.max(MIN_H, r.height - dy); nT = r.top + r.height - nH; }
+          w.style.left = nL + 'px'; w.style.top = nT + 'px';
+          w.style.width = nW + 'px'; w.style.height = nH + 'px';
+        }
+      });
+      document.addEventListener('touchmove', function(e) {
+        if (!dragging) return;
+        var t = e.touches[0];
+        var x = Math.max(0, Math.min(window.innerWidth  - w.offsetWidth,  t.clientX - dragOX));
+        var y = Math.max(0, Math.min(window.innerHeight - 40, t.clientY - dragOY));
+        w.style.left = x + 'px'; w.style.top = y + 'px';
+      }, { passive: true });
+      document.addEventListener('mouseup',  function() { dragging = false; resizing = false; });
+      document.addEventListener('touchend', function() { dragging = false; });
+
+      // 리사이즈 핸들
+      w.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
+        handle.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized') || w.classList.contains('minimized')) return;
+          e.stopPropagation(); e.preventDefault();
+          resizing = true;
+          resizeDir = handle.getAttribute('data-dir');
+          resizeSX = e.clientX; resizeSY = e.clientY;
+          var rect = w.getBoundingClientRect();
+          resizeSRect = { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+          w.style.left = rect.left + 'px'; w.style.top = rect.top + 'px';
+          w.style.width = rect.width + 'px'; w.style.height = rect.height + 'px';
+          w.style.right = 'auto'; w.style.bottom = 'auto';
+        });
+      });
     })();
   </script>
 </body>

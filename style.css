@@ -2657,6 +2657,13 @@ html, body {
 }
 
 
+/* README 아이콘 */
+#desktopIconReadme .dyo-di-wrap {
+  background: linear-gradient(145deg, #f0f6ff 0%, #dce8fb 100%);
+  border: 1px solid rgba(100,160,255,0.35);
+  box-shadow: 0 6px 16px rgba(30,80,180,0.2), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
 /* Shell 아이콘 (Windows CMD 스타일) */
 #desktopIconShell .dyo-di-wrap {
   background: #0c0c0c;
