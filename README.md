@@ -56,7 +56,7 @@ GitHub 감성의 다크 사이드바와 macOS & Ubuntu 스타일 데스크탑 UI
 
 📄 라이선스
 
-직접 운영 중인 블로그: dyomyo.tistory.com
+직접 운영 중인 블로그: [doyoucode dev blog](dyomyo.tistory.com)
 
 ---
 
