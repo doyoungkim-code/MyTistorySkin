@@ -598,7 +598,7 @@
 ║  Type '<span class="tr-cmd">help</span>' to see available commands ║
 ╚════════════════════════════════════════╝</div>
         <form class="dyo-term-input-row" id="dyoTermForm" onsubmit="return false;">
-          <span class="dyo-term-prompt">[doyoucode@guest ~]$&nbsp;</span>
+          <span class="dyo-term-prompt" id="dyoTermPrompt">[doyoucode@blog&nbsp;~]$&nbsp;</span>
           <input class="dyo-term-input" id="termInput" type="text"
             autocomplete="off" spellcheck="false"
             placeholder="type a command...">
@@ -646,17 +646,21 @@
           </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 터미널 명령어</div>
-          <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:22px">
-            <span style="color:#61afef">help</span><span>명령어 목록 보기</span>
-            <span style="color:#61afef">about / whoami</span><span>블로그 소개</span>
-            <span style="color:#61afef">ls</span><span>카테고리 목록</span>
-            <span style="color:#61afef">cd [카테고리]</span><span>카테고리로 이동</span>
-            <span style="color:#61afef">search [검색어]</span><span>포스트 검색</span>
-            <span style="color:#61afef">date</span><span>현재 날짜/시간</span>
-            <span style="color:#61afef">echo [텍스트]</span><span>텍스트 출력</span>
-            <span style="color:#61afef">github</span><span>GitHub 열기</span>
-            <span style="color:#61afef">clear</span><span>터미널 초기화</span>
-            <span style="color:#61afef">exit</span><span>터미널 창 닫기</span>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:12px">
+            <span style="color:#61afef">ls <span style="color:#5c6370">[-l|-al]</span></span><span>디렉토리 목록 <span style="color:#5c6370">(-l 상세, -al 숨김 포함)</span></span>
+            <span style="color:#61afef">cd <span style="color:#5c6370">[name|..|~|-]</span></span><span>디렉토리 이동 <span style="color:#5c6370">(..: 상위, ~: 루트, -: 이전)</span><br><span style="color:#5c6370;font-size:11px">└ 최하위 카테고리는 File Explorer에서 자동으로 열림</span></span>
+            <span style="color:#61afef">pwd</span><span>현재 경로 출력</span>
+            <span style="color:#61afef">search &lt;검색어&gt;</span><span>포스트 검색</span>
+            <span style="color:#61afef">about / github</span><span>블로그 소개 / GitHub 열기</span>
+            <span style="color:#61afef">clear / exit</span><span>터미널 초기화 / 닫기</span>
+          </div>
+
+          <div style="background:#161b22;border:1px solid #21262d;border-radius:6px;padding:10px 13px;margin-bottom:22px;font-family:'Fira Code',monospace;font-size:11.5px;line-height:1.9;color:#8b949e">
+            <span style="color:#58a6ff">[doyoucode@blog ~]$</span> <span style="color:#e6edf3">cd Backend</span><br>
+            <span style="color:#58a6ff">[doyoucode@blog ~/Backend]$</span> <span style="color:#e6edf3">ls</span><br>
+            <span style="color:#58a6ff">☕ Java/</span>&nbsp;&nbsp;<span style="color:#58a6ff">🍃 Spring Boot/</span>&nbsp;&nbsp;<span style="color:#58a6ff">💾 Database/</span><br>
+            <span style="color:#58a6ff">[doyoucode@blog ~/Backend]$</span> <span style="color:#e6edf3">open Spring Boot</span><br>
+            <span style="color:#3fb950">🌐 Opening Spring Boot ...</span>
           </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 브라우저 창</div>
@@ -1188,43 +1192,60 @@
       // 최대화 전 저장용
       var savedPos = null;
 
-      var categories = {
-        'project':          { label: '📂 Project',           url: '/category/Project' },
-        'dev log':          { label: '📁 Dev Log',            url: '/category/Project/Dev%20Log' },
-        'retrospect':       { label: '📁 Retrospect',         url: '/category/Project/Retrospect' },
-        'backend':          { label: '☕ Backend',             url: '/category/Backend' },
-        'java':             { label: '☕ Java',                url: '/category/Backend/Java' },
-        'spring':           { label: '🍃 Spring Boot',        url: '/category/Backend/Spring%20Boot' },
-        'spring boot':      { label: '🍃 Spring Boot',        url: '/category/Backend/Spring%20Boot' },
-        'database':         { label: '💾 Database',            url: '/category/Backend/Database' },
-        'db':               { label: '💾 Database',            url: '/category/Backend/Database' },
-        'frontend':         { label: '🎨 Frontend',           url: '/category/Frontend' },
-        'mobile':           { label: '📱 Mobile',             url: '/category/Frontend/Mobile' },
-        'web':              { label: '🌐 Web',                url: '/category/Frontend/Web' },
-        'cs':               { label: '💻 CS & Engineering',   url: '/category/CS%20&%20Engineering' },
-        'c':                { label: '📗 C',                  url: '/category/CS%20&%20Engineering/C' },
-        'algorithm':        { label: '📐 Algorithm',           url: '/category/CS%20&%20Engineering/Algorithm' },
-        'computer science': { label: '📚 Computer Science',   url: '/category/CS%20&%20Engineering/Computer%20Science' },
-        'infra':            { label: '🧱 Infra & Tools',      url: '/category/CS%20&%20Engineering/Infra%20&%20Tools' },
-        'growth':           { label: '🌱 Growth',             url: '/category/Growth' },
-        'certifications':   { label: '📜 Certifications',     url: '/category/Growth/Certifications' },
-        'english':          { label: '📖 English',            url: '/category/Growth/English' },
-        'books':            { label: '📚 Books',              url: '/category/Growth/Books' },
-        'documents':        { label: '📑 Documents',          url: '/category/Growth/Documents' },
-        'etc':              { label: '📄 etc',                url: '/category/Growth/etc' }
-      };
+      // 가상 파일시스템 (File Explorer와 동일한 트리)
+      var FS = { label: '~', icon: '📂', url: '/category', children: [
+        { label: 'Project', icon: '📂', url: '/category/Project', children: [
+          { label: 'Dev Log',    icon: '📁', url: '/category/Project/Dev%20Log' },
+          { label: 'Retrospect', icon: '📁', url: '/category/Project/Retrospect' }
+        ]},
+        { label: 'Backend', icon: '☕', url: '/category/Backend', children: [
+          { label: 'Java',        icon: '☕', url: '/category/Backend/Java' },
+          { label: 'Spring Boot', icon: '🍃', url: '/category/Backend/Spring%20Boot' },
+          { label: 'Database',    icon: '💾', url: '/category/Backend/Database' }
+        ]},
+        { label: 'Frontend', icon: '🎨', url: '/category/Frontend', children: [
+          { label: 'Mobile', icon: '📱', url: '/category/Frontend/Mobile' },
+          { label: 'Web',    icon: '🌐', url: '/category/Frontend/Web' }
+        ]},
+        { label: 'CS & Engineering', icon: '💻', url: '/category/CS%20&%20Engineering', children: [
+          { label: 'C',                icon: '📗', url: '/category/CS%20&%20Engineering/C' },
+          { label: 'Algorithm',        icon: '📐', url: '/category/CS%20&%20Engineering/Algorithm' },
+          { label: 'Computer Science', icon: '📚', url: '/category/CS%20&%20Engineering/Computer%20Science' },
+          { label: 'Infra & Tools',    icon: '🧱', url: '/category/CS%20&%20Engineering/Infra%20&%20Tools' }
+        ]},
+        { label: 'Growth', icon: '🌱', url: '/category/Growth', children: [
+          { label: 'Certifications', icon: '📜', url: '/category/Growth/Certifications' },
+          { label: 'English',        icon: '📖', url: '/category/Growth/English' },
+          { label: 'Books',          icon: '📚', url: '/category/Growth/Books' },
+          { label: 'Documents',      icon: '📑', url: '/category/Growth/Documents' },
+          { label: 'etc',            icon: '📄', url: '/category/Growth/etc' }
+        ]}
+      ]};
+      var cwdPath     = [FS]; // 현재 경로 (노드 배열, root = [FS])
+      var prevCwdPath = null; // cd - 용 이전 경로
 
       function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+      function getCwdNode() { return cwdPath[cwdPath.length - 1]; }
+      function getCwdStr() {
+        if (cwdPath.length === 1) return '~';
+        return '~/' + cwdPath.slice(1).map(function(n){ return n.label; }).join('/');
+      }
+      function updatePrompt() {
+        var el = document.getElementById('dyoTermPrompt');
+        if (el) el.innerHTML = '[doyoucode@blog&nbsp;<span style="color:#58a6ff;font-weight:600">' + getCwdStr() + '</span>]$&nbsp;';
+      }
 
       function addOutput(cmd, html) {
         var block = document.createElement('div');
         block.className = 'dyo-output-block';
+        var pStr = '[doyoucode@blog&nbsp;<span style="color:#58a6ff">' + getCwdStr() + '</span>]$';
         block.innerHTML =
           '<div class="dyo-output-cmd-line">' +
-            '<span class="dyo-output-prompt">[doyoucode@guest ~]$</span> ' +
+            '<span class="dyo-output-prompt">' + pStr + '</span> ' +
             '<span class="dyo-output-cmd">' + esc(cmd) + '</span>' +
           '</div>' +
-          '<div class="dyo-output-result">' + html + '</div>';
+          (html ? '<div class="dyo-output-result">' + html + '</div>' : '');
         output.insertBefore(block, form);
         output.scrollTop = output.scrollHeight;
       }
@@ -1249,16 +1270,20 @@
           case 'help':
             addOutput(cmd,
               '<span class="tr-info">Available commands:</span><br><br>' +
-              '<span class="tr-cmd">help</span>               — show this message<br>' +
-              '<span class="tr-cmd">about</span> / <span class="tr-cmd">whoami</span>  — about doyoucode<br>' +
-              '<span class="tr-cmd">ls</span>                 — list categories<br>' +
-              '<span class="tr-cmd">cd &lt;category&gt;</span>     — navigate to category<br>' +
-              '<span class="tr-cmd">search &lt;keyword&gt;</span>  — search blog posts<br>' +
-              '<span class="tr-cmd">date</span>               — current date & time<br>' +
-              '<span class="tr-cmd">echo &lt;text&gt;</span>       — echo text<br>' +
-              '<span class="tr-cmd">github</span>             — open GitHub profile<br>' +
-              '<span class="tr-cmd">clear</span>              — clear terminal<br>' +
-              '<span class="tr-cmd">exit</span>               — close terminal'
+              '<span style="color:#8b949e">── Navigation ──────────────────────────────</span><br>' +
+              '<span class="tr-cmd">ls</span> <span style="color:#5c6370">[-l|-al]</span>          — 디렉토리 목록 <span style="color:#5c6370">(-l 상세, -al 숨김 포함)</span><br>' +
+              '<span class="tr-cmd">cd</span> <span style="color:#5c6370">[name|..|~|-]</span>   — 디렉토리 이동 <span style="color:#5c6370">(..: 상위, ~: 루트, -: 이전)</span><br>' +
+              '<span style="color:#5c6370;padding-left:20px;font-size:11px">└ 최하위 카테고리는 cd 시 File Explorer에서 자동으로 열림</span><br>' +
+              '<span class="tr-cmd">pwd</span>                 — 현재 경로 출력<br>' +
+              '<br><span style="color:#8b949e">── Etc ─────────────────────────────────────</span><br>' +
+              '<span class="tr-cmd">about</span> / <span class="tr-cmd">whoami</span>   — 블로그 소개<br>' +
+              '<span class="tr-cmd">search &lt;keyword&gt;</span>   — 블로그 포스트 검색<br>' +
+              '<span class="tr-cmd">date</span>                — 현재 날짜 및 시간<br>' +
+              '<span class="tr-cmd">echo &lt;text&gt;</span>        — 텍스트 출력<br>' +
+              '<span class="tr-cmd">github</span>              — GitHub 프로필 열기<br>' +
+              '<span class="tr-cmd">clear</span>               — 터미널 화면 지우기<br>' +
+              '<span class="tr-cmd">exit</span>                — 터미널 닫기<br>' +
+              '<br><span style="color:#5c6370">💡 <kbd style="background:#21262d;border:1px solid #30363d;border-radius:3px;padding:0 4px">Tab</kbd> 자동완성 | <kbd style="background:#21262d;border:1px solid #30363d;border-radius:3px;padding:0 4px">↑↓</kbd> 히스토리</span>'
             ); break;
 
           case 'about': case 'whoami':
@@ -1268,32 +1293,127 @@
               '<span style="color:#5c6370">코딩 공부를 하며 마주친 시행착오와 해결 과정을 정리하며 성장 중</span>'
             ); break;
 
-          case 'ls':
-            var h = '<span class="tr-info">📂 Categories</span><br><br>';
-            [{name:'Project',color:'#56b6c2',subs:['Dev Log','Retrospect']},
-             {name:'Backend',color:'#c678dd',subs:['Java','Spring Boot','Database']},
-             {name:'Frontend',color:'#61afef',subs:['Mobile','Web']},
-             {name:'CS & Engineering',color:'#e06c75',subs:['C','Algorithm','Computer Science','Infra & Tools']},
-             {name:'Growth',color:'#98c379',subs:['Certifications','English','Books','Documents','etc']}
-            ].forEach(function(c) {
-              h += '<b style="color:'+c.color+'">📂 '+c.name+'</b> <span style="color:#5c6370">('+c.subs.join(', ')+')</span><br>';
-            });
-            h += '<br><span style="color:#5c6370">💡 <span class="tr-cmd">cd &lt;name&gt;</span> to navigate</span>';
-            addOutput(cmd, h); break;
-
-          case 'cd':
-            if (!arg) { addOutput(cmd,'<span class="tr-warn">Usage: cd &lt;category name&gt;</span>'); break; }
-            var key = arg.toLowerCase();
-            if (categories[key]) {
-              addOutput(cmd,'<span class="tr-success">📂 Opening '+categories[key].label+' ...</span>');
-              launchBrowser(categories[key].url);
+          case 'ls': {
+            var lsFlags = parts.slice(1).filter(function(p){ return p.startsWith('-'); }).join('');
+            var lsLong  = lsFlags.indexOf('l') !== -1;
+            var lsAll   = lsFlags.indexOf('a') !== -1;
+            var lsNode  = getCwdNode();
+            var lsKids  = lsNode.children || [];
+            var lsNow   = new Date();
+            var lsMon   = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][lsNow.getMonth()];
+            var lsDay   = String(lsNow.getDate()).padStart(2,' ');
+            var lsTime  = String(lsNow.getHours()).padStart(2,'0') + ':' + String(lsNow.getMinutes()).padStart(2,'0');
+            var lsDate  = lsMon + ' ' + lsDay + ' ' + lsTime;
+            if (lsLong) {
+              var lsH = '<pre style="margin:0;font-family:var(--font-mono);line-height:1.6">';
+              lsH += '<span style="color:#8b949e">total ' + (lsKids.length + (lsAll ? 2 : 0)) + '</span>\n';
+              if (lsAll) {
+                lsH += '<span style="color:#484f58">drwxr-xr-x</span> <span style="color:#8b949e">doyoucode blog ' + lsDate + '</span> <span style="color:#58a6ff">📂 .</span>\n';
+                lsH += '<span style="color:#484f58">drwxr-xr-x</span> <span style="color:#8b949e">doyoucode root ' + lsDate + '</span> <span style="color:#58a6ff">📂 ..</span>\n';
+              }
+              lsKids.forEach(function(c) {
+                var isDir  = c.children && c.children.length;
+                var perm   = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
+                var nColor = isDir ? '#58a6ff' : '#e6edf3';
+                lsH += '<span style="color:#484f58">' + perm + '</span> ';
+                lsH += '<span style="color:#8b949e">doyoucode blog ' + lsDate + '</span> ';
+                lsH += '<span style="color:' + nColor + '">' + c.icon + ' ' + esc(c.label) + (isDir ? '/' : '') + '</span>\n';
+              });
+              lsH += '</pre>';
+              if (!lsKids.length && !lsAll) lsH = '<span style="color:#8b949e">total 0</span><br><span style="color:#5c6370">(하위 디렉토리 없음) — <span class="tr-cmd">cd ..</span> 로 상위로 이동하세요.</span>';
+              addOutput(cmd, lsH);
             } else {
-              var sugg = Object.keys(categories).filter(function(k){ return k.indexOf(key)!==-1; })
-                .slice(0,3).map(function(k){ return categories[k].label; });
-              var msg = '<span class="tr-error">bash: cd: '+esc(arg)+': No such directory</span>';
-              if (sugg.length) msg += '<br><span class="tr-warn">Did you mean: '+sugg.join(', ')+'?</span>';
-              addOutput(cmd, msg);
-            } break;
+              if (!lsKids.length) {
+                addOutput(cmd, '<span style="color:#8b949e">(하위 디렉토리 없음)</span><br><span style="color:#5c6370"><span class="tr-cmd">cd ..</span> 로 상위로 이동하세요.</span>');
+              } else {
+                var lsH2 = '';
+                lsKids.forEach(function(c) {
+                  var isDir  = c.children && c.children.length;
+                  var nColor = isDir ? '#58a6ff' : '#e6edf3';
+                  lsH2 += '<span style="color:' + nColor + ';margin-right:18px">' + c.icon + '&nbsp;' + esc(c.label) + (isDir ? '/' : '') + '</span>';
+                });
+                addOutput(cmd, lsH2);
+              }
+            }
+            break;
+          }
+
+          case 'cd': {
+            var cdArg  = arg.replace(/^['"]|['"]$/g,'').trim();
+            var cdPrev = cwdPath.slice();
+            if (!cdArg || cdArg === '~') {
+              // cd 또는 cd ~ → root
+              addOutput(cmd, '');
+              prevCwdPath = cdPrev;
+              cwdPath = [FS];
+              updatePrompt();
+            } else if (cdArg === '-') {
+              // cd - → 이전 위치
+              if (!prevCwdPath) {
+                addOutput(cmd, '<span class="tr-error">bash: cd: OLDPWD not set</span>');
+              } else {
+                // 새 경로 문자열을 미리 계산 후, addOutput은 cwdPath 변경 전에 호출 (프롬프트 = 현재 위치)
+                var cdNewStr = prevCwdPath.length === 1 ? '~' : '~/' + prevCwdPath.slice(1).map(function(n){ return n.label; }).join('/');
+                addOutput(cmd, '<span style="color:#8b949e">' + cdNewStr + '</span>');
+                var cdTmp = cwdPath.slice();
+                cwdPath = prevCwdPath;
+                prevCwdPath = cdTmp;
+                updatePrompt();
+              }
+            } else if (cdArg === '.') {
+              // cd . → 현재 위치 유지
+              addOutput(cmd, '');
+            } else if (cdArg === '..') {
+              // cd .. → 상위로
+              if (cwdPath.length <= 1) {
+                addOutput(cmd, '');
+              } else {
+                addOutput(cmd, '');
+                prevCwdPath = cdPrev;
+                cwdPath = cwdPath.slice(0, -1);
+                updatePrompt();
+              }
+            } else {
+              // 이름으로 자식 검색 (대소문자 무시)
+              var cdCur    = getCwdNode();
+              var cdTarget = null;
+              if (cdCur.children) {
+                for (var ci = 0; ci < cdCur.children.length; ci++) {
+                  if (cdCur.children[ci].label.toLowerCase() === cdArg.toLowerCase()) {
+                    cdTarget = cdCur.children[ci]; break;
+                  }
+                }
+              }
+              if (cdTarget) {
+                if (!cdTarget.children || !cdTarget.children.length) {
+                  // 최하위 카테고리 → 브라우저에서 열고 현재 위치 유지
+                  addOutput(cmd, '<span class="tr-success">🌐 ' + esc(cdTarget.label) + ' 을(를) 브라우저에서 열기...</span>');
+                  launchBrowser(cdTarget.url);
+                } else {
+                  addOutput(cmd, '');
+                  prevCwdPath = cdPrev;
+                  cwdPath = cwdPath.concat([cdTarget]);
+                  updatePrompt();
+                }
+              } else {
+                var cdSugg = [];
+                if (cdCur.children) {
+                  cdCur.children.forEach(function(c) {
+                    if (c.label.toLowerCase().indexOf(cdArg.toLowerCase()) !== -1) cdSugg.push(esc(c.label));
+                  });
+                }
+                var cdMsg = '<span class="tr-error">bash: cd: ' + esc(cdArg) + ': No such file or directory</span>';
+                if (cdSugg.length) cdMsg += '<br><span class="tr-warn">혹시 이 항목을 찾으시나요? ' + cdSugg.join(', ') + '</span>';
+                addOutput(cmd, cdMsg);
+              }
+            }
+            break;
+          }
+
+          case 'pwd':
+            var pwdFull = '/home/doyoucode/blog';
+            if (cwdPath.length > 1) pwdFull += '/' + cwdPath.slice(1).map(function(n){ return n.label; }).join('/');
+            addOutput(cmd, '<span class="tr-default">' + esc(pwdFull) + '</span>'); break;
 
           case 'search': case 'grep':
             if (!arg) { addOutput(cmd,'<span class="tr-warn">Usage: search &lt;keyword&gt;</span>'); break; }
@@ -1570,15 +1690,25 @@
             termInput.value = histIdx < history.length-1 ? history[++histIdx] : (histIdx=history.length,'');
           } else if (e.key === 'Tab' || e.keyCode === 9) {
             e.preventDefault();
-            var val = termInput.value.trim().toLowerCase();
-            var cmds = ['help','about','whoami','ls','cd','search','grep','date','echo','clear','github','exit'];
-            if (!val.includes(' ')) {
-              var m = cmds.filter(function(c){ return c.startsWith(val); });
-              if (m.length === 1) termInput.value = m[0];
-            } else if (val.startsWith('cd ')) {
-              var p = val.slice(3);
-              var cm = Object.keys(categories).filter(function(k){ return k.startsWith(p); });
-              if (cm.length === 1) termInput.value = 'cd ' + cm[0];
+            var val = termInput.value;
+            var valTrim = val.trim().toLowerCase();
+            var cmds = ['help','about','whoami','ls','cd','pwd','search','grep','date','echo','clear','github','exit'];
+            if (!val.trim().includes(' ')) {
+              var tm = cmds.filter(function(c){ return c.startsWith(valTrim); });
+              if (tm.length === 1) termInput.value = tm[0] + ' ';
+            } else {
+              // cd/open 이후 자식 이름 자동완성
+              var spIdx = val.indexOf(' ');
+              var tabCmd = val.slice(0, spIdx).toLowerCase();
+              var tabArg = val.slice(spIdx + 1).toLowerCase();
+              if (tabCmd === 'cd') {
+                var tabKids = (getCwdNode().children || []).map(function(c){ return c.label; });
+                var tabM = tabKids.filter(function(n){ return n.toLowerCase().startsWith(tabArg); });
+                if (tabM.length === 1) termInput.value = tabCmd + ' ' + tabM[0];
+                else if (tabM.length > 1) {
+                  addOutput(val.trim(), tabM.map(function(n){ return '<span style="color:#58a6ff">' + esc(n) + '</span>'; }).join('  '));
+                }
+              }
             }
           }
         });
