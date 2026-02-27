@@ -10,7 +10,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Highlight.js (코드 신택스 하이라이팅) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
@@ -19,9 +19,10 @@
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./images/font.css">
   <style>
-    /* 홈화면 리다이렉트 시 깜빡임 방지 */
-    #tt-body-index .cont_skin,
-    #tt-body-index .area_foot { visibility: hidden; }
+    /* 홈화면 데스크탑 모드: 블로그 본문 전체 숨김 (데스크탑 오버레이가 덮음) */
+    #tt-body-index #dkWrap { visibility: hidden; }
+    /* 인덱스 페이지: JS 실행 전에도 즉시 데스크탑 표시 (flash 방지) */
+    #tt-body-index #dyoDesktop { display: flex; }
 
     <s_if_var_cover-image>.wrap_sub {
       background-image: url('[##_var_cover-image_##]');
@@ -206,20 +207,12 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
               </button>
 
-              <strong class="screen_out">관리 메뉴</strong>
               <ul class="list_control">
-                <li><a href="[##_owner_url_##]/entry/post" class="link_ctrl link_write" title="글쓰기">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
-                </a></li>
-                <li><a href="[##_guestbook_link_##]" class="link_ctrl link_memo" title="방명록">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                </a></li>
-                <li><a href="[##_rss_url_##]" class="link_ctrl link_rss" title="RSS">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
-                </a></li>
-                <li><a href="[##_owner_url_##]" class="link_ctrl link_manage" title="관리">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                </a></li>
+                <li>
+                  <button type="button" id="btnShell" title="Terminal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
@@ -476,6 +469,140 @@
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
     </button>
 
+    <!-- 데스크탑 홈화면 (인덱스 페이지 전용) -->
+    <div class="dyo-desktop" id="dyoDesktop">
+      <div class="dyo-desktop-grid">
+
+        <!-- Terminal 아이콘 (Windows CMD 스타일) -->
+        <div class="dyo-desktop-icon" id="desktopIconShell" title="Terminal">
+          <div class="dyo-di-wrap">
+            <!-- CMD: > prompt + _ cursor -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter" stroke-width="2.5">
+              <polyline points="4 8 9 12 4 16"></polyline>
+              <line x1="12" y1="16" x2="20" y2="16"></line>
+            </svg>
+          </div>
+          <span class="dyo-di-label">Command Prompt</span>
+        </div>
+
+        <!-- Dev Blog 아이콘 (Tistory) -->
+        <div class="dyo-desktop-icon" id="desktopIconBlog" title="Dev Blog">
+          <div class="dyo-di-wrap">
+            <!-- Tistory T 로고 -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3.5" y="6" width="17" height="3.2" rx="1.6" fill="white"/>
+              <rect x="10.4" y="8.8" width="3.2" height="10.2" rx="1.6" fill="white"/>
+            </svg>
+          </div>
+          <span class="dyo-di-label">Dev Blog</span>
+        </div>
+
+        <!-- GitHub 아이콘 -->
+        <div class="dyo-desktop-icon" id="desktopIconGithub" title="GitHub">
+          <div class="dyo-di-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+            </svg>
+          </div>
+          <span class="dyo-di-label">GitHub</span>
+        </div>
+
+        <!-- Trash 아이콘 -->
+        <div class="dyo-desktop-icon" id="desktopIconTrash" title="Trash">
+          <div class="dyo-di-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+              <path d="M10 11v6"></path>
+              <path d="M14 11v6"></path>
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+            </svg>
+          </div>
+          <span class="dyo-di-label">Trash</span>
+        </div>
+
+      </div>
+
+      <!-- 하단 태스크바 -->
+      <div class="dyo-desktop-bar">
+        <span class="dyo-bar-left">guest@doyoucode:~$</span>
+        <div class="dyo-bar-right">
+          <span id="desktopClock">00:00</span>
+          <span id="desktopDate">----/--/--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 가상 브라우저 창 (드래그 가능) -->
+    <div class="dyo-browser-win" id="dyoBrowserWin">
+      <div class="dyo-browser-titlebar" id="dyoBrowserTitlebar">
+        <span class="dyo-term-dot red"    id="dyoBrowserClose" title="닫기"></span>
+        <span class="dyo-term-dot yellow" id="dyoBrowserMin"   title="최소화"></span>
+        <span class="dyo-term-dot green"  id="dyoBrowserMax"   title="최대화"></span>
+        <div class="dyo-browser-navarea">
+          <button class="dyo-browser-navbtn" id="dyoBrowserBack"   title="뒤로">&#8592;</button>
+          <button class="dyo-browser-navbtn" id="dyoBrowserFwd"    title="앞으로">&#8594;</button>
+          <div class="dyo-browser-urlbar" id="dyoBrowserUrl">about:blank</div>
+          <button class="dyo-browser-navbtn" id="dyoBrowserReload" title="새로고침">&#8635;</button>
+        </div>
+      </div>
+      <iframe class="dyo-browser-frame" id="dyoBrowserFrame" src="about:blank"></iframe>
+      <div class="dyo-brs-handle n"  data-dir="n"></div>
+      <div class="dyo-brs-handle ne" data-dir="ne"></div>
+      <div class="dyo-brs-handle e"  data-dir="e"></div>
+      <div class="dyo-brs-handle se" data-dir="se"></div>
+      <div class="dyo-brs-handle s"  data-dir="s"></div>
+      <div class="dyo-brs-handle sw" data-dir="sw"></div>
+      <div class="dyo-brs-handle w"  data-dir="w"></div>
+      <div class="dyo-brs-handle nw" data-dir="nw"></div>
+    </div>
+
+    <!-- 가상 터미널 창 (드래그 가능) -->
+    <div class="dyo-shell-win" id="dyoShellWin">
+      <div class="dyo-shell-titlebar" id="dyoShellTitlebar">
+        <span class="dyo-term-dot red"    id="dyoShellClose"  title="닫기"></span>
+        <span class="dyo-term-dot yellow" id="dyoShellMin"    title="최소화"></span>
+        <span class="dyo-term-dot green"  id="dyoShellMax"    title="최대화"></span>
+        <span class="dyo-shell-title">guest@blog: ~</span>
+      </div>
+      <div class="dyo-term-body" id="termOutput">
+        <div class="dyo-term-banner">╔════════════════════════════════════════╗
+║  Welcome to doyoucode's terminal       ║
+║  Type '<span class="tr-cmd">help</span>' to see available commands ║
+╚════════════════════════════════════════╝</div>
+        <form class="dyo-term-input-row" id="dyoTermForm" onsubmit="return false;">
+          <span class="dyo-term-prompt">[doyoucode@guest ~]$&nbsp;</span>
+          <input class="dyo-term-input" id="termInput" type="text"
+            autocomplete="off" spellcheck="false"
+            placeholder="type a command...">
+        </form>
+      </div>
+      <div class="dyo-brs-handle n"  data-dir="n"></div>
+      <div class="dyo-brs-handle ne" data-dir="ne"></div>
+      <div class="dyo-brs-handle e"  data-dir="e"></div>
+      <div class="dyo-brs-handle se" data-dir="se"></div>
+      <div class="dyo-brs-handle s"  data-dir="s"></div>
+      <div class="dyo-brs-handle sw" data-dir="sw"></div>
+      <div class="dyo-brs-handle w"  data-dir="w"></div>
+      <div class="dyo-brs-handle nw" data-dir="nw"></div>
+    </div>
+
+    <!-- 관리자 빠른 메뉴바 -->
+    <div class="dyo-admin-bar">
+      <a href="/manage/newpost/?type=post&returnURL=%2Fmanage%2Fposts%2F" class="dyo-admin-btn" title="글쓰기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+      </a>
+      <a href="/manage" class="dyo-admin-btn" title="관리">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </a>
+    </div>
+
   </s_t3>
   <script src="./images/script.js"></script>
   <script>
@@ -517,10 +644,73 @@
       setTimeout(tick, 1000);
     })();
 
-    // 홈(인덱스) 페이지 접속 시 자동 리다이렉트
-    if (document.body.id === 'tt-body-index') {
-      window.location.replace('/notice/95');
-    }
+    // 홈(인덱스) 페이지 - 데스크탑 홈화면 표시
+    (function() {
+      if (document.body.id !== 'tt-body-index') return;
+
+      var desktop = document.getElementById('dyoDesktop');
+      if (!desktop) return;
+
+      // 데스크탑 표시 + 바디 스크롤 잠금
+      desktop.classList.add('show');
+      document.body.style.overflow = 'hidden';
+
+      // 시계 업데이트
+      function updateClock() {
+        var now = new Date();
+        var hh = String(now.getHours()).padStart(2, '0');
+        var mm = String(now.getMinutes()).padStart(2, '0');
+        var yyyy = now.getFullYear();
+        var mo = String(now.getMonth() + 1).padStart(2, '0');
+        var dd = String(now.getDate()).padStart(2, '0');
+        var clockEl = document.getElementById('desktopClock');
+        var dateEl  = document.getElementById('desktopDate');
+        if (clockEl) clockEl.textContent = hh + ':' + mm;
+        if (dateEl)  dateEl.textContent  = yyyy + '/' + mo + '/' + dd;
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      // Terminal 아이콘 클릭 → 터미널 창 열기
+      var iconShell = document.getElementById('desktopIconShell');
+      if (iconShell) {
+        iconShell.addEventListener('click', function() {
+          if (window.dyoOpenShell) window.dyoOpenShell();
+        });
+      }
+
+      // Blog 아이콘 클릭 → 전체글보기 창으로 열기
+      var iconBlog = document.getElementById('desktopIconBlog');
+      if (iconBlog) {
+        iconBlog.addEventListener('click', function() {
+          if (window.dyoOpenBrowser) window.dyoOpenBrowser('/category');
+        });
+      }
+
+      // GitHub 아이콘 클릭 → 새 탭으로 열기
+      var iconGithub = document.getElementById('desktopIconGithub');
+      if (iconGithub) {
+        iconGithub.addEventListener('click', function() {
+          window.open('https://github.com/doyoungkim-code', '_blank');
+        });
+      }
+
+      // Trash 아이콘 클릭 → 터미널 열고 rm -rf / 실행 (joke)
+      var iconTrash = document.getElementById('desktopIconTrash');
+      if (iconTrash) {
+        iconTrash.addEventListener('click', function() {
+          if (window.dyoOpenShell) window.dyoOpenShell();
+          setTimeout(function() {
+            var input = document.getElementById('termInput');
+            var form  = document.getElementById('dyoTermForm');
+            if (input && form) {
+              input.value = 'rm -rf /';
+              form.dispatchEvent(new Event('submit'));
+            }
+          }, 120);
+        });
+      }
+    })();
 
     // 게시글 목차(TOC) 자동 생성
     (function() {
@@ -743,6 +933,611 @@
       btnTop.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+    })();
+
+    // ============================================================
+    // 가상 터미널 창 (드래그 가능, 최소화/최대화)
+    // ============================================================
+    (function() {
+      var win      = document.getElementById('dyoShellWin');
+      var btnShell = document.getElementById('btnShell');
+      var titlebar = document.getElementById('dyoShellTitlebar');
+      var closeBtn = document.getElementById('dyoShellClose');
+      var minBtn   = document.getElementById('dyoShellMin');
+      var maxBtn   = document.getElementById('dyoShellMax');
+      var termInput= document.getElementById('termInput');
+      var output   = document.getElementById('termOutput');
+      var form     = document.getElementById('dyoTermForm');
+      if (!win || !btnShell) return;
+
+      var history = [], histIdx = -1;
+      var dragging = false, dragOX = 0, dragOY = 0;
+      var resizing = false, resizeDir = '', resizeSX = 0, resizeSY = 0, resizeSRect = null;
+      var MIN_W = 360, MIN_H = 180;
+      // 최대화 전 저장용
+      var savedPos = null;
+
+      var categories = {
+        'project':          { label: '📂 Project',           url: '/category/Project' },
+        'dev log':          { label: '📁 Dev Log',            url: '/category/Project/Dev%20Log' },
+        'retrospect':       { label: '📁 Retrospect',         url: '/category/Project/Retrospect' },
+        'backend':          { label: '☕ Backend',             url: '/category/Backend' },
+        'java':             { label: '☕ Java',                url: '/category/Backend/Java' },
+        'spring':           { label: '🍃 Spring Boot',        url: '/category/Backend/Spring%20Boot' },
+        'spring boot':      { label: '🍃 Spring Boot',        url: '/category/Backend/Spring%20Boot' },
+        'database':         { label: '💾 Database',            url: '/category/Backend/Database' },
+        'db':               { label: '💾 Database',            url: '/category/Backend/Database' },
+        'frontend':         { label: '🎨 Frontend',           url: '/category/Frontend' },
+        'mobile':           { label: '📱 Mobile',             url: '/category/Frontend/Mobile' },
+        'web':              { label: '🌐 Web',                url: '/category/Frontend/Web' },
+        'cs':               { label: '💻 CS & Engineering',   url: '/category/CS%20&%20Engineering' },
+        'c':                { label: '📗 C',                  url: '/category/CS%20&%20Engineering/C' },
+        'algorithm':        { label: '📐 Algorithm',           url: '/category/CS%20&%20Engineering/Algorithm' },
+        'computer science': { label: '📚 Computer Science',   url: '/category/CS%20&%20Engineering/Computer%20Science' },
+        'infra':            { label: '🧱 Infra & Tools',      url: '/category/CS%20&%20Engineering/Infra%20&%20Tools' },
+        'growth':           { label: '🌱 Growth',             url: '/category/Growth' },
+        'certifications':   { label: '📜 Certifications',     url: '/category/Growth/Certifications' },
+        'english':          { label: '📖 English',            url: '/category/Growth/English' },
+        'books':            { label: '📚 Books',              url: '/category/Growth/Books' },
+        'documents':        { label: '📑 Documents',          url: '/category/Growth/Documents' },
+        'etc':              { label: '📄 etc',                url: '/category/Growth/etc' }
+      };
+
+      function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+      function addOutput(cmd, html) {
+        var block = document.createElement('div');
+        block.className = 'dyo-output-block';
+        block.innerHTML =
+          '<div class="dyo-output-cmd-line">' +
+            '<span class="dyo-output-prompt">[doyoucode@guest ~]$</span> ' +
+            '<span class="dyo-output-cmd">' + esc(cmd) + '</span>' +
+          '</div>' +
+          '<div class="dyo-output-result">' + html + '</div>';
+        output.insertBefore(block, form);
+        output.scrollTop = output.scrollHeight;
+      }
+
+      var BANNER = '╔════════════════════════════════════════╗\n║  Welcome to doyoucode\'s terminal       ║\n║  Type \'<span class="tr-cmd">help</span>\' to see available commands ║\n╚════════════════════════════════════════╝';
+
+      // ── 브라우저 창 열기 (iframe) ──
+      function launchBrowser(url) {
+        if (window.dyoOpenBrowser) window.dyoOpenBrowser(url);
+      }
+
+      function processCmd(raw) {
+        var cmd = raw.trim();
+        if (!cmd) return;
+        history.push(cmd); histIdx = history.length;
+
+        var parts = cmd.split(/\s+/);
+        var base = parts[0].toLowerCase();
+        var arg  = parts.slice(1).join(' ');
+
+        switch (base) {
+          case 'help':
+            addOutput(cmd,
+              '<span class="tr-info">Available commands:</span><br><br>' +
+              '<span class="tr-cmd">help</span>               — show this message<br>' +
+              '<span class="tr-cmd">about</span> / <span class="tr-cmd">whoami</span>  — about doyoucode<br>' +
+              '<span class="tr-cmd">ls</span>                 — list categories<br>' +
+              '<span class="tr-cmd">cd &lt;category&gt;</span>     — navigate to category<br>' +
+              '<span class="tr-cmd">search &lt;keyword&gt;</span>  — search blog posts<br>' +
+              '<span class="tr-cmd">date</span>               — current date & time<br>' +
+              '<span class="tr-cmd">echo &lt;text&gt;</span>       — echo text<br>' +
+              '<span class="tr-cmd">github</span>             — open GitHub profile<br>' +
+              '<span class="tr-cmd">clear</span>              — clear terminal'
+            ); break;
+
+          case 'about': case 'whoami':
+            addOutput(cmd,
+              '<span class="tr-success"><b>doyoucode</b></span> — Backend Developer<br>' +
+              '프로그래밍이 일상이 된 개발자 꿈나무의 기록 공간<br>' +
+              '<span style="color:#5c6370">코딩 공부를 하며 마주친 시행착오와 해결 과정을 정리하며 성장 중</span>'
+            ); break;
+
+          case 'ls':
+            var h = '<span class="tr-info">📂 Categories</span><br><br>';
+            [{name:'Project',color:'#56b6c2',subs:['Dev Log','Retrospect']},
+             {name:'Backend',color:'#c678dd',subs:['Java','Spring Boot','Database']},
+             {name:'Frontend',color:'#61afef',subs:['Mobile','Web']},
+             {name:'CS & Engineering',color:'#e06c75',subs:['C','Algorithm','Computer Science','Infra & Tools']},
+             {name:'Growth',color:'#98c379',subs:['Certifications','English','Books','Documents','etc']}
+            ].forEach(function(c) {
+              h += '<b style="color:'+c.color+'">📂 '+c.name+'</b> <span style="color:#5c6370">('+c.subs.join(', ')+')</span><br>';
+            });
+            h += '<br><span style="color:#5c6370">💡 <span class="tr-cmd">cd &lt;name&gt;</span> to navigate</span>';
+            addOutput(cmd, h); break;
+
+          case 'cd':
+            if (!arg) { addOutput(cmd,'<span class="tr-warn">Usage: cd &lt;category name&gt;</span>'); break; }
+            var key = arg.toLowerCase();
+            if (categories[key]) {
+              addOutput(cmd,'<span class="tr-success">📂 Opening '+categories[key].label+' ...</span>');
+              launchBrowser(categories[key].url);
+            } else {
+              var sugg = Object.keys(categories).filter(function(k){ return k.indexOf(key)!==-1; })
+                .slice(0,3).map(function(k){ return categories[k].label; });
+              var msg = '<span class="tr-error">bash: cd: '+esc(arg)+': No such directory</span>';
+              if (sugg.length) msg += '<br><span class="tr-warn">Did you mean: '+sugg.join(', ')+'?</span>';
+              addOutput(cmd, msg);
+            } break;
+
+          case 'search': case 'grep':
+            if (!arg) { addOutput(cmd,'<span class="tr-warn">Usage: search &lt;keyword&gt;</span>'); break; }
+            addOutput(cmd,'<span class="tr-success">🔍 Searching for "'+esc(arg)+'" ...</span>');
+            launchBrowser('/search/'+encodeURIComponent(arg)); break;
+
+          case 'date':
+            var now = new Date();
+            var ds = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+
+              String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+
+              String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');
+            addOutput(cmd,'<span class="tr-default">'+['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][now.getDay()]+' '+ds+' KST</span>'); break;
+
+          case 'echo':
+            addOutput(cmd,'<span class="tr-default">'+(arg?esc(arg):'')+'</span>'); break;
+
+          case 'clear':
+            while (output.firstChild && output.firstChild !== form) {
+              output.removeChild(output.firstChild);
+            }
+            var bannerEl = document.createElement('div');
+            bannerEl.className = 'dyo-term-banner';
+            bannerEl.innerHTML = BANNER;
+            output.insertBefore(bannerEl, form);
+            output.scrollTop = 0;
+            return;
+
+          case 'github':
+            addOutput(cmd,'<span class="tr-success">🚀 Opening GitHub ...</span>');
+            setTimeout(function(){ window.open('https://github.com/doyoungkim-code','_blank'); }, 500); break;
+
+          case 'sudo':   addOutput(cmd,'<span class="tr-error">🔒 Permission denied 😎</span>'); break;
+          case 'rm':     addOutput(cmd,'<span class="tr-error">🚫 Not gonna happen here 😅</span>'); break;
+          case 'exit':   closeWindow(); return;
+          case 'hello': case 'hi':
+            addOutput(cmd,'<span class="tr-success">👋 Hello! Type <span class="tr-cmd">help</span> to see what you can do.</span>'); break;
+
+          default:
+            addOutput(cmd,
+              '<span class="tr-error">bash: '+esc(base)+': command not found</span><br>' +
+              '<span style="color:#5c6370">Type <span class="tr-cmd">help</span> to see available commands.</span>'
+            );
+        }
+      }
+
+      // ── 창 열기/닫기/최소화/최대화 ──
+      function openWindow() {
+        if (!win.classList.contains('open')) {
+          var W = 680, H = 440;
+          win.style.left   = Math.round((window.innerWidth  - W) / 2) + 'px';
+          win.style.top    = Math.round((window.innerHeight - H) / 2) + 'px';
+          win.style.right  = 'auto';
+          win.style.bottom = 'auto';
+        }
+        win.classList.add('open');
+        win.classList.remove('minimized');
+        btnShell.classList.add('active');
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        win.style.zIndex = window._dyoZTop;
+        setTimeout(function() {
+          termInput && termInput.focus();
+          output.scrollTop = output.scrollHeight;
+        }, 50);
+      }
+      function closeWindow() {
+        win.classList.remove('open', 'minimized', 'maximized');
+        btnShell.classList.remove('active');
+        savedPos = null;
+      }
+      function minimizeWindow() {
+        if (win.classList.contains('minimized')) {
+          win.classList.remove('minimized');
+          setTimeout(function(){ termInput && termInput.focus(); }, 50);
+        } else {
+          // 최대화 상태라면 먼저 복원
+          if (win.classList.contains('maximized')) {
+            win.classList.remove('maximized');
+            if (savedPos) {
+              win.style.left = savedPos.left; win.style.top = savedPos.top;
+              win.style.right = savedPos.right; win.style.bottom = savedPos.bottom;
+              win.style.width = savedPos.width; win.style.height = savedPos.height;
+              savedPos = null;
+            }
+          }
+          win.classList.add('minimized');
+        }
+      }
+      function maximizeWindow() {
+        if (win.classList.contains('maximized')) {
+          // 복원
+          win.classList.remove('maximized');
+          if (savedPos) {
+            win.style.left   = savedPos.left;
+            win.style.top    = savedPos.top;
+            win.style.right  = savedPos.right;
+            win.style.bottom = savedPos.bottom;
+            win.style.width  = savedPos.width;
+            win.style.height = savedPos.height;
+            savedPos = null;
+          }
+        } else {
+          // 현재 위치 저장
+          savedPos = {
+            left: win.style.left, top: win.style.top,
+            right: win.style.right, bottom: win.style.bottom,
+            width: win.style.width, height: win.style.height
+          };
+          win.classList.add('maximized');
+          // 최대화 시 인라인 스타일 초기화 (CSS로 제어)
+          win.style.left = win.style.top = win.style.right =
+          win.style.bottom = win.style.width = win.style.height = '';
+        }
+        setTimeout(function(){ termInput && termInput.focus(); }, 50);
+      }
+
+      // 데스크탑 아이콘에서 호출할 수 있도록 전역 노출
+      window.dyoOpenShell = openWindow;
+
+      // 창 포커스 (z-index 최상위)
+      function bringToFront() {
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        win.style.zIndex = window._dyoZTop;
+      }
+      win.addEventListener('mousedown', bringToFront);
+
+      btnShell.addEventListener('click', function() {
+        win.classList.contains('open') ? closeWindow() : openWindow();
+      });
+      if (closeBtn) closeBtn.addEventListener('click', closeWindow);
+      if (minBtn)   minBtn.addEventListener('click',   minimizeWindow);
+      if (maxBtn)   maxBtn.addEventListener('click',   maximizeWindow);
+
+      // ESC 닫기
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && win.classList.contains('open')) closeWindow();
+      });
+
+      // ── 드래그 ──
+      titlebar.addEventListener('dblclick', function(e) {
+        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+        maximizeWindow();
+      });
+
+      titlebar.addEventListener('mousedown', function(e) {
+        if (win.classList.contains('maximized')) return;
+        if (e.target === minBtn || e.target === maxBtn || e.target === closeBtn) return;
+        var rect = win.getBoundingClientRect();
+        // 인라인 left/top 좌표로 전환
+        win.style.left   = rect.left + 'px';
+        win.style.top    = rect.top  + 'px';
+        win.style.right  = 'auto';
+        win.style.bottom = 'auto';
+        dragging = true;
+        dragOX = e.clientX - rect.left;
+        dragOY = e.clientY - rect.top;
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (dragging) {
+          var x = Math.max(0, Math.min(window.innerWidth  - win.offsetWidth,  e.clientX - dragOX));
+          var y = Math.max(0, Math.min(window.innerHeight - 40, e.clientY - dragOY));
+          win.style.left = x + 'px';
+          win.style.top  = y + 'px';
+        }
+        if (resizing) {
+          var dx = e.clientX - resizeSX;
+          var dy = e.clientY - resizeSY;
+          var r = resizeSRect;
+          var newL = r.left, newT = r.top, newW = r.width, newH = r.height;
+          if (resizeDir.indexOf('e') !== -1) newW = Math.max(MIN_W, r.width + dx);
+          if (resizeDir.indexOf('s') !== -1) newH = Math.max(MIN_H, r.height + dy);
+          if (resizeDir.indexOf('w') !== -1) { newW = Math.max(MIN_W, r.width - dx); newL = r.left + r.width - newW; }
+          if (resizeDir.indexOf('n') !== -1) { newH = Math.max(MIN_H, r.height - dy); newT = r.top + r.height - newH; }
+          win.style.left   = newL + 'px';
+          win.style.top    = newT + 'px';
+          win.style.width  = newW + 'px';
+          win.style.height = newH + 'px';
+        }
+      });
+
+      document.addEventListener('mouseup', function() {
+        dragging = false;
+        resizing = false;
+      });
+
+      // ── 리사이즈 핸들 ──
+      win.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
+        handle.addEventListener('mousedown', function(e) {
+          if (win.classList.contains('maximized') || win.classList.contains('minimized')) return;
+          e.stopPropagation();
+          e.preventDefault();
+          resizing = true;
+          resizeDir = handle.getAttribute('data-dir');
+          resizeSX = e.clientX;
+          resizeSY = e.clientY;
+          var rect = win.getBoundingClientRect();
+          resizeSRect = { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+          win.style.left   = rect.left   + 'px';
+          win.style.top    = rect.top    + 'px';
+          win.style.width  = rect.width  + 'px';
+          win.style.height = rect.height + 'px';
+          win.style.right  = 'auto';
+          win.style.bottom = 'auto';
+        });
+      });
+
+      // 터치 드래그 (모바일)
+      titlebar.addEventListener('touchstart', function(e) {
+        if (win.classList.contains('maximized')) return;
+        var t = e.touches[0];
+        var rect = win.getBoundingClientRect();
+        win.style.left   = rect.left + 'px';
+        win.style.top    = rect.top  + 'px';
+        win.style.right  = 'auto';
+        win.style.bottom = 'auto';
+        dragging = true;
+        dragOX = t.clientX - rect.left;
+        dragOY = t.clientY - rect.top;
+      }, { passive: true });
+
+      document.addEventListener('touchmove', function(e) {
+        if (!dragging) return;
+        var t = e.touches[0];
+        var x = Math.max(0, Math.min(window.innerWidth  - win.offsetWidth,  t.clientX - dragOX));
+        var y = Math.max(0, Math.min(window.innerHeight - 40, t.clientY - dragOY));
+        win.style.left = x + 'px';
+        win.style.top  = y + 'px';
+      }, { passive: true });
+
+      document.addEventListener('touchend', function() { dragging = false; });
+
+      // ── 입력 이벤트 ──
+      // Enter: form submit (가장 안정적인 크로스-브라우저 방식)
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          if (!termInput) return;
+          processCmd(termInput.value);
+          termInput.value = '';
+          termInput.focus();
+        });
+      }
+
+      // 화살표키(히스토리) + Tab(자동완성)만 keydown으로 처리
+      if (termInput) {
+        termInput.addEventListener('keydown', function(e) {
+          if (e.key === 'ArrowUp' || e.keyCode === 38) {
+            e.preventDefault();
+            if (histIdx > 0) termInput.value = history[--histIdx];
+          } else if (e.key === 'ArrowDown' || e.keyCode === 40) {
+            e.preventDefault();
+            termInput.value = histIdx < history.length-1 ? history[++histIdx] : (histIdx=history.length,'');
+          } else if (e.key === 'Tab' || e.keyCode === 9) {
+            e.preventDefault();
+            var val = termInput.value.trim().toLowerCase();
+            var cmds = ['help','about','whoami','ls','cd','search','grep','date','echo','clear','github','exit'];
+            if (!val.includes(' ')) {
+              var m = cmds.filter(function(c){ return c.startsWith(val); });
+              if (m.length === 1) termInput.value = m[0];
+            } else if (val.startsWith('cd ')) {
+              var p = val.slice(3);
+              var cm = Object.keys(categories).filter(function(k){ return k.startsWith(p); });
+              if (cm.length === 1) termInput.value = 'cd ' + cm[0];
+            }
+          }
+        });
+      }
+
+      if (output) {
+        output.addEventListener('click', function(e) {
+          if (e.target.tagName !== 'A') termInput && termInput.focus();
+        });
+      }
+    })();
+
+    // ============================================================
+    // 가상 브라우저 창 (드래그 가능, 최소화/최대화/닫기)
+    // ============================================================
+    (function() {
+      var bwin     = document.getElementById('dyoBrowserWin');
+      var btbar    = document.getElementById('dyoBrowserTitlebar');
+      var bClose   = document.getElementById('dyoBrowserClose');
+      var bMin     = document.getElementById('dyoBrowserMin');
+      var bMax     = document.getElementById('dyoBrowserMax');
+      var bBack    = document.getElementById('dyoBrowserBack');
+      var bFwd     = document.getElementById('dyoBrowserFwd');
+      var bReload  = document.getElementById('dyoBrowserReload');
+      var bUrlBar  = document.getElementById('dyoBrowserUrl');
+      var bFrame   = document.getElementById('dyoBrowserFrame');
+      if (!bwin || !bFrame) return;
+
+      var dragging = false, dragOX = 0, dragOY = 0;
+      var resizing = false, resizeDir = '', resizeSX = 0, resizeSY = 0, resizeSRect = null;
+      var savedPos = null;
+      var MIN_W = 360, MIN_H = 200;
+
+      function openBrowser(url) {
+        var fullUrl = url.startsWith('http') ? url : (window.location.origin + url);
+        bFrame.src = fullUrl;
+        bUrlBar.textContent = window.location.hostname + (url.startsWith('/') ? url : '/' + url);
+        if (!bwin.classList.contains('open')) {
+          var W = Math.min(1200, window.innerWidth  - 40);
+          var H = Math.min(700,  window.innerHeight - 40);
+          bwin.style.width  = W + 'px';
+          bwin.style.height = H + 'px';
+          bwin.style.left   = Math.round((window.innerWidth  - W) / 2) + 'px';
+          bwin.style.top    = Math.round((window.innerHeight - H) / 2) + 'px';
+          bwin.style.right  = 'auto';
+          bwin.style.bottom = 'auto';
+        }
+        bwin.classList.add('open');
+        bwin.classList.remove('minimized');
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        bwin.style.zIndex = window._dyoZTop;
+      }
+
+      function closeBrowser() {
+        bwin.classList.remove('open', 'minimized', 'maximized');
+        bFrame.src = 'about:blank';
+        bUrlBar.textContent = 'about:blank';
+        savedPos = null;
+      }
+
+      function minimizeBrowser() {
+        bwin.classList.toggle('minimized');
+      }
+
+      function maximizeBrowser() {
+        if (bwin.classList.contains('maximized')) {
+          bwin.classList.remove('maximized');
+          if (savedPos) {
+            bwin.style.left   = savedPos.left;
+            bwin.style.top    = savedPos.top;
+            bwin.style.right  = savedPos.right;
+            bwin.style.bottom = savedPos.bottom;
+            bwin.style.width  = savedPos.width;
+            bwin.style.height = savedPos.height;
+            savedPos = null;
+          }
+        } else {
+          savedPos = {
+            left: bwin.style.left, top: bwin.style.top,
+            right: bwin.style.right, bottom: bwin.style.bottom,
+            width: bwin.style.width, height: bwin.style.height
+          };
+          bwin.classList.add('maximized');
+          bwin.style.left = bwin.style.top = bwin.style.right =
+          bwin.style.bottom = bwin.style.width = bwin.style.height = '';
+        }
+      }
+
+      // URL 업데이트 (iframe 내 페이지 이동 감지)
+      bFrame.addEventListener('load', function() {
+        try {
+          var loc = bFrame.contentWindow.location.href;
+          if (loc && loc !== 'about:blank') {
+            bUrlBar.textContent = loc.replace(/^https?:\/\//, '');
+          }
+        } catch(e) { /* cross-origin: 무시 */ }
+      });
+
+      // 전역 노출
+      window.dyoOpenBrowser = openBrowser;
+
+      // 창 포커스 (z-index 최상위)
+      function bringToFront() {
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        bwin.style.zIndex = window._dyoZTop;
+      }
+      bwin.addEventListener('mousedown', bringToFront);
+
+      if (bClose)  bClose.addEventListener('click',  closeBrowser);
+      if (bMin)    bMin.addEventListener('click',    minimizeBrowser);
+      if (bMax)    bMax.addEventListener('click',    maximizeBrowser);
+      if (bBack)   bBack.addEventListener('click',   function() { try { bFrame.contentWindow.history.back(); } catch(e){} });
+      if (bFwd)    bFwd.addEventListener('click',    function() { try { bFrame.contentWindow.history.forward(); } catch(e){} });
+      if (bReload) bReload.addEventListener('click', function() { try { bFrame.contentWindow.location.reload(); } catch(e){ bFrame.src = bFrame.src; } });
+
+      // 더블클릭 타이틀바 → 최대화 토글
+      btbar.addEventListener('dblclick', function(e) {
+        if (e.target === bClose || e.target === bMin || e.target === bMax) return;
+        maximizeBrowser();
+      });
+
+      // 드래그 (마우스)
+      btbar.addEventListener('mousedown', function(e) {
+        if (bwin.classList.contains('maximized')) return;
+        if (e.target === bClose || e.target === bMin || e.target === bMax) return;
+        var rect = bwin.getBoundingClientRect();
+        bwin.style.left   = rect.left + 'px';
+        bwin.style.top    = rect.top  + 'px';
+        bwin.style.right  = 'auto';
+        bwin.style.bottom = 'auto';
+        dragging = true;
+        dragOX = e.clientX - rect.left;
+        dragOY = e.clientY - rect.top;
+        bFrame.style.pointerEvents = 'none';
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (dragging) {
+          var x = Math.max(0, Math.min(window.innerWidth  - bwin.offsetWidth,  e.clientX - dragOX));
+          var y = Math.max(0, Math.min(window.innerHeight - 40, e.clientY - dragOY));
+          bwin.style.left = x + 'px';
+          bwin.style.top  = y + 'px';
+        }
+        if (resizing) {
+          var dx = e.clientX - resizeSX;
+          var dy = e.clientY - resizeSY;
+          var r = resizeSRect;
+          var newL = r.left, newT = r.top, newW = r.width, newH = r.height;
+          if (resizeDir.indexOf('e') !== -1) newW = Math.max(MIN_W, r.width + dx);
+          if (resizeDir.indexOf('s') !== -1) newH = Math.max(MIN_H, r.height + dy);
+          if (resizeDir.indexOf('w') !== -1) { newW = Math.max(MIN_W, r.width - dx); newL = r.left + r.width - newW; }
+          if (resizeDir.indexOf('n') !== -1) { newH = Math.max(MIN_H, r.height - dy); newT = r.top + r.height - newH; }
+          bwin.style.left   = newL + 'px';
+          bwin.style.top    = newT + 'px';
+          bwin.style.width  = newW + 'px';
+          bwin.style.height = newH + 'px';
+        }
+      });
+
+      document.addEventListener('mouseup', function() {
+        if (dragging || resizing) bFrame.style.pointerEvents = '';
+        dragging = false;
+        resizing = false;
+      });
+
+      // 리사이즈 핸들 (마우스)
+      bwin.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
+        handle.addEventListener('mousedown', function(e) {
+          if (bwin.classList.contains('maximized') || bwin.classList.contains('minimized')) return;
+          e.stopPropagation();
+          e.preventDefault();
+          resizing = true;
+          resizeDir = handle.getAttribute('data-dir');
+          resizeSX = e.clientX;
+          resizeSY = e.clientY;
+          var rect = bwin.getBoundingClientRect();
+          resizeSRect = { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+          bwin.style.left   = rect.left   + 'px';
+          bwin.style.top    = rect.top    + 'px';
+          bwin.style.width  = rect.width  + 'px';
+          bwin.style.height = rect.height + 'px';
+          bwin.style.right  = 'auto';
+          bwin.style.bottom = 'auto';
+          bFrame.style.pointerEvents = 'none';
+        });
+      });
+
+      // 드래그 (터치)
+      btbar.addEventListener('touchstart', function(e) {
+        if (bwin.classList.contains('maximized')) return;
+        var t = e.touches[0];
+        var rect = bwin.getBoundingClientRect();
+        bwin.style.left   = rect.left + 'px';
+        bwin.style.top    = rect.top  + 'px';
+        bwin.style.right  = 'auto';
+        bwin.style.bottom = 'auto';
+        dragging = true;
+        dragOX = t.clientX - rect.left;
+        dragOY = t.clientY - rect.top;
+      }, { passive: true });
+
+      document.addEventListener('touchmove', function(e) {
+        if (!dragging) return;
+        var t = e.touches[0];
+        var x = Math.max(0, Math.min(window.innerWidth  - bwin.offsetWidth,  t.clientX - dragOX));
+        var y = Math.max(0, Math.min(window.innerHeight - 40, t.clientY - dragOY));
+        bwin.style.left = x + 'px';
+        bwin.style.top  = y + 'px';
+      }, { passive: true });
+
+      document.addEventListener('touchend', function() { dragging = false; });
     })();
   </script>
 </body>
