@@ -790,6 +790,15 @@
         <span class="dyo-term-dot green"  id="dyoExplorerMax"   title="Maximize"></span>
         <span class="dyo-shell-title">📂 File Explorer</span>
       </div>
+      <div class="dyo-explorer-navbar" id="dyoExplorerNavbar">
+        <button class="dyo-exp-navbtn" id="dyoExpBack" disabled title="뒤로가기">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="dyo-exp-navbtn" id="dyoExpForward" disabled title="앞으로가기">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="dyo-exp-addrbar" id="dyoExpAddrBar"></div>
+      </div>
       <div class="dyo-explorer-body">
         <div class="dyo-explorer-sidebar" id="dyoExplorerTree"></div>
         <div class="dyo-explorer-main" id="dyoExplorerMain"></div>
@@ -3052,8 +3061,53 @@
           case 'blog':      if (window.dyoOpenBrowser) window.dyoOpenBrowser('/category'); break;
           case 'explorer':  if (window.dyoOpenExplorer) window.dyoOpenExplorer();          break;
           case 'refresh':   location.reload();                                             break;
+          // Explorer 아이템
+          case 'exp-open':
+            if (ctx && ctx.openFn) ctx.openFn();
+            break;
+          case 'exp-browser':
+            if (ctx && ctx.child && ctx.child.url) {
+              if (window.dyoOpenBrowser) window.dyoOpenBrowser(ctx.child.url);
+            }
+            break;
+          case 'exp-props':
+            if (ctx && ctx.child) {
+              var ec = ctx.child;
+              var isFolder = ctx.isFolder;
+              showProps({
+                name: ec.label,
+                ext: isFolder ? '' : '.html',
+                type: isFolder ? 'Folder' : 'Article',
+                desc: ec.label + (isFolder ? ' 카테고리 폴더' : ' 블로그 포스트 카테고리'),
+                location: ec.url || '/',
+                size: '—', disk: '—',
+                created: '—', modified: '—',
+                owner: 'doyoucode', group: 'staff',
+                permissions: 'Read-only', version: '—',
+                iconBg: isFolder ? 'linear-gradient(145deg,#1c2128 0%,#161b22 100%)' : 'linear-gradient(145deg,#1c2128 0%,#161b22 100%)',
+                iconBorder: '#30363d', iconColor: '#c9d1d9',
+                iconChar: ec.icon || (isFolder ? '📂' : '📄')
+              });
+            }
+            break;
         }
       });
+
+      // Explorer 아이템 우클릭용 글로벌 함수
+      window.dyoShowExpItemCtx = function(child, openFn, x, y) {
+        var isFolder = !!(child.children && child.children.length);
+        currentCtx = { type: 'exp-item', child: child, isFolder: isFolder, openFn: openFn };
+        var items = [
+          { label: isFolder ? '📂 Open Folder' : '🌐 Open in Browser', action: 'exp-open' }
+        ];
+        if (isFolder && child.url) {
+          items.push({ label: '🌐 Open in Browser', action: 'exp-browser' });
+        }
+        items.push('sep');
+        items.push({ label: 'Properties', action: 'exp-props' });
+        buildMenu(items);
+        showMenu(x, y);
+      };
     })();
 
     // ============================================================
@@ -3249,8 +3303,15 @@
       var mainEl   = document.getElementById('dyoExplorerMain');
       if (!w || !titlebar) return;
 
-      var prevRect = null;
+      var prevRect  = null;
       var treeBuilt = false;
+
+      // 탐색 히스토리
+      var navHistory = [];
+      var navIdx     = -1;
+      var backBtn    = document.getElementById('dyoExpBack');
+      var fwdBtn     = document.getElementById('dyoExpForward');
+      var addrBar    = document.getElementById('dyoExpAddrBar');
 
       // 카테고리 트리 정의
       var tree = [
@@ -3282,19 +3343,73 @@
         ]}
       ];
 
+      // rootNode 정의 (트리 정의 이후에 위치해야 함)
+      var rootNode = { label: 'Blog Root', icon: '📂', url: '/category', children: tree };
+
       function bringToFront() {
         window._dyoZTop = (window._dyoZTop || 9000) + 1;
         w.style.zIndex = window._dyoZTop;
       }
 
-      // 메인 패널 렌더링 (DOM 기반 — 클로저로 노드 참조 유지)
-      function renderMain(node) {
-        mainEl.innerHTML = '';
+      // 노드 → 루트부터의 조상 배열 탐색
+      function findAncestors(nodes, target, path) {
+        for (var i = 0; i < nodes.length; i++) {
+          var p = path.concat([nodes[i]]);
+          if (nodes[i] === target) return p;
+          if (nodes[i].children) {
+            var r = findAncestors(nodes[i].children, target, p);
+            if (r) return r;
+          }
+        }
+        return null;
+      }
 
-        var path = document.createElement('div');
-        path.className = 'dyo-exp-path';
-        path.textContent = node.icon + '\u00a0' + node.label;
-        mainEl.appendChild(path);
+      // 뒤로/앞으로 버튼 상태 갱신
+      function updateNavBtns() {
+        if (backBtn) backBtn.disabled = navIdx <= 0;
+        if (fwdBtn)  fwdBtn.disabled  = navIdx >= navHistory.length - 1;
+      }
+
+      // 주소창 브레드크럼 갱신
+      function updateAddrBar(ancestors) {
+        if (!addrBar) return;
+        addrBar.innerHTML = '';
+        ancestors.forEach(function(node, i) {
+          var isLast = i === ancestors.length - 1;
+          var crumb = document.createElement('span');
+          crumb.className = 'dyo-exp-crumb' + (isLast ? ' current' : '');
+          crumb.textContent = node.icon + '\u00a0' + node.label;
+          if (!isLast) {
+            (function(n, idx) {
+              crumb.addEventListener('click', function() {
+                navigate(n, ancestors.slice(0, idx + 1));
+              });
+            })(node, i);
+          }
+          addrBar.appendChild(crumb);
+          if (!isLast) {
+            var sep = document.createElement('span');
+            sep.className = 'dyo-exp-crumb-sep';
+            sep.textContent = '›';
+            addrBar.appendChild(sep);
+          }
+        });
+      }
+
+      // 탐색: 히스토리에 추가하고 렌더링
+      function navigate(node, ancestors) {
+        navHistory = navHistory.slice(0, navIdx + 1);
+        navHistory.push({ node: node, ancestors: ancestors });
+        navIdx = navHistory.length - 1;
+        renderMain(node, ancestors);
+        updateAddrBar(ancestors);
+        updateNavBtns();
+      }
+
+      // 메인 패널 렌더링 (DOM 기반 — 클로저로 노드 참조 유지)
+      function renderMain(node, ancestors) {
+        mainEl.innerHTML = '';
+        var curAncestors = ancestors || [rootNode];
 
         if (node.children && node.children.length > 0) {
           var grid = document.createElement('div');
@@ -3307,15 +3422,19 @@
               '<div class="dyo-exp-item-icon">' + child.icon + '</div>' +
               '<div class="dyo-exp-item-label">' + child.label + '</div>';
 
-            item.addEventListener('click', function() {
-              if (child.children && child.children.length > 0) {
-                // 하위 폴더 있음 → 안으로 탐색
-                renderMain(child);
-              } else {
-                // 리프 노드 → 브라우저에서 바로 열기
-                if (window.dyoOpenBrowser) window.dyoOpenBrowser(child.url);
-              }
-            });
+            (function(c) {
+              var openFn = c.children && c.children.length
+                ? function() { navigate(c, curAncestors.concat([c])); }
+                : function() { if (window.dyoOpenBrowser) window.dyoOpenBrowser(c.url); };
+
+              item.addEventListener('click', openFn);
+
+              item.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (window.dyoShowExpItemCtx) window.dyoShowExpItemCtx(c, openFn, e.clientX, e.clientY);
+              });
+            })(child);
 
             grid.appendChild(item);
           });
@@ -3373,7 +3492,8 @@
             // active 업데이트
             treeEl.querySelectorAll('.dyo-tree-item').forEach(function(el) { el.classList.remove('active'); });
             item.classList.add('active');
-            renderMain(node);
+            var ancs = findAncestors([rootNode], node, []) || [rootNode, node];
+            navigate(node, ancs);
             if (hasChildren && childrenEl) {
               var collapsed = childrenEl.classList.contains('collapsed');
               childrenEl.classList.toggle('collapsed');
@@ -3406,7 +3526,7 @@
         rootItem.addEventListener('click', function() {
           treeEl.querySelectorAll('.dyo-tree-item').forEach(function(el) { el.classList.remove('active'); });
           rootItem.classList.add('active');
-          renderMain({ label: 'Blog Root', icon: '📂', url: '/category', children: tree });
+          navigate(rootNode, [rootNode]);
           var isCollapsed = rootChildren.classList.toggle('collapsed');
           var arrow = rootItem.querySelector('.dyo-tree-arrow');
           if (arrow) {
@@ -3415,7 +3535,7 @@
           }
         });
 
-        renderMain({ label: 'Blog Root', icon: '📂', url: '/category', children: tree });
+        navigate(rootNode, [rootNode]);
       }
 
       function openExplorer() {
@@ -3428,13 +3548,42 @@
           w.style.height = H + 'px';
           w.style.left   = left + 'px';
           w.style.top    = top  + 'px';
+          // 재오픈 시 히스토리 초기화
+          navHistory = [];
+          navIdx     = -1;
         }
         w.classList.remove('minimized', 'maximized');
         w.classList.add('open');
         bringToFront();
-        buildTree();
+        if (!treeBuilt) {
+          buildTree();         // 첫 오픈: 트리 빌드 + navigate(rootNode) 포함
+        } else if (!wasOpen) {
+          navigate(rootNode, [rootNode]); // 재오픈: root로 이동
+        }
         if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(w);
       }
+
+      // 뒤로가기
+      if (backBtn) backBtn.addEventListener('click', function() {
+        if (navIdx > 0) {
+          navIdx--;
+          var entry = navHistory[navIdx];
+          renderMain(entry.node, entry.ancestors);
+          updateAddrBar(entry.ancestors);
+          updateNavBtns();
+        }
+      });
+
+      // 앞으로가기
+      if (fwdBtn) fwdBtn.addEventListener('click', function() {
+        if (navIdx < navHistory.length - 1) {
+          navIdx++;
+          var entry = navHistory[navIdx];
+          renderMain(entry.node, entry.ancestors);
+          updateAddrBar(entry.ancestors);
+          updateNavBtns();
+        }
+      });
 
       window.dyoOpenExplorer = openExplorer;
 
