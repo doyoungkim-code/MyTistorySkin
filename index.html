@@ -536,12 +536,23 @@
           <span class="dyo-di-label">Guestbook</span>
         </div>
 
+        <!-- File Explorer 아이콘 -->
+        <div class="dyo-desktop-icon" id="desktopIconExplorer" title="File Explorer">
+          <div class="dyo-di-wrap">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="rgba(255,255,255,0.35)" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M3 11h18" stroke="#fff" stroke-width="1.3"/>
+            </svg>
+          </div>
+          <span class="dyo-di-label">File Explorer</span>
+        </div>
 
       </div>
 
       <!-- 하단 태스크바 -->
       <div class="dyo-desktop-bar">
         <span class="dyo-bar-left">guest@doyoucode:~$</span>
+        <div class="dyo-bar-center" id="dyoBarCenter"></div>
         <div class="dyo-bar-right">
           <span id="desktopClock">00:00</span>
           <span id="desktopDate">----/--/--</span>
@@ -615,7 +626,15 @@
         <div style="font-family:'Noto Sans KR','Apple SD Gothic Neo',-apple-system,sans-serif;font-size:13px;line-height:1.85;color:#abb2bf">
 
           <div style="color:#e6e6e6;font-size:15px;font-weight:700;margin-bottom:2px"># doyoucode · README</div>
-          <div style="color:#5c6370;font-size:12px;margin-bottom:22px">개발자 테마의 Tistory 블로그 · 데스크탑 UI + 터미널 인터페이스</div>
+          <div style="color:#5c6370;font-size:12px;margin-bottom:16px">개발자 테마의 Tistory 블로그 · 데스크탑 UI + 터미널 인터페이스</div>
+
+          <div style="background:#1c2330;border:1px solid #e5c07b44;border-left:3px solid #e5c07b;border-radius:7px;padding:11px 14px;margin-bottom:22px;display:flex;align-items:flex-start;gap:10px">
+            <span style="font-size:18px;flex-shrink:0;line-height:1.3">💡</span>
+            <div>
+              <div style="color:#e5c07b;font-weight:700;font-size:12px;letter-spacing:0.4px;margin-bottom:4px">TIP — 전체화면 모드</div>
+              <div style="color:#8b949e;font-size:12px;line-height:1.65">우하단 관리바의 <kbd style="background:#0d1117;border:1px solid #484f58;border-bottom:2px solid #30363d;border-radius:4px;padding:1px 6px;color:#c9d1d9;font-family:'Fira Code',monospace;font-size:11px">⛶</kbd> 버튼을 클릭하면 전체화면 모드로 전환됩니다.<br>더욱 실감나는 데스크탑 환경을 경험할 수 있습니다! 🖥️</div>
+            </div>
+          </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 데스크탑 아이콘</div>
           <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:22px">
@@ -730,6 +749,66 @@
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
         </svg>
       </a>
+      <div class="dyo-admin-sep"></div>
+      <button class="dyo-admin-btn" id="btnFullscreen" title="전체화면">
+        <!-- 전체화면 진입 아이콘 -->
+        <svg id="fsIconExpand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+        </svg>
+        <!-- 전체화면 종료 아이콘 (숨김) -->
+        <svg id="fsIconCompress" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 외부 링크 확인 다이얼로그 -->
+    <div class="dyo-confirm-overlay" id="dyoConfirmOverlay">
+      <div class="dyo-confirm-box">
+        <div class="dyo-confirm-icon">🔗</div>
+        <div class="dyo-confirm-msg">외부 링크로 이동합니다.<br>새 탭에서 여시겠습니까?</div>
+        <div class="dyo-confirm-url" id="dyoConfirmUrl"></div>
+        <div class="dyo-confirm-btns">
+          <button class="dyo-confirm-cancel" id="dyoConfirmCancel">취소</button>
+          <button class="dyo-confirm-ok" id="dyoConfirmOk">새 탭으로 열기 →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 우클릭 컨텍스트 메뉴 (JS로 동적 생성) -->
+    <div class="dyo-ctx-menu" id="dyoCtxMenu"></div>
+
+    <!-- File Explorer Window -->
+    <div class="dyo-shell-win dyo-explorer-win" id="dyoExplorerWin" style="width:580px;height:400px;top:80px;left:180px;">
+      <div class="dyo-brs-handle n"></div><div class="dyo-brs-handle ne"></div>
+      <div class="dyo-brs-handle e"></div><div class="dyo-brs-handle se"></div>
+      <div class="dyo-brs-handle s"></div><div class="dyo-brs-handle sw"></div>
+      <div class="dyo-brs-handle w"></div><div class="dyo-brs-handle nw"></div>
+      <div class="dyo-shell-titlebar" id="dyoExplorerTitlebar">
+        <span class="dyo-term-dot red"    id="dyoExplorerClose" title="Close"></span>
+        <span class="dyo-term-dot yellow" id="dyoExplorerMin"   title="Minimize"></span>
+        <span class="dyo-term-dot green"  id="dyoExplorerMax"   title="Maximize"></span>
+        <span class="dyo-shell-title">📂 File Explorer</span>
+      </div>
+      <div class="dyo-explorer-body">
+        <div class="dyo-explorer-sidebar" id="dyoExplorerTree"></div>
+        <div class="dyo-explorer-main" id="dyoExplorerMain"></div>
+      </div>
+    </div>
+
+    <!-- Properties Window -->
+    <div class="dyo-shell-win dyo-props-win" id="dyoPropsWin" style="width:360px;height:480px;top:100px;left:420px;">
+      <div class="dyo-brs-handle n"></div><div class="dyo-brs-handle ne"></div>
+      <div class="dyo-brs-handle e"></div><div class="dyo-brs-handle se"></div>
+      <div class="dyo-brs-handle s"></div><div class="dyo-brs-handle sw"></div>
+      <div class="dyo-brs-handle w"></div><div class="dyo-brs-handle nw"></div>
+      <div class="dyo-shell-titlebar" id="dyoPropsTitlebar">
+        <span class="dyo-term-dot red"    id="dyoPropsClose" title="Close"></span>
+        <span class="dyo-term-dot yellow" id="dyoPropsMin"   title="Minimize"></span>
+        <span class="dyo-term-dot green"  id="dyoPropsMax"   title="Maximize"></span>
+        <span class="dyo-shell-title" id="dyoPropsTitle">Properties</span>
+      </div>
+      <div class="dyo-props-body" id="dyoPropsBody"></div>
     </div>
 
   </s_t3>
@@ -832,14 +911,21 @@
         });
       }
 
-      // GitHub 아이콘 클릭 → 새 탭으로 열기
+      // GitHub 아이콘 클릭 → 외부 링크 확인 후 새 탭으로 열기
       var iconGithub = document.getElementById('desktopIconGithub');
       if (iconGithub) {
         iconGithub.addEventListener('click', function() {
-          window.open('https://github.com/doyoungkim-code', '_blank');
+          if (window.dyoOpenExternal) window.dyoOpenExternal('https://github.com/doyoungkim-code');
         });
       }
 
+      // File Explorer 아이콘 클릭
+      var iconExplorer = document.getElementById('desktopIconExplorer');
+      if (iconExplorer) {
+        iconExplorer.addEventListener('click', function() {
+          if (window.dyoOpenExplorer) window.dyoOpenExplorer();
+        });
+      }
 
     })();
 
@@ -1223,7 +1309,7 @@
 
           case 'github':
             addOutput(cmd,'<span class="tr-success">🚀 Opening GitHub ...</span>');
-            setTimeout(function(){ window.open('https://github.com/doyoungkim-code','_blank'); }, 500); break;
+            setTimeout(function(){ if (window.dyoOpenExternal) window.dyoOpenExternal('https://github.com/doyoungkim-code'); }, 400); break;
 
           case 'sudo':   addOutput(cmd,'<span class="tr-error">🔒 Permission denied 😎</span>'); break;
           case 'rm':     addOutput(cmd,'<span class="tr-error">🚫 Not gonna happen here 😅</span>'); break;
@@ -2313,6 +2399,799 @@
           w.style.left=r.left+'px'; w.style.top=r.top+'px';
           w.style.width=r.width+'px'; w.style.height=r.height+'px';
           w.style.right='auto'; w.style.bottom='auto';
+        });
+      });
+    })();
+  </script>
+
+  <script>
+    // ============================================================
+    // 외부 링크 확인 다이얼로그
+    // ============================================================
+    (function() {
+      var overlay   = document.getElementById('dyoConfirmOverlay');
+      var urlEl     = document.getElementById('dyoConfirmUrl');
+      var cancelBtn = document.getElementById('dyoConfirmCancel');
+      var okBtn     = document.getElementById('dyoConfirmOk');
+      if (!overlay) return;
+
+      var pendingUrl = null;
+
+      window.dyoOpenExternal = function(url) {
+        pendingUrl = url;
+        urlEl.textContent = url;
+        overlay.classList.add('show');
+      };
+
+      okBtn.addEventListener('click', function() {
+        if (pendingUrl) window.open(pendingUrl, '_blank');
+        overlay.classList.remove('show');
+        pendingUrl = null;
+      });
+
+      cancelBtn.addEventListener('click', function() {
+        overlay.classList.remove('show');
+        pendingUrl = null;
+      });
+
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          overlay.classList.remove('show');
+          pendingUrl = null;
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('show')) {
+          overlay.classList.remove('show');
+          pendingUrl = null;
+        }
+        if (e.key === 'Enter' && overlay.classList.contains('show')) {
+          okBtn.click();
+        }
+      });
+    })();
+
+    // ============================================================
+    // 전체화면 토글 버튼
+    // ============================================================
+    (function() {
+      var btn      = document.getElementById('btnFullscreen');
+      var iconExp  = document.getElementById('fsIconExpand');
+      var iconComp = document.getElementById('fsIconCompress');
+      if (!btn) return;
+
+      function updateIcons() {
+        var isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        iconExp.style.display  = isFs ? 'none'  : '';
+        iconComp.style.display = isFs ? ''      : 'none';
+        btn.title = isFs ? '전체화면 종료' : '전체화면';
+      }
+
+      btn.addEventListener('click', function() {
+        if (document.fullscreenElement || document.webkitFullscreenElement) {
+          (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        } else {
+          var el = document.documentElement;
+          if (el.requestFullscreen) el.requestFullscreen();
+          else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        }
+      });
+
+      document.addEventListener('fullscreenchange', updateIcons);
+      document.addEventListener('webkitfullscreenchange', updateIcons);
+    })();
+
+    // ============================================================
+    // 태스크바 열린 창 버튼
+    // ============================================================
+    (function() {
+      var container = document.getElementById('dyoBarCenter');
+      if (!container) return;
+
+      var winDefs = [
+        {
+          id: 'dyoShellWin', label: 'Terminal',
+          icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>',
+          open: function() { if (window.dyoOpenShell) window.dyoOpenShell(); }
+        },
+        {
+          id: 'dyoBrowserWin', label: 'Browser',
+          icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+          open: function() { if (window.dyoOpenBrowser) window.dyoOpenBrowser('/category'); }
+        },
+        {
+          id: 'dyoReadmeWin', label: 'README',
+          icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+          open: function() { if (window.dyoOpenReadme) window.dyoOpenReadme(); }
+        },
+        {
+          id: 'dyoGuestWin', label: 'Guestbook',
+          icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+          open: function() { if (window.dyoOpenGuest) window.dyoOpenGuest(); }
+        },
+        {
+          id: 'dyoPropsWin', label: 'Properties',
+          icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>',
+          open: function() { if (window.dyoOpenProps && window._dyoLastPropsMeta) window.dyoOpenProps(window._dyoLastPropsMeta); }
+        },
+        {
+          id: 'dyoExplorerWin', label: 'File Explorer',
+          icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+          open: function() { if (window.dyoOpenExplorer) window.dyoOpenExplorer(); }
+        }
+      ];
+
+      winDefs.forEach(function(def) {
+        var winEl = document.getElementById(def.id);
+        if (!winEl) return;
+
+        var btn = document.createElement('button');
+        btn.className = 'dyo-taskbtn';
+        btn.dataset.winId = def.id;
+        btn.innerHTML = def.icon + '<span class="dyo-taskbtn-label">' + def.label + '</span>';
+        container.appendChild(btn);
+
+        // 클릭: 닫힘→열기 / 나머지→항상 맨 앞으로 복원
+        btn.addEventListener('click', function() {
+          if (!winEl.classList.contains('open')) {
+            def.open();
+          } else {
+            winEl.classList.remove('minimized');
+            window._dyoZTop = (window._dyoZTop || 9000) + 1;
+            winEl.style.zIndex = window._dyoZTop;
+          }
+        });
+
+        // 창 클래스 변화 감지 → 버튼 상태 업데이트
+        var observer = new MutationObserver(function() {
+          var isOpen = winEl.classList.contains('open');
+          var isMin  = winEl.classList.contains('minimized');
+          btn.classList.toggle('open',      isOpen);
+          btn.classList.toggle('active',    isOpen && !isMin);
+          btn.classList.toggle('minimized', isOpen && isMin);
+        });
+        observer.observe(winEl, { attributes: true, attributeFilter: ['class'] });
+      });
+    })();
+
+    // ============================================================
+    // 바탕화면 우클릭 컨텍스트 메뉴
+    // ============================================================
+    (function() {
+      var desktop = document.getElementById('dyoDesktop');
+      var menu    = document.getElementById('dyoCtxMenu');
+      if (!desktop || !menu) return;
+
+      // 아이콘 메타데이터 (풍부한 속성 포함)
+      var iconMeta = {
+        desktopIconReadme: {
+          name: 'README', ext: '.md', type: 'Document',
+          desc: '블로그 소개 및 사용법 문서',
+          location: '~/Desktop/README.md',
+          size: '4.2 KB', disk: '8 KB',
+          created: '2025-01-15', modified: '2026-02-27',
+          owner: 'doyoucode', group: 'staff',
+          permissions: 'Read-only', version: '1.0',
+          iconBg: 'linear-gradient(145deg,#f0f6ff 0%,#dce8fb 100%)',
+          iconBorder: 'rgba(100,160,255,0.35)', iconColor: '#3b82f6', iconChar: '📄',
+          action: function() { if (window.dyoOpenReadme) window.dyoOpenReadme(); }
+        },
+        desktopIconShell: {
+          name: 'Terminal', ext: '.app', type: 'Application',
+          desc: '터미널 에뮬레이터 (Bash-like shell)',
+          location: '/usr/bin/terminal',
+          size: '—', disk: '—',
+          created: '2025-01-15', modified: '2026-02-27',
+          owner: 'root', group: 'wheel',
+          permissions: 'Read / Execute', version: '2.1.0',
+          iconBg: '#0c0c0c', iconBorder: '#3a3a3a', iconColor: '#cccccc', iconChar: '>_',
+          action: function() { if (window.dyoOpenShell) window.dyoOpenShell(); }
+        },
+        desktopIconBlog: {
+          name: 'Dev Blog', ext: '.url', type: 'Shortcut',
+          desc: 'Tistory 개발 블로그 바로가기',
+          location: 'https://doyoucode.tistory.com',
+          url: 'https://doyoucode.tistory.com/category',
+          size: '—', disk: '—',
+          created: '2025-01-15', modified: '2026-02-27',
+          owner: 'doyoucode', group: 'staff',
+          permissions: 'Read-only', version: '—',
+          iconBg: 'linear-gradient(145deg,#ff6320 0%,#e8501a 100%)',
+          iconBorder: 'rgba(255,140,80,0.4)', iconColor: '#fff', iconChar: 'T',
+          action: function() { if (window.dyoOpenBrowser) window.dyoOpenBrowser('/category'); }
+        },
+        desktopIconGithub: {
+          name: 'GitHub', ext: '.url', type: 'Shortcut',
+          desc: 'GitHub 프로필 페이지 (외부 링크)',
+          location: 'https://github.com/doyoungkim-code',
+          url: 'https://github.com/doyoungkim-code',
+          size: '—', disk: '—',
+          created: '2025-01-15', modified: '2026-02-27',
+          owner: 'doyoucode', group: 'staff',
+          permissions: 'Read-only', version: '—',
+          iconBg: 'linear-gradient(145deg,#24292e 0%,#1a1e22 100%)',
+          iconBorder: 'rgba(139,148,158,0.3)', iconColor: '#fff', iconChar: '⌥G',
+          action: function() { if (window.dyoOpenExternal) window.dyoOpenExternal('https://github.com/doyoungkim-code'); }
+        },
+        desktopIconGuest: {
+          name: 'Guestbook', ext: '.app', type: 'Application',
+          desc: '방명록 채팅 애플리케이션',
+          location: '/home/doyoucode/guestbook',
+          size: '—', disk: '—',
+          created: '2025-01-15', modified: '2026-02-27',
+          owner: 'doyoucode', group: 'staff',
+          permissions: 'Read / Write', version: '1.2.0',
+          iconBg: 'linear-gradient(145deg,#fffbe0 0%,#fff3a0 100%)',
+          iconBorder: 'rgba(200,168,0,0.4)', iconColor: '#c8a800', iconChar: '💬',
+          action: function() { if (window.dyoOpenGuest) window.dyoOpenGuest(); }
+        },
+        desktopIconExplorer: {
+          name: 'File Explorer', ext: '.app', type: 'Application',
+          desc: '블로그 카테고리 탐색기',
+          location: '/usr/bin/explorer',
+          size: '—', disk: '—',
+          created: '2025-01-15', modified: '2026-02-27',
+          owner: 'root', group: 'wheel',
+          permissions: 'Read / Execute', version: '1.0.0',
+          iconBg: 'linear-gradient(145deg,#fffbe0 0%,#fde68a 100%)',
+          iconBorder: 'rgba(240,163,10,0.4)', iconColor: '#f0a30a', iconChar: '📂',
+          action: function() { if (window.dyoOpenExplorer) window.dyoOpenExplorer(); }
+        }
+      };
+
+      // 메뉴 아이템 동적 빌드
+      function buildMenu(items) {
+        menu.innerHTML = '';
+        items.forEach(function(item) {
+          if (item === 'sep') {
+            var sep = document.createElement('div');
+            sep.className = 'dyo-ctx-sep';
+            menu.appendChild(sep);
+          } else {
+            var el = document.createElement('button');
+            el.className = 'dyo-ctx-item' +
+              (item.disabled ? ' disabled' : '') +
+              (item.danger   ? ' danger'   : '');
+            el.textContent = item.label;
+            el.dataset.action = item.action || '';
+            if (item.disabled) el.setAttribute('disabled', '');
+            menu.appendChild(el);
+          }
+        });
+      }
+
+      function showMenu(x, y) {
+        menu.classList.add('show');
+        var mw = menu.offsetWidth  || 180;
+        var mh = menu.offsetHeight || 200;
+        var px = Math.min(x, window.innerWidth  - mw - 8);
+        var py = Math.min(y, window.innerHeight - mh - 8);
+        menu.style.left = px + 'px';
+        menu.style.top  = py + 'px';
+      }
+
+      function hideMenu() { menu.classList.remove('show'); }
+
+      function showProps(meta) {
+        if (window.dyoOpenProps) window.dyoOpenProps(meta);
+      }
+
+      var currentCtx = null;
+
+      // 데스크탑 우클릭 — 3가지 케이스
+      desktop.addEventListener('contextmenu', function(e) {
+        if (e.target.closest('.dyo-shell-win, .dyo-browser-win')) return;
+        e.preventDefault();
+
+        var iconEl  = e.target.closest('.dyo-desktop-icon');
+        var taskBtn = e.target.closest('.dyo-taskbtn');
+
+        if (iconEl) {
+          // ── 아이콘 우클릭
+          var meta = iconMeta[iconEl.id];
+          currentCtx = { type: 'icon', meta: meta };
+          buildMenu([
+            { label: 'Open',       action: 'icon-open' },
+            'sep',
+            { label: 'Properties', action: 'icon-props', disabled: !meta }
+          ]);
+
+        } else if (taskBtn) {
+          // ── 태스크바 버튼 우클릭
+          var winId  = taskBtn.dataset.winId;
+          var winEl  = winId ? document.getElementById(winId) : null;
+          var isOpen = !!(winEl && winEl.classList.contains('open'));
+          var isMini = !!(winEl && winEl.classList.contains('minimized'));
+          currentCtx = { type: 'task', winEl: winEl };
+          buildMenu([
+            { label: 'Bring to Front', action: 'task-front',    disabled: !isOpen },
+            { label: 'Minimize',       action: 'task-minimize', disabled: !isOpen || isMini },
+            'sep',
+            { label: 'Close',          action: 'task-close', danger: true, disabled: !isOpen }
+          ]);
+
+        } else {
+          // ── 배경 우클릭
+          currentCtx = { type: 'bg' };
+          buildMenu([
+            { label: 'New Terminal',       action: 'terminal'  },
+            { label: 'Open README',        action: 'readme'    },
+            { label: 'Open Guestbook',     action: 'guestbook' },
+            { label: 'Dev Blog',           action: 'blog'      },
+            { label: 'Open File Explorer', action: 'explorer'  },
+            'sep',
+            { label: 'Refresh Desktop',    action: 'refresh'   }
+          ]);
+        }
+
+        showMenu(e.clientX, e.clientY);
+      });
+
+      // 메뉴 외부 클릭 시 닫기
+      document.addEventListener('mousedown', function(e) {
+        if (!menu.contains(e.target)) hideMenu();
+      });
+
+      // ESC 닫기
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          hideMenu();
+        }
+      });
+
+      // 메뉴 아이템 실행
+      menu.addEventListener('click', function(e) {
+        var item = e.target.closest('.dyo-ctx-item');
+        if (!item || item.hasAttribute('disabled')) return;
+        hideMenu();
+        var action = item.dataset.action;
+        var ctx = currentCtx;
+        switch (action) {
+          // 아이콘
+          case 'icon-open':
+            if (ctx && ctx.meta && ctx.meta.action) ctx.meta.action();
+            break;
+          case 'icon-props':
+            if (ctx && ctx.meta) showProps(ctx.meta);
+            break;
+          // 태스크바
+          case 'task-front':
+            if (ctx && ctx.winEl) {
+              ctx.winEl.classList.remove('minimized');
+              window._dyoZTop = (window._dyoZTop || 9000) + 1;
+              ctx.winEl.style.zIndex = window._dyoZTop;
+            }
+            break;
+          case 'task-minimize':
+            if (ctx && ctx.winEl) ctx.winEl.classList.add('minimized');
+            break;
+          case 'task-close':
+            if (ctx && ctx.winEl) ctx.winEl.classList.remove('open', 'minimized', 'maximized');
+            break;
+          // 배경
+          case 'terminal':  if (window.dyoOpenShell)    window.dyoOpenShell();              break;
+          case 'readme':    if (window.dyoOpenReadme)  window.dyoOpenReadme();             break;
+          case 'guestbook': if (window.dyoOpenGuest)   window.dyoOpenGuest();              break;
+          case 'blog':      if (window.dyoOpenBrowser) window.dyoOpenBrowser('/category'); break;
+          case 'explorer':  if (window.dyoOpenExplorer) window.dyoOpenExplorer();          break;
+          case 'refresh':   location.reload();                                             break;
+        }
+      });
+    })();
+
+    // ============================================================
+    // Properties Window
+    // ============================================================
+    (function() {
+      var w        = document.getElementById('dyoPropsWin');
+      var titlebar = document.getElementById('dyoPropsTitlebar');
+      var closeBtn = document.getElementById('dyoPropsClose');
+      var minBtn   = document.getElementById('dyoPropsMin');
+      var maxBtn   = document.getElementById('dyoPropsMax');
+      var titleEl  = document.getElementById('dyoPropsTitle');
+      var bodyEl   = document.getElementById('dyoPropsBody');
+      if (!w || !titlebar) return;
+
+      var prevRect = null;
+
+      // 풍부한 속성 내용 빌드
+      function buildContent(meta) {
+        var today = new Date().toISOString().slice(0, 10);
+        var h = '';
+
+        // 아이콘 헤더
+        h += '<div class="dyo-props-icon-hdr">';
+        h += '<div class="dyo-props-icon-box" style="background:' + meta.iconBg + ';border:1px solid ' + meta.iconBorder + ';">';
+        h += '<span style="color:' + meta.iconColor + '">' + (meta.iconChar || '?') + '</span>';
+        h += '</div>';
+        h += '<div class="dyo-props-icon-name">' + meta.name + (meta.ext || '') + '</div>';
+        h += '<div class="dyo-props-type-badge">' + meta.type + '</div>';
+        h += '</div>';
+
+        // General
+        h += '<div class="dyo-props-section">';
+        h += '<div class="dyo-props-section-title">General</div>';
+        h += row('Name',        meta.name + (meta.ext || ''));
+        h += row('Type',        meta.type);
+        h += row('Description', meta.desc);
+        h += row('Location',    meta.location, 'accent');
+        if (meta.url) h += row('URL', meta.url, 'accent');
+        h += '</div>';
+
+        // Storage
+        h += '<div class="dyo-props-section">';
+        h += '<div class="dyo-props-section-title">Storage</div>';
+        h += row('Size',    meta.size || '—');
+        h += row('On disk', meta.disk || '—');
+        h += '</div>';
+
+        // Dates
+        h += '<div class="dyo-props-section">';
+        h += '<div class="dyo-props-section-title">Dates</div>';
+        h += row('Created',  meta.created  || today);
+        h += row('Modified', meta.modified || today);
+        h += row('Accessed', today, 'green');
+        h += '</div>';
+
+        // Details
+        h += '<div class="dyo-props-section">';
+        h += '<div class="dyo-props-section-title">Details</div>';
+        h += row('Owner',       meta.owner       || '—');
+        h += row('Group',       meta.group       || '—');
+        h += row('Permissions', meta.permissions || '—');
+        if (meta.version && meta.version !== '—') h += row('Version', meta.version);
+        h += row('Encoding',    'UTF-8');
+        h += row('Platform',    'Web / Browser');
+        h += '</div>';
+
+        return h;
+      }
+
+      function row(key, val, cls) {
+        return '<div class="dyo-props-row">' +
+          '<span class="dyo-props-key">' + key + '</span>' +
+          '<span class="dyo-props-val' + (cls ? ' ' + cls : '') + '">' + val + '</span>' +
+          '</div>';
+      }
+
+      function openProps(meta) {
+        window._dyoLastPropsMeta = meta;
+        titleEl.textContent = meta.name + ' — Properties';
+        bodyEl.innerHTML = buildContent(meta);
+        w.classList.remove('minimized', 'maximized');
+        w.classList.add('open');
+        bringToFront();
+      }
+
+      function closeProps()    { w.classList.remove('open', 'minimized', 'maximized'); }
+      function minimizeProps() { w.classList.toggle('minimized'); }
+      function maximizeProps() {
+        if (w.classList.contains('maximized')) {
+          if (prevRect) {
+            w.style.left = prevRect.l + 'px'; w.style.top    = prevRect.t + 'px';
+            w.style.width = prevRect.w + 'px'; w.style.height = prevRect.h + 'px';
+          }
+          w.classList.remove('maximized');
+        } else {
+          var r = w.getBoundingClientRect();
+          prevRect = { l: r.left, t: r.top, w: r.width, h: r.height };
+          w.style.left = ''; w.style.top = ''; w.style.width = ''; w.style.height = '';
+          w.classList.add('maximized');
+        }
+      }
+      function bringToFront() {
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+      }
+
+      window.dyoOpenProps = openProps;
+
+      w.addEventListener('mousedown', bringToFront);
+      if (closeBtn) closeBtn.addEventListener('click', closeProps);
+      if (minBtn)   minBtn.addEventListener('click',   minimizeProps);
+      if (maxBtn)   maxBtn.addEventListener('click',   maximizeProps);
+
+      titlebar.addEventListener('dblclick', function(e) {
+        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+        maximizeProps();
+      });
+
+      // 드래그
+      titlebar.addEventListener('mousedown', function(e) {
+        if (w.classList.contains('maximized')) return;
+        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+        var r = w.getBoundingClientRect();
+        w.style.left = r.left + 'px'; w.style.top = r.top + 'px';
+        var ox = e.clientX - r.left, oy = e.clientY - r.top;
+        function onMove(ev) { w.style.left = (ev.clientX - ox) + 'px'; w.style.top = (ev.clientY - oy) + 'px'; }
+        function onUp()    { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+
+      // 리사이즈
+      w.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
+        handle.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized')) return;
+          e.preventDefault(); e.stopPropagation();
+          var dir = handle.className.replace('dyo-brs-handle', '').trim();
+          var r = w.getBoundingClientRect();
+          var sx = e.clientX, sy = e.clientY;
+          var sl = r.left, st = r.top, sw = r.width, sh = r.height;
+          function onMove(ev) {
+            var dx = ev.clientX - sx, dy = ev.clientY - sy;
+            var nl = sl, nt = st, nw = sw, nh = sh;
+            if (dir.includes('e')) nw = Math.max(260, sw + dx);
+            if (dir.includes('s')) nh = Math.max(200, sh + dy);
+            if (dir.includes('w')) { nw = Math.max(260, sw - dx); nl = sl + sw - nw; }
+            if (dir.includes('n')) { nh = Math.max(200, sh - dy); nt = st + sh - nh; }
+            w.style.width = nw + 'px'; w.style.height = nh + 'px';
+            w.style.left  = nl + 'px'; w.style.top    = nt + 'px';
+          }
+          function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        });
+      });
+    })();
+
+    // ============================================================
+    // File Explorer Window
+    // ============================================================
+    (function() {
+      var w        = document.getElementById('dyoExplorerWin');
+      var titlebar = document.getElementById('dyoExplorerTitlebar');
+      var closeBtn = document.getElementById('dyoExplorerClose');
+      var minBtn   = document.getElementById('dyoExplorerMin');
+      var maxBtn   = document.getElementById('dyoExplorerMax');
+      var treeEl   = document.getElementById('dyoExplorerTree');
+      var mainEl   = document.getElementById('dyoExplorerMain');
+      if (!w || !titlebar) return;
+
+      var prevRect = null;
+      var treeBuilt = false;
+
+      // 카테고리 트리 정의
+      var tree = [
+        { label: 'Project', icon: '📂', url: '/category/Project', children: [
+          { label: 'Dev Log',    icon: '📁', url: '/category/Project/Dev%20Log' },
+          { label: 'Retrospect', icon: '📁', url: '/category/Project/Retrospect' }
+        ]},
+        { label: 'Backend', icon: '☕', url: '/category/Backend', children: [
+          { label: 'Java',        icon: '☕', url: '/category/Backend/Java' },
+          { label: 'Spring Boot', icon: '🍃', url: '/category/Backend/Spring%20Boot' },
+          { label: 'Database',    icon: '💾', url: '/category/Backend/Database' }
+        ]},
+        { label: 'Frontend', icon: '🎨', url: '/category/Frontend', children: [
+          { label: 'Mobile', icon: '📱', url: '/category/Frontend/Mobile' },
+          { label: 'Web',    icon: '🌐', url: '/category/Frontend/Web' }
+        ]},
+        { label: 'CS & Engineering', icon: '💻', url: '/category/CS%20&%20Engineering', children: [
+          { label: 'C',                icon: '📗', url: '/category/CS%20&%20Engineering/C' },
+          { label: 'Algorithm',        icon: '📐', url: '/category/CS%20&%20Engineering/Algorithm' },
+          { label: 'Computer Science', icon: '📚', url: '/category/CS%20&%20Engineering/Computer%20Science' },
+          { label: 'Infra & Tools',    icon: '🧱', url: '/category/CS%20&%20Engineering/Infra%20&%20Tools' }
+        ]},
+        { label: 'Growth', icon: '🌱', url: '/category/Growth', children: [
+          { label: 'Certifications', icon: '📜', url: '/category/Growth/Certifications' },
+          { label: 'English',        icon: '📖', url: '/category/Growth/English' },
+          { label: 'Books',          icon: '📚', url: '/category/Growth/Books' },
+          { label: 'Documents',      icon: '📑', url: '/category/Growth/Documents' },
+          { label: 'etc',            icon: '📄', url: '/category/Growth/etc' }
+        ]}
+      ];
+
+      function bringToFront() {
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+      }
+
+      // 메인 패널 렌더링 (DOM 기반 — 클로저로 노드 참조 유지)
+      function renderMain(node) {
+        mainEl.innerHTML = '';
+
+        var path = document.createElement('div');
+        path.className = 'dyo-exp-path';
+        path.textContent = node.icon + '\u00a0' + node.label;
+        mainEl.appendChild(path);
+
+        if (node.children && node.children.length > 0) {
+          var grid = document.createElement('div');
+          grid.className = 'dyo-explorer-grid';
+
+          node.children.forEach(function(child) {
+            var item = document.createElement('div');
+            item.className = 'dyo-exp-item';
+            item.innerHTML =
+              '<div class="dyo-exp-item-icon">' + child.icon + '</div>' +
+              '<div class="dyo-exp-item-label">' + child.label + '</div>';
+
+            item.addEventListener('click', function() {
+              if (child.children && child.children.length > 0) {
+                // 하위 폴더 있음 → 안으로 탐색
+                renderMain(child);
+              } else {
+                // 리프 노드 → 브라우저에서 바로 열기
+                if (window.dyoOpenBrowser) window.dyoOpenBrowser(child.url);
+              }
+            });
+
+            grid.appendChild(item);
+          });
+
+          mainEl.appendChild(grid);
+        } else {
+          // 리프 단독 표시
+          var empty = document.createElement('div');
+          empty.className = 'dyo-exp-empty';
+          empty.innerHTML =
+            '<div style="font-size:40px;margin-bottom:8px;">' + node.icon + '</div>' +
+            '<div style="color:#8b949e;font-size:12px;margin-bottom:14px;">' + node.label + '</div>';
+          var openBtn = document.createElement('button');
+          openBtn.className = 'dyo-exp-open-btn';
+          openBtn.textContent = 'Open in Browser \u2192';
+          openBtn.addEventListener('click', function() {
+            if (window.dyoOpenBrowser) window.dyoOpenBrowser(node.url);
+          });
+          empty.appendChild(openBtn);
+          mainEl.appendChild(empty);
+        }
+      }
+
+      // 트리 빌드
+      function buildTreeNodes(nodes, depth, parentEl, setActive) {
+        nodes.forEach(function(node) {
+          var hasChildren = !!(node.children && node.children.length);
+          var wrapper = document.createElement('div');
+
+          var item = document.createElement('div');
+          item.className = 'dyo-tree-item';
+          item.style.paddingLeft = (8 + depth * 14) + 'px';
+
+          var arrow = document.createElement('span');
+          arrow.className = 'dyo-tree-arrow';
+          arrow.textContent = hasChildren ? '▶' : '\u00a0';
+
+          var label = document.createElement('span');
+          label.textContent = node.icon + '\u00a0' + node.label;
+
+          item.appendChild(arrow);
+          item.appendChild(label);
+          wrapper.appendChild(item);
+
+          var childrenEl = null;
+          if (hasChildren) {
+            childrenEl = document.createElement('div');
+            childrenEl.className = 'dyo-tree-children collapsed';
+            buildTreeNodes(node.children, depth + 1, childrenEl, setActive);
+            wrapper.appendChild(childrenEl);
+          }
+
+          item.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // active 업데이트
+            treeEl.querySelectorAll('.dyo-tree-item').forEach(function(el) { el.classList.remove('active'); });
+            item.classList.add('active');
+            renderMain(node);
+            if (hasChildren && childrenEl) {
+              var collapsed = childrenEl.classList.contains('collapsed');
+              childrenEl.classList.toggle('collapsed');
+              arrow.textContent = collapsed ? '▼' : '▶';
+              arrow.classList.toggle('open', collapsed);
+            }
+          });
+
+          parentEl.appendChild(wrapper);
+        });
+      }
+
+      function buildTree() {
+        if (treeBuilt) return;
+        treeBuilt = true;
+
+        // Root 항목
+        var rootItem = document.createElement('div');
+        rootItem.className = 'dyo-tree-item active';
+        rootItem.style.paddingLeft = '8px';
+        rootItem.innerHTML = '<span class="dyo-tree-arrow open">▼</span><span>📂\u00a0Blog Root</span>';
+
+        var rootChildren = document.createElement('div');
+        rootChildren.className = 'dyo-tree-children';
+        buildTreeNodes(tree, 1, rootChildren, null);
+
+        treeEl.appendChild(rootItem);
+        treeEl.appendChild(rootChildren);
+
+        rootItem.addEventListener('click', function() {
+          treeEl.querySelectorAll('.dyo-tree-item').forEach(function(el) { el.classList.remove('active'); });
+          rootItem.classList.add('active');
+          renderMain({ label: 'Blog Root', icon: '📂', url: '/category', children: tree });
+          var isCollapsed = rootChildren.classList.toggle('collapsed');
+          var arrow = rootItem.querySelector('.dyo-tree-arrow');
+          if (arrow) {
+            arrow.textContent = isCollapsed ? '▶' : '▼';
+            arrow.classList.toggle('open', !isCollapsed);
+          }
+        });
+
+        renderMain({ label: 'Blog Root', icon: '📂', url: '/category', children: tree });
+      }
+
+      function openExplorer() {
+        var W = 680, H = 480;
+        var left = Math.max(10, Math.round((window.innerWidth  - W) / 2));
+        var top  = Math.max(10, Math.round((window.innerHeight - H) / 2));
+        w.style.width  = W + 'px';
+        w.style.height = H + 'px';
+        w.style.left   = left + 'px';
+        w.style.top    = top  + 'px';
+        w.classList.remove('minimized', 'maximized');
+        w.classList.add('open');
+        bringToFront();
+        buildTree();
+      }
+
+      window.dyoOpenExplorer = openExplorer;
+
+      w.addEventListener('mousedown', bringToFront);
+      if (closeBtn) closeBtn.addEventListener('click', function() { w.classList.remove('open', 'minimized', 'maximized'); });
+      if (minBtn)   minBtn.addEventListener('click', function() { w.classList.toggle('minimized'); });
+      if (maxBtn)   maxBtn.addEventListener('click', function() {
+        if (w.classList.contains('maximized')) {
+          if (prevRect) {
+            w.style.left = prevRect.l + 'px'; w.style.top    = prevRect.t + 'px';
+            w.style.width = prevRect.w + 'px'; w.style.height = prevRect.h + 'px';
+          }
+          w.classList.remove('maximized');
+        } else {
+          var r = w.getBoundingClientRect();
+          prevRect = { l: r.left, t: r.top, w: r.width, h: r.height };
+          w.style.left = ''; w.style.top = ''; w.style.width = ''; w.style.height = '';
+          w.classList.add('maximized');
+        }
+      });
+
+      titlebar.addEventListener('dblclick', function(e) {
+        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+        maxBtn.click();
+      });
+
+      // 드래그
+      titlebar.addEventListener('mousedown', function(e) {
+        if (w.classList.contains('maximized')) return;
+        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+        var r = w.getBoundingClientRect();
+        w.style.left = r.left + 'px'; w.style.top = r.top + 'px';
+        var ox = e.clientX - r.left, oy = e.clientY - r.top;
+        function onMove(ev) { w.style.left = (ev.clientX - ox) + 'px'; w.style.top = (ev.clientY - oy) + 'px'; }
+        function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+
+      // 리사이즈
+      w.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
+        handle.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized')) return;
+          e.preventDefault(); e.stopPropagation();
+          var dir = handle.className.replace('dyo-brs-handle', '').trim();
+          var r = w.getBoundingClientRect();
+          var sx = e.clientX, sy = e.clientY;
+          var sl = r.left, st = r.top, sw = r.width, sh = r.height;
+          function onMove(ev) {
+            var dx = ev.clientX - sx, dy = ev.clientY - sy;
+            var nl = sl, nt = st, nw = sw, nh = sh;
+            if (dir.includes('e')) nw = Math.max(380, sw + dx);
+            if (dir.includes('s')) nh = Math.max(250, sh + dy);
+            if (dir.includes('w')) { nw = Math.max(380, sw - dx); nl = sl + sw - nw; }
+            if (dir.includes('n')) { nh = Math.max(250, sh - dy); nt = st + sh - nh; }
+            w.style.width = nw + 'px'; w.style.height = nh + 'px';
+            w.style.left  = nl + 'px'; w.style.top    = nt + 'px';
+          }
+          function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
         });
       });
     })();
