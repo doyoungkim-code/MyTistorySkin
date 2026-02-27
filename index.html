@@ -2076,8 +2076,9 @@
           if (textarea) textarea.value = '';
           loaded = false;
           loadGuest();
+          if (window.dyoToast) window.dyoToast('메시지가 전송되었습니다!', 'success');
         }).catch(function() {
-          alert('전송에 실패했습니다. 다시 시도해주세요.');
+          if (window.dyoToast) window.dyoToast('전송에 실패했습니다. 다시 시도해주세요.', 'error');
         }).finally(function() {
           sendBtn.disabled = false;
         });
@@ -2131,8 +2132,15 @@
               });
             })
             .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
-            .then(function() { loaded = false; loadGuest(); })
-            .catch(function() { alert('수정에 실패했습니다.'); saveB.disabled = false; });
+            .then(function() {
+              loaded = false;
+              loadGuest();
+              if (window.dyoToast) window.dyoToast('수정되었습니다.', 'success');
+            })
+            .catch(function() {
+              if (window.dyoToast) window.dyoToast('수정에 실패했습니다.', 'error');
+              saveB.disabled = false;
+            });
         }
 
         saveB.addEventListener('click', doSave);
@@ -2163,20 +2171,20 @@
             body: JSON.stringify({ password: hashedPw })
           })
           .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
-          .then(function() { loaded = false; loadGuest(); })
+          .then(function() {
+            loaded = false;
+            loadGuest();
+            if (window.dyoToast) window.dyoToast('삭제되었습니다.', 'success');
+          })
           .catch(function() {
-            alert('삭제에 실패했습니다. 비밀번호를 확인해주세요.');
+            if (window.dyoToast) window.dyoToast('삭제에 실패했습니다. 비밀번호를 확인해주세요.', 'error');
             if (form) form.remove();
             restore();
           });
         }
 
-        if (isLoggedIn) {
-          // 로그인 상태: 확인 다이얼로그만
-          if (!confirm('이 메시지를 삭제하시겠습니까?')) return;
-          doDelete('', null);
-        } else {
-          // 비로그인 게스트: 비밀번호 입력 폼 표시
+        // 로그인 여부 관계없이 창 안에서 인라인 확인 폼 표시
+        {
           bubbleEl.style.display = 'none';
           if (editBtnEl) editBtnEl.style.display = 'none';
           if (delBtnEl)  delBtnEl.style.display  = 'none';
@@ -2185,7 +2193,7 @@
           form.className = 'dyo-cedit-wrap';
           form.innerHTML =
             '<div class="dyo-cdel-notice">정말 삭제하시겠습니까?</div>' +
-            '<input type="password" class="dyo-cedit-pw" placeholder="비밀번호">' +
+            (isLoggedIn ? '' : '<input type="password" class="dyo-cedit-pw" placeholder="비밀번호">') +
             '<div class="dyo-cedit-btns">' +
             '<button class="dyo-cedit-cancel">취소</button>' +
             '<button class="dyo-cedit-save dyo-cedit-del">삭제</button>' +
@@ -2196,7 +2204,7 @@
           var cancelB = form.querySelector('.dyo-cedit-cancel');
           var saveB   = form.querySelector('.dyo-cedit-save');
 
-          pwEl.focus();
+          if (pwEl) pwEl.focus(); else saveB.focus();
 
           cancelB.addEventListener('click', function() {
             form.remove();
@@ -2204,18 +2212,27 @@
           });
 
           saveB.addEventListener('click', function() {
-            var pwVal = pwEl.value;
-            if (!pwVal) { pwEl.focus(); return; }
-            saveB.disabled = true;
-            tistoryHashPw(pwVal).then(function(hashed) {
-              doDelete(hashed, form);
-            });
+            if (isLoggedIn) {
+              saveB.disabled = true;
+              doDelete('', form);
+            } else {
+              var pwVal = pwEl.value;
+              if (!pwVal) { pwEl.focus(); return; }
+              saveB.disabled = true;
+              tistoryHashPw(pwVal).then(function(hashed) {
+                doDelete(hashed, form);
+              });
+            }
           });
 
           pwEl.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') { e.preventDefault(); saveB.click(); }
           });
         }
+      }
+
+      function formatMsgDate(dateStr) {
+        return dateStr || '';
       }
 
       function renderChat(msgs) {
@@ -2230,13 +2247,17 @@
             var delBtn  = m.canDelete && m.id
               ? '<button class="dyo-chat-delbtn" data-id="' + m.id + '" title="삭제">🗑</button>'
               : '';
+            var timeStr = formatMsgDate(m.date);
+            var timeEl  = timeStr ? '<div class="dyo-chat-time">' + timeStr + '</div>' : '';
             return '<div class="dyo-chat-row ' + role + '">' +
                    '<div class="dyo-chat-wrap">' +
                    '<div class="dyo-chat-name">' + esc(m.author) + '</div>' +
                    '<div class="dyo-chat-bwrap">' +
                    '<div class="dyo-chat-bubble">' + esc(m.content) + '</div>' +
                    editBtn + delBtn +
-                   '</div></div></div>';
+                   '</div>' +
+                   timeEl +
+                   '</div></div>';
           }).join('');
           chat.scrollTop = chat.scrollHeight;
         }
@@ -2301,13 +2322,13 @@
               var canEdit    = calcCanEdit(item.writer);
               var canDelete  = calcCanDelete(item.writer);
               msgData[item.id] = { author: item.writer ? item.writer.name : '방문자', content: item.content };
-              msgs.push({ id: item.id, author: item.writer ? item.writer.name : '방문자', content: item.content, isAdmin: isAdmin, canEdit: canEdit, canDelete: canDelete });
+              msgs.push({ id: item.id, author: item.writer ? item.writer.name : '방문자', content: item.content, isAdmin: isAdmin, canEdit: canEdit, canDelete: canDelete, date: item.written || '' });
               (item.children || []).forEach(function(child) {
                 var childIsAdmin   = !!(child.writer && child.writer.role === 'owner');
                 var childCanEdit   = calcCanEdit(child.writer);
                 var childCanDelete = calcCanDelete(child.writer);
                 msgData[child.id] = { author: child.writer ? child.writer.name : ADMIN_NICK, content: child.content };
-                msgs.push({ id: child.id, author: child.writer ? child.writer.name : ADMIN_NICK, content: child.content, isAdmin: true, canEdit: childCanEdit, canDelete: childCanDelete });
+                msgs.push({ id: child.id, author: child.writer ? child.writer.name : ADMIN_NICK, content: child.content, isAdmin: true, canEdit: childCanEdit, canDelete: childCanDelete, date: child.written || '' });
               });
             });
             // owner이면 이름/비밀번호 입력 숨기기
@@ -2332,7 +2353,11 @@
           w.style.width  = W + 'px';
           w.style.height = H + 'px';
           w.style.left   = Math.round(window.innerWidth - W - 24) + 'px';
-          w.style.top    = Math.round((window.innerHeight - H) / 2) + 'px';
+          // 토스트 알림(bottom: 108px) 과 겹치지 않도록 하단 160px 여유 확보
+          w.style.top    = Math.max(20, Math.min(
+            Math.round((window.innerHeight - H) / 2),
+            window.innerHeight - H - 160
+          )) + 'px';
           w.style.right  = 'auto';
           w.style.bottom = 'auto';
         }
@@ -2539,6 +2564,42 @@
           okBtn.click();
         }
       });
+    })();
+
+    // ============================================================
+    // Toast 알림
+    // ============================================================
+    (function() {
+      var container = document.createElement('div');
+      container.className = 'dyo-toast-container';
+      document.body.appendChild(container);
+
+      var ICONS = { success: '✓', error: '✕', warn: '⚠', info: 'i' };
+
+      window.dyoToast = function(msg, type, duration) {
+        type     = type     || 'info';
+        duration = duration || 3000;
+
+        var toast = document.createElement('div');
+        toast.className = 'dyo-toast ' + type;
+        toast.innerHTML =
+          '<em class="dyo-toast-icon">' + (ICONS[type] || 'i') + '</em>' +
+          '<span>' + msg + '</span>' +
+          '<div class="dyo-toast-bar" style="animation-duration:' + duration + 'ms"></div>';
+        container.appendChild(toast);
+
+        function dismiss() {
+          if (toast.classList.contains('dyo-toast-out')) return;
+          toast.classList.add('dyo-toast-out');
+          setTimeout(function() { if (toast.parentNode) toast.remove(); }, 220);
+        }
+
+        var timer = setTimeout(dismiss, duration);
+        toast.addEventListener('click', function() {
+          clearTimeout(timer);
+          dismiss();
+        }, { once: true });
+      };
     })();
 
     // ============================================================
