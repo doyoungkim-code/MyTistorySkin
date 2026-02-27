@@ -10,7 +10,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.19.0/js/md5.min.js"></script>
 
   <!-- Highlight.js (코드 신택스 하이라이팅) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
@@ -522,19 +523,19 @@
           <span class="dyo-di-label">GitHub</span>
         </div>
 
-        <!-- Trash 아이콘 -->
-        <div class="dyo-desktop-icon" id="desktopIconTrash" title="Trash">
+        <!-- Guestbook 채팅 아이콘 -->
+        <div class="dyo-desktop-icon" id="desktopIconGuest" title="Guestbook">
           <div class="dyo-di-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
-              <path d="M10 11v6"></path>
-              <path d="M14 11v6"></path>
-              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="#FEE500" opacity="0.25" stroke="#c8a800" stroke-width="1.5" stroke-linejoin="round"/>
+              <circle cx="8.5" cy="11" r="1.2" fill="#c8a800"/>
+              <circle cx="12" cy="11" r="1.2" fill="#c8a800"/>
+              <circle cx="15.5" cy="11" r="1.2" fill="#c8a800"/>
             </svg>
           </div>
-          <span class="dyo-di-label">Trash</span>
+          <span class="dyo-di-label">Guestbook</span>
         </div>
+
 
       </div>
 
@@ -610,36 +611,100 @@
         <span class="dyo-term-dot green"  id="dyoReadmeMax"   title="최대화"></span>
         <span class="dyo-shell-title">README.md</span>
       </div>
-      <div class="dyo-term-body" style="overflow-y:auto;padding:20px 28px"><pre style="margin:0;font-family:inherit;font-size:13px;line-height:1.8;color:#abb2bf;white-space:pre-wrap"># doyoucode Blog  -  README
+      <div class="dyo-term-body" style="overflow-y:auto;padding:20px 24px">
+        <div style="font-family:'Noto Sans KR','Apple SD Gothic Neo',-apple-system,sans-serif;font-size:13px;line-height:1.85;color:#abb2bf">
 
-## 개요
-  doyoucode는 개발자 테마의 Tistory 블로그입니다.
-  데스크탑 스타일 UI와 터미널 인터페이스를 제공합니다.
+          <div style="color:#e6e6e6;font-size:15px;font-weight:700;margin-bottom:2px"># doyoucode · README</div>
+          <div style="color:#5c6370;font-size:12px;margin-bottom:22px">개발자 테마의 Tistory 블로그 · 데스크탑 UI + 터미널 인터페이스</div>
 
-## 데스크탑 아이콘
-  README         - 이 도움말 페이지
-  Command Prompt - 터미널 창 열기
-  Dev Blog       - 전체 포스트 보기 (브라우저 창)
-  GitHub         - GitHub 프로필 새 탭으로 열기
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 데스크탑 아이콘</div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:22px">
+            <span style="color:#61afef">README</span><span>이 도움말 페이지</span>
+            <span style="color:#61afef">Terminal</span><span>터미널 창 열기</span>
+            <span style="color:#61afef">Dev Blog</span><span>전체 포스트 보기 (브라우저 창)</span>
+            <span style="color:#61afef">Guestbook</span><span>방명록 채팅 / 메시지 남기기</span>
+            <span style="color:#61afef">GitHub</span><span>GitHub 프로필 새 탭으로 열기</span>
+          </div>
 
-## 터미널 명령어
-  help           - 사용 가능한 명령어 목록
-  about/whoami   - 블로그 소개
-  ls             - 카테고리 목록
-  cd [category]  - 카테고리로 이동
-  search [word]  - 포스트 검색
-  date           - 현재 날짜/시간
-  github         - GitHub 열기
-  clear          - 터미널 초기화
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 터미널 명령어</div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:22px">
+            <span style="color:#61afef">help</span><span>명령어 목록 보기</span>
+            <span style="color:#61afef">about / whoami</span><span>블로그 소개</span>
+            <span style="color:#61afef">ls</span><span>카테고리 목록</span>
+            <span style="color:#61afef">cd [카테고리]</span><span>카테고리로 이동</span>
+            <span style="color:#61afef">search [검색어]</span><span>포스트 검색</span>
+            <span style="color:#61afef">date</span><span>현재 날짜/시간</span>
+            <span style="color:#61afef">echo [텍스트]</span><span>텍스트 출력</span>
+            <span style="color:#61afef">github</span><span>GitHub 열기</span>
+            <span style="color:#61afef">clear</span><span>터미널 초기화</span>
+            <span style="color:#61afef">exit</span><span>터미널 창 닫기</span>
+          </div>
 
-## 브라우저 창
-  - 드래그로 이동, 모서리로 크기 조절
-  - 닫기(빨강) / 최소화(노랑) / 최대화(초록)
-  - 뒤로 / 앞으로 / 새로고침 지원
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 브라우저 창</div>
+          <div style="padding-left:12px;margin-bottom:22px">
+            <div>드래그로 이동 / 모서리로 크기 조절</div>
+            <div>닫기(빨강) · 최소화(노랑) · 최대화(초록)</div>
+            <div>뒤로 · 앞으로 · 새로고침 지원</div>
+          </div>
 
-## 관리자 메뉴  (우하단, 메인화면에서만 표시)
-  글쓰기 - 새 포스트 작성
-  관리   - Tistory 관리 페이지</pre>
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## Guestbook <span style="color:#5c6370;font-weight:400;font-size:12px">(방명록 채팅)</span></div>
+          <div style="padding-left:12px;margin-bottom:22px">
+            <div>카카오톡 스타일 채팅 인터페이스</div>
+            <div>방문자 메시지 → 오른쪽 노란 말풍선</div>
+            <div>관리자 답글 → 왼쪽 흰 말풍선</div>
+            <div>이름 + 비밀번호 입력 후 메시지 전송</div>
+            <div style="color:#5c6370">Ctrl+Enter 로 빠른 전송</div>
+          </div>
+
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 관리자 메뉴 <span style="color:#5c6370;font-weight:400;font-size:12px">(메인화면 우하단)</span></div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px">
+            <span style="color:#61afef">글쓰기</span><span>새 포스트 작성</span>
+            <span style="color:#61afef">관리</span><span>Tistory 관리 페이지</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="dyo-brs-handle n"  data-dir="n"></div>
+      <div class="dyo-brs-handle ne" data-dir="ne"></div>
+      <div class="dyo-brs-handle e"  data-dir="e"></div>
+      <div class="dyo-brs-handle se" data-dir="se"></div>
+      <div class="dyo-brs-handle s"  data-dir="s"></div>
+      <div class="dyo-brs-handle sw" data-dir="sw"></div>
+      <div class="dyo-brs-handle w"  data-dir="w"></div>
+      <div class="dyo-brs-handle nw" data-dir="nw"></div>
+    </div>
+
+    <!-- Guestbook 채팅창 -->
+    <div class="dyo-shell-win" id="dyoGuestWin">
+      <div class="dyo-shell-titlebar" id="dyoGuestTitlebar">
+        <span class="dyo-term-dot red"    id="dyoGuestClose" title="닫기"></span>
+        <span class="dyo-term-dot yellow" id="dyoGuestMin"   title="최소화"></span>
+        <span class="dyo-term-dot green"  id="dyoGuestMax"   title="최대화"></span>
+        <span class="dyo-shell-title">Guestbook</span>
+      </div>
+      <div class="dyo-guest-kakaohdr">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="#3b1e08" opacity="0.6"/></svg>
+        <span>방명록</span>
+        <button class="dyo-guest-reload" id="dyoGuestReload" title="새로고침">↺</button>
+      </div>
+      <div class="dyo-guest-body" id="dyoGuestBody">
+        <div class="dyo-guest-loading" id="dyoGuestLoading">
+          <div class="dyo-guest-spinner"></div>
+          <span>방명록 불러오는 중...</span>
+        </div>
+        <div class="dyo-guest-chat" id="dyoGuestChat" style="display:none"></div>
+      </div>
+      <div class="dyo-guest-footer" id="dyoGuestFooter">
+        <div class="dyo-guest-meta" id="dyoGuestMeta">
+          <input type="text"     class="dyo-guest-finput" id="dyoGuestIName" placeholder="이름" maxlength="20" autocomplete="off">
+          <input type="password" class="dyo-guest-finput" id="dyoGuestIPw"   placeholder="비밀번호" maxlength="40" autocomplete="off">
+        </div>
+        <div class="dyo-guest-compose">
+          <textarea class="dyo-guest-textarea" id="dyoGuestTextarea" placeholder="방명록을 남겨보세요…" maxlength="500" rows="2"></textarea>
+          <button class="dyo-guest-sendbtn" id="dyoGuestSend" title="전송 (Ctrl+Enter)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
       </div>
       <div class="dyo-brs-handle n"  data-dir="n"></div>
       <div class="dyo-brs-handle ne" data-dir="ne"></div>
@@ -759,6 +824,14 @@
         });
       }
 
+      // Guestbook 아이콘 클릭 → 채팅창 열기
+      var iconGuest = document.getElementById('desktopIconGuest');
+      if (iconGuest) {
+        iconGuest.addEventListener('click', function() {
+          if (window.dyoOpenGuest) window.dyoOpenGuest();
+        });
+      }
+
       // GitHub 아이콘 클릭 → 새 탭으로 열기
       var iconGithub = document.getElementById('desktopIconGithub');
       if (iconGithub) {
@@ -767,21 +840,7 @@
         });
       }
 
-      // Trash 아이콘 클릭 → 터미널 열고 rm -rf / 실행 (joke)
-      var iconTrash = document.getElementById('desktopIconTrash');
-      if (iconTrash) {
-        iconTrash.addEventListener('click', function() {
-          if (window.dyoOpenShell) window.dyoOpenShell();
-          setTimeout(function() {
-            var input = document.getElementById('termInput');
-            var form  = document.getElementById('dyoTermForm');
-            if (input && form) {
-              input.value = 'rm -rf /';
-              form.dispatchEvent(new Event('submit'));
-            }
-          }, 120);
-        });
-      }
+
     })();
 
     // 게시글 목차(TOC) 자동 생성
@@ -1098,7 +1157,8 @@
               '<span class="tr-cmd">date</span>               — current date & time<br>' +
               '<span class="tr-cmd">echo &lt;text&gt;</span>       — echo text<br>' +
               '<span class="tr-cmd">github</span>             — open GitHub profile<br>' +
-              '<span class="tr-cmd">clear</span>              — clear terminal'
+              '<span class="tr-cmd">clear</span>              — clear terminal<br>' +
+              '<span class="tr-cmd">exit</span>               — close terminal'
             ); break;
 
           case 'about': case 'whoami':
@@ -1775,6 +1835,484 @@
           w.style.left = rect.left + 'px'; w.style.top = rect.top + 'px';
           w.style.width = rect.width + 'px'; w.style.height = rect.height + 'px';
           w.style.right = 'auto'; w.style.bottom = 'auto';
+        });
+      });
+    })();
+
+    // ============================================================
+    // Guestbook 채팅창
+    // ============================================================
+    (function() {
+      var w        = document.getElementById('dyoGuestWin');
+      var titlebar = document.getElementById('dyoGuestTitlebar');
+      var closeBtn = document.getElementById('dyoGuestClose');
+      var minBtn   = document.getElementById('dyoGuestMin');
+      var maxBtn   = document.getElementById('dyoGuestMax');
+      var reloadBtn  = document.getElementById('dyoGuestReload');
+      var chat       = document.getElementById('dyoGuestChat');
+      var loading    = document.getElementById('dyoGuestLoading');
+      var metaRow    = document.getElementById('dyoGuestMeta');
+      var nameInput  = document.getElementById('dyoGuestIName');
+      var pwInput    = document.getElementById('dyoGuestIPw');
+      var textarea   = document.getElementById('dyoGuestTextarea');
+      var sendBtn    = document.getElementById('dyoGuestSend');
+      if (!w) return;
+
+      var ADMIN_NICK = 'doyoucode';
+      var isOwner    = false;
+      var isLoggedIn = false;
+      var msgData    = {};   // id → { author, content }
+      var dragging = false, dragOX = 0, dragOY = 0;
+      var resizing = false, resizeDir = '', resizeSX = 0, resizeSY = 0, resizeSRect = null;
+      var MIN_W = 300, MIN_H = 200;
+      var savedPos = null;
+      var loaded = false;
+
+      // ── 유틸 ──
+      function esc(t) {
+        return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+
+      function sha256hex(str) {
+        return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
+          .then(function(buf) {
+            return Array.from(new Uint8Array(buf))
+              .map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+          });
+      }
+
+      // Tistory 방명록 비밀번호: SHA-256( MD5( encodeURIComponent(pw) ) )
+      function tistoryHashPw(passwd) {
+        var encoded = encodeURIComponent(passwd);
+        var md5hash = (typeof md5 === 'function') ? md5(encoded) : encoded;
+        return sha256hex(md5hash);
+      }
+
+      function sendGuest() {
+        var text = textarea ? textarea.value.trim() : '';
+        if (!text) return;
+        var name = nameInput ? nameInput.value.trim() : '';
+        var pw   = pwInput   ? pwInput.value        : '';
+        if (!name && metaRow && !metaRow.classList.contains('owner-mode')) return;
+
+        sendBtn.disabled = true;
+        var hashPromise = pw ? tistoryHashPw(pw) : Promise.resolve('');
+        hashPromise.then(function(hashedPw) {
+          return fetch('/m/api/guestbook', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              captcha:    '',
+              comment:    text,
+              homepage:   '',
+              isSecret:   false,
+              mentionId:  null,
+              name:       name,
+              parent:     null,
+              password:   hashedPw
+            })
+          });
+        }).then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        }).then(function() {
+          if (textarea) textarea.value = '';
+          loaded = false;
+          loadGuest();
+        }).catch(function() {
+          alert('전송에 실패했습니다. 다시 시도해주세요.');
+        }).finally(function() {
+          sendBtn.disabled = false;
+        });
+      }
+
+      function editGuest(id, bwrap) {
+        var d = msgData[id];
+        if (!d) return;
+        var bubbleEl = bwrap.querySelector('.dyo-chat-bubble');
+        var editBtnEl = bwrap.querySelector('.dyo-chat-editbtn');
+        bubbleEl.style.display = 'none';
+        if (editBtnEl) editBtnEl.style.display = 'none';
+
+        var form = document.createElement('div');
+        form.className = 'dyo-cedit-wrap';
+        form.innerHTML =
+          '<textarea class="dyo-cedit-ta" rows="2">' + esc(d.content) + '</textarea>' +
+          (isLoggedIn ? '' : '<input type="password" class="dyo-cedit-pw" placeholder="비밀번호">') +
+          '<div class="dyo-cedit-btns">' +
+          '<button class="dyo-cedit-cancel">취소</button>' +
+          '<button class="dyo-cedit-save">수정</button>' +
+          '</div>';
+        bwrap.insertBefore(form, bubbleEl);
+
+        var ta      = form.querySelector('.dyo-cedit-ta');
+        var pwEl    = form.querySelector('.dyo-cedit-pw');
+        var cancelB = form.querySelector('.dyo-cedit-cancel');
+        var saveB   = form.querySelector('.dyo-cedit-save');
+
+        ta.focus();
+        ta.setSelectionRange(ta.value.length, ta.value.length);
+
+        cancelB.addEventListener('click', function() {
+          form.remove();
+          bubbleEl.style.display = '';
+          if (editBtnEl) editBtnEl.style.display = '';
+        });
+
+        function doSave() {
+          var newText = ta.value.trim();
+          if (!newText) return;
+          var pwVal = pwEl ? pwEl.value : '';
+          saveB.disabled = true;
+          (pwVal ? tistoryHashPw(pwVal) : Promise.resolve(''))
+            .then(function(hashed) {
+              return fetch('/m/api/guestbook/' + id, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ comment: newText, mentionId: null, name: d.author, password: hashed, secret: false })
+              });
+            })
+            .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+            .then(function() { loaded = false; loadGuest(); })
+            .catch(function() { alert('수정에 실패했습니다.'); saveB.disabled = false; });
+        }
+
+        saveB.addEventListener('click', doSave);
+        ta.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); doSave(); }
+        });
+      }
+
+      function deleteGuest(id, bwrap) {
+        var d = msgData[id];
+        if (!d) return;
+
+        var bubbleEl  = bwrap.querySelector('.dyo-chat-bubble');
+        var editBtnEl = bwrap.querySelector('.dyo-chat-editbtn');
+        var delBtnEl  = bwrap.querySelector('.dyo-chat-delbtn');
+
+        function restore() {
+          bubbleEl.style.display = '';
+          if (editBtnEl) editBtnEl.style.display = '';
+          if (delBtnEl)  delBtnEl.style.display  = '';
+        }
+
+        function doDelete(hashedPw, form) {
+          fetch('/m/api/guestbook/' + id, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: hashedPw })
+          })
+          .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+          .then(function() { loaded = false; loadGuest(); })
+          .catch(function() {
+            alert('삭제에 실패했습니다. 비밀번호를 확인해주세요.');
+            if (form) form.remove();
+            restore();
+          });
+        }
+
+        if (isLoggedIn) {
+          // 로그인 상태: 확인 다이얼로그만
+          if (!confirm('이 메시지를 삭제하시겠습니까?')) return;
+          doDelete('', null);
+        } else {
+          // 비로그인 게스트: 비밀번호 입력 폼 표시
+          bubbleEl.style.display = 'none';
+          if (editBtnEl) editBtnEl.style.display = 'none';
+          if (delBtnEl)  delBtnEl.style.display  = 'none';
+
+          var form = document.createElement('div');
+          form.className = 'dyo-cedit-wrap';
+          form.innerHTML =
+            '<div class="dyo-cdel-notice">정말 삭제하시겠습니까?</div>' +
+            '<input type="password" class="dyo-cedit-pw" placeholder="비밀번호">' +
+            '<div class="dyo-cedit-btns">' +
+            '<button class="dyo-cedit-cancel">취소</button>' +
+            '<button class="dyo-cedit-save dyo-cedit-del">삭제</button>' +
+            '</div>';
+          bwrap.insertBefore(form, bubbleEl);
+
+          var pwEl    = form.querySelector('.dyo-cedit-pw');
+          var cancelB = form.querySelector('.dyo-cedit-cancel');
+          var saveB   = form.querySelector('.dyo-cedit-save');
+
+          pwEl.focus();
+
+          cancelB.addEventListener('click', function() {
+            form.remove();
+            restore();
+          });
+
+          saveB.addEventListener('click', function() {
+            var pwVal = pwEl.value;
+            if (!pwVal) { pwEl.focus(); return; }
+            saveB.disabled = true;
+            tistoryHashPw(pwVal).then(function(hashed) {
+              doDelete(hashed, form);
+            });
+          });
+
+          pwEl.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); saveB.click(); }
+          });
+        }
+      }
+
+      function renderChat(msgs) {
+        if (msgs.length === 0) {
+          chat.innerHTML = '<div class="dyo-guest-empty">방명록이 비어있거나<br>불러올 수 없습니다.</div>';
+        } else {
+          chat.innerHTML = msgs.map(function(m) {
+            var role    = m.isAdmin ? 'admin' : 'visitor';
+            var editBtn = m.canEdit && m.id
+              ? '<button class="dyo-chat-editbtn" data-id="' + m.id + '" title="수정">✏</button>'
+              : '';
+            var delBtn  = m.canDelete && m.id
+              ? '<button class="dyo-chat-delbtn" data-id="' + m.id + '" title="삭제">🗑</button>'
+              : '';
+            return '<div class="dyo-chat-row ' + role + '">' +
+                   '<div class="dyo-chat-wrap">' +
+                   '<div class="dyo-chat-name">' + esc(m.author) + '</div>' +
+                   '<div class="dyo-chat-bwrap">' +
+                   '<div class="dyo-chat-bubble">' + esc(m.content) + '</div>' +
+                   editBtn + delBtn +
+                   '</div></div></div>';
+          }).join('');
+          chat.scrollTop = chat.scrollHeight;
+        }
+        loading.style.display = 'none';
+        chat.style.display = 'flex';
+      }
+
+      function loadGuest() {
+        loaded = true;
+        loading.style.display = 'flex';
+        loading.querySelector('span').textContent = '방명록 불러오는 중...';
+        loading.querySelector('.dyo-guest-spinner').style.display = '';
+        chat.style.display = 'none';
+        chat.innerHTML = '';
+
+        fetch('/m/api/guestbook?reverse=true', { credentials: 'include', cache: 'no-store' })
+          .then(function(r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+          })
+          .then(function(json) {
+            var items = (json.data && json.data.items) || [];
+            var msgs = [];
+            // Pass 1: 로그인 상태 확정
+            //   isOwner    = 관리자 로그인 (isRequestUser && role=owner)
+            //   isLoggedIn = 일반 계정 로그인 (isRequestUser, 관리자 포함)
+            isOwner    = false;
+            isLoggedIn = false;
+            msgData    = {};
+            items.forEach(function(item) {
+              if (item.writer && item.writer.isRequestUser) {
+                isLoggedIn = true;
+                if (item.writer.role === 'owner') isOwner = true;
+              }
+              (item.children || []).forEach(function(c) {
+                if (c.writer && c.writer.isRequestUser) {
+                  isLoggedIn = true;
+                  if (c.writer.role === 'owner') isOwner = true;
+                }
+              });
+            });
+            // Pass 2: canEdit 결정
+            //   관리자(isOwner)    : 본인(관리자) 메시지만
+            //   로그인 일반 계정   : isRequestUser=true인 본인 메시지만
+            //   비로그인 게스트    : 게스트 메시지 전체 (클릭 시 비밀번호 입력)
+            function calcCanEdit(writer) {
+              var isAdmin = !!(writer && writer.role === 'owner');
+              var isMine  = !!(writer && writer.isRequestUser);
+              if (isOwner)    return isAdmin;   // 관리자: 관리자 메시지만
+              if (isLoggedIn) return isMine;    // 로그인: 본인 메시지만
+              return !isAdmin;                  // 비로그인: 게스트 메시지 전체
+            }
+            function calcCanDelete(writer) {
+              var isAdmin = !!(writer && writer.role === 'owner');
+              var isMine  = !!(writer && writer.isRequestUser);
+              if (isOwner)    return true;      // 관리자: 모든 메시지 삭제 가능
+              if (isLoggedIn) return isMine;    // 로그인: 본인 메시지만
+              return !isAdmin;                  // 비로그인: 게스트 메시지 전체 (비밀번호 필요)
+            }
+            items.forEach(function(item) {
+              var isAdmin    = !!(item.writer && item.writer.role === 'owner');
+              var canEdit    = calcCanEdit(item.writer);
+              var canDelete  = calcCanDelete(item.writer);
+              msgData[item.id] = { author: item.writer ? item.writer.name : '방문자', content: item.content };
+              msgs.push({ id: item.id, author: item.writer ? item.writer.name : '방문자', content: item.content, isAdmin: isAdmin, canEdit: canEdit, canDelete: canDelete });
+              (item.children || []).forEach(function(child) {
+                var childIsAdmin   = !!(child.writer && child.writer.role === 'owner');
+                var childCanEdit   = calcCanEdit(child.writer);
+                var childCanDelete = calcCanDelete(child.writer);
+                msgData[child.id] = { author: child.writer ? child.writer.name : ADMIN_NICK, content: child.content };
+                msgs.push({ id: child.id, author: child.writer ? child.writer.name : ADMIN_NICK, content: child.content, isAdmin: true, canEdit: childCanEdit, canDelete: childCanDelete });
+              });
+            });
+            // owner이면 이름/비밀번호 입력 숨기기
+            if (metaRow) {
+              if (isOwner) metaRow.classList.add('owner-mode');
+              else         metaRow.classList.remove('owner-mode');
+            }
+            renderChat(msgs);
+          })
+          .catch(function() {
+            loading.querySelector('span').textContent = '불러오기 실패. ↺ 버튼으로 재시도';
+            loading.querySelector('.dyo-guest-spinner').style.display = 'none';
+          });
+      }
+
+      // ── 창 열기/닫기/최소화/최대화 ──
+      function openGuest() {
+        if (!w.classList.contains('open')) {
+          var W = Math.min(360, window.innerWidth  - 40);
+          var H = Math.min(580, window.innerHeight - 40);
+          w.style.width  = W + 'px';
+          w.style.height = H + 'px';
+          w.style.left   = Math.round(window.innerWidth - W - 24) + 'px';
+          w.style.top    = Math.round((window.innerHeight - H) / 2) + 'px';
+          w.style.right  = 'auto';
+          w.style.bottom = 'auto';
+        }
+        w.classList.add('open');
+        w.classList.remove('minimized');
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+        if (!loaded) loadGuest();
+      }
+      function closeGuest() {
+        w.classList.remove('open','minimized','maximized');
+        savedPos = null;
+      }
+      function minimizeGuest() {
+        if (w.classList.contains('minimized')) {
+          w.classList.remove('minimized');
+        } else {
+          if (w.classList.contains('maximized')) {
+            w.classList.remove('maximized');
+            if (savedPos) {
+              w.style.left=savedPos.left; w.style.top=savedPos.top;
+              w.style.right=savedPos.right; w.style.bottom=savedPos.bottom;
+              w.style.width=savedPos.width; w.style.height=savedPos.height;
+              savedPos=null;
+            }
+          }
+          w.classList.add('minimized');
+        }
+      }
+      function maximizeGuest() {
+        if (w.classList.contains('maximized')) {
+          w.classList.remove('maximized');
+          if (savedPos) {
+            w.style.left=savedPos.left; w.style.top=savedPos.top;
+            w.style.right=savedPos.right; w.style.bottom=savedPos.bottom;
+            w.style.width=savedPos.width; w.style.height=savedPos.height;
+            savedPos=null;
+          }
+        } else {
+          savedPos = { left:w.style.left, top:w.style.top, right:w.style.right,
+                       bottom:w.style.bottom, width:w.style.width, height:w.style.height };
+          w.classList.add('maximized');
+          w.style.left=w.style.top=w.style.right=w.style.bottom=w.style.width=w.style.height='';
+        }
+      }
+
+      window.dyoOpenGuest = openGuest;
+
+      w.addEventListener('mousedown', function() {
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+      });
+      if (closeBtn)  closeBtn.addEventListener('click',  closeGuest);
+      if (minBtn)    minBtn.addEventListener('click',    minimizeGuest);
+      if (maxBtn)    maxBtn.addEventListener('click',    maximizeGuest);
+      if (reloadBtn) reloadBtn.addEventListener('click', function() { loaded=false; loadGuest(); });
+      if (sendBtn)   sendBtn.addEventListener('click', sendGuest);
+      chat.addEventListener('click', function(e) {
+        var editBtn = e.target.closest('.dyo-chat-editbtn');
+        if (editBtn) {
+          var bwrap = editBtn.closest('.dyo-chat-bwrap');
+          if (bwrap) editGuest(editBtn.dataset.id, bwrap);
+          return;
+        }
+        var delBtn = e.target.closest('.dyo-chat-delbtn');
+        if (delBtn) {
+          var bwrap = delBtn.closest('.dyo-chat-bwrap');
+          if (bwrap) deleteGuest(delBtn.dataset.id, bwrap);
+        }
+      });
+      if (textarea) {
+        textarea.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); sendGuest(); }
+        });
+      }
+
+      if (titlebar) {
+        titlebar.addEventListener('dblclick', function(e) {
+          if (e.target===closeBtn||e.target===minBtn||e.target===maxBtn) return;
+          maximizeGuest();
+        });
+        titlebar.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized')) return;
+          if (e.target===closeBtn||e.target===minBtn||e.target===maxBtn) return;
+          var r = w.getBoundingClientRect();
+          w.style.left=r.left+'px'; w.style.top=r.top+'px';
+          w.style.right='auto'; w.style.bottom='auto';
+          dragging=true; dragOX=e.clientX-r.left; dragOY=e.clientY-r.top;
+          e.preventDefault();
+        });
+        titlebar.addEventListener('touchstart', function(e) {
+          if (w.classList.contains('maximized')) return;
+          var t=e.touches[0], r=w.getBoundingClientRect();
+          w.style.left=r.left+'px'; w.style.top=r.top+'px';
+          w.style.right='auto'; w.style.bottom='auto';
+          dragging=true; dragOX=t.clientX-r.left; dragOY=t.clientY-r.top;
+        }, {passive:true});
+      }
+
+      document.addEventListener('mousemove', function(e) {
+        if (dragging) {
+          var x=Math.max(0,Math.min(window.innerWidth-w.offsetWidth, e.clientX-dragOX));
+          var y=Math.max(0,Math.min(window.innerHeight-40, e.clientY-dragOY));
+          w.style.left=x+'px'; w.style.top=y+'px';
+        }
+        if (resizing) {
+          var dx=e.clientX-resizeSX, dy=e.clientY-resizeSY, r=resizeSRect;
+          var nL=r.left,nT=r.top,nW=r.width,nH=r.height;
+          if (resizeDir.indexOf('e')!==-1) nW=Math.max(MIN_W,r.width+dx);
+          if (resizeDir.indexOf('s')!==-1) nH=Math.max(MIN_H,r.height+dy);
+          if (resizeDir.indexOf('w')!==-1){nW=Math.max(MIN_W,r.width-dx);nL=r.left+r.width-nW;}
+          if (resizeDir.indexOf('n')!==-1){nH=Math.max(MIN_H,r.height-dy);nT=r.top+r.height-nH;}
+          w.style.left=nL+'px'; w.style.top=nT+'px';
+          w.style.width=nW+'px'; w.style.height=nH+'px';
+        }
+      });
+      document.addEventListener('touchmove', function(e) {
+        if (!dragging) return;
+        var t=e.touches[0];
+        var x=Math.max(0,Math.min(window.innerWidth-w.offsetWidth, t.clientX-dragOX));
+        var y=Math.max(0,Math.min(window.innerHeight-40, t.clientY-dragOY));
+        w.style.left=x+'px'; w.style.top=y+'px';
+      }, {passive:true});
+      document.addEventListener('mouseup',  function(){dragging=false;resizing=false;});
+      document.addEventListener('touchend', function(){dragging=false;});
+
+      w.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
+        handle.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized')||w.classList.contains('minimized')) return;
+          e.stopPropagation(); e.preventDefault();
+          resizing=true; resizeDir=handle.getAttribute('data-dir');
+          resizeSX=e.clientX; resizeSY=e.clientY;
+          var r=w.getBoundingClientRect();
+          resizeSRect={left:r.left,top:r.top,width:r.width,height:r.height};
+          w.style.left=r.left+'px'; w.style.top=r.top+'px';
+          w.style.width=r.width+'px'; w.style.height=r.height+'px';
+          w.style.right='auto'; w.style.bottom='auto';
         });
       });
     })();
