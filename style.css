@@ -2604,10 +2604,14 @@ html, body {
 /* 아이콘 그리드 영역 */
 .dyo-desktop-grid {
   flex: 1;
+  min-height: 0;
+  overflow: hidden;
   padding: 52px 52px;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: flex-start;
+  align-content: flex-start;
   gap: 8px;
   position: relative;
   z-index: 1;
@@ -2699,6 +2703,13 @@ html, body {
   border: 1px solid rgba(139,148,158,0.3);
 }
 #desktopIconTrash .dyo-di-wrap svg { stroke: #8b949e; }
+
+/* Blogram 아이콘 — Instagram 그라데이션 */
+#desktopIconGallery .dyo-di-wrap {
+  background: linear-gradient(135deg, #833ab4 0%, #c13584 35%, #e1306c 60%, #f77737 85%, #fcaf45 100%);
+  border: 1px solid rgba(225,48,108,0.4);
+  box-shadow: 0 6px 16px rgba(193,53,132,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
+}
 
 /* 아이콘 레이블 */
 .dyo-di-label {
@@ -3972,3 +3983,598 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   opacity: 0.45;
   animation: dyo-toast-bar linear forwards;
 }
+
+/* ── Gallery 창 ── */
+.dyo-gallery-win {
+  min-width: 340px;
+  min-height: 260px;
+}
+.dyo-gallery-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+  flex-shrink: 0;
+  height: 32px;
+  gap: 8px;
+}
+.dyo-gallery-status {
+  font-size: 11px;
+  color: #8b949e;
+  font-family: var(--font-mono);
+}
+.dyo-gallery-reload {
+  background: none;
+  border: none;
+  color: #8b949e;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.dyo-gallery-reload:hover { background: #21262d; color: #c9d1d9; }
+.dyo-gallery-body {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+.dyo-gallery-body::-webkit-scrollbar { width: 4px; }
+.dyo-gallery-body::-webkit-scrollbar-track { background: transparent; }
+.dyo-gallery-body::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+.dyo-gallery-body::-webkit-scrollbar-thumb:hover { background: #3d3d3d; }
+.dyo-gallery-body { scrollbar-width: thin; scrollbar-color: #2a2a2a transparent; }
+/* 로딩 */
+.dyo-gallery-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  min-height: 140px;
+  color: #8b949e;
+  font-size: 13px;
+}
+.dyo-gallery-spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid #21262d;
+  border-top-color: #ff78b4;
+  border-radius: 50%;
+  animation: dyo-spin 0.75s linear infinite;
+}
+/* ── Instagram 프로필 헤더 ── */
+.dyo-gallery-profile {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 20px 20px 16px;
+  flex-shrink: 0;
+}
+.dyo-gp-avatar-ring {
+  flex-shrink: 0;
+  width: 76px; height: 76px;
+  border-radius: 50%;
+  background: conic-gradient(#f9ce34 0deg, #ee2a7b 140deg, #6228d7 280deg, #f9ce34 360deg);
+  padding: 3px;
+}
+.dyo-gp-avatar-img {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  border: 3px solid #0d1117;
+  object-fit: cover;
+  display: block;
+  box-sizing: border-box;
+}
+.dyo-gp-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dyo-gp-uname {
+  font-size: 17px;
+  font-weight: 400;
+  color: #f5f5f5;
+  letter-spacing: -0.01em;
+}
+.dyo-gp-stats {
+  display: flex;
+  gap: 20px;
+}
+.dyo-gp-stat {
+  font-size: 13px;
+  color: #8e8e8e;
+}
+.dyo-gp-stat strong {
+  font-weight: 600;
+  color: #f5f5f5;
+}
+.dyo-gp-bio {
+  font-size: 12px;
+  color: #f5f5f5;
+  line-height: 1.5;
+}
+/* 탭 바 */
+.dyo-gp-tabs {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #262626;
+  flex-shrink: 0;
+}
+.dyo-gp-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  background: none;
+  border: none;
+  border-top: 1px solid transparent;
+  margin-top: -1px;
+  color: #8e8e8e;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: default;
+  transition: color 0.15s;
+}
+.dyo-gp-tab-active {
+  color: #f5f5f5;
+  border-top-color: #f5f5f5;
+}
+
+/* 빈 상태 */
+.dyo-gallery-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 160px;
+  padding: 24px 0;
+  color: #8b949e;
+  font-size: 13px;
+}
+/* 그리드 */
+/* Instagram 스타일 그리드 */
+.dyo-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  padding: 0;
+}
+/* 셀 */
+.dyo-gallery-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #161b22;
+  cursor: pointer;
+}
+.dyo-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.dyo-gallery-item:hover img { transform: scale(1.04); }
+/* 호버 오버레이 — Instagram 스타일 (중앙 아이콘) */
+.dyo-gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.38);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dyo-gallery-item:hover .dyo-gallery-overlay { opacity: 1; }
+.dyo-ig-center-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+}
+
+/* ============================================================
+   Gallery Lightbox — Instagram Style
+   ============================================================ */
+.dyo-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+}
+.dyo-lightbox.open { display: flex; }
+
+.dyo-lb-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* 닫기 버튼 */
+.dyo-lb-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: opacity 0.15s;
+}
+.dyo-lb-close:hover { opacity: 0.7; }
+
+/* ── 모달 2-컬럼 레이아웃 ── */
+.dyo-lb-modal {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  background: #000;
+  border: 1px solid #363636;
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 90vw;
+  max-height: 88vh;
+  width: min(960px, 90vw);
+}
+
+/* 왼쪽: 사진 영역 */
+.dyo-lb-photo-side {
+  position: relative;
+  flex: 1;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
+}
+.dyo-lb-img {
+  max-width: 100%;
+  max-height: 88vh;
+  width: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* 이전/다음 버튼 */
+.dyo-lb-nav {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 1;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.15s;
+}
+.dyo-lb-nav:hover { background: rgba(255,255,255,0.25); }
+.dyo-lb-prev { left: 10px; }
+.dyo-lb-next { right: 10px; }
+
+/* 오른쪽: Instagram 사이드바 */
+.dyo-lb-ig-side {
+  width: 340px;
+  min-width: 340px;
+  max-width: 340px;
+  background: #000;
+  border-left: 1px solid #262626;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 헤더 */
+.dyo-lb-ig-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  flex-shrink: 0;
+}
+.dyo-lb-ig-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dyo-lb-ig-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #833ab4 0%, #e1306c 50%, #fcaf45 100%);
+  border: 2px solid #262626;
+  flex-shrink: 0;
+}
+.dyo-lb-ig-username {
+  color: #f5f5f5;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* 햄버거(···) 메뉴 */
+.dyo-lb-ig-menu-wrap {
+  position: relative;
+}
+.dyo-lb-ig-menu-btn {
+  background: none;
+  border: none;
+  color: #f5f5f5;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.15s;
+}
+.dyo-lb-ig-menu-btn:hover { opacity: 0.6; }
+.dyo-lb-ig-dropdown {
+  display: none;
+  position: absolute;
+  right: 0; top: calc(100% + 6px);
+  background: #1a1a1a;
+  border: 1px solid #363636;
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 140px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  z-index: 10;
+}
+.dyo-lb-ig-dropdown.open { display: block; }
+.dyo-lb-ig-dd-item {
+  display: block;
+  width: 100%;
+  padding: 11px 16px;
+  background: none;
+  border: none;
+  color: #f5f5f5;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.12s;
+}
+.dyo-lb-ig-dd-item:hover { background: #262626; }
+.dyo-lb-ig-dd-item + .dyo-lb-ig-dd-item { border-top: 1px solid #262626; }
+
+/* 구분선 */
+.dyo-lb-ig-divider {
+  height: 1px;
+  background: #262626;
+  flex-shrink: 0;
+}
+
+/* 캡션 + 댓글 스크롤 영역 */
+.dyo-lb-ig-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 14px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.dyo-lb-ig-scroll::-webkit-scrollbar { width: 4px; }
+.dyo-lb-ig-scroll::-webkit-scrollbar-track { background: transparent; }
+.dyo-lb-ig-scroll::-webkit-scrollbar-thumb { background: #363636; border-radius: 2px; }
+
+/* 캡션 */
+.dyo-lb-ig-caption {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.dyo-lb-ig-avatar-sm {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #833ab4 0%, #e1306c 50%, #fcaf45 100%);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.dyo-lb-ig-caption-text {
+  font-size: 13px;
+  color: #f5f5f5;
+  line-height: 1.6;
+  word-break: break-word;
+}
+.dyo-lb-ig-uname {
+  font-weight: 600;
+  margin-right: 6px;
+  color: #f5f5f5;
+}
+
+/* 댓글 컨테이너 */
+.dyo-lb-ig-cmt-stub {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 2px;
+}
+.dyo-lb-ig-cmt-link {
+  color: #8e8e8e;
+  text-decoration: none;
+  font-size: 12px;
+}
+.dyo-lb-ig-cmt-link:hover { color: #f5f5f5; }
+.dyo-lb-ig-cmt-empty {
+  color: #8e8e8e;
+  font-size: 12px;
+  margin: 0;
+}
+
+/* 댓글 아이템 */
+.dyo-lb-ig-cmt-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.dyo-lb-ig-cmt-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.dyo-lb-ig-cmt-avatar-def {
+  background: #363636;
+}
+.dyo-lb-ig-cmt-body {
+  flex: 1;
+  min-width: 0;
+}
+.dyo-lb-ig-cmt-author {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f5f5f5;
+  margin-right: 4px;
+}
+.dyo-lb-ig-cmt-text {
+  font-size: 13px;
+  color: #f5f5f5;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.dyo-lb-ig-cmt-time {
+  font-size: 11px;
+  color: #8e8e8e;
+  margin-top: 3px;
+}
+
+/* 액션 바 */
+.dyo-lb-ig-actions {
+  flex-shrink: 0;
+  padding: 6px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dyo-lb-ig-action-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 2px 0;
+}
+.dyo-lb-ig-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.1s;
+  border-radius: 4px;
+}
+.dyo-lb-ig-btn:hover { opacity: 0.6; }
+.dyo-lb-ig-like-btn.liked { color: #ed4956; }
+.dyo-lb-ig-like-btn.liked .dyo-lb-heart-outline { display: none !important; }
+.dyo-lb-ig-like-btn.liked .dyo-lb-heart-filled  { display: block !important; }
+
+/* 좋아요 펄스 애니메이션 */
+@keyframes dyo-lb-heart-pop {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.32); }
+  60%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+.dyo-lb-ig-like-btn.pop { animation: dyo-lb-heart-pop 0.35s ease; }
+
+.dyo-lb-ig-likes-line {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f5f5f5;
+}
+.dyo-lb-ig-date-line {
+  font-size: 11px;
+  color: #8e8e8e;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.dyo-lb-ig-counter {
+  font-size: 11px;
+  color: #4d4d4d;
+}
+
+/* 댓글 입력 폼 */
+.dyo-lb-ig-compose {
+  flex-shrink: 0;
+  padding: 8px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.dyo-lb-ig-compose-meta {
+  display: flex;
+  gap: 6px;
+}
+.dyo-lb-ig-meta-inp {
+  flex: 1;
+  min-width: 0;
+  background: #1a1a1a;
+  border: 1px solid #363636;
+  border-radius: 6px;
+  color: #f5f5f5;
+  font-size: 12px;
+  padding: 5px 9px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+.dyo-lb-ig-meta-inp:focus { border-color: #8e8e8e; }
+.dyo-lb-ig-meta-inp::placeholder { color: #4d4d4d; }
+.dyo-lb-ig-compose-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dyo-lb-ig-cmt-input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  color: #f5f5f5;
+  font-size: 13px;
+  font-family: inherit;
+}
+.dyo-lb-ig-cmt-input::placeholder { color: #8e8e8e; }
+.dyo-lb-ig-cmt-submit {
+  background: none;
+  border: none;
+  color: #0095f6;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 4px;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.dyo-lb-ig-cmt-submit:disabled { color: rgba(0,149,246,0.4); cursor: default; }
+.dyo-lb-ig-cmt-submit:not(:disabled):hover { opacity: 0.7; }
+
+/* 답글 들여쓰기 */
+.dyo-lb-ig-cmt-reply { padding-left: 38px; }

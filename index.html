@@ -547,6 +547,18 @@
           <span class="dyo-di-label">File Explorer</span>
         </div>
 
+        <!-- Blogram 아이콘 -->
+        <div class="dyo-desktop-icon" id="desktopIconGallery" title="Blogram">
+          <div class="dyo-di-wrap">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="1.8"/>
+              <circle cx="12" cy="12" r="5" stroke="white" stroke-width="1.8"/>
+              <circle cx="17.5" cy="6.5" r="1.3" fill="white"/>
+            </svg>
+          </div>
+          <span class="dyo-di-label">Blogram</span>
+        </div>
+
       </div>
 
       <!-- 하단 태스크바 -->
@@ -641,6 +653,7 @@
             <span style="color:#61afef">README</span><span>이 도움말 페이지</span>
             <span style="color:#61afef">Terminal</span><span>터미널 창 열기</span>
             <span style="color:#61afef">Dev Blog</span><span>전체 포스트 보기 (브라우저 창)</span>
+            <span style="color:#61afef">Blogram</span><span>Instagram 스타일 사진 피드</span>
             <span style="color:#61afef">Guestbook</span><span>방명록 채팅 / 메시지 남기기</span>
             <span style="color:#61afef">GitHub</span><span>GitHub 프로필 새 탭으로 열기</span>
           </div>
@@ -668,6 +681,16 @@
             <div>드래그로 이동 / 모서리로 크기 조절</div>
             <div>닫기(빨강) · 최소화(노랑) · 최대화(초록)</div>
             <div>뒤로 · 앞으로 · 새로고침 지원</div>
+          </div>
+
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## Blogram <span style="color:#5c6370;font-weight:400;font-size:12px">(인스타그램 스타일 사진 피드)</span></div>
+          <div style="padding-left:12px;margin-bottom:22px">
+            <div>사진 카테고리 포스트를 Instagram UI로 감상</div>
+            <div>프로필 · 게시물 수 · 팔로워 · 팔로잉 표시</div>
+            <div>사진 클릭 시 라이트박스 — 좋아요 · 댓글 · 공유</div>
+            <div>좋아요: 로그인/비로그인 모두 가능 (쿠키 중복 방지)</div>
+            <div>댓글: 게스트는 이름 + 비밀번호 입력 후 작성</div>
+            <div style="color:#5c6370">← → 키로 이전 / 다음 사진 이동</div>
           </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## Guestbook <span style="color:#5c6370;font-weight:400;font-size:12px">(방명록 채팅)</span></div>
@@ -832,6 +855,137 @@
       <div class="dyo-props-body" id="dyoPropsBody"></div>
     </div>
 
+    <!-- Blogram 창 -->
+    <div class="dyo-shell-win dyo-gallery-win" id="dyoGalleryWin">
+      <div class="dyo-brs-handle n"></div><div class="dyo-brs-handle ne"></div>
+      <div class="dyo-brs-handle e"></div><div class="dyo-brs-handle se"></div>
+      <div class="dyo-brs-handle s"></div><div class="dyo-brs-handle sw"></div>
+      <div class="dyo-brs-handle w"></div><div class="dyo-brs-handle nw"></div>
+      <div class="dyo-shell-titlebar" id="dyoGalleryTitlebar">
+        <span class="dyo-term-dot red"    id="dyoGalleryClose" title="닫기"></span>
+        <span class="dyo-term-dot yellow" id="dyoGalleryMin"   title="최소화"></span>
+        <span class="dyo-term-dot green"  id="dyoGalleryMax"   title="최대화"></span>
+        <span class="dyo-shell-title">📷 Blogram</span>
+      </div>
+      <div class="dyo-gallery-toolbar" id="dyoGalleryToolbar">
+        <span class="dyo-gallery-status" id="dyoGalleryStatus"></span>
+      </div>
+      <div class="dyo-gallery-body" id="dyoGalleryBody">
+        <!-- Instagram 프로필 헤더 -->
+        <div class="dyo-gallery-profile" id="dyoGalleryProfile">
+          <div class="dyo-gp-avatar-ring">
+            <img class="dyo-gp-avatar-img" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fdcw74H%2FdJMcacCdDz7%2FAAAAAAAAAAAAAAAAAAAAADsp14QhaXFHW-MrLGX64kxBD-4ExyawRyxn5bwMsN05%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3D2Wpl5e4o6CQ3Th%252BrrBkwoYobc7E%253D" alt="프로필">
+          </div>
+          <div class="dyo-gp-info">
+            <div class="dyo-gp-uname">doyoucode</div>
+            <div class="dyo-gp-stats">
+              <span class="dyo-gp-stat"><strong id="dyoGpPostCount">—</strong> 게시물</span>
+              <span class="dyo-gp-stat"><strong>42</strong> 팔로워</span>
+              <span class="dyo-gp-stat"><strong>42</strong> 팔로잉</span>
+            </div>
+            <div class="dyo-gp-bio">📷 사진과 일상을 기록합니다</div>
+          </div>
+        </div>
+        <!-- 탭 바 -->
+        <div class="dyo-gp-tabs">
+          <button class="dyo-gp-tab dyo-gp-tab-active">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>
+            게시물
+          </button>
+        </div>
+        <div class="dyo-gallery-grid" id="dyoGalleryGrid"></div>
+        <div class="dyo-gallery-empty" id="dyoGalleryEmpty" style="display:none">
+          <span style="font-size:32px">📷</span>
+          <span>아직 등록된 사진이 없습니다</span>
+          <span style="font-size:11px;color:#484f58">index.html의 GALLERY_POSTS 배열에 추가하세요</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery Lightbox — Instagram Style -->
+    <div class="dyo-lightbox" id="dyoLightbox">
+      <div class="dyo-lb-bg" id="dyoLbBg"></div>
+      <button class="dyo-lb-close" id="dyoLbClose">✕</button>
+
+      <div class="dyo-lb-modal">
+        <!-- 왼쪽: 사진 + 이전/다음 -->
+        <div class="dyo-lb-photo-side">
+          <button class="dyo-lb-nav dyo-lb-prev" id="dyoLbPrev">&#8249;</button>
+          <img class="dyo-lb-img" id="dyoLbImg" src="" alt="">
+          <button class="dyo-lb-nav dyo-lb-next" id="dyoLbNext">&#8250;</button>
+        </div>
+
+        <!-- 오른쪽: Instagram 사이드바 -->
+        <div class="dyo-lb-ig-side">
+          <!-- 헤더: 작성자 + 햄버거 -->
+          <div class="dyo-lb-ig-header">
+            <div class="dyo-lb-ig-profile">
+              <div class="dyo-lb-ig-avatar"></div>
+              <span class="dyo-lb-ig-username">doyoucode</span>
+            </div>
+            <div class="dyo-lb-ig-menu-wrap" id="dyoLbMenuWrap">
+              <button class="dyo-lb-ig-menu-btn" id="dyoLbMenuBtn" title="더보기">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+              </button>
+              <div class="dyo-lb-ig-dropdown" id="dyoLbDropdown">
+                <a class="dyo-lb-ig-dd-item" id="dyoLbPostLink" href="#" target="_blank">포스트 보기</a>
+                <button class="dyo-lb-ig-dd-item" id="dyoLbCopyLink">링크 복사</button>
+              </div>
+            </div>
+          </div>
+          <div class="dyo-lb-ig-divider"></div>
+
+          <!-- 캡션 + 댓글 영역 -->
+          <div class="dyo-lb-ig-scroll" id="dyoLbScroll">
+            <div class="dyo-lb-ig-caption">
+              <div class="dyo-lb-ig-avatar-sm"></div>
+              <div class="dyo-lb-ig-caption-text">
+                <span class="dyo-lb-ig-uname">doyoucode</span>
+                <span id="dyoLbTitle"></span>
+              </div>
+            </div>
+            <div class="dyo-lb-ig-cmt-stub" id="dyoLbCmtStub">
+              <!-- 댓글 개수 로드 후 표시 -->
+            </div>
+          </div>
+          <div class="dyo-lb-ig-divider"></div>
+
+          <!-- 액션 바: 좋아요 / 댓글 / 공유 -->
+          <div class="dyo-lb-ig-actions">
+            <div class="dyo-lb-ig-action-row">
+              <button class="dyo-lb-ig-btn dyo-lb-ig-like-btn" id="dyoLbLikeBtn" title="좋아요">
+                <svg class="dyo-lb-heart-outline" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <svg class="dyo-lb-heart-filled" width="24" height="24" viewBox="0 0 24 24" fill="#ed4956" stroke="#ed4956" stroke-width="2" stroke-linejoin="round" style="display:none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
+              <button class="dyo-lb-ig-btn dyo-lb-ig-cmt-btn" id="dyoLbCmtBtn" title="댓글 달기">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </button>
+              <button class="dyo-lb-ig-btn dyo-lb-ig-share-btn" id="dyoLbShareBtn" title="공유">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+            <div class="dyo-lb-ig-likes-line" id="dyoLbLikesLine">좋아요 0개</div>
+            <div class="dyo-lb-ig-date-line" id="dyoLbDate"></div>
+            <div class="dyo-lb-ig-counter" id="dyoLbCounter"></div>
+          </div>
+          <div class="dyo-lb-ig-divider"></div>
+
+          <!-- 댓글 입력 폼 -->
+          <div class="dyo-lb-ig-compose">
+            <div class="dyo-lb-ig-compose-meta">
+              <input class="dyo-lb-ig-meta-inp" id="dyoLbCmtName" type="text" placeholder="이름" maxlength="40" autocomplete="nickname">
+              <input class="dyo-lb-ig-meta-inp" id="dyoLbCmtPw"   type="password" placeholder="비밀번호" maxlength="60" autocomplete="current-password">
+            </div>
+            <div class="dyo-lb-ig-compose-row">
+              <div class="dyo-lb-ig-avatar-sm"></div>
+              <input class="dyo-lb-ig-cmt-input" id="dyoLbCmtInput" type="text" placeholder="댓글 달기...">
+              <button class="dyo-lb-ig-cmt-submit" id="dyoLbCmtSubmit" disabled>게시</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </s_t3>
   <script src="./images/script.js"></script>
   <script>
@@ -950,6 +1104,15 @@
         iconExplorer.addEventListener('click', function() {
           window._dyoAnimSrc = this;
           if (window.dyoOpenExplorer) window.dyoOpenExplorer();
+        });
+      }
+
+      // Blogram 아이콘 클릭
+      var iconGallery = document.getElementById('desktopIconGallery');
+      if (iconGallery) {
+        iconGallery.addEventListener('click', function() {
+          window._dyoAnimSrc = this;
+          if (window.dyoOpenGallery) window.dyoOpenGallery();
         });
       }
 
@@ -2918,6 +3081,11 @@
           id: 'dyoExplorerWin', label: 'File Explorer',
           icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
           open: function() { if (window.dyoOpenExplorer) window.dyoOpenExplorer(); }
+        },
+        {
+          id: 'dyoGalleryWin', label: 'Blogram',
+          icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>',
+          open: function() { if (window.dyoOpenGallery) window.dyoOpenGallery(); }
         }
       ];
 
@@ -3045,6 +3213,18 @@
           iconBg: 'linear-gradient(145deg,#fffbe0 0%,#fde68a 100%)',
           iconBorder: 'rgba(240,163,10,0.4)', iconColor: '#f0a30a', iconChar: '📂',
           action: function() { if (window.dyoOpenExplorer) window.dyoOpenExplorer(); }
+        },
+        desktopIconGallery: {
+          name: 'Blogram', ext: '.app', type: 'Application',
+          desc: '블로그 포스트 사진을 Instagram 스타일로 보여주는 앱. GALLERY_POSTS 배열에 직접 등록.',
+          location: '/home/doyoucode/blogram',
+          size: '—', disk: '—',
+          created: '2026-02-28', modified: '2026-03-01',
+          owner: 'doyoucode', group: 'staff',
+          permissions: 'Read-only', version: '2.0.0',
+          iconBg: 'linear-gradient(145deg,#fff0f6 0%,#fcd6e8 100%)',
+          iconBorder: 'rgba(255,120,180,0.4)', iconColor: '#ff78b4', iconChar: '📷',
+          action: function() { if (window.dyoOpenGallery) window.dyoOpenGallery(); }
         }
       };
 
@@ -3128,6 +3308,7 @@
             { label: 'Open Guestbook',     action: 'guestbook' },
             { label: 'Dev Blog',           action: 'blog'      },
             { label: 'Open File Explorer', action: 'explorer'  },
+            { label: 'Open Blogram',       action: 'gallery'   },
             'sep',
             { label: 'Refresh Desktop',    action: 'refresh'   }
           ]);
@@ -3198,6 +3379,7 @@
           case 'guestbook': if (window.dyoOpenGuest)   window.dyoOpenGuest();              break;
           case 'blog':      if (window.dyoOpenBrowser) window.dyoOpenBrowser('/category'); break;
           case 'explorer':  if (window.dyoOpenExplorer) window.dyoOpenExplorer();          break;
+          case 'gallery':   if (window.dyoOpenGallery)  window.dyoOpenGallery();          break;
           case 'refresh':   location.reload();                                             break;
           // Explorer 아이템
           case 'exp-open':
@@ -3853,6 +4035,730 @@
           document.addEventListener('mouseup', onUp);
         });
       });
+    })();
+  </script>
+
+  <script>
+    // ============================================================
+    // Blogram 창  (Instagram 스타일 — 직접 관리)
+    // ============================================================
+    (function() {
+      var w        = document.getElementById('dyoGalleryWin');
+      var titlebar = document.getElementById('dyoGalleryTitlebar');
+      var closeBtn = document.getElementById('dyoGalleryClose');
+      var minBtn   = document.getElementById('dyoGalleryMin');
+      var maxBtn   = document.getElementById('dyoGalleryMax');
+      var statusEl = document.getElementById('dyoGalleryStatus');
+      var gridEl   = document.getElementById('dyoGalleryGrid');
+      var emptyEl  = document.getElementById('dyoGalleryEmpty');
+      if (!w) return;
+
+      var prevRect = null;
+
+      function bringToFront() {
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+      }
+
+      // ══════════════════════════════════════════════════════════════
+      // GALLERY_CATEGORY: 자동으로 파싱할 카테고리 경로
+      //   설정하면 해당 카테고리 페이지의 게시글(썸네일 있는 것)을 자동으로 가져옴.
+      //   게시글 제목이 사진 이름으로 표시됨.
+      //   빈 문자열('')로 설정하면 아래 GALLERY_POSTS 배열을 직접 사용.
+      // ══════════════════════════════════════════════════════════════
+      var GALLERY_CATEGORY = '/category/Pictures';
+
+      // ══════════════════════════════════════════════════════════════
+      // GALLERY_POSTS: GALLERY_CATEGORY가 비어있거나 파싱 실패 시 사용하는 수동 목록
+      //   img  : 이미지 URL  (티스토리 업로드 후 복사한 CDN URL)
+      //   url  : 포스트 URL  (해당 블로그 글 주소)
+      //   title: 글 제목
+      //   date : 날짜 (YYYY-MM-DD)
+      // ══════════════════════════════════════════════════════════════
+      var GALLERY_POSTS = [];
+
+      // 카테고리 페이지 HTML을 파싱해 포스트 목록 추출
+      function fetchCategoryPosts(path, cb) {
+        fetch(path, { credentials: 'include' })
+          .then(function(r) { if (!r.ok) throw new Error(); return r.text(); })
+          .then(function(html) {
+            var parser = new DOMParser();
+            var doc    = parser.parseFromString(html, 'text/html');
+            var posts  = [];
+            doc.querySelectorAll('.list_content').forEach(function(item) {
+              var thumbEl = item.querySelector('.thumbnail_post img');
+              var linkEl  = item.querySelector('a.thumbnail_post, a.link_post');
+              var titleEl = item.querySelector('.tit_post');
+              var dateEl  = item.querySelector('.txt_date');
+              if (!thumbEl || !linkEl) return; // 썸네일 없는 게시글 제외
+              var imgUrl  = thumbEl.getAttribute('src') || '';
+              // Tistory CDN URL 고화질(R1280x0)로 업그레이드
+              imgUrl = imgUrl.replace(/\/thumb\/R\d+x\d+\//, '/thumb/R1280x0/');
+              var postUrl = linkEl.getAttribute('href') || '#';
+              // 절대 URL이면 pathname만 추출
+              try { postUrl = new URL(postUrl).pathname; } catch(e) {}
+              posts.push({
+                img:   imgUrl,
+                url:   postUrl,
+                title: titleEl ? titleEl.textContent.trim() : '',
+                date:  dateEl  ? dateEl.textContent.trim()  : ''
+              });
+            });
+            cb(posts);
+          })
+          .catch(function() { cb(null); });
+      }
+
+      // ── 라이트박스 (Instagram Style) ──────────────────────────────
+      var _photos     = [];
+      var _currentIdx = 0;
+      var lbEl         = document.getElementById('dyoLightbox');
+      var lbBgEl       = document.getElementById('dyoLbBg');
+      var lbCloseEl    = document.getElementById('dyoLbClose');
+      var lbPrevEl     = document.getElementById('dyoLbPrev');
+      var lbNextEl     = document.getElementById('dyoLbNext');
+      var lbImgEl      = document.getElementById('dyoLbImg');
+      var lbTitleEl    = document.getElementById('dyoLbTitle');
+      var lbDateEl     = document.getElementById('dyoLbDate');
+      var lbCntEl      = document.getElementById('dyoLbCounter');
+      var lbPostLink   = document.getElementById('dyoLbPostLink');
+      var lbCopyLink   = document.getElementById('dyoLbCopyLink');
+      var lbMenuBtn    = document.getElementById('dyoLbMenuBtn');
+      var lbDropdown   = document.getElementById('dyoLbDropdown');
+      var lbLikeBtn    = document.getElementById('dyoLbLikeBtn');
+      var lbLikesLine  = document.getElementById('dyoLbLikesLine');
+      var lbCmtBtn     = document.getElementById('dyoLbCmtBtn');
+      var lbShareBtn   = document.getElementById('dyoLbShareBtn');
+      var lbCmtStub    = document.getElementById('dyoLbCmtStub');
+      var lbCmtInput   = document.getElementById('dyoLbCmtInput');
+      var lbCmtName    = document.getElementById('dyoLbCmtName');
+      var lbCmtPw      = document.getElementById('dyoLbCmtPw');
+      var lbCmtSubmit  = document.getElementById('dyoLbCmtSubmit');
+      var lbComposeMeta = document.querySelector('.dyo-lb-ig-compose-meta');
+
+      // ── 로그인 상태 감지 (게스트만 이름/비밀번호 입력 표시) ──────
+      var _lbLoginState = null; // null=미확인, true=로그인됨, false=게스트
+      var _likeCache = {};     // postId → { liked: bool, count: number }
+
+      function detectLoginState(cb) {
+        if (_lbLoginState !== null) { cb(_lbLoginState); return; }
+        // ① /m/api/me 시도 (Tistory 내부 API)
+        fetch('/m/api/me', { credentials: 'include', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+          .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+          .then(function(d) {
+            var loggedIn = !!(d && (d.data || d.id || d.userId || d.name || d.blogName));
+            _lbLoginState = loggedIn;
+            cb(loggedIn);
+          })
+          .catch(function() {
+            // ② 방명록 API에서 isRequestUser 확인 (fallback)
+            fetch('/m/api/guestbook?limit=3&reverse=true', { credentials: 'include' })
+              .then(function(r) { return r.json(); })
+              .then(function(d) {
+                var items = (d.data && d.data.items) || [];
+                var found = false;
+                items.forEach(function(item) {
+                  if (item.writer && item.writer.isRequestUser) found = true;
+                  (item.children || []).forEach(function(c) {
+                    if (c.writer && c.writer.isRequestUser) found = true;
+                  });
+                });
+                _lbLoginState = found;
+                cb(found);
+              })
+              .catch(function() { _lbLoginState = false; cb(false); });
+          });
+      }
+
+      function updateComposeMeta(isLoggedIn) {
+        if (lbComposeMeta) lbComposeMeta.style.display = isLoggedIn ? 'none' : '';
+      }
+
+      // ── 좋아요 (Tistory /reaction API) ───────────────────────────
+      function getPostId(url) {
+        return ((url || '').match(/\/(\d+)/) || [])[1] || null;
+      }
+
+      // JSON에서 카운트 추출 (여러 키 이름 대응)
+      function extractCount(d) {
+        if (d == null) return null;
+        // Tistory /reaction API 응답: { reactionCounter: { like, sum, sad } }
+        if (d.reactionCounter) {
+          var rc = d.reactionCounter;
+          var v = rc.like != null ? rc.like : rc.sum;
+          if (v != null) return parseInt(v, 10);
+        }
+        var keys = ['count','likeCount','reactionCount','totalCount','sympathyCount','cnt'];
+        for (var i = 0; i < keys.length; i++) {
+          if (d[keys[i]] != null) return parseInt(d[keys[i]], 10);
+        }
+        return null;
+      }
+
+      // lbOpen 시: 캐시 우선, 없으면 모바일 API + /reaction GET 병렬로 liked 여부 + 카운트 조회
+      function fetchLikeState(postId, postUrl, cb) {
+        // 이미 캐시된 상태가 있으면 즉시 반환
+        if (_likeCache[postId] !== undefined) {
+          cb(_likeCache[postId]);
+          return;
+        }
+
+        var result = { liked: false, count: null };
+        var done   = 0;
+        function finish() {
+          if (++done === 2) {
+            _likeCache[postId] = result;
+            cb(result);
+          }
+        }
+
+        // ① /m/api/{postId}/reaction — 카운트 + liked 여부
+        fetch('/m/api/' + postId + '/reaction', {
+          credentials: 'include',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+          .then(function(r) { return r.json(); })
+          .then(function(d) {
+            var src = d.data || d;
+            var c = extractCount(src);
+            if (c !== null) result.count = c;
+            var liked = !!(src.liked || src.isLiked || src.userLiked || src.myReaction || src.userReaction);
+            if (liked) result.liked = true;
+            finish();
+          })
+          .catch(function() { finish(); });
+
+        // ② GET /reaction?entryId — isActive / reactionActivated 로 liked 여부 확인 + 카운트
+        fetch('/reaction?entryId=' + postId, {
+          credentials: 'include',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+          .then(function(r) { return r.json(); })
+          .then(function(d) {
+            var src = d.data || d;
+            // Tistory GET /reaction 응답: isActive(bool), reactionActivated("LIKE"|"")
+            var liked = !!(src.isActive || src.reactionActivated === 'LIKE' ||
+                           src.liked || src.isLiked || src.userReaction || src.myReaction);
+            if (liked) result.liked = true;
+            var c = extractCount(src);
+            if (c !== null && result.count === null) result.count = c;
+            finish();
+          })
+          .catch(function() { finish(); });
+      }
+
+      // 좋아요 추가/취소: POST or DELETE /reaction
+      function callReactionAPI(postId, isLike, cb) {
+        var body = isLike
+          ? { entryId: parseInt(postId, 10), reactionType: 'LIKE' }
+          : { entryId: parseInt(postId, 10) };
+        fetch('/reaction', {
+          method: isLike ? 'POST' : 'DELETE',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify(body)
+        })
+          .then(function(r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+          })
+          .then(function(d) {
+            var src = d.data || d;
+            var count = extractCount(src);
+            _likeCache[postId] = { liked: isLike, count: count };
+            cb({ success: true, liked: isLike, count: count });
+          })
+          .catch(function() { cb({ success: false }); });
+      }
+
+      function applyLikeUI(liked, count) {
+        if (!lbLikeBtn || !lbLikesLine) return;
+        lbLikeBtn.classList.toggle('liked', liked);
+        lbLikesLine.textContent = count != null ? '좋아요 ' + count + '개' : '좋아요';
+      }
+
+      // lbOpen 시 현재 상태 로드
+      function updateLikeUI(postUrl) {
+        var postId = getPostId(postUrl);
+        if (!postId) { applyLikeUI(false, 0); return; }
+        applyLikeUI(false, null); // 초기화
+        fetchLikeState(postId, postUrl, function(state) {
+          applyLikeUI(state.liked, state.count);
+        });
+      }
+
+      // ── HTML 이스케이프 ───────────────────────────────────────────
+      function escHtml(s) {
+        return String(s)
+          .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+
+      // ── 댓글 시간 포맷 ────────────────────────────────────────────
+      function fmtTime(str) {
+        if (!str) return '';
+        // "YYYY-MM-DD HH:mm:ss" 또는 ISO 형식
+        var d = new Date(str.replace(' ', 'T'));
+        if (isNaN(d)) return str;
+        var diff = Math.floor((Date.now() - d) / 1000);
+        if (diff < 60)   return '방금 전';
+        if (diff < 3600) return Math.floor(diff/60) + '분 전';
+        if (diff < 86400) return Math.floor(diff/3600) + '시간 전';
+        var y = d.getFullYear(), m = d.getMonth()+1, day = d.getDate();
+        return y + '. ' + m + '. ' + day + '.';
+      }
+
+      // ── 비밀번호 해싱: SHA-256( MD5( encodeURIComponent(pw) ) ) ──
+      //    방명록과 동일한 Tistory 표준 방식
+      function sha256hex(str) {
+        return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
+          .then(function(buf) {
+            return Array.from(new Uint8Array(buf))
+              .map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+          });
+      }
+      function lbHashPw(passwd) {
+        if (!passwd) return Promise.resolve('');
+        var encoded = encodeURIComponent(passwd);
+        var md5hash = (typeof md5 === 'function') ? md5(encoded) : encoded;
+        return sha256hex(md5hash);
+      }
+
+      // ── Tistory 모바일 댓글 API ───────────────────────────────────
+      //  GET /m/api/{postId}/comment?reverse=true
+      //  응답: { data: { items: [...], totalItems: N } }
+      function fetchTistoryComments(postUrl, cb) {
+        var postId = (postUrl.match(/\/(\d+)/) || [])[1];
+        if (!postId) { cb(null); return; }
+        fetch('/m/api/' + postId + '/comment?reverse=true', { credentials: 'include' })
+          .then(function(r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+          })
+          .then(function(res) {
+            var d    = res.data || res;
+            var list = d.items || d.comments || [];
+            cb(Array.isArray(list) ? list : []);
+          })
+          .catch(function() { cb(null); });
+      }
+
+      // ── 댓글 단일 항목 HTML ───────────────────────────────────────
+      function cmtItemHtml(c, isReply) {
+        var author = escHtml((c.writer && c.writer.name) || c.name || '익명');
+        var text   = escHtml(c.content || '');
+        var time   = escHtml(c.written || fmtTime(c.regTime || c.date || ''));
+        var avatar = (c.writer && c.writer.profileImage) || c.profileImage || '';
+        var avHtml = avatar
+          ? '<img class="dyo-lb-ig-cmt-avatar" src="' + escHtml(avatar) + '" alt="" loading="lazy">'
+          : '<div class="dyo-lb-ig-cmt-avatar dyo-lb-ig-cmt-avatar-def"></div>';
+        return (
+          '<div class="dyo-lb-ig-cmt-item' + (isReply ? ' dyo-lb-ig-cmt-reply' : '') + '">' +
+            avHtml +
+            '<div class="dyo-lb-ig-cmt-body">' +
+              '<span class="dyo-lb-ig-cmt-author">' + author + '</span> ' +
+              '<span class="dyo-lb-ig-cmt-text">'   + text   + '</span>' +
+              (time ? '<div class="dyo-lb-ig-cmt-time">' + time + '</div>' : '') +
+            '</div>' +
+          '</div>'
+        );
+      }
+
+      // ── 댓글 렌더링 ───────────────────────────────────────────────
+      function renderComments(comments) {
+        if (!lbCmtStub) return;
+        if (comments === null) {
+          lbCmtStub.innerHTML = '<p class="dyo-lb-ig-cmt-empty">댓글을 불러오지 못했습니다.</p>';
+          return;
+        }
+        if (comments.length === 0) {
+          lbCmtStub.innerHTML = '<p class="dyo-lb-ig-cmt-empty">첫 번째 댓글을 남겨보세요.</p>';
+          return;
+        }
+        var html = '';
+        comments.forEach(function(c) {
+          html += cmtItemHtml(c, false);
+          // 답글(children)도 렌더링
+          if (Array.isArray(c.children)) {
+            c.children.forEach(function(child) {
+              html += cmtItemHtml(child, true);
+            });
+          }
+        });
+        lbCmtStub.innerHTML = html;
+      }
+
+      function updateCmtUI(postUrl) {
+        if (!lbCmtStub) return;
+        lbCmtStub.innerHTML = '<p class="dyo-lb-ig-cmt-empty">댓글 불러오는 중…</p>';
+        fetchTistoryComments(postUrl, function(comments) {
+          // 댓글 응답에서 isRequestUser 확인 (아직 로그인 상태 미확인 시)
+          if (_lbLoginState === null && Array.isArray(comments)) {
+            comments.forEach(function(c) {
+              if (c.writer && c.writer.isRequestUser) _lbLoginState = true;
+              (c.children || []).forEach(function(child) {
+                if (child.writer && child.writer.isRequestUser) _lbLoginState = true;
+              });
+            });
+            if (_lbLoginState === true) updateComposeMeta(true);
+          }
+          renderComments(comments);
+        });
+      }
+
+      // ── 댓글 작성 ─────────────────────────────────────────────────
+      //  POST /m/api/{postId}/comment
+      function postComment(postId, name, pw, text, cb) {
+        lbHashPw(pw).then(function(hashedPw) {
+          fetch('/m/api/' + postId + '/comment', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              captcha:    '',
+              comment:    text,
+              homepage:   location.origin,
+              isSecret:   false,
+              mentionId:  null,
+              name:       name || '익명',
+              parent:     null,
+              password:   hashedPw
+            })
+          })
+            .then(function(r) {
+              if (!r.ok) throw new Error('HTTP ' + r.status);
+              return r.json();
+            })
+            .then(function(d) { cb({ success: true, data: d }); })
+            .catch(function() { cb({ success: false }); });
+        }).catch(function() { cb({ success: false }); });
+      }
+
+      // ── 공유 ─────────────────────────────────────────────────────
+      function sharePost(url) {
+        var fullUrl = location.origin + url;
+        if (navigator.share) {
+          navigator.share({ url: fullUrl }).catch(function() {});
+        } else {
+          navigator.clipboard.writeText(fullUrl).then(function() {
+            var btn = lbShareBtn;
+            var orig = btn.innerHTML;
+            btn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+            setTimeout(function() { btn.innerHTML = orig; }, 1500);
+          }).catch(function() {});
+        }
+      }
+
+      // ── 메인 open/close ───────────────────────────────────────────
+      function lbOpen(idx) {
+        _currentIdx = ((idx % _photos.length) + _photos.length) % _photos.length;
+        var p = _photos[_currentIdx];
+
+        lbImgEl.src              = p.img;
+        lbImgEl.alt              = p.title || '';
+        if (lbTitleEl)  lbTitleEl.textContent  = p.title || '';
+        if (lbDateEl)   lbDateEl.textContent   = p.date  || '';
+        if (lbCntEl)    lbCntEl.textContent    = (_currentIdx + 1) + ' / ' + _photos.length;
+        if (lbPostLink) lbPostLink.href = p.url;
+
+        var show = _photos.length > 1;
+        if (lbPrevEl) lbPrevEl.style.display = show ? '' : 'none';
+        if (lbNextEl) lbNextEl.style.display = show ? '' : 'none';
+
+        updateLikeUI(p.url);
+        updateCmtUI(p.url);
+        // 로그인 상태에 따라 이름/비밀번호 입력란 표시 여부 결정
+        updateComposeMeta(_lbLoginState === true);
+
+        if (lbEl) lbEl.classList.add('open');
+        if (lbDropdown) lbDropdown.classList.remove('open');
+      }
+
+      function lbClose() {
+        if (lbEl) lbEl.classList.remove('open');
+        if (lbImgEl) lbImgEl.src = '';
+        if (lbDropdown) lbDropdown.classList.remove('open');
+      }
+
+      // ── 이벤트 바인딩 ─────────────────────────────────────────────
+      if (lbCloseEl) lbCloseEl.addEventListener('click', lbClose);
+      if (lbBgEl)    lbBgEl.addEventListener('click',    lbClose);
+      if (lbPrevEl)  lbPrevEl.addEventListener('click',  function() { lbOpen(_currentIdx - 1); });
+      if (lbNextEl)  lbNextEl.addEventListener('click',  function() { lbOpen(_currentIdx + 1); });
+
+      // 햄버거 메뉴
+      if (lbMenuBtn) lbMenuBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (lbDropdown) lbDropdown.classList.toggle('open');
+      });
+      document.addEventListener('click', function() {
+        if (lbDropdown) lbDropdown.classList.remove('open');
+      });
+
+      // 링크 복사
+      if (lbCopyLink) lbCopyLink.addEventListener('click', function() {
+        var p = _photos[_currentIdx];
+        if (!p) return;
+        navigator.clipboard.writeText(location.origin + p.url).then(function() {
+          lbCopyLink.textContent = '복사됨 ✓';
+          setTimeout(function() { lbCopyLink.textContent = '링크 복사'; }, 1500);
+        }).catch(function() {});
+        if (lbDropdown) lbDropdown.classList.remove('open');
+      });
+
+      // 좋아요
+      if (lbLikeBtn) lbLikeBtn.addEventListener('click', function() {
+        var p = _photos[_currentIdx];
+        if (!p) return;
+        var postId  = getPostId(p.url);
+        if (!postId) return;
+        var nowLiked = !lbLikeBtn.classList.contains('liked');
+        // 낙관적 UI 업데이트 (즉시 반영)
+        var curText  = lbLikesLine ? lbLikesLine.textContent : '';
+        var curCount = parseInt((curText.match(/\d+/) || ['0'])[0], 10);
+        applyLikeUI(nowLiked, nowLiked ? curCount + 1 : Math.max(0, curCount - 1));
+        lbLikeBtn.classList.remove('pop');
+        void lbLikeBtn.offsetWidth;
+        lbLikeBtn.classList.add('pop');
+        // API 호출 후 서버 카운트로 보정
+        callReactionAPI(postId, nowLiked, function(res) {
+          if (!res.success) {
+            // 실패 시 원래 상태로 롤백 + 캐시도 복원
+            _likeCache[postId] = { liked: !nowLiked, count: curCount };
+            applyLikeUI(!nowLiked, curCount);
+          } else if (res.count != null) {
+            applyLikeUI(nowLiked, res.count);
+          }
+        });
+      });
+
+      // 공유
+      if (lbShareBtn) lbShareBtn.addEventListener('click', function() {
+        var p = _photos[_currentIdx];
+        if (p) sharePost(p.url);
+      });
+
+      // 댓글 입력 — 내용 있어야 게시 버튼 활성화
+      if (lbCmtInput) lbCmtInput.addEventListener('input', function() {
+        if (lbCmtSubmit) lbCmtSubmit.disabled = !this.value.trim();
+      });
+
+      // 댓글 입력 — Enter 키로 제출
+      if (lbCmtInput) lbCmtInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey && lbCmtSubmit && !lbCmtSubmit.disabled) {
+          e.preventDefault();
+          lbCmtSubmit.click();
+        }
+      });
+
+      // 댓글 게시
+      if (lbCmtSubmit) lbCmtSubmit.addEventListener('click', function() {
+        var p = _photos[_currentIdx];
+        if (!p) return;
+        var postId  = getPostId(p.url);
+        var name    = lbCmtName   ? lbCmtName.value.trim()   : '';
+        var pw      = lbCmtPw     ? lbCmtPw.value             : '';
+        var comment = lbCmtInput  ? lbCmtInput.value.trim()  : '';
+        if (!comment || !postId) return;
+
+        lbCmtSubmit.disabled = true;
+        lbCmtSubmit.textContent = '…';
+
+        postComment(postId, name, pw, comment, function(res) {
+          lbCmtSubmit.textContent = '게시';
+          if (res.success) {
+            if (lbCmtInput) { lbCmtInput.value = ''; }
+            // 댓글 목록 새로고침
+            updateCmtUI(p.url);
+          } else {
+            // 실패 시 버튼 재활성화
+            lbCmtSubmit.disabled = false;
+          }
+        });
+      });
+
+      // 키보드
+      document.addEventListener('keydown', function(e) {
+        if (!lbEl || !lbEl.classList.contains('open')) return;
+        if (e.key === 'Escape')     lbClose();
+        if (e.key === 'ArrowLeft')  lbOpen(_currentIdx - 1);
+        if (e.key === 'ArrowRight') lbOpen(_currentIdx + 1);
+      });
+
+      var gpPostCountEl = document.getElementById('dyoGpPostCount');
+      function setProfilePostCount(n) {
+        if (gpPostCountEl) gpPostCountEl.textContent = n;
+      }
+
+      // ── 렌더링 ───────────────────────────────────────────────────
+      function render() {
+        gridEl.innerHTML = '';
+        _photos = GALLERY_POSTS;
+
+        setProfilePostCount(_photos.length);
+
+        if (!_photos.length) {
+          gridEl.style.display  = 'none';
+          emptyEl.style.display = 'flex';
+          if (statusEl) statusEl.textContent = '0 posts';
+          return;
+        }
+
+        _photos.forEach(function(p, i) {
+          var cell = document.createElement('div');
+          cell.className = 'dyo-gallery-item';
+
+          var img = document.createElement('img');
+          img.src     = p.img;
+          img.alt     = p.title || '';
+          img.loading = 'lazy';
+
+          var overlay = document.createElement('div');
+          overlay.className = 'dyo-gallery-overlay';
+          overlay.innerHTML = '<span class="dyo-ig-center-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>';
+
+          cell.appendChild(img);
+          cell.appendChild(overlay);
+          cell.addEventListener('click', function() { lbOpen(i); });
+          gridEl.appendChild(cell);
+        });
+
+        gridEl.style.display  = 'grid';
+        emptyEl.style.display = 'none';
+        if (statusEl) statusEl.textContent = _photos.length + ' posts';
+      }
+
+      // ── 창 열기/닫기/최소화/최대화 ─────────────────────────────
+      function openGallery() {
+        var wasOpen = w.classList.contains('open');
+        if (!wasOpen) {
+          var W = Math.min(400, window.innerWidth  - 40);
+          var H = Math.min(580, window.innerHeight - 40);
+          w.style.width  = W + 'px';
+          w.style.height = H + 'px';
+          w.style.left   = Math.round(window.innerWidth - W - 24) + 'px';
+          w.style.top    = Math.max(20, Math.min(
+            Math.round((window.innerHeight - H) / 2),
+            window.innerHeight - H - 160
+          )) + 'px';
+          w.style.right  = 'auto';
+          w.style.bottom = 'auto';
+        }
+        w.classList.remove('minimized', 'maximized');
+        w.classList.add('open');
+        bringToFront();
+        if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(w);
+
+        // 로그인 상태 감지 (처음 한 번만)
+        if (_lbLoginState === null) {
+          detectLoginState(function(isLoggedIn) { updateComposeMeta(isLoggedIn); });
+        }
+
+        if (GALLERY_CATEGORY) {
+          // 카테고리 페이지에서 자동 파싱
+          if (statusEl) statusEl.textContent = '불러오는 중…';
+          if (gridEl)   gridEl.innerHTML = '';
+          if (emptyEl)  emptyEl.style.display = 'none';
+          fetchCategoryPosts(GALLERY_CATEGORY, function(posts) {
+            if (posts && posts.length > 0) GALLERY_POSTS = posts;
+            render();
+          });
+        } else {
+          render();
+        }
+      }
+
+      window.dyoOpenGallery = openGallery;
+
+      if (closeBtn) closeBtn.addEventListener('click', function() {
+        if (window.dyoAnimDismiss) {
+          window.dyoAnimDismiss(w, function() { w.classList.remove('open', 'minimized', 'maximized'); });
+        } else {
+          w.classList.remove('open', 'minimized', 'maximized');
+        }
+      });
+
+      if (minBtn) minBtn.addEventListener('click', function() {
+        if (w.classList.contains('minimized')) {
+          var tb = document.querySelector('.dyo-taskbtn[data-win-id="dyoGalleryWin"]');
+          window._dyoAnimSrc = tb || null;
+          w.classList.remove('minimized');
+          bringToFront();
+          if (window.dyoAnimOpen) window.dyoAnimOpen(w);
+        } else {
+          if (window.dyoAnimMinimize) {
+            window.dyoAnimMinimize(w, function() { w.classList.add('minimized'); });
+          } else {
+            w.classList.add('minimized');
+          }
+        }
+      });
+
+      if (maxBtn) maxBtn.addEventListener('click', function() {
+        if (w.classList.contains('maximized')) {
+          if (prevRect) {
+            w.style.left = prevRect.l + 'px'; w.style.top    = prevRect.t + 'px';
+            w.style.width = prevRect.w + 'px'; w.style.height = prevRect.h + 'px';
+          }
+          w.classList.remove('maximized');
+          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(w);
+        } else {
+          w.classList.remove('minimized');
+          var r = w.getBoundingClientRect();
+          prevRect = { l: r.left, t: r.top, w: r.width, h: r.height };
+          w.style.left = ''; w.style.top = ''; w.style.width = ''; w.style.height = '';
+          w.classList.add('maximized');
+          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(w);
+        }
+      });
+
+      titlebar.addEventListener('dblclick', function(e) {
+        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+        maxBtn.click();
+      });
+
+      // 드래그
+      titlebar.addEventListener('mousedown', function(e) {
+        if (w.classList.contains('maximized')) return;
+        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+        var r = w.getBoundingClientRect();
+        w.style.left = r.left + 'px'; w.style.top = r.top + 'px';
+        var ox = e.clientX - r.left, oy = e.clientY - r.top;
+        function onMove(ev) { w.style.left = (ev.clientX - ox) + 'px'; w.style.top = (ev.clientY - oy) + 'px'; }
+        function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+
+      // 리사이즈
+      w.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
+        handle.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized')) return;
+          e.preventDefault(); e.stopPropagation();
+          var dir = handle.className.replace('dyo-brs-handle', '').trim();
+          var r = w.getBoundingClientRect();
+          var sx = e.clientX, sy = e.clientY;
+          var sl = r.left, st = r.top, sw = r.width, sh = r.height;
+          function onMove(ev) {
+            var dx = ev.clientX - sx, dy = ev.clientY - sy;
+            var nl = sl, nt = st, nw = sw, nh = sh;
+            if (dir.includes('e')) nw = Math.max(340, sw + dx);
+            if (dir.includes('s')) nh = Math.max(260, sh + dy);
+            if (dir.includes('w')) { nw = Math.max(340, sw - dx); nl = sl + sw - nw; }
+            if (dir.includes('n')) { nh = Math.max(260, sh - dy); nt = st + sh - nh; }
+            w.style.width = nw + 'px'; w.style.height = nh + 'px';
+            w.style.left  = nl + 'px'; w.style.top    = nt + 'px';
+          }
+          function onUp2() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp2); }
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp2);
+        });
+      });
+
+      w.addEventListener('mousedown', bringToFront);
     })();
   </script>
 </body>
