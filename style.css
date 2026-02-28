@@ -3687,6 +3687,45 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 }
 .dyo-exp-open-btn:hover { background: #388bfd; }
 
+/* 뷰 전환 버튼 */
+.dyo-exp-view-btns { display: flex; gap: 2px; flex-shrink: 0; margin-left: 4px; }
+.dyo-exp-viewbtn {
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: none; border-radius: 5px;
+  color: #484f58; cursor: pointer; padding: 0;
+  transition: background 0.13s, color 0.13s;
+}
+.dyo-exp-viewbtn:hover { background: #21262d; color: #8b949e; }
+.dyo-exp-viewbtn.active { color: #58a6ff; background: #1f6feb22; }
+
+/* List 뷰 */
+.dyo-explorer-list { display: flex; flex-direction: column; gap: 1px; }
+.dyo-exp-list-header {
+  display: grid;
+  grid-template-columns: 22px 1fr 90px 50px;
+  gap: 0 10px;
+  padding: 4px 10px 6px;
+  border-bottom: 1px solid #21262d;
+  font-size: 11px; color: #484f58;
+  font-family: var(--font-mono); user-select: none;
+}
+.dyo-exp-list-item {
+  display: grid;
+  grid-template-columns: 22px 1fr 90px 50px;
+  gap: 0 10px; align-items: center;
+  padding: 5px 10px; border-radius: 5px;
+  cursor: pointer; color: #c9d1d9;
+  user-select: none; font-size: 13px;
+  transition: background 0.1s;
+}
+.dyo-exp-list-item:hover { background: #161b22; }
+.dyo-exp-list-item:active { background: #1f6feb22; }
+.dyo-exp-list-icon { font-size: 16px; line-height: 1; text-align: center; }
+.dyo-exp-list-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dyo-exp-list-type { color: #8b949e; font-size: 12px; font-family: var(--font-mono); }
+.dyo-exp-list-count { color: #484f58; font-size: 12px; font-family: var(--font-mono); text-align: right; }
+
 /* ── External Link Confirm Dialog ── */
 .dyo-confirm-overlay {
   position: fixed;

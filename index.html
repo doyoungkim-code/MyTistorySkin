@@ -802,6 +802,14 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
         <div class="dyo-exp-addrbar" id="dyoExpAddrBar"></div>
+        <div class="dyo-exp-view-btns">
+          <button class="dyo-exp-viewbtn active" id="dyoExpViewGrid" title="Grid 뷰">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </button>
+          <button class="dyo-exp-viewbtn" id="dyoExpViewList" title="List 뷰">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg>
+          </button>
+        </div>
       </div>
       <div class="dyo-explorer-body">
         <div class="dyo-explorer-sidebar" id="dyoExplorerTree"></div>
@@ -3435,6 +3443,23 @@
 
       var prevRect  = null;
       var treeBuilt = false;
+      var viewMode  = 'grid'; // 'grid' | 'list'
+
+      // 뷰 전환 버튼
+      var viewGridBtn = document.getElementById('dyoExpViewGrid');
+      var viewListBtn = document.getElementById('dyoExpViewList');
+      function setViewMode(mode) {
+        viewMode = mode;
+        if (viewGridBtn) viewGridBtn.classList.toggle('active', mode === 'grid');
+        if (viewListBtn) viewListBtn.classList.toggle('active', mode === 'list');
+        // 현재 위치 다시 렌더링
+        if (navIdx >= 0 && navHistory[navIdx]) {
+          var e = navHistory[navIdx];
+          renderMain(e.node, e.ancestors);
+        }
+      }
+      if (viewGridBtn) viewGridBtn.addEventListener('click', function() { setViewMode('grid'); });
+      if (viewListBtn) viewListBtn.addEventListener('click', function() { setViewMode('list'); });
 
       // 탐색 히스토리
       var navHistory = [];
@@ -3542,34 +3567,63 @@
         var curAncestors = ancestors || [rootNode];
 
         if (node.children && node.children.length > 0) {
-          var grid = document.createElement('div');
-          grid.className = 'dyo-explorer-grid';
 
-          node.children.forEach(function(child) {
-            var item = document.createElement('div');
-            item.className = 'dyo-exp-item';
-            item.innerHTML =
-              '<div class="dyo-exp-item-icon">' + child.icon + '</div>' +
-              '<div class="dyo-exp-item-label">' + child.label + '</div>';
+          // ── 공통 이벤트 바인딩 헬퍼 ──
+          function bindItem(el, c) {
+            var openFn = c.children && c.children.length
+              ? function() { navigate(c, curAncestors.concat([c])); }
+              : function() { if (window.dyoOpenBrowser) window.dyoOpenBrowser(c.url); };
+            el.addEventListener('click', openFn);
+            el.addEventListener('contextmenu', function(e) {
+              e.preventDefault(); e.stopPropagation();
+              if (window.dyoShowExpItemCtx) window.dyoShowExpItemCtx(c, openFn, e.clientX, e.clientY);
+            });
+          }
 
-            (function(c) {
-              var openFn = c.children && c.children.length
-                ? function() { navigate(c, curAncestors.concat([c])); }
-                : function() { if (window.dyoOpenBrowser) window.dyoOpenBrowser(c.url); };
+          if (viewMode === 'list') {
+            // ── List 뷰 ──
+            var list = document.createElement('div');
+            list.className = 'dyo-explorer-list';
 
-              item.addEventListener('click', openFn);
+            // 헤더
+            var hdr = document.createElement('div');
+            hdr.className = 'dyo-exp-list-header';
+            hdr.innerHTML = '<span></span><span>Name</span><span>Type</span><span style="text-align:right">Items</span>';
+            list.appendChild(hdr);
 
-              item.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (window.dyoShowExpItemCtx) window.dyoShowExpItemCtx(c, openFn, e.clientX, e.clientY);
-              });
-            })(child);
+            node.children.forEach(function(child) {
+              var isDir = child.children && child.children.length;
+              var row = document.createElement('div');
+              row.className = 'dyo-exp-list-item';
+              row.innerHTML =
+                '<span class="dyo-exp-list-icon">' + child.icon + '</span>' +
+                '<span class="dyo-exp-list-name">' + child.label + '</span>' +
+                '<span class="dyo-exp-list-type">' + (isDir ? 'Folder' : 'Category') + '</span>' +
+                '<span class="dyo-exp-list-count">' + (isDir ? child.children.length : '—') + '</span>';
+              (function(c) { bindItem(row, c); })(child);
+              list.appendChild(row);
+            });
 
-            grid.appendChild(item);
-          });
+            mainEl.appendChild(list);
 
-          mainEl.appendChild(grid);
+          } else {
+            // ── Grid 뷰 ──
+            var grid = document.createElement('div');
+            grid.className = 'dyo-explorer-grid';
+
+            node.children.forEach(function(child) {
+              var item = document.createElement('div');
+              item.className = 'dyo-exp-item';
+              item.innerHTML =
+                '<div class="dyo-exp-item-icon">' + child.icon + '</div>' +
+                '<div class="dyo-exp-item-label">' + child.label + '</div>';
+              (function(c) { bindItem(item, c); })(child);
+              grid.appendChild(item);
+            });
+
+            mainEl.appendChild(grid);
+          }
+
         } else {
           // 리프 단독 표시
           var empty = document.createElement('div');
