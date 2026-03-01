@@ -2565,7 +2565,7 @@ html, body {
   .dyo-term-body { padding: 12px 16px 6px; font-size: 13px; }
   .dyo-term-input-row { padding: 8px 16px 12px; }
   .dyo-term-prompt { font-size: 13px; }
-  .dyo-term-input { font-size: 13px; }
+  .dyo-term-input { font-size: 13px; }  
 }
 
 
@@ -2588,7 +2588,9 @@ html, body {
    *   background-size: auto, cover;
    */
 
-  background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbVSlHP%2FdJMcadnwusT%2FAAAAAAAAAAAAAAAAAAAAANQwzVrWYleMazulbZvaPnk5T-8-kymCRR9qhnPdmpE_%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3DqNxELUkKuQTt3pctIwbOLmU9nmc%253D') center / cover no-repeat;
+  background:
+    url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbVSlHP%2FdJMcadnwusT%2FAAAAAAAAAAAAAAAAAAAAANQwzVrWYleMazulbZvaPnk5T-8-kymCRR9qhnPdmpE_%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DAID%252Buv6WNn3EhAm55qG2V5Wsj2E%253D') center / cover no-repeat,
+    linear-gradient(135deg, #0a0e16 0%, #1a2235 50%, #0a0e16 100%);
   display: none;
   flex-direction: column;
   overflow: hidden;
@@ -2723,11 +2725,11 @@ html, body {
 
 /* 하단 태스크바 */
 .dyo-desktop-bar {
-  height: 44px;
-  background: rgba(10,14,20,0.92);
+  height: 52px;
+  background: rgba(10,14,20,0.4);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid #21262d;
+  border-top: 1px solid rgba(255,255,255,0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2735,6 +2737,7 @@ html, body {
   flex-shrink: 0;
   position: relative;
   z-index: 1;
+  overflow: visible;
 }
 
 .dyo-bar-left {
@@ -2745,7 +2748,7 @@ html, body {
 }
 
 .dyo-bar-center {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 4px;
   position: absolute;
@@ -2802,6 +2805,89 @@ html, body {
 }
 .dyo-taskbtn { position: relative; }
 
+/* ── macOS Dock ──────────────────────────────────────────────── */
+.dyo-dock {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0 24px;
+  z-index: 2;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.dyo-dock-item {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  position: relative;
+  transform-origin: center center;
+  transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.dyo-dock-item.open { display: flex; }
+
+.dyo-dock-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  flex-shrink: 0;
+}
+
+.dyo-dock-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.dyo-dock-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.8);
+  opacity: 0;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+.dyo-dock-item.open .dyo-dock-dot { opacity: 1; }
+.dyo-dock-item.minimized .dyo-dock-dot { opacity: 1; background: rgba(255,255,255,0.3); }
+
+.dyo-dock-label {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(20,20,24,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #e6edf3;
+  font-size: 11.5px;
+  font-family: var(--font-sans);
+  padding: 4px 10px;
+  border-radius: 7px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  transition: opacity 0.1s;
+}
+
 .dyo-bar-right {
   display: flex;
   align-items: center;
@@ -2840,7 +2926,7 @@ html, body {
    ============================================ */
 .dyo-admin-bar {
   position: fixed;
-  bottom: 56px;
+  bottom: 62px;
   right: 20px;
   z-index: 99999;
   display: flex !important;
@@ -4578,3 +4664,163 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 
 /* 답글 들여쓰기 */
 .dyo-lb-ig-cmt-reply { padding-left: 38px; }
+
+/* Blogram 무한스크롤 sentinel */
+.dyo-gallery-sentinel {
+  grid-column: 1 / -1;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* ============================================
+   BOOT SCREEN
+   ============================================ */
+#dyoBoot {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease;
+}
+#dyoBoot.dyo-boot-hiding {
+  opacity: 0;
+  pointer-events: none;
+}
+.dyo-boot-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dyo-boot-spinner {
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  animation: dyo-boot-spin 0.75s linear infinite;
+}
+@keyframes dyo-boot-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── TUTORIAL ─────────────────────────────────────────────── */
+#dyoTutorial {
+  position: fixed;
+  inset: 0;
+  z-index: 999990;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+#dyoTutorial.active {
+  pointer-events: auto;
+  opacity: 1;
+}
+#dyoTutSpotlight {
+  position: fixed;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 9999px rgba(0, 0, 0, 0.72),
+    0 0 0 2px rgba(88, 166, 255, 0.85),
+    0 0 22px rgba(88, 166, 255, 0.3);
+  transition: left 0.35s cubic-bezier(.4,0,.2,1),
+              top  0.35s cubic-bezier(.4,0,.2,1),
+              width  0.35s cubic-bezier(.4,0,.2,1),
+              height 0.35s cubic-bezier(.4,0,.2,1),
+              box-shadow 0.35s ease;
+  pointer-events: none;
+}
+#dyoTutSpotlight.no-target {
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.72);
+  border-radius: 0;
+}
+#dyoTutBox {
+  position: fixed;
+  width: 300px;
+  background: #1c2128;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 22px 22px 18px;
+  box-sizing: border-box;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  color: #e6edf3;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  transition: left 0.35s cubic-bezier(.4,0,.2,1),
+              top  0.35s cubic-bezier(.4,0,.2,1),
+              opacity 0.2s ease;
+  pointer-events: auto;
+}
+#dyoTutPreview {
+  position: fixed;
+  left: 70%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 999991;
+}
+#dyoTutPreview.hidden { display: none; }
+@media (max-width: 900px) {
+  #dyoTutPreview { display: none !important; }
+}
+.dyo-tut-emoji {
+  font-size: 28px;
+  margin-bottom: 10px;
+  display: block;
+}
+.dyo-tut-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #f0f6fc;
+  margin: 0 0 6px;
+}
+.dyo-tut-desc {
+  font-size: 13px;
+  color: #8b949e;
+  line-height: 1.55;
+  margin: 0 0 16px;
+}
+.dyo-tut-dots {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.dyo-tut-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #30363d;
+  transition: background 0.2s;
+}
+.dyo-tut-dot.active {
+  background: #58a6ff;
+}
+.dyo-tut-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.dyo-tut-skip {
+  background: none;
+  border: none;
+  color: #6e7681;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.dyo-tut-skip:hover { color: #8b949e; }
+.dyo-tut-next {
+  background: #238636;
+  border: 1px solid #2ea043;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.dyo-tut-next:hover { background: #2ea043; }
