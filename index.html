@@ -577,6 +577,18 @@
           <span class="dyo-di-label">Blogram</span>
         </div>
 
+        <!-- Music Player 아이콘 -->
+        <div class="dyo-desktop-icon" id="desktopIconMusic" title="Music">
+          <div class="dyo-di-wrap dyo-di-music">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 18V5l12-2v13" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="6" cy="18" r="3" stroke="white" stroke-width="1.8"/>
+              <circle cx="18" cy="16" r="3" stroke="white" stroke-width="1.8"/>
+            </svg>
+          </div>
+          <span class="dyo-di-label">Music</span>
+        </div>
+
       </div>
 
       <!-- 하단 Dock -->
@@ -818,6 +830,62 @@
           <button class="dyo-confirm-cancel" id="dyoConfirmCancel">취소</button>
           <button class="dyo-confirm-ok" id="dyoConfirmOk">새 탭으로 열기 →</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Music Player 창 -->
+    <div class="dyo-shell-win dyo-music-win" id="dyoMusicWin">
+      <div class="dyo-brs-handle n"></div><div class="dyo-brs-handle ne"></div>
+      <div class="dyo-brs-handle e"></div><div class="dyo-brs-handle se"></div>
+      <div class="dyo-brs-handle s"></div><div class="dyo-brs-handle sw"></div>
+      <div class="dyo-brs-handle w"></div><div class="dyo-brs-handle nw"></div>
+      <div class="dyo-shell-titlebar" id="dyoMusicTitlebar">
+        <span class="dyo-term-dot red"    id="dyoMusicClose" title="닫기"></span>
+        <span class="dyo-term-dot yellow" id="dyoMusicMin"   title="최소화"></span>
+        <span class="dyo-term-dot green"  id="dyoMusicMax"   title="최대화"></span>
+        <span class="dyo-shell-title">Music</span>
+      </div>
+      <div class="dyo-music-body">
+        <div class="dyo-music-art-wrap">
+          <div class="dyo-music-art" id="dyoMusicArt">
+            <img id="dyoMusicThumb" src="" alt="" draggable="false">
+          </div>
+        </div>
+        <div class="dyo-music-meta">
+          <div class="dyo-music-song" id="dyoMusicSong">—</div>
+          <div class="dyo-music-chan" id="dyoMusicChan">—</div>
+        </div>
+        <div class="dyo-music-seek-wrap">
+          <div class="dyo-music-seek" id="dyoMusicSeek">
+            <div class="dyo-music-seek-fill" id="dyoMusicSeekFill"></div>
+            <div class="dyo-music-seek-knob" id="dyoMusicSeekKnob"></div>
+          </div>
+          <div class="dyo-music-times">
+            <span id="dyoMusicCur">—</span>
+            <span id="dyoMusicDur">—</span>
+          </div>
+        </div>
+        <div class="dyo-music-ctrls">
+          <button class="dyo-mc-btn dyo-mc-side" id="dyoMusicPrev" title="이전">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
+          </button>
+          <button class="dyo-mc-btn dyo-mc-play" id="dyoMusicPlay" title="재생">
+            <svg class="dyo-mc-icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg class="dyo-mc-icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+          </button>
+          <button class="dyo-mc-btn dyo-mc-side" id="dyoMusicNext" title="다음">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
+          </button>
+        </div>
+        <div class="dyo-music-vol-wrap">
+          <svg class="dyo-music-vol-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg>
+          <input type="range" class="dyo-music-vol" id="dyoMusicVol" min="0" max="100" value="70">
+          <svg class="dyo-music-vol-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+        </div>
+        <div class="dyo-music-yt-area" id="dyoYTContainer">
+          <div id="dyoYTPlayer"></div>
+        </div>
+        <div class="dyo-music-playlist" id="dyoMusicList"></div>
       </div>
     </div>
 
@@ -1132,6 +1200,15 @@
         iconGallery.addEventListener('click', function() {
           window._dyoAnimSrc = this;
           if (window.dyoOpenGallery) window.dyoOpenGallery();
+        });
+      }
+
+      // Music Player 아이콘 클릭
+      var iconMusic = document.getElementById('desktopIconMusic');
+      if (iconMusic) {
+        iconMusic.addEventListener('click', function() {
+          window._dyoAnimSrc = this;
+          if (window.dyoOpenMusic) window.dyoOpenMusic();
         });
       }
 
@@ -3104,6 +3181,11 @@
           id: 'dyoGalleryWin', label: 'Blogram',
           icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>',
           open: function() { if (window.dyoOpenGallery) window.dyoOpenGallery(); }
+        },
+        {
+          id: 'dyoMusicWin', label: 'Music',
+          icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
+          open: function() { if (window.dyoOpenMusic) window.dyoOpenMusic(); }
         }
       ];
 
@@ -3192,6 +3274,12 @@
           style: 'background:linear-gradient(135deg,#833ab4,#c13584 35%,#e1306c 60%,#f77737 85%,#fcaf45);border:1px solid rgba(225,48,108,.4)',
           icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="1.8"/><circle cx="12" cy="12" r="5" stroke="white" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.3" fill="white"/></svg>',
           open: function() { if (window.dyoOpenGallery) window.dyoOpenGallery(); }
+        },
+        {
+          id: 'dyoMusicWin', label: 'Music',
+          style: 'background:linear-gradient(145deg,#fc3c44,#ff2d55);border:1px solid rgba(255,45,85,.4)',
+          icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18V5l12-2v13" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" stroke="white" stroke-width="1.8"/><circle cx="18" cy="16" r="3" stroke="white" stroke-width="1.8"/></svg>',
+          open: function() { if (window.dyoOpenMusic) window.dyoOpenMusic(); }
         }
       ];
 
@@ -3444,6 +3532,18 @@
           iconBg: 'linear-gradient(145deg,#fff0f6 0%,#fcd6e8 100%)',
           iconBorder: 'rgba(255,120,180,0.4)', iconColor: '#ff78b4', iconChar: '📷',
           action: function() { if (window.dyoOpenGallery) window.dyoOpenGallery(); }
+        },
+        desktopIconMusic: {
+          name: 'Music', ext: '.app', type: 'Application',
+          desc: 'YouTube 스트리밍 뮤직 플레이어',
+          location: '/Applications/Music',
+          size: '4 tracks', disk: '— (streaming)',
+          created: '2025-01-15', modified: '2026-03-03',
+          owner: 'doyoucode', group: 'staff',
+          permissions: 'Read / Execute', version: 'YouTube IFrame API v3',
+          iconBg: 'linear-gradient(145deg,#fc3c44,#ff2d55)',
+          iconBorder: 'rgba(255,45,85,0.4)', iconColor: '#fff', iconChar: '♪',
+          action: function() { if (window.dyoOpenMusic) window.dyoOpenMusic(); }
         }
       };
 
@@ -5391,6 +5491,348 @@
           window.dyoStartTutorial();
         });
       }
+    })();
+
+    // ============================================================
+    // Music Player
+    // ============================================================
+    (function() {
+      var w        = document.getElementById('dyoMusicWin');
+      var titlebar = document.getElementById('dyoMusicTitlebar');
+      var closeBtn = document.getElementById('dyoMusicClose');
+      var minBtn   = document.getElementById('dyoMusicMin');
+      var maxBtn   = document.getElementById('dyoMusicMax');
+      if (!w) return;
+
+      var artEl    = document.getElementById('dyoMusicArt');
+      var thumbEl  = document.getElementById('dyoMusicThumb');
+      var songEl   = document.getElementById('dyoMusicSong');
+      var chanEl   = document.getElementById('dyoMusicChan');
+      var seekEl   = document.getElementById('dyoMusicSeek');
+      var fillEl   = document.getElementById('dyoMusicSeekFill');
+      var knobEl   = document.getElementById('dyoMusicSeekKnob');
+      var curEl    = document.getElementById('dyoMusicCur');
+      var durEl    = document.getElementById('dyoMusicDur');
+      var playBtn  = document.getElementById('dyoMusicPlay');
+      var prevBtn  = document.getElementById('dyoMusicPrev');
+      var nextBtn  = document.getElementById('dyoMusicNext');
+      var volEl    = document.getElementById('dyoMusicVol');
+      var listEl   = document.getElementById('dyoMusicList');
+
+      var PLAYLIST = [
+        { id: 'uTuuz__8gUM', title: '', artist: '' },
+        { id: 'CfPxlb8-ZQ0', title: '', artist: '' },
+        { id: 'HfaIcB4Ogxk', title: '', artist: '' },
+        { id: 'hOJ76cZEt08', title: '', artist: '' }
+      ];
+
+      var curIdx         = 0;
+      var ytPlayer       = null;
+      var isPlaying      = false;
+      var progressTimer  = null;
+      var autoPlayOnReady = false;
+      var dragging = false, dragOX = 0, dragOY = 0;
+      var savedPos = null;
+      var seeking  = false;
+
+      function bringToFront() {
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+      }
+      w.addEventListener('mousedown', bringToFront);
+
+      // ── 창 관리 ─────────────────────────────────────────────
+      function openMusic() {
+        var wasOpen = w.classList.contains('open');
+        if (!wasOpen) {
+          var GAP_RIGHT  = 8;
+          var GAP_TOP    = 8;
+          var GAP_BOTTOM = 68; // 하단 바(52px) + 여유 16px
+          var W = 260;
+          var H = window.innerHeight - GAP_TOP - GAP_BOTTOM;
+          w.style.width  = W + 'px';
+          w.style.height = H + 'px';
+          w.style.left   = (window.innerWidth - W - GAP_RIGHT) + 'px';
+          w.style.top    = GAP_TOP + 'px';
+          w.style.right  = 'auto';
+          w.style.bottom = 'auto';
+        }
+        w.classList.add('open');
+        w.classList.remove('minimized');
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+        if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(w);
+        if (!ytPlayer) { loadYTAPI(); }
+        renderPlaylist();
+        updateMeta(curIdx);
+      }
+      function closeMusic() {
+        if (window.dyoAnimDismiss) {
+          window.dyoAnimDismiss(w, function() { w.classList.remove('open','minimized','maximized'); savedPos = null; });
+        } else {
+          w.classList.remove('open','minimized','maximized'); savedPos = null;
+        }
+      }
+      function minimizeMusic() {
+        if (w.classList.contains('minimized')) {
+          var tb = document.querySelector('.dyo-dock-item[data-win-id="dyoMusicWin"]') || document.querySelector('.dyo-taskbtn[data-win-id="dyoMusicWin"]');
+          window._dyoAnimSrc = tb || null;
+          w.classList.remove('minimized');
+          if (window.dyoAnimOpen) window.dyoAnimOpen(w);
+        } else {
+          if (w.classList.contains('maximized')) {
+            w.classList.remove('maximized');
+            if (savedPos) { w.style.left=savedPos.left; w.style.top=savedPos.top; w.style.right=savedPos.right; w.style.bottom=savedPos.bottom; w.style.width=savedPos.width; w.style.height=savedPos.height; savedPos=null; }
+          }
+          if (window.dyoAnimMinimize) { window.dyoAnimMinimize(w, function() { w.classList.add('minimized'); }); }
+          else { w.classList.add('minimized'); }
+        }
+      }
+      function maximizeMusic() {
+        if (w.classList.contains('maximized')) {
+          w.classList.remove('maximized');
+          if (savedPos) { w.style.left=savedPos.left; w.style.top=savedPos.top; w.style.right=savedPos.right; w.style.bottom=savedPos.bottom; w.style.width=savedPos.width; w.style.height=savedPos.height; savedPos=null; }
+          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(w);
+        } else {
+          w.classList.remove('minimized');
+          savedPos = { left:w.style.left, top:w.style.top, right:w.style.right, bottom:w.style.bottom, width:w.style.width, height:w.style.height };
+          w.classList.add('maximized');
+          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(w);
+        }
+      }
+
+      closeBtn.addEventListener('click', closeMusic);
+      minBtn.addEventListener('click', minimizeMusic);
+      maxBtn.addEventListener('click', maximizeMusic);
+
+      titlebar.addEventListener('dblclick', function(e) {
+        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+        maximizeMusic();
+      });
+
+      titlebar.addEventListener('mousedown', function(e) {
+        if (e.button !== 0 || w.classList.contains('maximized')) return;
+        if (e.target===closeBtn || e.target===minBtn || e.target===maxBtn) return;
+        dragging = true;
+        dragOX = e.clientX - w.getBoundingClientRect().left;
+        dragOY = e.clientY - w.getBoundingClientRect().top;
+        w.style.right = 'auto'; w.style.bottom = 'auto';
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+        e.preventDefault();
+      });
+      document.addEventListener('mousemove', function(e) {
+        if (!dragging) return;
+        w.style.left = Math.max(0, Math.min(e.clientX - dragOX, window.innerWidth  - w.offsetWidth))  + 'px';
+        w.style.top  = Math.max(0, Math.min(e.clientY - dragOY, window.innerHeight - w.offsetHeight)) + 'px';
+      });
+      document.addEventListener('mouseup', function() { dragging = false; });
+
+      // ── 리사이즈 핸들 ──────────────────────────────────────────
+      w.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
+        handle.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized') || w.classList.contains('minimized')) return;
+          e.stopPropagation(); e.preventDefault();
+          var dir = handle.className.replace(/dyo-brs-handle/g, '').trim();
+          var r = w.getBoundingClientRect();
+          var sx = e.clientX, sy = e.clientY;
+          var sl = r.left, st = r.top, sw = r.width, sh = r.height;
+          function onMove(ev) {
+            var dx = ev.clientX - sx, dy = ev.clientY - sy;
+            var nl = sl, nt = st, nw = sw, nh = sh;
+            if (dir.indexOf('e') !== -1) nw = Math.max(280, sw + dx);
+            if (dir.indexOf('s') !== -1) nh = Math.max(400, sh + dy);
+            if (dir.indexOf('w') !== -1) { nw = Math.max(280, sw - dx); nl = sl + sw - nw; }
+            if (dir.indexOf('n') !== -1) { nh = Math.max(400, sh - dy); nt = st + sh - nh; }
+            w.style.width  = nw + 'px'; w.style.height = nh + 'px';
+            w.style.left   = nl + 'px'; w.style.top    = nt + 'px';
+            w.style.right  = 'auto';    w.style.bottom = 'auto';
+          }
+          function onUp() {
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+          }
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        });
+      });
+
+      // ── YouTube IFrame API ───────────────────────────────────
+      function loadYTAPI() {
+        if (window.YT && window.YT.Player) { initPlayer(); return; }
+        if (!document.getElementById('dyoYTScript')) {
+          var s = document.createElement('script');
+          s.id  = 'dyoYTScript';
+          s.src = 'https://www.youtube.com/iframe_api';
+          document.head.appendChild(s);
+        }
+        var prev = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function() {
+          if (prev) prev();
+          initPlayer();
+        };
+      }
+      function initPlayer() {
+        if (ytPlayer) return;
+        var ytCon = document.getElementById('dyoYTContainer');
+        var ytW = ytCon ? (ytCon.offsetWidth  || 320) : 320;
+        var ytH = ytCon ? (ytCon.offsetHeight || 180) : 180;
+        ytPlayer = new YT.Player('dyoYTPlayer', {
+          height: String(ytH), width: String(ytW),
+          videoId: PLAYLIST[curIdx].id,
+          playerVars: { autoplay: 0, controls: 0, disablekb: 1, fs: 0, iv_load_policy: 3, modestbranding: 1, rel: 0 },
+          events: { onReady: onPlayerReady, onStateChange: onStateChange }
+        });
+      }
+      function syncMeta() {
+        if (!ytPlayer || !ytPlayer.getVideoData) return;
+        var d = ytPlayer.getVideoData();
+        if (!d || !d.title) return;
+        PLAYLIST[curIdx].title  = d.title;
+        PLAYLIST[curIdx].artist = d.author || '';
+        songEl.textContent = d.title;
+        chanEl.textContent = d.author || '';
+        var items = listEl.querySelectorAll('.dyo-pl-title');
+        if (items[curIdx]) items[curIdx].textContent = d.title;
+        var artists = listEl.querySelectorAll('.dyo-pl-artist');
+        if (artists[curIdx]) artists[curIdx].textContent = d.author || '';
+      }
+      function onPlayerReady(e) {
+        e.target.setVolume(parseInt(volEl.value, 10));
+        var iframe = document.querySelector('#dyoYTContainer iframe');
+        if (iframe) { iframe.style.cssText = 'width:100%;height:100%;border:0;display:block;'; }
+        syncMeta();
+        if (autoPlayOnReady) { autoPlayOnReady = false; e.target.playVideo(); }
+      }
+      function onStateChange(e) {
+        var S = (window.YT && YT.PlayerState) ? YT.PlayerState : { PLAYING:1, PAUSED:2, BUFFERING:3, ENDED:0 };
+        if (e.data === S.PLAYING)  { setPlaying(true);  syncMeta(); }
+        else if (e.data === S.PAUSED || e.data === S.BUFFERING) { setPlaying(false); }
+        else if (e.data === S.ENDED) { handleEnded(); }
+      }
+      function handleEnded() {
+        playTrack((curIdx + 1) % PLAYLIST.length);
+      }
+
+      // ── 플레이어 상태 ────────────────────────────────────────
+      function setPlaying(val) {
+        isPlaying = val;
+        var pi = playBtn.querySelector('.dyo-mc-icon-play');
+        var pa = playBtn.querySelector('.dyo-mc-icon-pause');
+        if (pi) pi.style.display = val ? 'none' : '';
+        if (pa) pa.style.display = val ? ''     : 'none';
+        if (val) { artEl.classList.add('playing'); startProgress(); }
+        else     { artEl.classList.remove('playing'); stopProgress(); }
+      }
+      function playTrack(idx) {
+        curIdx = idx;
+        updateMeta(idx);
+        renderPlaylist();
+        if (ytPlayer && ytPlayer.loadVideoById) ytPlayer.loadVideoById(PLAYLIST[idx].id);
+      }
+      function updateMeta(idx) {
+        var t = PLAYLIST[idx];
+        songEl.textContent = t.title;
+        chanEl.textContent = t.artist;
+        thumbEl.src = 'https://img.youtube.com/vi/' + t.id + '/mqdefault.jpg';
+      }
+
+      // ── 진행바 ───────────────────────────────────────────────
+      function startProgress() {
+        stopProgress();
+        progressTimer = setInterval(updateProgress, 1000);
+      }
+      function stopProgress() {
+        if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+      }
+      function updateProgress() {
+        if (!ytPlayer || !ytPlayer.getCurrentTime) return;
+        var cur = ytPlayer.getCurrentTime() || 0;
+        var dur = ytPlayer.getDuration()    || 0;
+        curEl.textContent = fmtTime(cur);
+        if (dur > 0) {
+          durEl.textContent = fmtTime(dur);
+          var pct = (cur / dur) * 100;
+          fillEl.style.width = pct + '%';
+          knobEl.style.left  = pct + '%';
+        } else {
+          durEl.textContent  = 'LIVE';
+          fillEl.style.width = '100%';
+          knobEl.style.left  = '100%';
+        }
+      }
+      function fmtTime(s) {
+        s = Math.floor(s);
+        var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+        return h > 0 ? h + ':' + pad(m) + ':' + pad(sec) : m + ':' + pad(sec);
+      }
+      function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+      // ── 컨트롤 이벤트 ────────────────────────────────────────
+      playBtn.addEventListener('click', function() {
+        if (!ytPlayer) { autoPlayOnReady = true; loadYTAPI(); return; }
+        isPlaying ? ytPlayer.pauseVideo() : ytPlayer.playVideo();
+      });
+      prevBtn.addEventListener('click', function() {
+        if (!ytPlayer) return;
+        if ((ytPlayer.getCurrentTime() || 0) > 3) { ytPlayer.seekTo(0); return; }
+        playTrack((curIdx - 1 + PLAYLIST.length) % PLAYLIST.length);
+      });
+      nextBtn.addEventListener('click', function() {
+        if (!ytPlayer) return;
+        playTrack((curIdx + 1) % PLAYLIST.length);
+      });
+      volEl.addEventListener('input', function() {
+        if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(parseInt(this.value, 10));
+      });
+
+      // Seek
+      seekEl.addEventListener('mousedown', function(e) { seeking = true; doSeek(e); e.preventDefault(); });
+      document.addEventListener('mousemove', function(e) { if (seeking) doSeek(e); });
+      document.addEventListener('mouseup',   function()  { seeking = false; });
+      function doSeek(e) {
+        if (!ytPlayer || !ytPlayer.getDuration) return;
+        var dur = ytPlayer.getDuration();
+        if (!dur || dur <= 0) return;
+        var rect = seekEl.getBoundingClientRect();
+        var pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        ytPlayer.seekTo(pct * dur, true);
+        fillEl.style.width = (pct * 100) + '%';
+        knobEl.style.left  = (pct * 100) + '%';
+      }
+
+      // ── 플레이리스트 렌더 ────────────────────────────────────
+      function renderPlaylist() {
+        listEl.innerHTML = '';
+        PLAYLIST.forEach(function(track, i) {
+          var item = document.createElement('div');
+          item.className = 'dyo-music-pl-item' + (i === curIdx ? ' active' : '');
+          var eqDelay = [0, 0.2, 0.1];
+          var eqDur   = [0.6, 0.8, 0.7];
+          var eqSvg =
+            '<svg class="dyo-pl-eq" viewBox="0 0 24 24" fill="none">' +
+              '<rect x="2"  y="10" width="4" height="10" rx="1" fill="#58a6ff" style="transform-origin:bottom center;animation:dyo-music-eq ' + eqDur[0] + 's ease-in-out infinite ' + eqDelay[0] + 's"/>' +
+              '<rect x="10" y="6"  width="4" height="14" rx="1" fill="#58a6ff" style="transform-origin:bottom center;animation:dyo-music-eq ' + eqDur[1] + 's ease-in-out infinite ' + eqDelay[1] + 's"/>' +
+              '<rect x="18" y="8"  width="4" height="12" rx="1" fill="#58a6ff" style="transform-origin:bottom center;animation:dyo-music-eq ' + eqDur[2] + 's ease-in-out infinite ' + eqDelay[2] + 's"/>' +
+            '</svg>';
+          item.innerHTML =
+            '<span class="dyo-pl-num">' + (i + 1) + '</span>' +
+            eqSvg +
+            '<img class="dyo-pl-thumb" src="https://img.youtube.com/vi/' + track.id + '/mqdefault.jpg" alt="" draggable="false">' +
+            '<div class="dyo-pl-info">' +
+              '<div class="dyo-pl-title">'  + track.title  + '</div>' +
+              '<div class="dyo-pl-artist">' + track.artist + '</div>' +
+            '</div>';
+          item.addEventListener('click', function() {
+            if (!ytPlayer) { curIdx = i; updateMeta(i); renderPlaylist(); autoPlayOnReady = true; loadYTAPI(); return; }
+            if (i === curIdx) { isPlaying ? ytPlayer.pauseVideo() : ytPlayer.playVideo(); }
+            else { playTrack(i); }
+          });
+          listEl.appendChild(item);
+        });
+      }
+
+      window.dyoOpenMusic = openMusic;
     })();
 
     if (window.dyoMaybeStartTutorial) window.dyoMaybeStartTutorial();
