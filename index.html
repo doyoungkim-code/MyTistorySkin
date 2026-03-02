@@ -480,12 +480,13 @@
         <p class="dyo-tut-desc"  id="dyoTutDesc"></p>
         <div class="dyo-tut-dots" id="dyoTutDots"></div>
         <div class="dyo-tut-actions">
-          <button class="dyo-tut-skip" id="dyoTutSkip">Skip tutorial</button>
+          <button class="dyo-tut-skip" id="dyoTutSkip">✕</button>
           <button class="dyo-tut-next" id="dyoTutNext">Next →</button>
         </div>
       </div>
       <div id="dyoTutPreview" class="hidden"></div>
     </div>
+    <button id="dyoTutLauncher" class="hidden">튜토리얼 보기</button>
 
     <!-- 데스크탑 홈화면 (인덱스 페이지 전용) -->
     <div class="dyo-desktop" id="dyoDesktop">
@@ -5342,9 +5343,12 @@
         setTimeout(function() { overlay.style.display = 'none'; }, 400);
       }
 
+      var launcherBtn = document.getElementById('dyoTutLauncher');
+
       function endTutorial() {
         localStorage.setItem(TUT_KEY, '1');
         closeTutorial();
+        if (launcherBtn) launcherBtn.classList.add('hidden');
       }
 
       if (!skipBtn || !nextBtn) return;
@@ -5367,6 +5371,7 @@
 
       window.dyoStartTutorial = function() {
         currentStep = 0;
+        if (launcherBtn) launcherBtn.classList.add('hidden');
         overlay.style.display = '';
         requestAnimationFrame(function() {
           overlay.classList.add('active');
@@ -5374,11 +5379,18 @@
         });
       };
 
+      // 튜토리얼 미완료 시 런처 버튼 표시
       window.dyoMaybeStartTutorial = function() {
-        if (!localStorage.getItem(TUT_KEY)) {
-          window.dyoStartTutorial();
+        if (!localStorage.getItem(TUT_KEY) && launcherBtn) {
+          launcherBtn.classList.remove('hidden');
         }
       };
+
+      if (launcherBtn) {
+        launcherBtn.addEventListener('click', function() {
+          window.dyoStartTutorial();
+        });
+      }
     })();
 
     if (window.dyoMaybeStartTutorial) window.dyoMaybeStartTutorial();

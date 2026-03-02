@@ -4765,6 +4765,24 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 @media (max-width: 900px) {
   #dyoTutPreview { display: none !important; }
 }
+#dyoTutLauncher {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 99000;
+  background: #1c2128;
+  color: #e6edf3;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: background 0.15s, opacity 0.3s;
+}
+#dyoTutLauncher:hover { background: #2d333b; }
+#dyoTutLauncher.hidden { display: none; }
 .dyo-tut-emoji {
   font-size: 28px;
   margin-bottom: 10px;
