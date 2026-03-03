@@ -2431,12 +2431,12 @@ html, body {
   display: none !important;
 }
 
-/* 최대화: 콘텐츠 영역 전체 */
+/* 최대화: 태스크바 위까지만 */
 .dyo-shell-win.maximized {
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  bottom: 0 !important;
+  bottom: 52px !important;
   width: auto !important;
   height: auto !important;
   border-radius: 0;
@@ -2726,20 +2726,24 @@ html, body {
 
 /* 하단 태스크바 */
 .dyo-desktop-bar {
+  /* 태스크바: 항상 모든 창 위에 고정 */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 52px;
-  background: rgba(10,14,20,0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(255,255,255,0.06);
-  display: flex;
+  z-index: 99995;
+  background: rgba(10,14,20,0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: none;          /* 기본: 숨김 — JS 또는 head CSS로 표시 */
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
   overflow: visible;
 }
+.dyo-desktop-bar.show { display: flex; }
 
 .dyo-bar-left {
   color: #3fb950;
@@ -2892,8 +2896,129 @@ html, body {
 .dyo-bar-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
 }
+
+/* 구분선 */
+.dyo-bar-right-sep {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+
+/* ── 태스크바 뮤직 미니 위젯 ── */
+.dyo-tbmusic {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  bottom: 0;
+  display: none;
+  align-items: center;
+  gap: 7px;
+  max-width: 240px;
+  overflow: hidden;
+}
+.dyo-tbmusic.show { display: flex; }
+
+/* EQ 바 (재생 중 애니) */
+.dyo-tbm-eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.dyo-tbm-eq span {
+  display: block;
+  width: 2px;
+  border-radius: 1px;
+  background: #58a6ff;
+  transform-origin: bottom center;
+}
+.dyo-tbm-eq span:nth-child(1) { height: 7px;  animation: dyo-tbm-eq 0.6s ease-in-out infinite 0s; }
+.dyo-tbm-eq span:nth-child(2) { height: 14px; animation: dyo-tbm-eq 0.8s ease-in-out infinite 0.2s; }
+.dyo-tbm-eq span:nth-child(3) { height: 10px; animation: dyo-tbm-eq 0.7s ease-in-out infinite 0.1s; }
+@keyframes dyo-tbm-eq {
+  0%, 100% { transform: scaleY(0.25); }
+  50%       { transform: scaleY(1); }
+}
+/* 일시정지 시 정지 */
+.dyo-tbmusic:not(.playing) .dyo-tbm-eq span { animation-play-state: paused; }
+
+/* 곡명 */
+.dyo-tbm-title {
+  font-size: 11px;
+  color: #c9d1d9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90px;
+  font-family: var(--font-sans);
+  flex-shrink: 1;
+  cursor: pointer;
+}
+.dyo-tbm-title:hover { color: #fff; }
+
+/* 재생/일시정지 버튼 */
+.dyo-tbm-play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(88,166,255,0.12);
+  border: 1px solid rgba(88,166,255,0.2);
+  color: #58a6ff;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.dyo-tbm-play:hover { background: rgba(88,166,255,0.28); color: #fff; }
+.dyo-tbm-play svg { display: block; }
+
+/* 볼륨 슬라이더 */
+.dyo-tbm-vol {
+  width: 52px;
+  height: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  accent-color: #58a6ff;
+  flex-shrink: 0;
+}
+.dyo-tbm-vol::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #58a6ff;
+  cursor: pointer;
+}
+.dyo-tbm-vol::-moz-range-thumb {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #58a6ff;
+  border: none;
+  cursor: pointer;
+}
+
+/* 열기 버튼 */
+.dyo-tbm-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  color: rgba(255,255,255,0.45);
+  flex-shrink: 0;
+  transition: color 0.15s, background 0.15s;
+}
+.dyo-tbm-open:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.dyo-tbm-open svg { display: block; }
 
 #desktopClock {
   color: #e6edf3;
@@ -3003,7 +3128,7 @@ html, body {
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  bottom: 0 !important;
+  bottom: 52px !important;
   width: auto !important;
   height: auto !important;
   border-radius: 0;
@@ -3105,6 +3230,7 @@ html, body {
   .dyo-browser-win.maximized {
     left: 0 !important;
     top: 0 !important;
+    bottom: 52px !important;
   }
 }
 
@@ -5109,3 +5235,4 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   0%, 100% { transform: scaleY(0.35); }
   50%       { transform: scaleY(1); }
 }
+

@@ -24,6 +24,7 @@
     #tt-body-index #dkWrap { visibility: hidden; }
     /* 인덱스 페이지: JS 실행 전에도 즉시 데스크탑 표시 (flash 방지) */
     #tt-body-index #dyoDesktop { display: flex; }
+    #tt-body-index #dyoDesktopBar { display: flex; }
 
     <s_if_var_cover-image>.wrap_sub {
       background-image: url('[##_var_cover-image_##]');
@@ -591,14 +592,30 @@
 
       </div>
 
-      <!-- 하단 Dock -->
-      <div class="dyo-desktop-bar">
-        <div class="dyo-bar-center" id="dyoBarCenter"></div>
-        <div class="dyo-dock" id="dyoDock"></div>
-        <div class="dyo-bar-right">
-          <span id="desktopClock">00:00</span>
-          <span id="desktopDate">----/--/--</span>
+    </div>
+
+    <!-- 하단 태스크바 (dyo-desktop 외부 — 항상 창 위에 표시) -->
+    <div class="dyo-desktop-bar" id="dyoDesktopBar">
+      <div class="dyo-bar-center" id="dyoBarCenter"></div>
+      <div class="dyo-dock" id="dyoDock"></div>
+      <div class="dyo-bar-right">
+        <span id="desktopClock">00:00</span>
+        <span id="desktopDate">----/--/--</span>
+      </div>
+      <!-- 뮤직 미니 위젯 — 태스크바 맨 오른쪽 -->
+      <div class="dyo-tbmusic" id="dyoTbMusic">
+        <div class="dyo-tbm-eq" id="dyoTbmEq">
+          <span></span><span></span><span></span>
         </div>
+        <span class="dyo-tbm-title" id="dyoTbmTitle">—</span>
+        <button class="dyo-tbm-play" id="dyoTbmPlay" title="재생 / 일시정지">
+          <svg class="dyo-tbm-icon-play"  width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <svg class="dyo-tbm-icon-pause" width="9" height="9" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+        </button>
+        <input type="range" class="dyo-tbm-vol" id="dyoTbmVol" min="0" max="100" value="70" title="볼륨">
+        <button class="dyo-tbm-open" id="dyoTbmOpen" title="뮤직 플레이어 열기">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </button>
       </div>
     </div>
 
@@ -1157,6 +1174,10 @@
       // 데스크탑 표시 + 바디 스크롤 잠금
       desktop.classList.add('show');
       document.body.style.overflow = 'hidden';
+
+      // 태스크바 표시 (dyo-desktop 외부에 위치)
+      var desktopBar = document.getElementById('dyoDesktopBar');
+      if (desktopBar) desktopBar.classList.add('show');
 
       // 시계 업데이트
       function updateClock() {
@@ -5537,6 +5558,13 @@
       var maxBtn   = document.getElementById('dyoMusicMax');
       if (!w) return;
 
+      // 태스크바 뮤직 미니 위젯
+      var tbMusic  = document.getElementById('dyoTbMusic');
+      var tbTitle  = document.getElementById('dyoTbmTitle');
+      var tbPlay   = document.getElementById('dyoTbmPlay');
+      var tbVol    = document.getElementById('dyoTbmVol');
+      var tbOpen   = document.getElementById('dyoTbmOpen');
+
       var artEl    = document.getElementById('dyoMusicArt');
       var thumbEl  = document.getElementById('dyoMusicThumb');
       var songEl   = document.getElementById('dyoMusicSong');
@@ -5575,6 +5603,45 @@
       w.addEventListener('mousedown', bringToFront);
 
       // ── 창 관리 ─────────────────────────────────────────────
+      // ── 태스크바 뮤직 미니 위젯 ─────────────────────────────
+      function updateTbPlayIcon() {
+        if (!tbPlay) return;
+        var pi = tbPlay.querySelector('.dyo-tbm-icon-play');
+        var pa = tbPlay.querySelector('.dyo-tbm-icon-pause');
+        if (pi) pi.style.display = isPlaying ? 'none' : '';
+        if (pa) pa.style.display = isPlaying ? ''     : 'none';
+        if (tbMusic) tbMusic.classList.toggle('playing', isPlaying);
+      }
+      function showTbMusic() {
+        if (!tbMusic) return;
+        var t = PLAYLIST[curIdx];
+        if (tbTitle) tbTitle.textContent = t.title || ('Track ' + (curIdx + 1));
+        if (tbVol)   tbVol.value = volEl ? volEl.value : 70;
+        updateTbPlayIcon();
+        tbMusic.classList.add('show');
+      }
+      function hideTbMusic() {
+        if (tbMusic) tbMusic.classList.remove('show');
+      }
+      if (tbPlay) {
+        tbPlay.addEventListener('click', function() {
+          if (!ytPlayer) return;
+          isPlaying ? ytPlayer.pauseVideo() : ytPlayer.playVideo();
+        });
+      }
+      if (tbVol) {
+        tbVol.addEventListener('input', function() {
+          if (volEl) volEl.value = this.value;
+          if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(parseInt(this.value, 10));
+        });
+      }
+      if (tbOpen) {
+        tbOpen.addEventListener('click', function() { openMusic(); });
+      }
+      if (tbTitle) {
+        tbTitle.addEventListener('click', function() { openMusic(); });
+      }
+
       function openMusic() {
         var wasOpen = w.classList.contains('open');
         if (!wasOpen) {
@@ -5600,14 +5667,19 @@
         updateMeta(curIdx);
       }
       function closeMusic() {
+        var doClose = function() {
+          w.classList.remove('open','minimized','maximized');
+          savedPos = null;
+        };
         if (window.dyoAnimDismiss) {
-          window.dyoAnimDismiss(w, function() { w.classList.remove('open','minimized','maximized'); savedPos = null; });
+          window.dyoAnimDismiss(w, doClose);
         } else {
-          w.classList.remove('open','minimized','maximized'); savedPos = null;
+          doClose();
         }
       }
       function minimizeMusic() {
         if (w.classList.contains('minimized')) {
+          // 최소화 복원
           var tb = document.querySelector('.dyo-dock-item[data-win-id="dyoMusicWin"]') || document.querySelector('.dyo-taskbtn[data-win-id="dyoMusicWin"]');
           window._dyoAnimSrc = tb || null;
           w.classList.remove('minimized');
@@ -5617,8 +5689,11 @@
             w.classList.remove('maximized');
             if (savedPos) { w.style.left=savedPos.left; w.style.top=savedPos.top; w.style.right=savedPos.right; w.style.bottom=savedPos.bottom; w.style.width=savedPos.width; w.style.height=savedPos.height; savedPos=null; }
           }
-          if (window.dyoAnimMinimize) { window.dyoAnimMinimize(w, function() { w.classList.add('minimized'); }); }
-          else { w.classList.add('minimized'); }
+          var doMin = function() {
+            w.classList.add('minimized');
+          };
+          if (window.dyoAnimMinimize) { window.dyoAnimMinimize(w, doMin); }
+          else { doMin(); }
         }
       }
       function maximizeMusic() {
@@ -5729,6 +5804,8 @@
         if (items[curIdx]) items[curIdx].textContent = d.title;
         var artists = listEl.querySelectorAll('.dyo-pl-artist');
         if (artists[curIdx]) artists[curIdx].textContent = d.author || '';
+        // 태스크바 뮤직 미니 동기화
+        if (tbTitle) tbTitle.textContent = d.title;
       }
       function onPlayerReady(e) {
         e.target.setVolume(parseInt(volEl.value, 10));
@@ -5756,6 +5833,9 @@
         if (pa) pa.style.display = val ? ''     : 'none';
         if (val) { artEl.classList.add('playing'); startProgress(); }
         else     { artEl.classList.remove('playing'); stopProgress(); }
+        // 태스크바 뮤직 미니 동기화
+        if (val) { showTbMusic(); } else { hideTbMusic(); }
+        updateTbPlayIcon();
       }
       function playTrack(idx) {
         curIdx = idx;
