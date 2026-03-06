@@ -2713,6 +2713,100 @@ html, body {
   box-shadow: 0 6px 16px rgba(193,53,132,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
+/* Features 폴더 아이콘 */
+#desktopIconFeatures .dyo-di-wrap {
+  background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
+  border: 1px solid rgba(118,75,162,0.5);
+  box-shadow: 0 6px 16px rgba(102,126,234,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+/* ============================================================
+   Features 폴더 팝업
+   ============================================================ */
+.dyo-folder-popup {
+  display: none;
+  position: fixed;
+  background: rgba(13, 17, 23, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #30363d;
+  border-radius: 14px;
+  padding: 14px;
+  z-index: 9500;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
+  animation: dyo-win-pop 0.18s ease-out both;
+}
+.dyo-folder-popup.open { display: block; }
+
+.dyo-folder-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #21262d;
+}
+.dyo-folder-popup-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e6edf3;
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+}
+.dyo-folder-popup-close {
+  background: none;
+  border: none;
+  color: #6e7681;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 2px;
+  transition: color 0.15s;
+}
+.dyo-folder-popup-close:hover { color: #e6edf3; }
+
+.dyo-folder-popup-grid {
+  display: flex;
+  gap: 6px;
+}
+
+.dyo-folder-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 8px 6px 6px;
+  border-radius: 10px;
+  transition: background 0.15s;
+  width: 72px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.dyo-folder-item:hover  { background: rgba(255,255,255,0.07); }
+.dyo-folder-item:active { background: rgba(255,255,255,0.12); }
+
+.dyo-folder-item .dyo-di-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+}
+.dyo-folder-item .dyo-di-wrap svg {
+  width: 22px;
+  height: 22px;
+}
+.dyo-folder-item > span {
+  font-size: 10px;
+  color: #e6edf3;
+  text-align: center;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 64px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
 /* 아이콘 레이블 */
 .dyo-di-label {
   color: #ffffff;

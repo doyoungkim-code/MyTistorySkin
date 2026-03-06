@@ -508,18 +508,6 @@
           <span class="dyo-di-label">README</span>
         </div>
 
-        <!-- Terminal 아이콘 (Windows CMD 스타일) -->
-        <div class="dyo-desktop-icon" id="desktopIconShell" title="Terminal">
-          <div class="dyo-di-wrap">
-            <!-- CMD: > prompt + _ cursor -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter" stroke-width="2.5">
-              <polyline points="4 8 9 12 4 16"></polyline>
-              <line x1="12" y1="16" x2="20" y2="16"></line>
-            </svg>
-          </div>
-          <span class="dyo-di-label">Command Prompt</span>
-        </div>
-
         <!-- Dev Blog 아이콘 (Tistory) -->
         <div class="dyo-desktop-icon" id="desktopIconBlog" title="Dev Blog">
           <div class="dyo-di-wrap">
@@ -532,14 +520,27 @@
           <span class="dyo-di-label">Dev Blog</span>
         </div>
 
-        <!-- GitHub 아이콘 -->
-        <div class="dyo-desktop-icon" id="desktopIconGithub" title="GitHub">
+        <!-- Terminal 아이콘 (Windows CMD 스타일) -->
+        <div class="dyo-desktop-icon" id="desktopIconShell" title="Terminal">
           <div class="dyo-di-wrap">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+            <!-- CMD: > prompt + _ cursor -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="square" stroke-linejoin="miter" stroke-width="2.5">
+              <polyline points="4 8 9 12 4 16"></polyline>
+              <line x1="12" y1="16" x2="20" y2="16"></line>
             </svg>
           </div>
-          <span class="dyo-di-label">GitHub</span>
+          <span class="dyo-di-label">Command Prompt</span>
+        </div>
+
+        <!-- File Explorer 아이콘 -->
+        <div class="dyo-desktop-icon" id="desktopIconExplorer" title="File Explorer">
+          <div class="dyo-di-wrap">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="rgba(255,255,255,0.35)" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M3 11h18" stroke="#fff" stroke-width="1.3"/>
+            </svg>
+          </div>
+          <span class="dyo-di-label">File Explorer</span>
         </div>
 
         <!-- Guestbook 채팅 아이콘 -->
@@ -555,19 +556,21 @@
           <span class="dyo-di-label">Guestbook</span>
         </div>
 
-        <!-- File Explorer 아이콘 -->
-        <div class="dyo-desktop-icon" id="desktopIconExplorer" title="File Explorer">
+        <!-- Features 폴더 아이콘 -->
+        <div class="dyo-desktop-icon" id="desktopIconFeatures" title="Features">
           <div class="dyo-di-wrap">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="rgba(255,255,255,0.35)" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M3 11h18" stroke="#fff" stroke-width="1.3"/>
+              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="rgba(255,255,255,0.22)" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+              <circle cx="8.5" cy="13.5" r="1.8" fill="rgba(255,255,255,0.9)"/>
+              <circle cx="12.5" cy="13" r="1.4" fill="rgba(255,255,255,0.7)"/>
+              <circle cx="16" cy="13.5" r="1.2" fill="rgba(255,255,255,0.55)"/>
             </svg>
           </div>
-          <span class="dyo-di-label">File Explorer</span>
+          <span class="dyo-di-label">Features</span>
         </div>
 
         <!-- Blogram 아이콘 -->
-        <div class="dyo-desktop-icon" id="desktopIconGallery" title="Blogram">
+        <div class="dyo-desktop-icon" id="desktopIconGallery" title="Blogram" style="display:none">
           <div class="dyo-di-wrap">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="1.8"/>
@@ -579,7 +582,7 @@
         </div>
 
         <!-- Music Player 아이콘 -->
-        <div class="dyo-desktop-icon" id="desktopIconMusic" title="Music">
+        <div class="dyo-desktop-icon" id="desktopIconMusic" title="Music" style="display:none">
           <div class="dyo-di-wrap dyo-di-music">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M9 18V5l12-2v13" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -594,6 +597,34 @@
 
     </div>
 
+    <!-- Features 폴더 팝업 -->
+    <div class="dyo-folder-popup" id="dyoFeaturesPopup">
+      <div class="dyo-folder-popup-header">
+        <span class="dyo-folder-popup-title">Features</span>
+        <button class="dyo-folder-popup-close" id="dyoFeaturePopupClose">×</button>
+      </div>
+      <div class="dyo-folder-popup-grid">
+        <div class="dyo-folder-item" id="fpBlogram" title="Blogram">
+          <div class="dyo-di-wrap" style="background:linear-gradient(135deg,#833ab4,#c13584 35%,#e1306c 60%,#f77737 85%,#fcaf45);border:1px solid rgba(225,48,108,.4);box-shadow:0 4px 12px rgba(193,53,132,.4),inset 0 1px 0 rgba(255,255,255,.15)">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="1.8"/><circle cx="12" cy="12" r="5" stroke="white" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.3" fill="white"/></svg>
+          </div>
+          <span>Blogram</span>
+        </div>
+        <div class="dyo-folder-item" id="fpMusic" title="Music">
+          <div class="dyo-di-wrap" style="background:linear-gradient(145deg,#fc3c44,#ff2d55);border:1px solid rgba(255,45,85,.4);box-shadow:0 4px 12px rgba(255,45,85,.4),inset 0 1px 0 rgba(255,255,255,.15)">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" stroke="white" stroke-width="1.8"/><circle cx="18" cy="16" r="3" stroke="white" stroke-width="1.8"/></svg>
+          </div>
+          <span>Music</span>
+        </div>
+        <div class="dyo-folder-item" id="fpGithub" title="GitHub">
+          <div class="dyo-di-wrap" style="background:linear-gradient(145deg,#24292e,#1a1e22);border:1px solid rgba(139,148,158,.3);box-shadow:0 4px 12px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          </div>
+          <span>GitHub</span>
+        </div>
+      </div>
+    </div>
+
     <!-- 하단 태스크바 (dyo-desktop 외부 — 항상 창 위에 표시) -->
     <div class="dyo-desktop-bar" id="dyoDesktopBar">
       <div class="dyo-bar-center" id="dyoBarCenter"></div>
@@ -603,7 +634,7 @@
         <span id="desktopDate">----/--/--</span>
       </div>
       <!-- 뮤직 미니 위젯 — 태스크바 맨 오른쪽 -->
-      <div class="dyo-tbmusic" id="dyoTbMusic">
+      <div class="dyo-tbmusic show" id="dyoTbMusic">
         <div class="dyo-tbm-eq" id="dyoTbmEq">
           <span></span><span></span><span></span>
         </div>
@@ -1265,6 +1296,77 @@
           if (window.dyoOpenMusic) window.dyoOpenMusic();
         });
       }
+
+      // Features 폴더 아이콘
+      var iconFeatures  = document.getElementById('desktopIconFeatures');
+      var featuresPopup = document.getElementById('dyoFeaturesPopup');
+      function openFeaturesPopup() {
+        if (!featuresPopup || !iconFeatures) return;
+        featuresPopup.classList.add('open');
+        var ir = iconFeatures.getBoundingClientRect();
+        var pw = featuresPopup.offsetWidth  || 244;
+        var ph = featuresPopup.offsetHeight || 130;
+        // 아이콘 오른쪽에 배치, 화면 밖이면 왼쪽으로
+        var left = ir.right + 10;
+        var top  = ir.top + ir.height / 2 - ph / 2;
+        if (left + pw > window.innerWidth - 8) left = ir.left - pw - 10;
+        left = Math.max(8, left);
+        top  = Math.max(8, Math.min(top, window.innerHeight - ph - 8));
+        featuresPopup.style.left = left + 'px';
+        featuresPopup.style.top  = top  + 'px';
+      }
+      function closeFeaturesPopup() {
+        if (featuresPopup) featuresPopup.classList.remove('open');
+      }
+      window.dyoOpenFeatures = openFeaturesPopup;
+
+      if (iconFeatures) {
+        iconFeatures.addEventListener('click', function() {
+          featuresPopup && featuresPopup.classList.contains('open') ? closeFeaturesPopup() : openFeaturesPopup();
+        });
+      }
+      var fpCloseBtn = document.getElementById('dyoFeaturePopupClose');
+      if (fpCloseBtn) fpCloseBtn.addEventListener('click', closeFeaturesPopup);
+
+      // 팝업 아이템 클릭 핸들러
+      var fpBlogram = document.getElementById('fpBlogram');
+      if (fpBlogram) fpBlogram.addEventListener('click', function() {
+        closeFeaturesPopup();
+        if (window.dyoOpenGallery) window.dyoOpenGallery();
+      });
+      var fpMusic = document.getElementById('fpMusic');
+      if (fpMusic) fpMusic.addEventListener('click', function() {
+        closeFeaturesPopup();
+        if (window.dyoOpenMusic) window.dyoOpenMusic();
+      });
+      var fpGithub = document.getElementById('fpGithub');
+      if (fpGithub) fpGithub.addEventListener('click', function() {
+        closeFeaturesPopup();
+        if (window.dyoOpenExternal) window.dyoOpenExternal('https://github.com/doyoungkim-code');
+      });
+
+      // 팝업 아이템 우클릭 → 컨텍스트 메뉴 (오픈 후 처리를 위해 defer)
+      var fpCtxMap = {
+        fpBlogram: 'desktopIconGallery',
+        fpMusic:   'desktopIconMusic',
+        fpGithub:  'desktopIconGithub'
+      };
+      ['fpBlogram', 'fpMusic', 'fpGithub'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('contextmenu', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (window.dyoShowIconCtxMenu) window.dyoShowIconCtxMenu(fpCtxMap[id], e.clientX, e.clientY);
+        });
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!featuresPopup || !featuresPopup.classList.contains('open')) return;
+        if (iconFeatures && iconFeatures.contains(e.target)) return;
+        if (featuresPopup.contains(e.target)) return;
+        closeFeaturesPopup();
+      });
 
     })();
 
@@ -3598,7 +3700,31 @@
           iconBg: 'linear-gradient(145deg,#fc3c44,#ff2d55)',
           iconBorder: 'rgba(255,45,85,0.4)', iconColor: '#fff', iconChar: '♪',
           action: function() { if (window.dyoOpenMusic) window.dyoOpenMusic(); }
+        },
+        desktopIconFeatures: {
+          name: 'Features', ext: '.folder', type: 'Folder',
+          desc: 'Blogram, Music, GitHub 등 추가 앱이 모여있는 폴더',
+          location: '~/Desktop/Features',
+          size: '3 items', disk: '—',
+          created: '2026-03-07', modified: '2026-03-07',
+          owner: 'doyoucode', group: 'staff',
+          permissions: 'Read / Write', version: '—',
+          iconBg: 'linear-gradient(145deg,#667eea 0%,#764ba2 100%)',
+          iconBorder: 'rgba(118,75,162,0.5)', iconColor: '#fff', iconChar: '📁',
+          action: function() { if (window.dyoOpenFeatures) window.dyoOpenFeatures(); }
         }
+      };
+
+      // 팝업 아이템 우클릭용 글로벌 헬퍼
+      window.dyoShowIconCtxMenu = function(metaKey, clientX, clientY) {
+        var meta = iconMeta[metaKey];
+        currentCtx = { type: 'icon', meta: meta };
+        buildMenu([
+          { label: 'Open',       action: 'icon-open' },
+          'sep',
+          { label: 'Properties', action: 'icon-props', disabled: !meta }
+        ]);
+        showMenu(clientX, clientY);
       };
 
       // 메뉴 아이템 동적 빌드
@@ -5535,7 +5661,7 @@
 
       // 튜토리얼 미완료 시 런처 버튼 표시
       window.dyoMaybeStartTutorial = function() {
-        if (!localStorage.getItem(TUT_KEY) && launcherBtn) {
+        if (!localStorage.getItem(TUT_KEY) && launcherBtn && document.body.id === 'tt-body-index') {
           launcherBtn.classList.remove('hidden');
         }
       };
@@ -5621,11 +5747,11 @@
         tbMusic.classList.add('show');
       }
       function hideTbMusic() {
-        if (tbMusic) tbMusic.classList.remove('show');
+        // 음악바는 항상 표시 — show 클래스 제거하지 않음
       }
       if (tbPlay) {
         tbPlay.addEventListener('click', function() {
-          if (!ytPlayer) return;
+          if (!ytPlayer) { openMusic(); return; }
           isPlaying ? ytPlayer.pauseVideo() : ytPlayer.playVideo();
         });
       }
