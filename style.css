@@ -3288,6 +3288,13 @@ html, body {
   background: #30363d;
   color: #e6edf3;
 }
+.dyo-browser-newtab {
+  margin-left: 4px;
+  border-left: 1px solid #30363d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .dyo-browser-urlbar {
   flex: 1;
@@ -5320,7 +5327,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   position: fixed;
   top: 28px;
   right: 28px;
-  width: 336px;
+  width: 300px;
   z-index: 8500;
   background: #fef9c3;
   border-radius: 3px;
@@ -5378,6 +5385,17 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   transition: color 0.15s;
 }
 .dyo-plan-toggle:hover { color: #78350f; }
+.dyo-plan-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #92400e;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+  text-decoration: none;
+  padding: 0 2px;
+}
+.dyo-plan-link-btn:hover { opacity: 1; }
 
 .dyo-plan-body { padding: 10px 0 8px; }
 
@@ -5472,4 +5490,261 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   transition: color 0.15s, background 0.15s;
 }
 .dyo-plan-add-btn:hover { color: #78350f; background: rgba(0,0,0,0.05); }
+
+/* ============================================================
+   Bookmarks 위젯
+   ============================================================ */
+.dyo-bm-widget {
+  display: none;
+  position: fixed;
+  right: 28px;
+  top: 100px; /* JS가 재계산하여 덮어씀 */
+  width: 300px;
+  z-index: 8490; /* plan 위젯(8500)보다 한 단계 낮게 */
+  background: #f5f3ff;
+  border-radius: 3px;
+  box-shadow:
+    3px 6px 20px rgba(109,40,217,0.18),
+    0 1px 4px rgba(109,40,217,0.12),
+    inset 0 -3px 0 rgba(109,40,217,0.08);
+  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+  user-select: none;
+}
+#tt-body-index .dyo-bm-widget { display: block; }
+
+.dyo-bm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 10px 15px;
+  background: #ede9fe;
+  border-bottom: 1px solid rgba(109,40,217,0.1);
+  border-radius: 3px 3px 0 0;
+  cursor: grab;
+}
+.dyo-bm-header:active { cursor: grabbing; }
+.dyo-bm-widget.collapsed .dyo-bm-header {
+  border-bottom: none;
+  border-radius: 3px;
+}
+.dyo-bm-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #5b21b6;
+  letter-spacing: 0.02em;
+}
+.dyo-bm-title svg { flex-shrink: 0; color: #7c3aed; }
+.dyo-bm-header-btns { display: flex; align-items: center; gap: 8px; }
+.dyo-bm-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7c3aed;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+  text-decoration: none;
+  padding: 0 2px;
+}
+.dyo-bm-link-btn:hover { opacity: 1; }
+.dyo-bm-toggle {
+  background: none;
+  border: none;
+  color: #7c3aed;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 0 2px;
+  transition: color 0.15s;
+}
+.dyo-bm-toggle:hover { color: #5b21b6; }
+
+.dyo-bm-body { padding: 6px 0 6px; }
+
+.dyo-bm-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(124,58,237,0.2) transparent;
+}
+.dyo-bm-list::-webkit-scrollbar { width: 4px; }
+.dyo-bm-list::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.2); border-radius: 2px; }
+
+.dyo-bm-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 13px 6px 15px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.dyo-bm-item:hover { background: rgba(109,40,217,0.07); }
+.dyo-bm-fav {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.dyo-bm-fav-fb {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: rgba(109,40,217,0.15);
+  flex-shrink: 0;
+}
+.dyo-bm-item-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.dyo-bm-item-title {
+  font-size: 13px;
+  color: #4c1d95;
+  line-height: 1.45;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dyo-bm-item-host {
+  font-size: 11px;
+  color: #a78bfa;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dyo-bm-empty {
+  font-size: 12px;
+  color: #c4b5fd;
+  text-align: center;
+  padding: 16px;
+}
+
+
+/* ============================================================
+   캘린더 위젯
+   ============================================================ */
+.dyo-cal-widget {
+  display: none;
+  position: fixed;
+  right: 28px;
+  top: 100px;
+  width: 300px;
+  z-index: 8480;
+  background: #ecfdf5;
+  border-radius: 3px;
+  box-shadow:
+    3px 6px 20px rgba(16,185,129,0.18),
+    0 1px 4px rgba(16,185,129,0.12),
+    inset 0 -3px 0 rgba(16,185,129,0.08);
+  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+  user-select: none;
+}
+#tt-body-index .dyo-cal-widget { display: block; }
+
+.dyo-cal-header {
+  display: flex;
+  align-items: center;
+  padding: 9px 12px 9px 14px;
+  background: #a7f3d0;
+  border-bottom: 1px solid rgba(16,185,129,0.15);
+  border-radius: 3px 3px 0 0;
+  cursor: move;
+  gap: 6px;
+}
+.dyo-cal-widget.collapsed .dyo-cal-header {
+  border-bottom: none;
+  border-radius: 3px;
+}
+
+.dyo-cal-title-area {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+.dyo-cal-title-area svg { flex-shrink: 0; color: #047857; }
+
+.dyo-cal-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #064e3b;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.dyo-cal-header-btns {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.dyo-cal-nav,
+.dyo-cal-today-btn,
+.dyo-cal-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #047857;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: color 0.15s, background 0.15s;
+}
+.dyo-cal-nav        { font-size: 18px; font-weight: 600; }
+.dyo-cal-today-btn  { font-size: 9px; padding: 3px 5px; }
+.dyo-cal-toggle     { font-size: 20px; padding: 0 3px; }
+.dyo-cal-nav:hover,
+.dyo-cal-today-btn:hover,
+.dyo-cal-toggle:hover { color: #064e3b; background: rgba(0,0,0,0.06); }
+
+.dyo-cal-body { padding: 8px 10px 10px; }
+
+.dyo-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px 0;
+}
+
+.dyo-cal-dow {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: #6b7280;
+  padding: 2px 0 6px;
+  letter-spacing: 0.02em;
+}
+.dyo-cal-dow.sun { color: #ef4444; }
+.dyo-cal-dow.sat { color: #3b82f6; }
+
+.dyo-cal-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+  font-size: 12px;
+  color: #374151;
+  border-radius: 50%;
+  line-height: 1;
+}
+.dyo-cal-day.sun { color: #ef4444; }
+.dyo-cal-day.sat { color: #3b82f6; }
+.dyo-cal-day.empty { pointer-events: none; }
+.dyo-cal-day.today {
+  background: #10b981;
+  color: #fff;
+  font-weight: 700;
+}
+
 
