@@ -487,8 +487,6 @@
       </div>
       <div id="dyoTutPreview" class="hidden"></div>
     </div>
-    <button id="dyoTutLauncher" class="hidden">튜토리얼 보기</button>
-
     <!-- 데스크탑 홈화면 (인덱스 페이지 전용) -->
     <div class="dyo-desktop" id="dyoDesktop">
       <div class="dyo-desktop-grid">
@@ -595,6 +593,23 @@
 
       </div>
 
+    </div>
+
+    <!-- 블로그 작성 계획 위젯 -->
+    <div class="dyo-plan-widget" id="dyoPlanWidget">
+      <div class="dyo-plan-header" id="dyoPlanHeader">
+        <span class="dyo-plan-title">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          plan
+        </span>
+        <div class="dyo-plan-header-btns">
+          <span class="dyo-plan-count" id="dyoPlanCount"></span>
+          <button class="dyo-plan-toggle" id="dyoPlanToggle" title="접기/펼치기">−</button>
+        </div>
+      </div>
+      <div class="dyo-plan-body" id="dyoPlanBody">
+        <ul class="dyo-plan-list" id="dyoPlanList"></ul>
+      </div>
     </div>
 
     <!-- Features 폴더 팝업 -->
@@ -5320,6 +5335,170 @@
         top.classList.remove('open', 'minimized', 'maximized');
       }
     });
+
+    // ======================================================
+    // 블로그 작성 계획 위젯
+    // ======================================================
+    (function() {
+      if (document.body.id !== 'tt-body-index') return;
+
+      // ── 설정 ──────────────────────────────────────────────
+      // 체크리스트 항목을 읽어올 게시물 URL (상대경로)
+      var PLAN_POST_URL = '/notice/126';
+
+      var ITEMS_KEY  = 'dyo_plan_v1';
+      var CHECKS_KEY = 'dyo_plan_checks_v1';
+      var DEFAULT_ITEMS = [
+        { id: 'default-1', text: '작성할 포스트를 여기에 추가하세요', done: false }
+      ];
+
+      var widget    = document.getElementById('dyoPlanWidget');
+      var header    = document.getElementById('dyoPlanHeader');
+      var toggleBtn = document.getElementById('dyoPlanToggle');
+      var body      = document.getElementById('dyoPlanBody');
+      var list      = document.getElementById('dyoPlanList');
+      var input     = document.getElementById('dyoPlanInput');
+      var addBtn    = document.getElementById('dyoPlanAddBtn');
+      var countEl   = document.getElementById('dyoPlanCount');
+      if (!widget) return;
+
+      // ── 스토리지 ──────────────────────────────────────────
+      function loadItems() {
+        try { return JSON.parse(localStorage.getItem(ITEMS_KEY)) || DEFAULT_ITEMS.slice(); }
+        catch(e) { return DEFAULT_ITEMS.slice(); }
+      }
+      function saveItems(items) { localStorage.setItem(ITEMS_KEY, JSON.stringify(items)); }
+      function loadChecks() {
+        try { return JSON.parse(localStorage.getItem(CHECKS_KEY)) || {}; }
+        catch(e) { return {}; }
+      }
+      function saveChecks(checks) { localStorage.setItem(CHECKS_KEY, JSON.stringify(checks)); }
+
+      // ── 게시물 파싱 (PLAN_POST_URL 설정 시) ───────────────
+      function fetchPostItems(url, cb) {
+        fetch(url)
+          .then(function(r) { return r.text(); })
+          .then(function(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var content = doc.querySelector('.article-view, #article-view, .tt_article_useless_p_margin, .entry-content');
+            if (!content) { cb([]); return; }
+            var items = [], seen = {};
+            content.querySelectorAll('p, li').forEach(function(el) {
+              var text = el.textContent.trim();
+              if (text && !seen[text]) { seen[text] = true; items.push({ id: text, text: text }); }
+            });
+            cb(items);
+          })
+          .catch(function() { cb([]); });
+      }
+
+      // ── 렌더 ──────────────────────────────────────────────
+      function render(items) {
+        list.innerHTML = '';
+        var postMode = !!PLAN_POST_URL;
+        var checks   = postMode ? loadChecks() : null;
+        var done = 0;
+
+        items.forEach(function(item) {
+          var isDone = postMode ? !!checks[item.id] : item.done;
+          if (isDone) done++;
+
+          var li = document.createElement('li');
+          li.className = 'dyo-plan-item' + (isDone ? ' done' : '');
+
+          var cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.checked = isDone;
+          cb.className = 'dyo-plan-cb';
+          cb.addEventListener('change', function() {
+            li.classList.toggle('done', cb.checked);
+            lbl.style.textDecoration = cb.checked ? 'line-through' : '';
+            if (postMode) {
+              var ch = loadChecks(); ch[item.id] = cb.checked; saveChecks(ch);
+            } else {
+              item.done = cb.checked; saveItems(items);
+            }
+            var d = items.filter(function(i) { return postMode ? loadChecks()[i.id] : i.done; }).length;
+            countEl.textContent = d + '/' + items.length;
+          });
+
+          var lbl = document.createElement('span');
+          lbl.className = 'dyo-plan-label';
+          lbl.textContent = item.text;
+
+          li.appendChild(cb);
+          li.appendChild(lbl);
+
+          if (!postMode) {
+            var del = document.createElement('button');
+            del.className = 'dyo-plan-del';
+            del.title = '삭제';
+            del.innerHTML = '&times;';
+            del.addEventListener('click', function() {
+              items.splice(items.indexOf(item), 1);
+              saveItems(items);
+              render(items);
+            });
+            li.appendChild(del);
+          }
+
+          list.appendChild(li);
+        });
+
+        countEl.textContent = done + '/' + items.length;
+      }
+
+      // ── 초기 로드 ─────────────────────────────────────────
+      function init() {
+        countEl.textContent = '…';
+        fetchPostItems(PLAN_POST_URL, function(items) {
+          render(items.length ? items : [{ id: 'empty', text: '게시물을 불러올 수 없습니다.' }]);
+        });
+      }
+
+      // ── 접기/펼치기 ───────────────────────────────────────
+      var collapsed = localStorage.getItem('dyo_plan_collapsed') === '1';
+      function applyCollapse() {
+        if (collapsed) {
+          body.style.display = 'none';
+          toggleBtn.textContent = '+';
+          widget.classList.add('collapsed');
+        } else {
+          body.style.display = '';
+          toggleBtn.textContent = '−';
+          widget.classList.remove('collapsed');
+        }
+      }
+      toggleBtn.addEventListener('click', function() {
+        collapsed = !collapsed;
+        localStorage.setItem('dyo_plan_collapsed', collapsed ? '1' : '0');
+        applyCollapse();
+      });
+
+      // ── 드래그 ────────────────────────────────────────────
+      var dragging = false, dragOX = 0, dragOY = 0;
+      header.addEventListener('mousedown', function(e) {
+        if (e.target === toggleBtn) return;
+        dragging = true;
+        var r = widget.getBoundingClientRect();
+        widget.style.right  = 'auto';
+        widget.style.bottom = 'auto';
+        widget.style.left = r.left + 'px';
+        widget.style.top  = r.top  + 'px';
+        dragOX = e.clientX - r.left;
+        dragOY = e.clientY - r.top;
+        e.preventDefault();
+      });
+      document.addEventListener('mousemove', function(e) {
+        if (!dragging) return;
+        widget.style.left = Math.max(0, Math.min(e.clientX - dragOX, window.innerWidth  - widget.offsetWidth))  + 'px';
+        widget.style.top  = Math.max(0, Math.min(e.clientY - dragOY, window.innerHeight - widget.offsetHeight)) + 'px';
+      });
+      document.addEventListener('mouseup', function() { dragging = false; });
+
+      applyCollapse();
+      init();
+    })();
 
     // ======================================================
     // 튜토리얼
