@@ -5722,6 +5722,42 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 /* ============================================================
    캘린더 위젯
    ============================================================ */
+/* ── 태스크바 칸반 버튼 ────────────────────────────────── */
+.dyo-bar-board {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  color: #c9d1d9;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  transition: color 0.15s, background 0.15s;
+}
+.dyo-bar-board:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.12);
+}
+.dyo-bar-board-badge {
+  min-width: 16px;
+  height: 16px;
+  padding: 0 5px;
+  border-radius: 8px;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  line-height: 16px;
+  text-align: center;
+  display: none;
+}
+
 /* ── 태스크바 시계 (클릭 가능) ──────────────────────────── */
 .dyo-bar-clock {
   display: flex;
@@ -5816,11 +5852,11 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 
 
 /* ============================================================
-   Kanban Board Window  (White Tone)
+   Board Board Window  (White Tone)
    ============================================================ */
 
 /* 창 컨테이너 */
-.dyo-kbn-win {
+.dyo-brd-win {
   display: none;
   position: fixed;
   flex-direction: column;
@@ -5833,8 +5869,8 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   transition: width 0.28s cubic-bezier(0.4,0,0.2,1);
   min-height: 416px;
 }
-.dyo-kbn-win.open { display: flex; }
-.dyo-kbn-win.maximized {
+.dyo-brd-win.open { display: flex; }
+.dyo-brd-win.maximized {
   left: 0 !important;
   top: 0 !important;
   width: 100vw !important;
@@ -5844,19 +5880,19 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 }
 
 /* 타이틀바 (dyo-shell-titlebar 공유, 라이트 테마 오버라이드) */
-.dyo-kbn-win .dyo-shell-titlebar {
+.dyo-brd-win .dyo-shell-titlebar {
   background: #ffffff;
   border-bottom-color: var(--ct-border);
 }
-.dyo-kbn-win-title {
+.dyo-brd-win-title {
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--ct-text2);
   margin-left: 8px;
   flex: 1;
 }
-.dyo-kbn-refresh-btn,
-.dyo-kbn-link-btn {
+.dyo-brd-refresh-btn,
+.dyo-brd-link-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5868,14 +5904,14 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   transition: color 0.15s, background 0.15s;
   flex-shrink: 0;
 }
-.dyo-kbn-refresh-btn { font-size: 15px; }
-.dyo-kbn-refresh-btn:hover,
-.dyo-kbn-link-btn:hover {
+.dyo-brd-refresh-btn { font-size: 15px; }
+.dyo-brd-refresh-btn:hover,
+.dyo-brd-link-btn:hover {
   color: var(--ct-text);
   background: var(--ct-hover);
 }
 
-.dyo-kbn-col {
+.dyo-brd-col {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -5888,7 +5924,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 }
 
 /* 컬럼 헤더 */
-.dyo-kbn-col-header {
+.dyo-brd-col-header {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -5897,20 +5933,20 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   border-bottom: 1px solid var(--ct-border2);
   background: #ffffff;
 }
-.dyo-kbn-col-accent {
+.dyo-brd-col-accent {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }
-.dyo-kbn-col-title {
+.dyo-brd-col-title {
   font-family: var(--font-sans);
   font-size: 12px;
   color: var(--ct-text);
   flex: 1;
   font-weight: 600;
 }
-.dyo-kbn-col-count {
+.dyo-brd-col-count {
   font-size: 11px;
   color: var(--ct-text2);
   background: var(--ct-bg2);
@@ -5920,7 +5956,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 }
 
 /* 카드 목록 */
-.dyo-kbn-col-cards {
+.dyo-brd-col-cards {
   flex: 1;
   overflow-y: auto;
   padding: 8px;
@@ -5931,14 +5967,14 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   scrollbar-color: var(--ct-border) transparent;
   background: var(--ct-bg2);
 }
-.dyo-kbn-col-cards::-webkit-scrollbar { width: 4px; }
-.dyo-kbn-col-cards::-webkit-scrollbar-thumb {
+.dyo-brd-col-cards::-webkit-scrollbar { width: 4px; }
+.dyo-brd-col-cards::-webkit-scrollbar-thumb {
   background: var(--ct-border);
   border-radius: 2px;
 }
 
 /* 카드 */
-.dyo-kbn-card {
+.dyo-brd-card {
   background: #ffffff;
   border: 1px solid var(--ct-border);
   border-radius: 6px;
@@ -5946,20 +5982,20 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   transition: box-shadow 0.15s, border-color 0.15s, transform 0.1s;
 }
-.dyo-kbn-card:hover {
+.dyo-brd-card:hover {
   border-color: #b1bac4;
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
   transform: translateY(-1px);
 }
 
 /* 카드 배지 영역 */
-.dyo-kbn-card-badges {
+.dyo-brd-card-badges {
   display: flex;
   gap: 4px;
   margin-bottom: 6px;
   flex-wrap: wrap;
 }
-.dyo-kbn-label {
+.dyo-brd-label {
   font-family: var(--font-sans);
   font-size: 10px;
   padding: 1px 7px;
@@ -5967,12 +6003,12 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   font-weight: 700;
   letter-spacing: 0.3px;
 }
-.dyo-kbn-label.bug     { background: rgba(239,68,68,0.1);   color: #dc2626; border: 1px solid rgba(239,68,68,0.2); }
-.dyo-kbn-label.feature { background: rgba(59,130,246,0.1);  color: #2563eb; border: 1px solid rgba(59,130,246,0.2); }
-.dyo-kbn-label.docs    { background: rgba(34,197,94,0.1);   color: #16a34a; border: 1px solid rgba(34,197,94,0.2); }
-.dyo-kbn-label.infra   { background: rgba(139,92,246,0.1);  color: #7c3aed; border: 1px solid rgba(139,92,246,0.2); }
+.dyo-brd-label.bug     { background: rgba(239,68,68,0.1);   color: #dc2626; border: 1px solid rgba(239,68,68,0.2); }
+.dyo-brd-label.feature { background: rgba(59,130,246,0.1);  color: #2563eb; border: 1px solid rgba(59,130,246,0.2); }
+.dyo-brd-label.docs    { background: rgba(34,197,94,0.1);   color: #16a34a; border: 1px solid rgba(34,197,94,0.2); }
+.dyo-brd-label.infra   { background: rgba(139,92,246,0.1);  color: #7c3aed; border: 1px solid rgba(139,92,246,0.2); }
 
-.dyo-kbn-priority {
+.dyo-brd-priority {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -5981,23 +6017,27 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   border-radius: 5px;
   flex-shrink: 0;
 }
-.dyo-kbn-priority.veryhigh { background: rgba(220,38,38,0.10);   color: #dc2626; border: 1px solid rgba(220,38,38,0.22); }
-.dyo-kbn-priority.high     { background: rgba(234,88,12,0.10);   color: #ea580c; border: 1px solid rgba(234,88,12,0.22); }
-.dyo-kbn-priority.medium   { background: rgba(202,138,4,0.10);   color: #ca8a04; border: 1px solid rgba(202,138,4,0.22); }
-.dyo-kbn-priority.low      { background: rgba(37,99,235,0.10);   color: #2563eb; border: 1px solid rgba(37,99,235,0.22); }
-.dyo-kbn-priority.verylow  { background: rgba(107,114,128,0.08); color: #6b7280; border: 1px solid rgba(107,114,128,0.18); }
+.dyo-brd-priority.veryhigh { background: rgba(220,38,38,0.10);   color: #dc2626; border: 1px solid rgba(220,38,38,0.22); }
+.dyo-brd-priority.high     { background: rgba(234,88,12,0.10);   color: #ea580c; border: 1px solid rgba(234,88,12,0.22); }
+.dyo-brd-priority.medium   { background: rgba(202,138,4,0.10);   color: #ca8a04; border: 1px solid rgba(202,138,4,0.22); }
+.dyo-brd-priority.low      { background: rgba(37,99,235,0.10);   color: #2563eb; border: 1px solid rgba(37,99,235,0.22); }
+.dyo-brd-priority.verylow  { background: rgba(107,114,128,0.08); color: #6b7280; border: 1px solid rgba(107,114,128,0.18); }
 
 /* 카드 텍스트 */
-.dyo-kbn-card-title {
+.dyo-brd-card-title {
   font-family: var(--font-sans);
   font-size: 13px;
   color: var(--ct-text);
   line-height: 1.55;
   word-break: break-word;
 }
+.dyo-brd-card-title.done {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
 
 /* 로딩 상태 */
-.dyo-kbn-loading {
+.dyo-brd-loading {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--ct-text3);
@@ -6008,7 +6048,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 
 /* 모바일 반응형 */
 @media (max-width: 768px) {
-  .dyo-kbn-win {
+  .dyo-brd-win {
     left: 0 !important;
     top: 0 !important;
     width: 100vw !important;
@@ -6016,33 +6056,33 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
     border-radius: 0;
     min-width: unset;
   }
-  .dyo-kbn-body { flex-direction: column; }
-  .dyo-kbn-columns {
+  .dyo-brd-body { flex-direction: column; }
+  .dyo-brd-columns {
     flex-direction: column;
     overflow-y: auto;
     height: auto;
   }
-  .dyo-kbn-col {
+  .dyo-brd-col {
     flex: none;
     min-height: 180px;
   }
-  .dyo-kbn-detail-panel.open {
+  .dyo-brd-detail-panel.open {
     width: 100% !important;
     border-left: none;
     border-top: 1px solid var(--ct-border);
   }
-  .dyo-kbn-detail-inner { width: 100%; }
+  .dyo-brd-detail-inner { width: 100%; }
 }
 
 /* ── 칸반 body: 컬럼 + 상세 패널 나란히 ─────────────────── */
-.dyo-kbn-body {
+.dyo-brd-body {
   flex: 1;
   display: flex;
   flex-direction: row;
   overflow: hidden;
   min-height: 0;
 }
-.dyo-kbn-columns {
+.dyo-brd-columns {
   flex: 1;
   display: flex;
   gap: 12px;
@@ -6052,7 +6092,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 }
 
 /* ── 카드 상세 슬라이드 패널 ─────────────────────────────── */
-.dyo-kbn-detail-panel {
+.dyo-brd-detail-panel {
   width: 0;
   flex-shrink: 0;
   overflow: hidden;
@@ -6061,12 +6101,12 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   transition: width 0.28s cubic-bezier(0.4,0,0.2,1),
               border-color 0.28s cubic-bezier(0.4,0,0.2,1);
 }
-.dyo-kbn-detail-panel.open {
+.dyo-brd-detail-panel.open {
   width: 280px;
   border-left: 1px solid var(--ct-border);
 }
 
-.dyo-kbn-detail-inner {
+.dyo-brd-detail-inner {
   width: 280px;
   padding: 20px 18px;
   display: flex;
@@ -6078,12 +6118,12 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 }
 
 /* 헤더 */
-.dyo-kbn-detail-header {
+.dyo-brd-detail-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.dyo-kbn-detail-col-badge {
+.dyo-brd-detail-col-badge {
   font-size: 11px;
   font-weight: 700;
   font-family: var(--font-sans);
@@ -6092,7 +6132,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   border-radius: 20px;
   letter-spacing: 0.3px;
 }
-.dyo-kbn-detail-close {
+.dyo-brd-detail-close {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6102,10 +6142,10 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   color: #9ca3af;
   transition: background 0.15s, color 0.15s;
 }
-.dyo-kbn-detail-close:hover { background: #f3f4f6; color: #374151; }
+.dyo-brd-detail-close:hover { background: #f3f4f6; color: #374151; }
 
 /* 제목 */
-.dyo-kbn-detail-title {
+.dyo-brd-detail-title {
   font-family: var(--font-sans);
   font-size: 17px;
   font-weight: 700;
@@ -6115,12 +6155,12 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 }
 
 /* 섹션 */
-.dyo-kbn-detail-section {
+.dyo-brd-detail-section {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.dyo-kbn-detail-section-label {
+.dyo-brd-detail-section-label {
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 700;
@@ -6132,7 +6172,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 }
 
 /* 설명 */
-.dyo-kbn-detail-desc {
+.dyo-brd-detail-desc {
   font-family: var(--font-sans);
   font-size: 14px;
   color: #374151;
@@ -6140,33 +6180,33 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   white-space: pre-wrap;
   word-break: break-word;
 }
-.dyo-kbn-detail-desc.dyo-kbn-detail-desc-empty {
+.dyo-brd-detail-desc.dyo-brd-detail-desc-empty {
   color: #d1d5db;
   font-style: italic;
 }
 
 /* 필드 목록 */
-.dyo-kbn-detail-fields {
+.dyo-brd-detail-fields {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
-.dyo-kbn-detail-field {
+.dyo-brd-detail-field {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 9px 0;
   border-bottom: 1px solid #f3f4f6;
 }
-.dyo-kbn-detail-field:last-child { border-bottom: none; }
-.dyo-kbn-detail-field-key {
+.dyo-brd-detail-field:last-child { border-bottom: none; }
+.dyo-brd-detail-field-key {
   font-family: var(--font-sans);
   font-size: 12px;
   color: #9ca3af;
   width: 64px;
   flex-shrink: 0;
 }
-.dyo-kbn-detail-field-val {
+.dyo-brd-detail-field-val {
   font-family: var(--font-sans);
   font-size: 13px;
   color: #374151;
@@ -6175,7 +6215,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   gap: 6px;
   font-weight: 500;
 }
-.dyo-kbn-detail-avatar {
+.dyo-brd-detail-avatar {
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -6183,7 +6223,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   flex-shrink: 0;
   border: 1px solid #e5e7eb;
 }
-.dyo-kbn-avatar-tistory {
+.dyo-brd-avatar-tistory {
   background: #ff5a1f;
   color: #fff;
   font-size: 12px;
@@ -6194,13 +6234,13 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   justify-content: center;
   border: none;
 }
-.dyo-kbn-detail-prio-label {
+.dyo-brd-detail-prio-label {
   font-size: 12px;
   color: #6b7280;
 }
 
-/* ── Kanban: 툴바 (필터 + 진행률 + 클립보드) ─────────────── */
-.dyo-kbn-toolbar {
+/* ── Board: 툴바 (필터 + 진행률 + 클립보드) ─────────────── */
+.dyo-brd-toolbar {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -6210,13 +6250,13 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   flex-shrink: 0;
   flex-wrap: wrap;
 }
-.dyo-kbn-filter-area {
+.dyo-brd-filter-area {
   display: flex;
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
 }
-.dyo-kbn-search {
+.dyo-brd-search {
   font-family: var(--font-sans);
   font-size: 12px;
   padding: 4px 10px;
@@ -6228,8 +6268,8 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   outline: none;
   transition: border-color 0.15s;
 }
-.dyo-kbn-search:focus { border-color: #3b82f6; }
-.dyo-kbn-filter-select {
+.dyo-brd-search:focus { border-color: #3b82f6; }
+.dyo-brd-filter-select {
   font-family: var(--font-sans);
   font-size: 11px;
   padding: 4px 6px;
@@ -6240,33 +6280,33 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   cursor: pointer;
   outline: none;
 }
-.dyo-kbn-progress-area {
+.dyo-brd-progress-area {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-left: auto;
 }
-.dyo-kbn-progress-bar {
+.dyo-brd-progress-bar {
   width: 80px;
   height: 6px;
   background: var(--ct-bg3);
   border-radius: 3px;
   overflow: hidden;
 }
-.dyo-kbn-progress-fill {
+.dyo-brd-progress-fill {
   height: 100%;
   background: #22c55e;
   border-radius: 3px;
   transition: width 0.3s ease;
   width: 0;
 }
-.dyo-kbn-progress-text {
+.dyo-brd-progress-text {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--ct-text3);
   white-space: nowrap;
 }
-.dyo-kbn-clipboard-btn {
+.dyo-brd-clipboard-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6277,11 +6317,11 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   transition: color 0.15s, background 0.15s;
   position: relative;
 }
-.dyo-kbn-clipboard-btn:hover {
+.dyo-brd-clipboard-btn:hover {
   color: var(--ct-text);
   background: var(--ct-hover);
 }
-.dyo-kbn-clipboard-btn.dirty::after,
+.dyo-brd-clipboard-btn.dirty::after,
 .dyo-memo-action-btn.dirty::after {
   content: '';
   position: absolute;
@@ -6294,8 +6334,8 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   border: 1.5px solid #fff;
 }
 
-/* ── Kanban: 새 이슈 추가 버튼 & 폼 ─────────────────────── */
-.dyo-kbn-add-btn-trigger {
+/* ── Board: 새 이슈 추가 버튼 & 폼 ─────────────────────── */
+.dyo-brd-add-btn-trigger {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6308,11 +6348,11 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   color: var(--ct-text3);
   transition: color 0.15s, background 0.15s;
 }
-.dyo-kbn-add-btn-trigger:hover {
+.dyo-brd-add-btn-trigger:hover {
   color: #22c55e;
   background: var(--ct-hover);
 }
-.dyo-kbn-add-form {
+.dyo-brd-add-form {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -6320,12 +6360,12 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   border-bottom: 1px solid var(--ct-border);
   background: var(--ct-bg2);
 }
-.dyo-kbn-add-form-row {
+.dyo-brd-add-form-row {
   display: flex;
   gap: 6px;
   align-items: center;
 }
-.dyo-kbn-add-input {
+.dyo-brd-add-input {
   flex: 1;
   min-width: 0;
   padding: 5px 8px;
@@ -6338,9 +6378,9 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   outline: none;
   transition: border-color 0.15s;
 }
-.dyo-kbn-add-input:focus { border-color: #3b82f6; }
-.dyo-kbn-add-date { max-width: 140px; }
-.dyo-kbn-add-select {
+.dyo-brd-add-input:focus { border-color: #3b82f6; }
+.dyo-brd-add-date { max-width: 140px; }
+.dyo-brd-add-select {
   padding: 5px 6px;
   border: 1px solid var(--ct-border);
   border-radius: 5px;
@@ -6351,8 +6391,8 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   outline: none;
   cursor: pointer;
 }
-.dyo-kbn-add-submit,
-.dyo-kbn-add-cancel {
+.dyo-brd-add-submit,
+.dyo-brd-add-cancel {
   padding: 5px 14px;
   border: none;
   border-radius: 5px;
@@ -6362,19 +6402,19 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   transition: background 0.15s;
   white-space: nowrap;
 }
-.dyo-kbn-add-submit {
+.dyo-brd-add-submit {
   background: #3b82f6;
   color: #fff;
 }
-.dyo-kbn-add-submit:hover { background: #2563eb; }
-.dyo-kbn-add-cancel {
+.dyo-brd-add-submit:hover { background: #2563eb; }
+.dyo-brd-add-cancel {
   background: var(--ct-hover);
   color: var(--ct-text3);
 }
-.dyo-kbn-add-cancel:hover { background: var(--ct-border); }
+.dyo-brd-add-cancel:hover { background: var(--ct-border); }
 
-/* ── Kanban: 컬럼 접기/펼치기 ────────────────────────────── */
-.dyo-kbn-col-toggle {
+/* ── Board: 컬럼 접기/펼치기 ────────────────────────────── */
+.dyo-brd-col-toggle {
   font-size: 16px;
   font-weight: 600;
   width: 22px;
@@ -6388,36 +6428,36 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   transition: color 0.15s, background 0.15s;
   line-height: 1;
 }
-.dyo-kbn-col-toggle:hover {
+.dyo-brd-col-toggle:hover {
   color: var(--ct-text);
   background: var(--ct-hover);
 }
-.dyo-kbn-col.collapsed .dyo-kbn-col-cards {
+.dyo-brd-col.collapsed .dyo-brd-col-cards {
   display: none;
 }
-.dyo-kbn-col.collapsed {
+.dyo-brd-col.collapsed {
   flex: 0 0 auto;
   min-width: 0;
   width: 48px;
 }
-.dyo-kbn-col.collapsed .dyo-kbn-col-header {
+.dyo-brd-col.collapsed .dyo-brd-col-header {
   flex-direction: column;
   align-items: center;
   padding: 10px 6px;
   gap: 8px;
 }
-.dyo-kbn-col.collapsed .dyo-kbn-col-title {
+.dyo-brd-col.collapsed .dyo-brd-col-title {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   font-size: 11px;
 }
-.dyo-kbn-col.collapsed .dyo-kbn-col-count {
+.dyo-brd-col.collapsed .dyo-brd-col-count {
   font-size: 10px;
   padding: 0 5px;
 }
 
-/* ── Kanban: D-day 배지 ──────────────────────────────────── */
-.dyo-kbn-duedate {
+/* ── Board: D-day 배지 ──────────────────────────────────── */
+.dyo-brd-duedate {
   font-family: var(--font-mono);
   font-size: 10px;
   padding: 1px 6px;
@@ -6427,20 +6467,20 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   color: #6b7280;
   border: 1px solid rgba(107,114,128,0.18);
 }
-.dyo-kbn-duedate.soon {
+.dyo-brd-duedate.soon {
   background: rgba(245,158,11,0.1);
   color: #d97706;
   border-color: rgba(245,158,11,0.25);
 }
-.dyo-kbn-duedate.overdue {
+.dyo-brd-duedate.overdue {
   background: rgba(239,68,68,0.1);
   color: #dc2626;
   border-color: rgba(239,68,68,0.2);
   text-decoration: line-through;
 }
 
-/* ── Kanban: 서브태스크 배지 (카드) ──────────────────────── */
-.dyo-kbn-subtask-badge {
+/* ── Board: 서브태스크 배지 (카드) ──────────────────────── */
+.dyo-brd-subtask-badge {
   display: inline-flex;
   align-items: center;
   gap: 3px;
@@ -6453,13 +6493,13 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   border: 1px solid rgba(34,197,94,0.18);
 }
 
-/* ── Kanban: 서브태스크 (상세 패널) ──────────────────────── */
-.dyo-kbn-detail-subtasks {
+/* ── Board: 서브태스크 (상세 패널) ──────────────────────── */
+.dyo-brd-detail-subtasks {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-.dyo-kbn-subtask-item {
+.dyo-brd-subtask-item {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -6470,26 +6510,26 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   cursor: pointer;
   border-bottom: 1px solid #f3f4f6;
 }
-.dyo-kbn-subtask-item:last-child { border-bottom: none; }
-.dyo-kbn-subtask-item input[type="checkbox"] {
+.dyo-brd-subtask-item:last-child { border-bottom: none; }
+.dyo-brd-subtask-item input[type="checkbox"] {
   width: 15px;
   height: 15px;
   accent-color: #22c55e;
   cursor: pointer;
   flex-shrink: 0;
 }
-.dyo-kbn-subtask-item.done span {
+.dyo-brd-subtask-item.done span {
   text-decoration: line-through;
   color: #9ca3af;
 }
 
-/* ── Kanban: 이슈 삭제 버튼 ──────────────────────────────── */
-.dyo-kbn-detail-actions {
+/* ── Board: 이슈 삭제 버튼 ──────────────────────────────── */
+.dyo-brd-detail-actions {
   padding: 16px 0 4px;
   margin-top: 8px;
   border-top: 1px solid var(--ct-border);
 }
-.dyo-kbn-detail-delete {
+.dyo-brd-detail-delete {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -6503,13 +6543,13 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
-.dyo-kbn-detail-delete:hover {
+.dyo-brd-detail-delete:hover {
   background: #fef2f2;
   color: #dc2626;
 }
 
-/* ── Kanban: 이슈 수정 버튼 & 폼 ─────────────────────────── */
-.dyo-kbn-detail-edit-btn {
+/* ── Board: 이슈 수정 버튼 & 폼 ─────────────────────────── */
+.dyo-brd-detail-edit-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -6523,31 +6563,31 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
-.dyo-kbn-detail-edit-btn:hover {
+.dyo-brd-detail-edit-btn:hover {
   background: var(--ct-hover);
   color: var(--ct-text);
 }
-.dyo-kbn-detail-actions {
+.dyo-brd-detail-actions {
   display: flex;
   gap: 8px;
 }
-.dyo-kbn-detail-edit {
+.dyo-brd-detail-edit {
   padding: 4px 0;
 }
-.dyo-kbn-detail-edit-row {
+.dyo-brd-detail-edit-row {
   display: flex;
   flex-direction: column;
   gap: 3px;
   margin-bottom: 10px;
 }
-.dyo-kbn-detail-edit-row label {
+.dyo-brd-detail-edit-row label {
   font-size: 11px;
   color: var(--ct-text3);
   font-weight: 600;
 }
-.dyo-kbn-edit-input,
-.dyo-kbn-edit-select,
-.dyo-kbn-edit-textarea {
+.dyo-brd-edit-input,
+.dyo-brd-edit-select,
+.dyo-brd-edit-textarea {
   padding: 5px 8px;
   border: 1px solid var(--ct-border);
   border-radius: 5px;
@@ -6560,23 +6600,23 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   width: 100%;
   box-sizing: border-box;
 }
-.dyo-kbn-edit-input:focus,
-.dyo-kbn-edit-select:focus,
-.dyo-kbn-edit-textarea:focus {
+.dyo-brd-edit-input:focus,
+.dyo-brd-edit-select:focus,
+.dyo-brd-edit-textarea:focus {
   border-color: #3b82f6;
 }
-.dyo-kbn-edit-textarea {
+.dyo-brd-edit-textarea {
   resize: vertical;
   min-height: 60px;
   line-height: 1.5;
 }
-.dyo-kbn-detail-edit-btns {
+.dyo-brd-detail-edit-btns {
   display: flex;
   gap: 6px;
   margin-top: 4px;
 }
-.dyo-kbn-edit-save,
-.dyo-kbn-edit-cancel {
+.dyo-brd-edit-save,
+.dyo-brd-edit-cancel {
   padding: 5px 16px;
   border: none;
   border-radius: 5px;
@@ -6585,34 +6625,34 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   cursor: pointer;
   transition: background 0.15s;
 }
-.dyo-kbn-edit-save {
+.dyo-brd-edit-save {
   background: #3b82f6;
   color: #fff;
 }
-.dyo-kbn-edit-save:hover { background: #2563eb; }
-.dyo-kbn-edit-cancel {
+.dyo-brd-edit-save:hover { background: #2563eb; }
+.dyo-brd-edit-cancel {
   background: var(--ct-hover);
   color: var(--ct-text3);
 }
-.dyo-kbn-edit-cancel:hover { background: var(--ct-border); }
+.dyo-brd-edit-cancel:hover { background: var(--ct-border); }
 
-/* ── Kanban: 드래그 앤 드롭 ──────────────────────────────── */
-.dyo-kbn-card[draggable="true"] {
+/* ── Board: 드래그 앤 드롭 ──────────────────────────────── */
+.dyo-brd-card[draggable="true"] {
   cursor: grab;
 }
-.dyo-kbn-card[draggable="true"]:active {
+.dyo-brd-card[draggable="true"]:active {
   cursor: grabbing;
 }
-.dyo-kbn-card.dragging {
+.dyo-brd-card.dragging {
   opacity: 0.4;
 }
-.dyo-kbn-col-cards.dyo-kbn-dragover {
+.dyo-brd-col-cards.dyo-brd-dragover {
   background: rgba(59,130,246,0.06);
   outline: 2px dashed rgba(59,130,246,0.3);
   outline-offset: -2px;
   border-radius: 6px;
 }
-.dyo-kbn-drop-indicator {
+.dyo-brd-drop-indicator {
   height: 3px;
   background: #3b82f6;
   border-radius: 2px;
@@ -6620,11 +6660,11 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   transition: opacity 0.15s;
 }
 
-/* ── Kanban 모바일 툴바 반응형 ────────────────────────────── */
+/* ── Board 모바일 툴바 반응형 ────────────────────────────── */
 @media (max-width: 768px) {
-  .dyo-kbn-toolbar { flex-direction: column; align-items: stretch; gap: 6px; }
-  .dyo-kbn-filter-area { flex-wrap: wrap; }
-  .dyo-kbn-search { width: 100%; }
-  .dyo-kbn-progress-area { margin-left: 0; }
+  .dyo-brd-toolbar { flex-direction: column; align-items: stretch; gap: 6px; }
+  .dyo-brd-filter-area { flex-wrap: wrap; }
+  .dyo-brd-search { width: 100%; }
+  .dyo-brd-progress-area { margin-left: 0; }
 }
 
