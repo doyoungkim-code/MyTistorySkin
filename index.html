@@ -7216,7 +7216,7 @@
 
         el.innerHTML =
           (badges || stBadge ? '<div class="dyo-brd-card-badges">' + badges + stBadge + '</div>' : '') +
-          '<div class="dyo-brd-card-title' + (card.col === 'done' ? ' done' : '') + '">' + escHtml(card.title) + '</div>';
+          '<div class="dyo-brd-card-title' + (card.colId === 'done' ? ' done' : '') + '">' + escHtml(card.title) + '</div>';
         el.addEventListener('click', function(e) {
           if (el.classList.contains('dragging')) return;
           openCardDetail(card);
