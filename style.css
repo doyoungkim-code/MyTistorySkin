@@ -5763,6 +5763,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
   overflow: hidden;
   min-width: 560px;
+  transition: width 0.28s cubic-bezier(0.4,0,0.2,1);
   min-height: 320px;
 }
 .dyo-kbn-win.open { display: flex; }
@@ -5807,18 +5808,6 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   background: var(--ct-hover);
 }
 
-/* 본문 + 컬럼 레이아웃 */
-.dyo-kbn-body {
-  flex: 1;
-  overflow: hidden;
-  padding: 14px;
-  background: #f6f8fa;
-}
-.dyo-kbn-columns {
-  display: flex;
-  gap: 12px;
-  height: 100%;
-}
 .dyo-kbn-col {
   flex: 1;
   display: flex;
@@ -5960,13 +5949,186 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
     border-radius: 0;
     min-width: unset;
   }
+  .dyo-kbn-body { flex-direction: column; }
   .dyo-kbn-columns {
     flex-direction: column;
     overflow-y: auto;
+    height: auto;
   }
   .dyo-kbn-col {
     flex: none;
     min-height: 180px;
   }
+  .dyo-kbn-detail-panel.open {
+    width: 100% !important;
+    border-left: none;
+    border-top: 1px solid var(--ct-border);
+  }
+  .dyo-kbn-detail-inner { width: 100%; }
+}
+
+/* ── 칸반 body: 컬럼 + 상세 패널 나란히 ─────────────────── */
+.dyo-kbn-body {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  min-height: 0;
+}
+.dyo-kbn-columns {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  overflow-x: auto;
+  min-width: 0;
+}
+
+/* ── 카드 상세 슬라이드 패널 ─────────────────────────────── */
+.dyo-kbn-detail-panel {
+  width: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-left: 0px solid transparent;
+  background: #fff;
+  transition: width 0.28s cubic-bezier(0.4,0,0.2,1),
+              border-color 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+.dyo-kbn-detail-panel.open {
+  width: 280px;
+  border-left: 1px solid var(--ct-border);
+}
+
+.dyo-kbn-detail-inner {
+  width: 280px;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* 헤더 */
+.dyo-kbn-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dyo-kbn-detail-col-badge {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+.dyo-kbn-detail-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: #9ca3af;
+  transition: background 0.15s, color 0.15s;
+}
+.dyo-kbn-detail-close:hover { background: #f3f4f6; color: #374151; }
+
+/* 제목 */
+.dyo-kbn-detail-title {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* 섹션 */
+.dyo-kbn-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dyo-kbn-detail-section-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 6px;
+}
+
+/* 설명 */
+.dyo-kbn-detail-desc {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.dyo-kbn-detail-desc.dyo-kbn-detail-desc-empty {
+  color: #d1d5db;
+  font-style: italic;
+}
+
+/* 필드 목록 */
+.dyo-kbn-detail-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.dyo-kbn-detail-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.dyo-kbn-detail-field:last-child { border-bottom: none; }
+.dyo-kbn-detail-field-key {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: #9ca3af;
+  width: 64px;
+  flex-shrink: 0;
+}
+.dyo-kbn-detail-field-val {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+.dyo-kbn-detail-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid #e5e7eb;
+}
+.dyo-kbn-avatar-tistory {
+  background: #ff5a1f;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: var(--font-sans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+.dyo-kbn-detail-prio-label {
+  font-size: 12px;
+  color: #6b7280;
 }
 

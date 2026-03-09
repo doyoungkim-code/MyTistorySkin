@@ -965,6 +965,46 @@
       </div>
       <div class="dyo-kbn-body" id="dyoKanbanBody">
         <div class="dyo-kbn-columns" id="dyoKanbanColumns"></div>
+        <div class="dyo-kbn-detail-panel" id="dyoKbnDetailPanel">
+          <div class="dyo-kbn-detail-inner">
+            <div class="dyo-kbn-detail-header">
+              <span class="dyo-kbn-detail-col-badge" id="dyoKbnDetailColBadge"></span>
+              <button class="dyo-kbn-detail-close" id="dyoKbnDetailClose" title="닫기">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
+              </button>
+            </div>
+            <div class="dyo-kbn-detail-title" id="dyoKbnDetailTitle"></div>
+            <div class="dyo-kbn-detail-section">
+              <div class="dyo-kbn-detail-section-label">설명</div>
+              <div class="dyo-kbn-detail-desc" id="dyoKbnDetailDesc"></div>
+            </div>
+            <div class="dyo-kbn-detail-section">
+              <div class="dyo-kbn-detail-section-label">세부 정보</div>
+              <div class="dyo-kbn-detail-fields">
+                <div class="dyo-kbn-detail-field">
+                  <span class="dyo-kbn-detail-field-key">담당자</span>
+                  <span class="dyo-kbn-detail-field-val">
+                    <img class="dyo-kbn-detail-avatar" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fdcw74H%2FdJMcacCdDz7%2FAAAAAAAAAAAAAAAAAAAAADsp14QhaXFHW-MrLGX64kxBD-4ExyawRyxn5bwMsN05%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3D2Wpl5e4o6CQ3Th%252BrrBkwoYobc7E%253D" alt="doyoucode">doyoucode
+                  </span>
+                </div>
+                <div class="dyo-kbn-detail-field">
+                  <span class="dyo-kbn-detail-field-key">보고자</span>
+                  <span class="dyo-kbn-detail-field-val">
+                    <span class="dyo-kbn-detail-avatar dyo-kbn-avatar-tistory">T</span>tistory
+                  </span>
+                </div>
+                <div class="dyo-kbn-detail-field">
+                  <span class="dyo-kbn-detail-field-key">우선순위</span>
+                  <span class="dyo-kbn-detail-field-val" id="dyoKbnDetailPriority">—</span>
+                </div>
+                <div class="dyo-kbn-detail-field">
+                  <span class="dyo-kbn-detail-field-key">카테고리</span>
+                  <span class="dyo-kbn-detail-field-val" id="dyoKbnDetailLabel">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="dyo-brs-handle n"  data-dir="n"></div>
       <div class="dyo-brs-handle ne" data-dir="ne"></div>
@@ -6700,7 +6740,8 @@
                 colId:    COLS[colNum - 1].id,
                 title:    parts[1] || '',
                 label:    parts[2] ? parts[2].toLowerCase() : null,
-                priority: parts[3] ? parts[3].toLowerCase() : null
+                priority: parts[3] ? parts[3].toLowerCase() : null,
+                desc:     parts[4] || ''
               });
             });
             cb(cards);
@@ -6752,8 +6793,61 @@
         el.innerHTML =
           (badges ? '<div class="dyo-kbn-card-badges">' + badges + '</div>' : '') +
           '<div class="dyo-kbn-card-title">' + escHtml(card.title) + '</div>';
+        el.addEventListener('click', function() { openCardDetail(card); });
         return el;
       }
+
+      // ── 카드 상세 모달 ────────────────────────────────────
+      var PRIORITY_LABEL = {
+        veryhigh: 'Very High', high: 'High', medium: 'Medium', low: 'Low', verylow: 'Very Low'
+      };
+      var COL_LABEL = { todo: 'To Do', inprogress: 'In Progress', done: 'Done' };
+      var COL_COLOR = { todo: '#3b82f6', inprogress: '#f59e0b', done: '#22c55e' };
+
+      var detailPanel = document.getElementById('dyoKbnDetailPanel');
+      var detailClose = document.getElementById('dyoKbnDetailClose');
+
+      function openCardDetail(card) {
+        document.getElementById('dyoKbnDetailColBadge').textContent       = COL_LABEL[card.colId] || card.colId;
+        document.getElementById('dyoKbnDetailColBadge').style.background  = COL_COLOR[card.colId] || '#888';
+        document.getElementById('dyoKbnDetailTitle').textContent          = card.title;
+        var descEl = document.getElementById('dyoKbnDetailDesc');
+        descEl.classList.toggle('dyo-kbn-detail-desc-empty', !card.desc);
+        descEl.textContent = card.desc || '설명 없음';
+
+        // 우선순위
+        var prioEl = document.getElementById('dyoKbnDetailPriority');
+        if (card.priority && PRIORITY_ICON[card.priority]) {
+          prioEl.innerHTML = '<span class="dyo-kbn-priority ' + card.priority + '">' + PRIORITY_ICON[card.priority] + '</span>'
+            + '<span class="dyo-kbn-detail-prio-label">' + (PRIORITY_LABEL[card.priority] || card.priority) + '</span>';
+        } else {
+          prioEl.textContent = '—';
+        }
+
+        // 카테고리
+        var lblEl = document.getElementById('dyoKbnDetailLabel');
+        if (card.label) {
+          lblEl.innerHTML = '<span class="dyo-kbn-label ' + card.label + '">' + card.label + '</span>';
+        } else {
+          lblEl.textContent = '—';
+        }
+
+        if (detailPanel && !detailPanel.classList.contains('open')) {
+          var addW = 280;
+          var curW = win.offsetWidth;
+          var winLeft = parseFloat(win.style.left) || win.getBoundingClientRect().left;
+          var maxW = window.innerWidth - winLeft - 8;
+          win.style.width = Math.min(curW + addW, maxW) + 'px';
+          detailPanel.classList.add('open');
+        }
+      }
+
+      if (detailClose) detailClose.addEventListener('click', function() {
+        if (detailPanel && detailPanel.classList.contains('open')) {
+          detailPanel.classList.remove('open');
+          win.style.width = (win.offsetWidth - 280) + 'px';
+        }
+      });
 
       function escHtml(s) {
         return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -7000,7 +7094,7 @@
         if (kanW >= 360) {
           win.style.width  = kanW + 'px';
           win.style.height = kanH + 'px';
-          win.style.left   = Math.max(12, memoLeft - 12 - kanW) + 'px';
+          win.style.left   = Math.max(12, (window.innerWidth - kanW) / 2) + 'px';
           win.style.top    = memoTop + 'px';
           win.style.right  = 'auto';
           win.style.bottom = 'auto';
