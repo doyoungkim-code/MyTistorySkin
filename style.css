@@ -5440,6 +5440,97 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   text-decoration: line-through;
   color: #a3886a;
 }
+
+/* ── Memo: 헤더 액션 버튼 (클립보드) ─────────────────────── */
+.dyo-memo-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  color: #92400e;
+  position: relative;
+  transition: color 0.15s, background 0.15s;
+}
+.dyo-memo-action-btn:hover {
+  color: #78350f;
+  background: rgba(0,0,0,0.08);
+}
+
+/* ── Memo: 삭제 버튼 ──────────────────────────────────────── */
+.dyo-memo-del-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #b45309;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 2px;
+  opacity: 0;
+  transition: color 0.15s, opacity 0.15s;
+}
+.dyo-memo-item:hover .dyo-memo-del-btn { opacity: 0.7; }
+.dyo-memo-del-btn:hover { color: #dc2626; opacity: 1 !important; }
+
+/* ── Memo: 새 메모 입력 영역 ──────────────────────────────── */
+.dyo-memo-add {
+  display: flex;
+  align-items: center;
+  margin: 6px 13px 8px 16px;
+  border: 1.5px solid rgba(0,0,0,0.14);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.5);
+  transition: border-color 0.15s;
+}
+.dyo-memo-add:focus-within { border-color: #b45309; }
+.dyo-memo-add-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: #44320c;
+  font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 7px 10px;
+}
+.dyo-memo-add-input::placeholder { color: #a3886a; }
+.dyo-memo-add .dyo-memo-add-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  border-left: 1.5px solid rgba(0,0,0,0.12);
+  color: #92400e;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 0 12px;
+  align-self: stretch;
+  transition: color 0.15s, background 0.15s;
+}
+.dyo-memo-add .dyo-memo-add-btn:hover { color: #78350f; background: rgba(0,0,0,0.05); }
+
+/* ── Memo: 인라인 수정 ───────────────────────────────────── */
+.dyo-memo-label { cursor: default; }
+.dyo-memo-edit-input {
+  flex: 1;
+  min-width: 0;
+  padding: 2px 6px;
+  border: 1.5px solid #b45309;
+  border-radius: 4px;
+  background: #fff;
+  color: #44320c;
+  font-size: 13.5px;
+  font-family: 'Noto Sans KR', sans-serif;
+  outline: none;
+}
+.dyo-memo-item.editing { background: rgba(180,83,9,0.06); }
+
 .dyo-memo-del {
   flex-shrink: 0;
   background: none;
@@ -5631,97 +5722,73 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 /* ============================================================
    캘린더 위젯
    ============================================================ */
-.dyo-cal-widget {
+/* ── 태스크바 시계 (클릭 가능) ──────────────────────────── */
+.dyo-bar-clock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.dyo-bar-clock:hover { background: rgba(255,255,255,0.08); }
+
+/* ── 캘린더 팝업 ──────────────────────────────────────── */
+.dyo-cal-popup {
   display: none;
   position: fixed;
-  right: 28px;
-  top: 100px;
-  width: 300px;
-  z-index: 8480;
-  background: #ecfdf5;
-  border-radius: 3px;
-  box-shadow:
-    3px 6px 20px rgba(16,185,129,0.18),
-    0 1px 4px rgba(16,185,129,0.12),
-    inset 0 -3px 0 rgba(16,185,129,0.08);
+  z-index: 99996;
+  width: 280px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.1);
   font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
   user-select: none;
+  animation: dyo-win-pop 0.15s ease-out both;
 }
-#tt-body-index .dyo-cal-widget { display: block; }
+.dyo-cal-popup.open { display: block; }
 
-.dyo-cal-header {
+.dyo-cal-popup-header {
   display: flex;
   align-items: center;
-  padding: 9px 12px 9px 14px;
-  background: #a7f3d0;
-  border-bottom: 1px solid rgba(16,185,129,0.15);
-  border-radius: 3px 3px 0 0;
-  cursor: move;
-  gap: 6px;
+  justify-content: space-between;
+  padding: 12px 14px 8px;
 }
-.dyo-cal-widget.collapsed .dyo-cal-header {
-  border-bottom: none;
-  border-radius: 3px;
-}
-
-.dyo-cal-title-area {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex: 1;
-  min-width: 0;
-}
-.dyo-cal-title-area svg { flex-shrink: 0; color: #047857; }
-
-.dyo-cal-title {
-  font-size: 13px;
+.dyo-cal-popup-title {
+  font-size: 14px;
   font-weight: 700;
-  color: #064e3b;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
+  color: #111;
 }
 
-.dyo-cal-header-btns {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  flex-shrink: 0;
-}
-
-.dyo-cal-nav,
-.dyo-cal-today-btn,
-.dyo-cal-toggle {
+.dyo-cal-nav {
   background: none;
   border: none;
   cursor: pointer;
-  color: #047857;
+  color: #555;
+  font-size: 18px;
+  font-weight: 600;
   line-height: 1;
-  padding: 2px 4px;
-  border-radius: 3px;
+  padding: 4px 8px;
+  border-radius: 6px;
   transition: color 0.15s, background 0.15s;
 }
-.dyo-cal-nav        { font-size: 18px; font-weight: 600; }
-.dyo-cal-today-btn  { font-size: 9px; padding: 3px 5px; }
-.dyo-cal-toggle     { font-size: 20px; padding: 0 3px; }
-.dyo-cal-nav:hover,
-.dyo-cal-today-btn:hover,
-.dyo-cal-toggle:hover { color: #064e3b; background: rgba(0,0,0,0.06); }
+.dyo-cal-nav:hover { color: #111; background: #f3f4f6; }
 
-.dyo-cal-body { padding: 8px 10px 10px; }
+.dyo-cal-popup-body { padding: 4px 14px 14px; }
 
 .dyo-cal-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px 0;
+  gap: 2px 0;
 }
 
 .dyo-cal-dow {
   text-align: center;
   font-size: 10px;
   font-weight: 600;
-  color: #6b7280;
+  color: #9ca3af;
   padding: 2px 0 6px;
-  letter-spacing: 0.02em;
 }
 .dyo-cal-dow.sun { color: #ef4444; }
 .dyo-cal-dow.sat { color: #3b82f6; }
@@ -5730,11 +5797,11 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   margin: 0 auto;
-  font-size: 12px;
-  color: #374151;
+  font-size: 13px;
+  color: #222;
   border-radius: 50%;
   line-height: 1;
 }
@@ -5742,7 +5809,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 .dyo-cal-day.sat { color: #3b82f6; }
 .dyo-cal-day.empty { pointer-events: none; }
 .dyo-cal-day.today {
-  background: #10b981;
+  background: #111;
   color: #fff;
   font-weight: 700;
 }
@@ -5762,9 +5829,9 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   border-radius: 12px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
   overflow: hidden;
-  min-width: 560px;
+  min-width: 728px;
   transition: width 0.28s cubic-bezier(0.4,0,0.2,1);
-  min-height: 320px;
+  min-height: 416px;
 }
 .dyo-kbn-win.open { display: flex; }
 .dyo-kbn-win.maximized {
@@ -6130,5 +6197,434 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 .dyo-kbn-detail-prio-label {
   font-size: 12px;
   color: #6b7280;
+}
+
+/* ── Kanban: 툴바 (필터 + 진행률 + 클립보드) ─────────────── */
+.dyo-kbn-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: #fff;
+  border-bottom: 1px solid var(--ct-border2);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.dyo-kbn-filter-area {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.dyo-kbn-search {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  padding: 4px 10px;
+  border: 1px solid var(--ct-border);
+  border-radius: 5px;
+  background: var(--ct-bg2);
+  color: var(--ct-text);
+  width: 120px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.dyo-kbn-search:focus { border-color: #3b82f6; }
+.dyo-kbn-filter-select {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  padding: 4px 6px;
+  border: 1px solid var(--ct-border);
+  border-radius: 5px;
+  background: var(--ct-bg2);
+  color: var(--ct-text2);
+  cursor: pointer;
+  outline: none;
+}
+.dyo-kbn-progress-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+.dyo-kbn-progress-bar {
+  width: 80px;
+  height: 6px;
+  background: var(--ct-bg3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.dyo-kbn-progress-fill {
+  height: 100%;
+  background: #22c55e;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  width: 0;
+}
+.dyo-kbn-progress-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ct-text3);
+  white-space: nowrap;
+}
+.dyo-kbn-clipboard-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  color: var(--ct-text3);
+  transition: color 0.15s, background 0.15s;
+  position: relative;
+}
+.dyo-kbn-clipboard-btn:hover {
+  color: var(--ct-text);
+  background: var(--ct-hover);
+}
+.dyo-kbn-clipboard-btn.dirty::after,
+.dyo-memo-action-btn.dirty::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 7px;
+  height: 7px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+}
+
+/* ── Kanban: 새 이슈 추가 버튼 & 폼 ─────────────────────── */
+.dyo-kbn-add-btn-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  color: var(--ct-text3);
+  transition: color 0.15s, background 0.15s;
+}
+.dyo-kbn-add-btn-trigger:hover {
+  color: #22c55e;
+  background: var(--ct-hover);
+}
+.dyo-kbn-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px 10px;
+  border-bottom: 1px solid var(--ct-border);
+  background: var(--ct-bg2);
+}
+.dyo-kbn-add-form-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.dyo-kbn-add-input {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 8px;
+  border: 1px solid var(--ct-border);
+  border-radius: 5px;
+  background: var(--ct-bg);
+  color: var(--ct-text);
+  font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.dyo-kbn-add-input:focus { border-color: #3b82f6; }
+.dyo-kbn-add-date { max-width: 140px; }
+.dyo-kbn-add-select {
+  padding: 5px 6px;
+  border: 1px solid var(--ct-border);
+  border-radius: 5px;
+  background: var(--ct-bg);
+  color: var(--ct-text);
+  font-size: 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  outline: none;
+  cursor: pointer;
+}
+.dyo-kbn-add-submit,
+.dyo-kbn-add-cancel {
+  padding: 5px 14px;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.dyo-kbn-add-submit {
+  background: #3b82f6;
+  color: #fff;
+}
+.dyo-kbn-add-submit:hover { background: #2563eb; }
+.dyo-kbn-add-cancel {
+  background: var(--ct-hover);
+  color: var(--ct-text3);
+}
+.dyo-kbn-add-cancel:hover { background: var(--ct-border); }
+
+/* ── Kanban: 컬럼 접기/펼치기 ────────────────────────────── */
+.dyo-kbn-col-toggle {
+  font-size: 16px;
+  font-weight: 600;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--ct-text3);
+  flex-shrink: 0;
+  transition: color 0.15s, background 0.15s;
+  line-height: 1;
+}
+.dyo-kbn-col-toggle:hover {
+  color: var(--ct-text);
+  background: var(--ct-hover);
+}
+.dyo-kbn-col.collapsed .dyo-kbn-col-cards {
+  display: none;
+}
+.dyo-kbn-col.collapsed {
+  flex: 0 0 auto;
+  min-width: 0;
+  width: 48px;
+}
+.dyo-kbn-col.collapsed .dyo-kbn-col-header {
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 6px;
+  gap: 8px;
+}
+.dyo-kbn-col.collapsed .dyo-kbn-col-title {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 11px;
+}
+.dyo-kbn-col.collapsed .dyo-kbn-col-count {
+  font-size: 10px;
+  padding: 0 5px;
+}
+
+/* ── Kanban: D-day 배지 ──────────────────────────────────── */
+.dyo-kbn-duedate {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+  background: rgba(107,114,128,0.08);
+  color: #6b7280;
+  border: 1px solid rgba(107,114,128,0.18);
+}
+.dyo-kbn-duedate.soon {
+  background: rgba(245,158,11,0.1);
+  color: #d97706;
+  border-color: rgba(245,158,11,0.25);
+}
+.dyo-kbn-duedate.overdue {
+  background: rgba(239,68,68,0.1);
+  color: #dc2626;
+  border-color: rgba(239,68,68,0.2);
+  text-decoration: line-through;
+}
+
+/* ── Kanban: 서브태스크 배지 (카드) ──────────────────────── */
+.dyo-kbn-subtask-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: rgba(34,197,94,0.08);
+  color: #16a34a;
+  border: 1px solid rgba(34,197,94,0.18);
+}
+
+/* ── Kanban: 서브태스크 (상세 패널) ──────────────────────── */
+.dyo-kbn-detail-subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dyo-kbn-subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+}
+.dyo-kbn-subtask-item:last-child { border-bottom: none; }
+.dyo-kbn-subtask-item input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #22c55e;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.dyo-kbn-subtask-item.done span {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+/* ── Kanban: 이슈 삭제 버튼 ──────────────────────────────── */
+.dyo-kbn-detail-actions {
+  padding: 16px 0 4px;
+  margin-top: 8px;
+  border-top: 1px solid var(--ct-border);
+}
+.dyo-kbn-detail-delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  background: none;
+  color: #ef4444;
+  font-size: 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.dyo-kbn-detail-delete:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* ── Kanban: 이슈 수정 버튼 & 폼 ─────────────────────────── */
+.dyo-kbn-detail-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--ct-border);
+  border-radius: 6px;
+  background: none;
+  color: var(--ct-text2);
+  font-size: 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.dyo-kbn-detail-edit-btn:hover {
+  background: var(--ct-hover);
+  color: var(--ct-text);
+}
+.dyo-kbn-detail-actions {
+  display: flex;
+  gap: 8px;
+}
+.dyo-kbn-detail-edit {
+  padding: 4px 0;
+}
+.dyo-kbn-detail-edit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 10px;
+}
+.dyo-kbn-detail-edit-row label {
+  font-size: 11px;
+  color: var(--ct-text3);
+  font-weight: 600;
+}
+.dyo-kbn-edit-input,
+.dyo-kbn-edit-select,
+.dyo-kbn-edit-textarea {
+  padding: 5px 8px;
+  border: 1px solid var(--ct-border);
+  border-radius: 5px;
+  background: var(--ct-bg);
+  color: var(--ct-text);
+  font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.dyo-kbn-edit-input:focus,
+.dyo-kbn-edit-select:focus,
+.dyo-kbn-edit-textarea:focus {
+  border-color: #3b82f6;
+}
+.dyo-kbn-edit-textarea {
+  resize: vertical;
+  min-height: 60px;
+  line-height: 1.5;
+}
+.dyo-kbn-detail-edit-btns {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+.dyo-kbn-edit-save,
+.dyo-kbn-edit-cancel {
+  padding: 5px 16px;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.dyo-kbn-edit-save {
+  background: #3b82f6;
+  color: #fff;
+}
+.dyo-kbn-edit-save:hover { background: #2563eb; }
+.dyo-kbn-edit-cancel {
+  background: var(--ct-hover);
+  color: var(--ct-text3);
+}
+.dyo-kbn-edit-cancel:hover { background: var(--ct-border); }
+
+/* ── Kanban: 드래그 앤 드롭 ──────────────────────────────── */
+.dyo-kbn-card[draggable="true"] {
+  cursor: grab;
+}
+.dyo-kbn-card[draggable="true"]:active {
+  cursor: grabbing;
+}
+.dyo-kbn-card.dragging {
+  opacity: 0.4;
+}
+.dyo-kbn-col-cards.dyo-kbn-dragover {
+  background: rgba(59,130,246,0.06);
+  outline: 2px dashed rgba(59,130,246,0.3);
+  outline-offset: -2px;
+  border-radius: 6px;
+}
+.dyo-kbn-drop-indicator {
+  height: 3px;
+  background: #3b82f6;
+  border-radius: 2px;
+  margin: 2px 0;
+  transition: opacity 0.15s;
+}
+
+/* ── Kanban 모바일 툴바 반응형 ────────────────────────────── */
+@media (max-width: 768px) {
+  .dyo-kbn-toolbar { flex-direction: column; align-items: stretch; gap: 6px; }
+  .dyo-kbn-filter-area { flex-wrap: wrap; }
+  .dyo-kbn-search { width: 100%; }
+  .dyo-kbn-progress-area { margin-left: 0; }
 }
 
