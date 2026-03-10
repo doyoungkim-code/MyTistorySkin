@@ -5421,24 +5421,12 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
 .dyo-memo-item:hover { background: rgba(0,0,0,0.04); }
 .dyo-memo-item:hover .dyo-memo-del { opacity: 1; }
 
-.dyo-memo-cb {
-  flex-shrink: 0;
-  width: 17px;
-  height: 17px;
-  margin-top: 2px;
-  accent-color: #b45309;
-  cursor: pointer;
-}
 .dyo-memo-label {
   flex: 1;
   font-size: 14px;
   color: #44320c;
   line-height: 1.55;
   word-break: break-word;
-}
-.dyo-memo-item.done .dyo-memo-label {
-  text-decoration: line-through;
-  color: #a3886a;
 }
 
 /* ── Memo: 헤더 액션 버튼 (클립보드) ─────────────────────── */
@@ -6003,10 +5991,13 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   font-weight: 700;
   letter-spacing: 0.3px;
 }
-.dyo-brd-label.bug     { background: rgba(239,68,68,0.1);   color: #dc2626; border: 1px solid rgba(239,68,68,0.2); }
-.dyo-brd-label.feature { background: rgba(59,130,246,0.1);  color: #2563eb; border: 1px solid rgba(59,130,246,0.2); }
-.dyo-brd-label.docs    { background: rgba(34,197,94,0.1);   color: #16a34a; border: 1px solid rgba(34,197,94,0.2); }
-.dyo-brd-label.infra   { background: rgba(139,92,246,0.1);  color: #7c3aed; border: 1px solid rgba(139,92,246,0.2); }
+.dyo-brd-label.blog    { background: rgba(59,130,246,0.1);  color: #2563eb; border: 1px solid rgba(59,130,246,0.2); }
+.dyo-brd-label.job     { background: rgba(239,68,68,0.1);   color: #dc2626; border: 1px solid rgba(239,68,68,0.2); }
+.dyo-brd-label.exam    { background: rgba(245,158,11,0.1);  color: #d97706; border: 1px solid rgba(245,158,11,0.2); }
+.dyo-brd-label.hobby   { background: rgba(34,197,94,0.1);   color: #16a34a; border: 1px solid rgba(34,197,94,0.2); }
+.dyo-brd-label.study   { background: rgba(6,182,212,0.1);   color: #0891b2; border: 1px solid rgba(6,182,212,0.2); }
+.dyo-brd-label.coding  { background: rgba(236,72,153,0.1);  color: #db2777; border: 1px solid rgba(236,72,153,0.2); }
+.dyo-brd-label.etc     { background: rgba(139,92,246,0.1);  color: #7c3aed; border: 1px solid rgba(139,92,246,0.2); }
 
 .dyo-brd-priority {
   display: inline-flex;

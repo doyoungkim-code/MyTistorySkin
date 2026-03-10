@@ -1001,10 +1001,13 @@
           <input type="text" class="dyo-brd-search" id="dyoBrdSearch" placeholder="검색..." autocomplete="off" spellcheck="false">
           <select class="dyo-brd-filter-select" id="dyoBrdFilterLabel">
             <option value="">라벨 전체</option>
-            <option value="bug">bug</option>
-            <option value="feature">feature</option>
-            <option value="docs">docs</option>
-            <option value="infra">infra</option>
+            <option value="blog">blog</option>
+            <option value="job">job</option>
+            <option value="exam">exam</option>
+            <option value="hobby">hobby</option>
+            <option value="study">study</option>
+            <option value="coding">coding</option>
+            <option value="etc">etc</option>
           </select>
           <select class="dyo-brd-filter-select" id="dyoBrdFilterPriority">
             <option value="">우선순위 전체</option>
@@ -1041,10 +1044,13 @@
         <div class="dyo-brd-add-form-row">
           <select id="dyoBrdAddLabel" class="dyo-brd-add-select">
             <option value="">라벨 없음</option>
-            <option value="bug">bug</option>
-            <option value="feature">feature</option>
-            <option value="docs">docs</option>
-            <option value="infra">infra</option>
+            <option value="blog">blog</option>
+            <option value="job">job</option>
+            <option value="exam">exam</option>
+            <option value="hobby">hobby</option>
+            <option value="study">study</option>
+            <option value="coding">coding</option>
+            <option value="etc">etc</option>
           </select>
           <select id="dyoBrdAddPriority" class="dyo-brd-add-select">
             <option value="">우선순위 없음</option>
@@ -1128,10 +1134,11 @@
                 <label>라벨</label>
                 <select id="dyoBrdEditLabel" class="dyo-brd-edit-select">
                   <option value="">없음</option>
-                  <option value="bug">bug</option>
-                  <option value="feature">feature</option>
-                  <option value="docs">docs</option>
-                  <option value="infra">infra</option>
+                  <option value="blog">blog</option>
+                  <option value="job">job</option>
+                  <option value="exam">exam</option>
+                  <option value="hobby">hobby</option>
+                  <option value="etc">etc</option>
                 </select>
               </div>
               <div class="dyo-brd-detail-edit-row">
@@ -5729,15 +5736,9 @@
               tmp.value.split('\n').forEach(function(line) {
                 line = line.trim();
                 if (!line) return;
-                var done = false;
-                var m = line.match(/^([XO])\s*,\s*/i);
-                if (m) {
-                  done = m[1].toUpperCase() === 'O';
-                  line = line.slice(m[0].length).trim();
-                }
                 if (!line || seen[line]) return;
                 seen[line] = true;
-                items.push({ id: line, text: line, done: done });
+                items.push({ id: line, text: line });
               });
             });
             cb(items);
@@ -5747,8 +5748,7 @@
 
       // ── 렌더 ──────────────────────────────────────────────
       function updateCount() {
-        var d = _memoItems.filter(function(i) { return i.done; }).length;
-        countEl.textContent = d + '/' + _memoItems.length;
+        countEl.textContent = _memoItems.length;
       }
 
       function render(items) {
@@ -5757,18 +5757,7 @@
 
         items.forEach(function(item, idx) {
           var li = document.createElement('li');
-          li.className = 'dyo-memo-item' + (item.done ? ' done' : '');
-
-          var cb = document.createElement('input');
-          cb.type = 'checkbox';
-          cb.checked = item.done;
-          cb.className = 'dyo-memo-cb';
-          cb.addEventListener('change', function() {
-            item.done = cb.checked;
-            li.classList.toggle('done', cb.checked);
-            markDirty();
-            updateCount();
-          });
+          li.className = 'dyo-memo-item';
 
           var lbl = document.createElement('span');
           lbl.className = 'dyo-memo-label';
@@ -5818,7 +5807,6 @@
             render(_memoItems);
           });
 
-          li.appendChild(cb);
           li.appendChild(lbl);
           li.appendChild(delBtn);
           list.appendChild(li);
@@ -5831,7 +5819,7 @@
       function addMemo() {
         var text = (addInput.value || '').trim();
         if (!text) { addInput.focus(); return; }
-        _memoItems.push({ id: text, text: text, done: false });
+        _memoItems.push({ id: text, text: text });
         markDirty();
         render(_memoItems);
         addInput.value = '';
@@ -5844,7 +5832,7 @@
       if (clipboardBtn) clipboardBtn.addEventListener('click', function() {
         var lines = [];
         _memoItems.forEach(function(item) {
-          lines.push((item.done ? 'O' : 'X') + ', ' + item.text);
+          lines.push(item.text);
         });
         var text = lines.join('\n');
         if (navigator.clipboard && navigator.clipboard.writeText) {
