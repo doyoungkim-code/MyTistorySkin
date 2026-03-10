@@ -649,8 +649,8 @@
         </span>
         <div class="dyo-memo-header-btns">
           <span class="dyo-memo-count" id="dyoMemoCount"></span>
-          <button class="dyo-memo-action-btn" id="dyoMemoClipboard" title="메모 데이터를 클립보드에 복사">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <button class="dyo-memo-action-btn" id="dyoMemoClipboard" title="클립보드에 복사 후 저장">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
           </button>
           <a class="dyo-memo-link-btn" href="https://dyomyo.tistory.com/notice/126" target="_blank" rel="noopener" title="원본 게시물 열기">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -1023,8 +1023,8 @@
             <div class="dyo-brd-progress-fill" id="dyoBrdProgressFill"></div>
           </div>
           <span class="dyo-brd-progress-text" id="dyoBrdProgressText"></span>
-          <button class="dyo-brd-clipboard-btn" id="dyoBrdClipboard" title="현재 보드 데이터를 클립보드에 복사">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <button class="dyo-brd-clipboard-btn" id="dyoBrdClipboard" title="클립보드에 복사 후 저장">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
           </button>
           <button class="dyo-brd-add-btn-trigger" id="dyoBrdAddTrigger" title="새 이슈 추가">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -5835,9 +5835,10 @@
           lines.push(item.text);
         });
         var text = lines.join('\n');
+        var editWin = _dirty ? window.open('/manage/notice/126', '_blank') : null;
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(text).then(function() {
-            if (window.dyoToast) window.dyoToast('메모 데이터가 클립보드에 복사되었습니다', 'success', 2500);
+            if (window.dyoToast) window.dyoToast('클립보드에 복사 후 저장 페이지로 이동합니다', 'success', 2500);
             _dirty = false;
             clipboardBtn.classList.remove('dirty');
           });
@@ -7434,9 +7435,10 @@
           });
         });
         var text = lines.join('\n');
+        var editWin = _dirty ? window.open('/manage/notice/130', '_blank') : null;
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(text).then(function() {
-            if (window.dyoToast) window.dyoToast('보드 데이터가 클립보드에 복사되었습니다', 'success', 2500);
+            if (window.dyoToast) window.dyoToast('클립보드에 복사 후 저장 페이지로 이동합니다', 'success', 2500);
             _dirty = false;
             if (clipboardBtn) clipboardBtn.classList.remove('dirty');
           });
