@@ -2661,63 +2661,65 @@ html, body {
 }
 
 
-/* README 아이콘 */
+/* ── 데스크탑 아이콘 배경 (통일 스타일) ── */
 #desktopIconReadme .dyo-di-wrap {
-  background: linear-gradient(145deg, #f0f6ff 0%, #dce8fb 100%);
+  background: linear-gradient(145deg, #f0f6ff, #dce8fb);
   border: 1px solid rgba(100,160,255,0.35);
-  box-shadow: 0 6px 16px rgba(30,80,180,0.2), inset 0 1px 0 rgba(255,255,255,0.9);
+  box-shadow: 0 6px 16px rgba(30,80,180,0.25), inset 0 1px 0 rgba(255,255,255,0.6);
 }
-
-/* Shell 아이콘 (Windows CMD 스타일) */
 #desktopIconShell .dyo-di-wrap {
-  background: #0c0c0c;
-  border: 1px solid #3a3a3a;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.06);
-}
-#desktopIconShell .dyo-di-wrap svg { stroke: #cccccc; }
-
-/* Dev Blog 아이콘 (Tistory 스타일) */
-#desktopIconBlog .dyo-di-wrap {
-  background: linear-gradient(145deg, #ff6320 0%, #e8501a 100%);
-  border: 1px solid rgba(255,140,80,0.4);
-  box-shadow: 0 6px 16px rgba(232,80,26,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
-}
-#desktopIconBlog .dyo-di-wrap svg { fill: #ffffff; }
-
-/* GitHub 아이콘 */
-#desktopIconGithub .dyo-di-wrap {
-  background: linear-gradient(145deg, #24292e 0%, #1a1e22 100%);
-  border: 1px solid rgba(139,148,158,0.3);
+  background: linear-gradient(145deg, #1a1a1a, #0c0c0c);
+  border: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 6px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
 }
-#desktopIconGithub .dyo-di-wrap svg { fill: #ffffff; }
-
-/* Trash 아이콘 */
-/* File Explorer 아이콘 — 노란 폴더 */
-#desktopIconExplorer .dyo-di-wrap {
-  background: linear-gradient(145deg, #ffe066 0%, #f0a30a 100%);
-  border: 1px solid rgba(240,163,10,0.5);
-  box-shadow: 0 6px 16px rgba(240,163,10,0.35), inset 0 1px 0 rgba(255,255,255,0.35);
+#desktopIconShell .dyo-di-wrap svg { stroke: #cccccc; }
+#desktopIconBlog .dyo-di-wrap {
+  background: linear-gradient(145deg, #ff6320, #e8501a);
+  border: 1px solid rgba(255,140,80,0.4);
+  box-shadow: 0 6px 16px rgba(232,80,26,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
 }
-
+#desktopIconBlog .dyo-di-wrap svg { fill: #ffffff; }
+#desktopIconGithub .dyo-di-wrap {
+  background: linear-gradient(145deg, #24292e, #1a1e22);
+  border: 1px solid rgba(139,148,158,0.25);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+#desktopIconGithub .dyo-di-wrap svg { fill: #ffffff; }
+#desktopIconExplorer .dyo-di-wrap {
+  background: linear-gradient(145deg, #ffe066, #f0a30a);
+  border: 1px solid rgba(240,163,10,0.4);
+  box-shadow: 0 6px 16px rgba(240,163,10,0.3), inset 0 1px 0 rgba(255,255,255,0.35);
+}
 #desktopIconTrash .dyo-di-wrap {
-  background: linear-gradient(145deg, #191d24 0%, #1f242e 100%);
-  border: 1px solid rgba(139,148,158,0.3);
+  background: linear-gradient(145deg, #1f242e, #191d24);
+  border: 1px solid rgba(139,148,158,0.25);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
 }
 #desktopIconTrash .dyo-di-wrap svg { stroke: #8b949e; }
-
-/* Blogram 아이콘 — Instagram 그라데이션 */
-#desktopIconGallery .dyo-di-wrap {
-  background: linear-gradient(135deg, #833ab4 0%, #c13584 35%, #e1306c 60%, #f77737 85%, #fcaf45 100%);
-  border: 1px solid rgba(225,48,108,0.4);
-  box-shadow: 0 6px 16px rgba(193,53,132,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
+#desktopIconGuest .dyo-di-wrap {
+  background: linear-gradient(145deg, #fffbe0, #fff3a0);
+  border: 1px solid rgba(200,168,0,0.35);
+  box-shadow: 0 6px 16px rgba(200,168,0,0.2), inset 0 1px 0 rgba(255,255,255,0.7);
 }
-
-/* Features 폴더 아이콘 */
+#desktopIconGallery .dyo-di-wrap {
+  background: linear-gradient(145deg, #c13584, #e1306c);
+  border: 1px solid rgba(225,48,108,0.4);
+  box-shadow: 0 6px 16px rgba(193,53,132,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+}
 #desktopIconFeatures .dyo-di-wrap {
-  background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
-  border: 1px solid rgba(118,75,162,0.5);
-  box-shadow: 0 6px 16px rgba(102,126,234,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+  background: linear-gradient(145deg, #667eea, #764ba2);
+  border: 1px solid rgba(118,75,162,0.4);
+  box-shadow: 0 6px 16px rgba(102,126,234,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+#desktopIconBoard .dyo-di-wrap {
+  background: linear-gradient(145deg, #1e3a5f, #2563eb);
+  border: 1px solid rgba(59,130,246,0.4);
+  box-shadow: 0 6px 16px rgba(37,99,235,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+#desktopIconAlgoMon .dyo-di-wrap {
+  background: linear-gradient(145deg, #065f46, #059669);
+  border: 1px solid rgba(34,197,94,0.4);
+  box-shadow: 0 6px 16px rgba(5,150,105,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 /* ============================================================
@@ -5337,6 +5339,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
     inset 0 -3px 0 rgba(0,0,0,0.06);
   font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
   user-select: none;
+  transition: top 0.25s ease;
 }
 #tt-body-index .dyo-memo-widget { display: block; }
 
@@ -5348,7 +5351,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   background: #fde047;
   border-bottom: 1px solid rgba(0,0,0,0.08);
   border-radius: 3px 3px 0 0;
-  cursor: move;
+  cursor: default;
 }
 .dyo-memo-widget.collapsed .dyo-memo-header {
   border-bottom: none;
@@ -5588,6 +5591,7 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
     inset 0 -3px 0 rgba(109,40,217,0.08);
   font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
   user-select: none;
+  transition: top 0.25s ease;
 }
 #tt-body-index .dyo-bm-widget { display: block; }
 
@@ -5599,9 +5603,8 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   background: #ede9fe;
   border-bottom: 1px solid rgba(109,40,217,0.1);
   border-radius: 3px 3px 0 0;
-  cursor: grab;
+  cursor: default;
 }
-.dyo-bm-header:active { cursor: grabbing; }
 .dyo-bm-widget.collapsed .dyo-bm-header {
   border-bottom: none;
   border-radius: 3px;
@@ -5704,6 +5707,349 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   color: #c4b5fd;
   text-align: center;
   padding: 16px;
+}
+
+/* ============================================================
+   Daily English 위젯
+   ============================================================ */
+.dyo-eng-widget {
+  display: none;
+  position: fixed;
+  right: 28px;
+  top: 100px;
+  width: 300px;
+  z-index: 8480;
+  background: #ecfdf5;
+  border-radius: 3px;
+  box-shadow:
+    3px 6px 20px rgba(5,150,105,0.18),
+    0 1px 4px rgba(5,150,105,0.12),
+    inset 0 -3px 0 rgba(5,150,105,0.08);
+  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+  user-select: none;
+  transition: top 0.25s ease;
+}
+#tt-body-index .dyo-eng-widget { display: block; }
+
+.dyo-eng-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 10px 15px;
+  background: #a7f3d0;
+  border-bottom: 1px solid rgba(5,150,105,0.15);
+  border-radius: 3px 3px 0 0;
+  cursor: default;
+}
+.dyo-eng-widget.collapsed .dyo-eng-header {
+  border-bottom: none;
+  border-radius: 3px;
+}
+.dyo-eng-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #065f46;
+  letter-spacing: -0.3px;
+}
+.dyo-eng-title svg { flex-shrink: 0; color: #059669; }
+.dyo-eng-header-btns { display: flex; align-items: center; gap: 8px; }
+.dyo-eng-link-btn {
+  display: flex;
+  align-items: center;
+  color: #059669;
+  opacity: 0.7;
+  transition: 0.15s;
+  text-decoration: none;
+}
+.dyo-eng-link-btn:hover { opacity: 1; }
+.dyo-eng-toggle {
+  border: none;
+  background: transparent;
+  color: #059669;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: 0.15s;
+}
+.dyo-eng-toggle:hover { color: #065f46; }
+
+.dyo-eng-body { padding: 0 0 6px; }
+
+.dyo-eng-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 15px;
+  border-bottom: 1px solid rgba(5,150,105,0.1);
+}
+.dyo-eng-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #059669;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.dyo-eng-nav-btn:hover { color: #065f46; background: rgba(0,0,0,0.08); }
+.dyo-eng-nav-btn:disabled { color: #a7f3d0; cursor: default; }
+.dyo-eng-nav-btn:disabled:hover { background: transparent; }
+.dyo-eng-date {
+  font-size: 13px;
+  font-weight: 600;
+  color: #065f46;
+  min-width: 70px;
+  text-align: center;
+  cursor: pointer;
+}
+.dyo-eng-date:hover { text-decoration: underline; }
+.dyo-eng-date-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.dyo-eng-blind-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #059669;
+  cursor: pointer;
+  transition: 0.15s;
+  margin-left: auto;
+}
+.dyo-eng-blind-btn:hover { color: #065f46; background: rgba(0,0,0,0.08); }
+.dyo-eng-blind-btn.active { color: #dc2626; }
+.dyo-eng-en.blind {
+  color: transparent;
+  background: rgba(5,150,105,0.12);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.15s;
+  user-select: none;
+}
+.dyo-eng-en.blind:hover {
+  background: rgba(5,150,105,0.2);
+}
+.dyo-eng-en.blind.reveal {
+  color: #065f46;
+  background: rgba(5,150,105,0.06);
+}
+.dyo-eng-empty {
+  font-size: 13px;
+  color: #6ee7b7;
+  text-align: center;
+  padding: 16px;
+}
+
+/* ============================================================
+   Daily Algorithm 위젯
+   ============================================================ */
+.dyo-algo-widget {
+  display: none;
+  position: fixed;
+  right: 28px;
+  top: 100px;
+  width: 300px;
+  z-index: 8470;
+  background: #eff6ff;
+  border-radius: 3px;
+  box-shadow:
+    3px 6px 20px rgba(37,99,235,0.18),
+    0 1px 4px rgba(37,99,235,0.12),
+    inset 0 -3px 0 rgba(37,99,235,0.08);
+  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+  user-select: none;
+  transition: top 0.25s ease;
+}
+#tt-body-index .dyo-algo-widget { display: block; }
+
+.dyo-algo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 10px 15px;
+  background: #bfdbfe;
+  border-bottom: 1px solid rgba(37,99,235,0.15);
+  border-radius: 3px 3px 0 0;
+  cursor: default;
+}
+.dyo-algo-widget.collapsed .dyo-algo-header {
+  border-bottom: none;
+  border-radius: 3px;
+}
+.dyo-algo-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e40af;
+  letter-spacing: -0.3px;
+}
+.dyo-algo-title svg { flex-shrink: 0; color: #2563eb; }
+.dyo-algo-header-btns { display: flex; align-items: center; gap: 8px; }
+.dyo-algo-link-btn {
+  display: flex;
+  align-items: center;
+  color: #2563eb;
+  opacity: 0.7;
+  transition: 0.15s;
+  text-decoration: none;
+}
+.dyo-algo-link-btn:hover { opacity: 1; }
+.dyo-algo-toggle {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: 0.15s;
+}
+.dyo-algo-toggle:hover { color: #1e40af; }
+
+.dyo-algo-body { padding: 0 0 6px; }
+
+.dyo-algo-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 15px;
+  border-bottom: 1px solid rgba(37,99,235,0.1);
+}
+.dyo-algo-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.dyo-algo-nav-btn:hover { color: #1e40af; background: rgba(0,0,0,0.08); }
+.dyo-algo-nav-btn:disabled { color: #bfdbfe; cursor: default; }
+.dyo-algo-nav-btn:disabled:hover { background: transparent; }
+.dyo-algo-date {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e40af;
+  min-width: 70px;
+  text-align: center;
+  cursor: pointer;
+}
+.dyo-algo-date:hover { text-decoration: underline; }
+.dyo-algo-date-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dyo-algo-content { padding: 10px 15px 8px; }
+.dyo-algo-problem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+}
+.dyo-algo-problem-num {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #2563eb;
+  background: rgba(37,99,235,0.1);
+  border: 1px solid rgba(37,99,235,0.2);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+.dyo-algo-problem-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e40af;
+  text-decoration: none;
+  transition: 0.15s;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.dyo-algo-problem-title:hover { color: #2563eb; text-decoration: underline; }
+.dyo-algo-problem-link {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  color: #2563eb;
+  opacity: 0.6;
+  transition: 0.15s;
+}
+.dyo-algo-problem-link:hover { opacity: 1; }
+.dyo-algo-tier {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 3px;
+  padding: 1px 6px;
+  letter-spacing: -0.2px;
+}
+.dyo-algo-tier.unrated { color: #888; background: rgba(0,0,0,0.06); }
+.dyo-algo-tier.bronze   { color: #ad5600; background: rgba(173,86,0,0.1); }
+.dyo-algo-tier.silver   { color: #435f7a; background: rgba(67,95,122,0.1); }
+.dyo-algo-tier.gold     { color: #ec9a00; background: rgba(236,154,0,0.1); }
+.dyo-algo-tier.platinum { color: #27e2a4; background: rgba(39,226,164,0.12); }
+.dyo-algo-tier.diamond  { color: #00b4fc; background: rgba(0,180,252,0.1); }
+.dyo-algo-tier.ruby     { color: #ff0062; background: rgba(255,0,98,0.1); }
+.dyo-algo-empty {
+  font-size: 13px;
+  color: #93c5fd;
+  text-align: center;
+  padding: 16px;
+}
+
+.dyo-eng-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.dyo-eng-item {
+  padding: 8px 15px 10px;
+  border-bottom: 1px solid rgba(5,150,105,0.08);
+}
+.dyo-eng-item:last-child { border-bottom: none; }
+.dyo-eng-en {
+  font-size: 14px;
+  font-weight: 600;
+  color: #065f46;
+  line-height: 1.5;
+  letter-spacing: -0.2px;
+}
+.dyo-eng-ko {
+  font-size: 12.5px;
+  color: #047857;
+  opacity: 0.7;
+  line-height: 1.5;
+  margin-top: 2px;
 }
 
 
@@ -6657,5 +7003,525 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   .dyo-brd-filter-area { flex-wrap: wrap; }
   .dyo-brd-search { width: 100%; }
   .dyo-brd-progress-area { margin-left: 0; }
+}
+
+/* ============================================================
+   Algorithm Monitor Window  ─  Flashy Dark Neon Theme
+   ============================================================ */
+
+/* ── 창 컨테이너 ── */
+.dyo-algomon-win {
+  display: none;
+  position: fixed;
+  flex-direction: column;
+  background: #0c0e14;
+  border-radius: 14px;
+  border: 1px solid rgba(88,166,255,0.18);
+  box-shadow:
+    0 0 40px rgba(88,166,255,0.12),
+    0 20px 60px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow: hidden;
+  z-index: 9001;
+  min-width: 420px;
+  min-height: 360px;
+}
+.dyo-algomon-win.open { display: flex; }
+.dyo-algomon-win.maximized {
+  left: 0 !important; top: 0 !important;
+  right: 0 !important; bottom: 52px !important;
+  width: auto !important; height: auto !important;
+  border-radius: 0;
+}
+
+/* ── 타이틀바 ── */
+.dyo-algomon-win .dyo-shell-titlebar {
+  background: linear-gradient(135deg, #0f1219 0%, #141824 100%);
+  border-bottom: 1px solid rgba(88,166,255,0.12);
+}
+.dyo-algomon-win-title {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #58a6ff;
+  font-family: var(--font-mono);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(88,166,255,0.5);
+}
+.dyo-algomon-refresh-btn,
+.dyo-algomon-link-btn {
+  background: none; border: none; cursor: pointer;
+  color: #4a5568; padding: 2px 4px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+.dyo-algomon-refresh-btn { font-size: 15px; }
+.dyo-algomon-refresh-btn:hover,
+.dyo-algomon-link-btn:hover {
+  color: #58a6ff;
+  text-shadow: 0 0 8px rgba(88,166,255,0.6);
+}
+
+/* ── 검색바 ── */
+.dyo-algomon-searchbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #0a0c12;
+  border-bottom: 1px solid rgba(88,166,255,0.08);
+  flex-shrink: 0;
+}
+.dyo-algomon-search-icon {
+  color: #4a5568;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+.dyo-algomon-searchbar:focus-within .dyo-algomon-search-icon {
+  color: #58a6ff;
+}
+.dyo-algomon-search-input {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: #e6edf3;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dyo-algomon-search-input::placeholder {
+  color: #4a5568;
+  font-style: italic;
+}
+.dyo-algomon-search-input:focus {
+  border-color: rgba(88,166,255,0.4);
+  box-shadow: 0 0 12px rgba(88,166,255,0.1);
+}
+.dyo-algomon-search-btn {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #1a6dff, #3b82f6);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  color: #fff;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.1s;
+}
+.dyo-algomon-search-btn:hover {
+  box-shadow: 0 0 16px rgba(59,130,246,0.4);
+  transform: translateY(-1px);
+}
+.dyo-algomon-search-btn:active {
+  transform: translateY(0);
+}
+.dyo-algomon-home-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  color: #8b949e;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.dyo-algomon-home-btn:hover {
+  color: #3fb950;
+  border-color: rgba(63,185,80,0.3);
+  box-shadow: 0 0 10px rgba(63,185,80,0.15);
+}
+
+/* ── body ── */
+.dyo-algomon-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: linear-gradient(180deg, #0c0e14 0%, #10131c 50%, #0c0e14 100%);
+}
+.dyo-algomon-body::-webkit-scrollbar { width: 5px; }
+.dyo-algomon-body::-webkit-scrollbar-track { background: transparent; }
+.dyo-algomon-body::-webkit-scrollbar-thumb { background: rgba(88,166,255,0.2); border-radius: 3px; }
+.dyo-algomon-loading {
+  text-align: center;
+  color: #58a6ff;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  padding: 40px 0;
+  animation: dyo-algomon-pulse 1.5s ease-in-out infinite;
+}
+@keyframes dyo-algomon-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+/* ── 프로필 카드 ── */
+.dyo-algomon-profile {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(88,166,255,0.06) 0%, rgba(139,92,246,0.06) 100%);
+  border-radius: 14px;
+  border: 1px solid rgba(88,166,255,0.12);
+  position: relative;
+  overflow: hidden;
+}
+.dyo-algomon-profile::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(88,166,255,0.04) 60deg, transparent 120deg);
+  animation: dyo-algomon-rotate 8s linear infinite;
+  pointer-events: none;
+}
+@keyframes dyo-algomon-rotate {
+  to { transform: rotate(360deg); }
+}
+
+.dyo-algomon-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  border: 3px solid transparent;
+  background-image: linear-gradient(#0c0e14, #0c0e14),
+                    linear-gradient(135deg, #58a6ff, #a855f7, #3fb950);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  box-shadow: 0 0 20px rgba(88,166,255,0.25);
+  transition: box-shadow 0.3s;
+}
+.dyo-algomon-avatar:hover {
+  box-shadow: 0 0 30px rgba(88,166,255,0.45);
+}
+.dyo-algomon-profile-info {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+.dyo-algomon-handle {
+  font-size: 20px;
+  font-weight: 800;
+  color: #e6edf3;
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
+}
+.dyo-algomon-handle a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+.dyo-algomon-handle a:hover {
+  color: #58a6ff;
+  text-shadow: 0 0 16px rgba(88,166,255,0.5);
+  text-decoration: none;
+}
+.dyo-algomon-tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-left: 8px;
+  vertical-align: middle;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.dyo-algomon-tier-badge.bronze {
+  background: linear-gradient(135deg, rgba(173,86,0,0.2), rgba(205,127,50,0.15));
+  color: #cd7f32;
+  border: 1px solid rgba(205,127,50,0.3);
+  box-shadow: 0 0 8px rgba(205,127,50,0.2);
+}
+.dyo-algomon-tier-badge.silver {
+  background: linear-gradient(135deg, rgba(192,192,192,0.15), rgba(169,169,169,0.1));
+  color: #b0c4de;
+  border: 1px solid rgba(192,192,192,0.25);
+  box-shadow: 0 0 8px rgba(192,192,192,0.2);
+}
+.dyo-algomon-tier-badge.gold {
+  background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(236,154,0,0.1));
+  color: #ffd700;
+  border: 1px solid rgba(255,215,0,0.3);
+  box-shadow: 0 0 12px rgba(255,215,0,0.2);
+  text-shadow: 0 0 6px rgba(255,215,0,0.3);
+}
+.dyo-algomon-tier-badge.platinum {
+  background: linear-gradient(135deg, rgba(39,226,164,0.15), rgba(0,255,200,0.08));
+  color: #27e2a4;
+  border: 1px solid rgba(39,226,164,0.3);
+  box-shadow: 0 0 12px rgba(39,226,164,0.2);
+  text-shadow: 0 0 6px rgba(39,226,164,0.3);
+}
+.dyo-algomon-tier-badge.diamond {
+  background: linear-gradient(135deg, rgba(0,180,252,0.15), rgba(100,220,255,0.08));
+  color: #00b4fc;
+  border: 1px solid rgba(0,180,252,0.3);
+  box-shadow: 0 0 14px rgba(0,180,252,0.25);
+  text-shadow: 0 0 8px rgba(0,180,252,0.4);
+}
+.dyo-algomon-tier-badge.ruby {
+  background: linear-gradient(135deg, rgba(255,0,98,0.18), rgba(255,50,120,0.08));
+  color: #ff3278;
+  border: 1px solid rgba(255,0,98,0.35);
+  box-shadow: 0 0 14px rgba(255,0,98,0.3);
+  text-shadow: 0 0 8px rgba(255,0,98,0.5);
+}
+.dyo-algomon-tier-badge.master {
+  background: linear-gradient(135deg, rgba(255,0,98,0.18), rgba(168,85,247,0.12));
+  color: #ff3278;
+  border: 1px solid rgba(255,0,98,0.35);
+  box-shadow: 0 0 14px rgba(255,0,98,0.3), 0 0 28px rgba(168,85,247,0.15);
+  text-shadow: 0 0 8px rgba(255,0,98,0.5);
+  animation: dyo-algomon-master-glow 2s ease-in-out infinite alternate;
+}
+@keyframes dyo-algomon-master-glow {
+  from { box-shadow: 0 0 14px rgba(255,0,98,0.3), 0 0 28px rgba(168,85,247,0.15); }
+  to   { box-shadow: 0 0 20px rgba(255,0,98,0.5), 0 0 40px rgba(168,85,247,0.25); }
+}
+.dyo-algomon-tier-badge.sprout {
+  background: rgba(100,100,100,0.12);
+  color: #6b7280;
+  border: 1px solid rgba(100,100,100,0.2);
+}
+
+.dyo-algomon-bio {
+  font-size: 12px;
+  color: #8b949e;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+.dyo-algomon-rank {
+  font-size: 11px;
+  color: #58a6ff;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  opacity: 0.7;
+}
+
+/* ── 통계 그리드 ── */
+.dyo-algomon-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.dyo-algomon-stat {
+  text-align: center;
+  padding: 16px 8px 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+.dyo-algomon-stat:hover {
+  border-color: rgba(88,166,255,0.25);
+  box-shadow: 0 0 20px rgba(88,166,255,0.1);
+  transform: translateY(-2px);
+}
+.dyo-algomon-stat:nth-child(1):hover { border-color: rgba(63,185,80,0.35); box-shadow: 0 0 20px rgba(63,185,80,0.12); }
+.dyo-algomon-stat:nth-child(2):hover { border-color: rgba(168,85,247,0.35); box-shadow: 0 0 20px rgba(168,85,247,0.12); }
+.dyo-algomon-stat:nth-child(3):hover { border-color: rgba(251,191,36,0.35); box-shadow: 0 0 20px rgba(251,191,36,0.12); }
+.dyo-algomon-stat:nth-child(4):hover { border-color: rgba(244,63,94,0.35); box-shadow: 0 0 20px rgba(244,63,94,0.12); }
+
+.dyo-algomon-stat-val {
+  font-size: 22px;
+  font-weight: 800;
+  color: #e6edf3;
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
+}
+.dyo-algomon-stat:nth-child(1) .dyo-algomon-stat-val { color: #3fb950; text-shadow: 0 0 12px rgba(63,185,80,0.3); }
+.dyo-algomon-stat:nth-child(2) .dyo-algomon-stat-val { color: #a855f7; text-shadow: 0 0 12px rgba(168,85,247,0.3); }
+.dyo-algomon-stat:nth-child(3) .dyo-algomon-stat-val { color: #fbbf24; text-shadow: 0 0 12px rgba(251,191,36,0.3); }
+.dyo-algomon-stat:nth-child(4) .dyo-algomon-stat-val { color: #f43f5e; text-shadow: 0 0 12px rgba(244,63,94,0.3); }
+
+.dyo-algomon-stat-label {
+  font-size: 9px;
+  color: #6e7681;
+  margin-top: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── 레벨 분포 바 ── */
+.dyo-algomon-dist {
+  padding: 16px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.dyo-algomon-dist-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8b949e;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.dyo-algomon-dist-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dyo-algomon-dist-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+.dyo-algomon-dist-lbl {
+  width: 64px;
+  text-align: right;
+  color: #8b949e;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  flex-shrink: 0;
+  letter-spacing: 0.3px;
+}
+.dyo-algomon-dist-track {
+  flex: 1;
+  height: 18px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 9px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.dyo-algomon-dist-fill {
+  height: 100%;
+  border-radius: 9px;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+.dyo-algomon-dist-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+  animation: dyo-algomon-shimmer 2.5s ease-in-out infinite;
+}
+@keyframes dyo-algomon-shimmer {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(300%); }
+}
+.dyo-algomon-dist-cnt {
+  width: 34px;
+  text-align: right;
+  color: #c9d1d9;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ── 잔디 (Grass) ── */
+.dyo-algomon-grass {
+  padding: 16px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.dyo-algomon-grass-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8b949e;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.dyo-algomon-grass-streak {
+  font-size: 10px;
+  font-weight: 600;
+  color: #3fb950;
+  font-family: var(--font-mono);
+  text-shadow: 0 0 8px rgba(63,185,80,0.3);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.dyo-algomon-grass-grid {
+  display: grid;
+  grid-template-columns: repeat(53, 1fr);
+  gap: 2px;
+}
+.dyo-algomon-grass-cell {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.04);
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.dyo-algomon-grass-cell:hover {
+  box-shadow: 0 0 4px rgba(255,255,255,0.15);
+}
+.dyo-algomon-grass-cell.lv1 { background: #0e4429; box-shadow: inset 0 0 2px rgba(63,185,80,0.15); }
+.dyo-algomon-grass-cell.lv2 { background: #006d32; box-shadow: inset 0 0 3px rgba(63,185,80,0.2); }
+.dyo-algomon-grass-cell.lv3 { background: #26a641; box-shadow: 0 0 3px rgba(38,166,65,0.2); }
+.dyo-algomon-grass-cell.lv4 {
+  background: #39d353;
+  box-shadow: 0 0 6px rgba(57,211,83,0.35);
+}
+.dyo-algomon-grass-cell.frozen {
+  background: #1a4a6e;
+  box-shadow: 0 0 4px rgba(88,166,255,0.2);
+}
+.dyo-algomon-grass-cell.repaired {
+  background: #5c4b1a;
+  box-shadow: 0 0 4px rgba(255,212,59,0.2);
+}
+
+.dyo-algomon-grass-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  margin-top: 6px;
+  font-size: 9px;
+  color: #6e7681;
+  font-family: var(--font-mono);
+}
+.dyo-algomon-grass-legend-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* ── 모바일 반응형 ── */
+@media (max-width: 600px) {
+  .dyo-algomon-win { min-width: 320px; }
+  .dyo-algomon-stats { grid-template-columns: repeat(2, 1fr); }
+  .dyo-algomon-grass-grid { grid-template-columns: repeat(26, 1fr); }
 }
 
