@@ -2848,18 +2848,54 @@ html, body {
   left: 0;
   right: 0;
   height: 80px;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .dyo-astronaut {
   position: absolute;
   bottom: 0;
+  left: 0;
   width: 32px;
   height: 48px;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  pointer-events: auto;
+  cursor: grab;
+  user-select: none;
+  will-change: transform;
+}
+.dyo-astronaut.dyo-dragging,
+.dyo-astronaut.dyo-falling,
+.dyo-astronaut.dyo-walking {
+  animation: none !important;
+}
+.dyo-astronaut.dyo-falling .dyo-astro-arm-l {
+  animation: dyo-flail-arm-l 0.4s ease-in-out infinite !important;
+}
+.dyo-astronaut.dyo-falling .dyo-astro-arm-r {
+  animation: dyo-flail-arm-r 0.4s ease-in-out infinite !important;
+}
+.dyo-astronaut.dyo-falling .dyo-astro-leg-l {
+  animation: dyo-flail-leg-l 0.35s ease-in-out infinite !important;
+}
+.dyo-astronaut.dyo-falling .dyo-astro-leg-r {
+  animation: dyo-flail-leg-r 0.35s ease-in-out infinite !important;
+}
+@keyframes dyo-flail-arm-l {
+  0%, 100% { transform: rotate(-50deg); }
+  50%      { transform: rotate(30deg); }
+}
+@keyframes dyo-flail-arm-r {
+  0%, 100% { transform: rotate(50deg); }
+  50%      { transform: rotate(-30deg); }
+}
+@keyframes dyo-flail-leg-l {
+  0%, 100% { transform: rotate(-35deg); }
+  50%      { transform: rotate(25deg); }
+}
+@keyframes dyo-flail-leg-r {
+  0%, 100% { transform: rotate(35deg); }
+  50%      { transform: rotate(-25deg); }
 }
 
 .dyo-astronaut svg {
@@ -2868,46 +2904,77 @@ html, body {
   display: block;
 }
 
-/* 이동 경로: 왼→오→왼 왕복 */
+/* 이동 경로: 왼→오→왼 왕복 (GPU 가속: transform만 사용) */
+/* -5vw ~ 105vw 왕복, 바운스(-12px)는 5% 간격으로 삽입 */
 @keyframes dyo-astro-walk-r {
-  0%   { left: -5%;  transform: scaleX(1); }
-  49.9%{ left: 105%; transform: scaleX(1); }
-  50%  { left: 105%; transform: scaleX(-1); }
-  99.9%{ left: -5%;  transform: scaleX(-1); }
-  100% { left: -5%;  transform: scaleX(1); }
+  0%    { transform: translateX(-5vw) translateY(0px) scaleX(1); }
+  5%    { transform: translateX(0.5vw) translateY(-12px) scaleX(1); }
+  10%   { transform: translateX(6vw) translateY(0px) scaleX(1); }
+  15%   { transform: translateX(11.5vw) translateY(-12px) scaleX(1); }
+  20%   { transform: translateX(17vw) translateY(0px) scaleX(1); }
+  25%   { transform: translateX(22.5vw) translateY(-12px) scaleX(1); }
+  30%   { transform: translateX(28vw) translateY(0px) scaleX(1); }
+  35%   { transform: translateX(33.5vw) translateY(-12px) scaleX(1); }
+  40%   { transform: translateX(39vw) translateY(0px) scaleX(1); }
+  45%   { transform: translateX(44.5vw) translateY(-12px) scaleX(1); }
+  49.9% { transform: translateX(105vw) translateY(0px) scaleX(1); }
+  50%   { transform: translateX(105vw) translateY(0px) scaleX(-1); }
+  55%   { transform: translateX(94vw) translateY(-12px) scaleX(-1); }
+  60%   { transform: translateX(83vw) translateY(0px) scaleX(-1); }
+  65%   { transform: translateX(72vw) translateY(-12px) scaleX(-1); }
+  70%   { transform: translateX(61vw) translateY(0px) scaleX(-1); }
+  75%   { transform: translateX(50vw) translateY(-12px) scaleX(-1); }
+  80%   { transform: translateX(39vw) translateY(0px) scaleX(-1); }
+  85%   { transform: translateX(28vw) translateY(-12px) scaleX(-1); }
+  90%   { transform: translateX(17vw) translateY(0px) scaleX(-1); }
+  95%   { transform: translateX(6vw) translateY(-12px) scaleX(-1); }
+  99.9% { transform: translateX(-5vw) translateY(0px) scaleX(-1); }
+  100%  { transform: translateX(-5vw) translateY(0px) scaleX(1); }
 }
-/* 오→왼→오 왕복 */
 @keyframes dyo-astro-walk-l {
-  0%   { left: 105%; transform: scaleX(-1); }
-  49.9%{ left: -5%;  transform: scaleX(-1); }
-  50%  { left: -5%;  transform: scaleX(1); }
-  99.9%{ left: 105%; transform: scaleX(1); }
-  100% { left: 105%; transform: scaleX(-1); }
+  0%    { transform: translateX(105vw) translateY(0px) scaleX(-1); }
+  5%    { transform: translateX(94vw) translateY(-12px) scaleX(-1); }
+  10%   { transform: translateX(83vw) translateY(0px) scaleX(-1); }
+  15%   { transform: translateX(72vw) translateY(-12px) scaleX(-1); }
+  20%   { transform: translateX(61vw) translateY(0px) scaleX(-1); }
+  25%   { transform: translateX(50vw) translateY(-12px) scaleX(-1); }
+  30%   { transform: translateX(39vw) translateY(0px) scaleX(-1); }
+  35%   { transform: translateX(28vw) translateY(-12px) scaleX(-1); }
+  40%   { transform: translateX(17vw) translateY(0px) scaleX(-1); }
+  45%   { transform: translateX(6vw) translateY(-12px) scaleX(-1); }
+  49.9% { transform: translateX(-5vw) translateY(0px) scaleX(-1); }
+  50%   { transform: translateX(-5vw) translateY(0px) scaleX(1); }
+  55%   { transform: translateX(6vw) translateY(-12px) scaleX(1); }
+  60%   { transform: translateX(17vw) translateY(0px) scaleX(1); }
+  65%   { transform: translateX(28vw) translateY(-12px) scaleX(1); }
+  70%   { transform: translateX(39vw) translateY(0px) scaleX(1); }
+  75%   { transform: translateX(50vw) translateY(-12px) scaleX(1); }
+  80%   { transform: translateX(61vw) translateY(0px) scaleX(1); }
+  85%   { transform: translateX(72vw) translateY(-12px) scaleX(1); }
+  90%   { transform: translateX(83vw) translateY(0px) scaleX(1); }
+  95%   { transform: translateX(94vw) translateY(-12px) scaleX(1); }
+  99.9% { transform: translateX(105vw) translateY(0px) scaleX(1); }
+  100%  { transform: translateX(105vw) translateY(0px) scaleX(-1); }
 }
 
 /* 우주인 1: 왼→오, 45초 */
 .dyo-astronaut.a1 {
-  animation: dyo-astro-walk-r 45s linear infinite, dyo-astro-bounce 2s ease-in-out infinite;
+  animation: dyo-astro-walk-r 45s linear infinite;
 }
 /* 우주인 2: 오→왼, 55초 */
 .dyo-astronaut.a2 {
-  animation: dyo-astro-walk-l 55s linear infinite, dyo-astro-bounce 2.2s ease-in-out infinite;
-  animation-delay: -15s, -0.5s;
+  animation: dyo-astro-walk-l 55s linear infinite;
+  animation-delay: -15s;
 }
 /* 우주인 3: 왼→오, 38초 */
 .dyo-astronaut.a3 {
-  animation: dyo-astro-walk-r 38s linear infinite, dyo-astro-bounce 1.8s ease-in-out infinite;
-  animation-delay: -28s, -1.2s;
+  animation: dyo-astro-walk-r 38s linear infinite;
+  animation-delay: -28s;
 }
 /* 우주인 4: 오→왼, 50초 */
 .dyo-astronaut.a4 {
-  animation: dyo-astro-walk-l 50s linear infinite, dyo-astro-bounce 2.4s ease-in-out infinite;
-  animation-delay: -40s, -0.8s;
-}
-
-@keyframes dyo-astro-bounce {
-  0%, 100% { margin-bottom: 0; }
-  50%      { margin-bottom: 12px; }
+  animation: dyo-astro-walk-l 50s linear infinite;
+  animation-delay: -40s;
 }
 
 /* 팔 흔들기 */
@@ -3000,6 +3067,7 @@ html, body {
   z-index: 0;
   opacity: 0;
   animation: dyo-shooting-star var(--speed, 1s) ease-out forwards;
+  will-change: transform, opacity;
 }
 .dyo-shooting-star::before {
   content: '';

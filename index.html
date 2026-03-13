@@ -1931,6 +1931,162 @@
         setTimeout(scheduleShootingStars, 3000);
       })();
 
+      // ── 우주인 드래그 & 달 중력 낙하 ──
+      (function() {
+        var astroLayer = document.querySelector('.dyo-astronaut-layer');
+        var desktop = document.getElementById('dyoDesktop');
+        if (!astroLayer || !desktop) return;
+
+        var GRAVITY = 0.04;
+        var WALK_SPEED = 0.8;
+        var dragged = null; // 현재 드래그 중인 우주인 상태
+
+        // 각 우주인에 고유 상태 부여
+        astroLayer.querySelectorAll('.dyo-astronaut').forEach(function(el, i) {
+          el._astro = { phase: 'css', raf: null, idx: i };
+        });
+
+        function getGroundY() {
+          var dr = desktop.getBoundingClientRect();
+          var lr = astroLayer.getBoundingClientRect();
+          return lr.bottom - dr.top - 48; // 48 = astronaut height
+        }
+
+        // 위치 캡처 (CSS 애니메이션 중이어도 실제 화면 위치)
+        function grab(el) {
+          var dr = desktop.getBoundingClientRect();
+          var er = el.getBoundingClientRect();
+          return { x: er.left - dr.left, y: er.top - dr.top };
+        }
+
+        // ── pointerdown: 잡기 ──
+        document.addEventListener('pointerdown', function(e) {
+          var el = e.target.closest('.dyo-astronaut');
+          if (!el || !el._astro) return;
+          e.preventDefault();
+
+          var a = el._astro;
+          // 진행 중인 raf 중단
+          if (a.raf) { cancelAnimationFrame(a.raf); a.raf = null; }
+
+          // 현재 위치 캡처 (CSS 애니메이션 위치 포함)
+          var pos = grab(el);
+
+          // CSS 애니메이션 끊기: 클래스 추가 + desktop으로 이동
+          a.phase = 'dragging';
+          el.classList.add('dyo-dragging');
+          el.classList.remove('dyo-falling');
+          desktop.appendChild(el);
+          el.style.cssText = 'position:absolute;left:'+pos.x+'px;top:'+pos.y+'px;width:32px;height:48px;z-index:9999;pointer-events:auto;cursor:grabbing;';
+
+          var dr = desktop.getBoundingClientRect();
+          dragged = {
+            el: el,
+            offX: e.clientX - dr.left - pos.x,
+            offY: e.clientY - dr.top - pos.y
+          };
+
+          el.setPointerCapture(e.pointerId);
+        });
+
+        // ── pointermove: 드래그 ──
+        document.addEventListener('pointermove', function(e) {
+          if (!dragged) return;
+          e.preventDefault();
+          var dr = desktop.getBoundingClientRect();
+          dragged.el.style.left = (e.clientX - dr.left - dragged.offX) + 'px';
+          dragged.el.style.top = (e.clientY - dr.top - dragged.offY) + 'px';
+        });
+
+        // ── pointerup: 놓기 → 낙하 ──
+        document.addEventListener('pointerup', function(e) {
+          if (!dragged) return;
+          var el = dragged.el;
+          dragged = null;
+          el.releasePointerCapture(e.pointerId);
+
+          var curY = parseFloat(el.style.top) || 0;
+          var groundY = getGroundY();
+
+          if (curY >= groundY) {
+            el.style.top = groundY + 'px';
+            startWalk(el);
+          } else {
+            startFall(el, curY, groundY);
+          }
+        });
+
+        // ── 달 중력 낙하 ──
+        function startFall(el, posY, groundY) {
+          var a = el._astro;
+          a.phase = 'falling';
+          el.classList.add('dyo-falling');
+          el.classList.remove('dyo-dragging');
+          el.style.cursor = 'default';
+
+          var vel = 0, bounces = 0;
+
+          function step() {
+            if (a.phase !== 'falling') return;
+            vel += GRAVITY;
+            posY += vel;
+            if (posY >= groundY) {
+              posY = groundY;
+              bounces++;
+              if (bounces < 3 && vel > 2) {
+                vel = -vel * 0.3;
+              } else {
+                el.style.top = groundY + 'px';
+                startWalk(el);
+                return;
+              }
+            }
+            el.style.top = posY + 'px';
+            a.raf = requestAnimationFrame(step);
+          }
+          a.raf = requestAnimationFrame(step);
+        }
+
+        // ── 착지 후 걸어서 퇴장 ──
+        function startWalk(el) {
+          var a = el._astro;
+          a.phase = 'walking';
+          el.classList.remove('dyo-dragging', 'dyo-falling');
+          el.classList.add('dyo-walking');
+
+          var posX = parseFloat(el.style.left) || 0;
+          var groundY = getGroundY();
+          var dw = desktop.offsetWidth;
+          var dir = (posX < dw / 2) ? 1 : -1;
+          var t = 0;
+          var flip = dir === 1 ? 'scaleX(1)' : 'scaleX(-1)';
+
+          el.style.top = groundY + 'px';
+          el.style.cursor = 'grab';
+          el.style.transform = flip;
+
+          function step() {
+            if (a.phase !== 'walking') return;
+            t++;
+            posX += WALK_SPEED * dir;
+            var bounce = Math.abs(Math.sin(t * 0.08)) * 10;
+            el.style.left = posX + 'px';
+            el.style.top = (groundY - bounce) + 'px';
+
+            if (posX > dw + 60 || posX < -60) {
+              a.phase = 'css';
+              a.raf = null;
+              el.style.cssText = '';
+              el.classList.remove('dyo-dragging', 'dyo-falling', 'dyo-walking');
+              astroLayer.appendChild(el);
+              return;
+            }
+            a.raf = requestAnimationFrame(step);
+          }
+          a.raf = requestAnimationFrame(step);
+        }
+      })();
+
       // 태스크바 표시 (dyo-desktop 외부에 위치)
       var desktopBar = document.getElementById('dyoDesktopBar');
       if (desktopBar) desktopBar.classList.add('show');
@@ -2340,7 +2496,7 @@
         } else {
           btnTop.classList.remove('visible');
         }
-      });
+      }, { passive: true });
 
       btnTop.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
