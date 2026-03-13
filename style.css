@@ -2753,6 +2753,90 @@ html, body {
 }
 
 
+/* ── 지구 (포트폴리오 링크) ── */
+.dyo-earth {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  z-index: 3;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+.dyo-earth:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+.dyo-earth-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(100,180,255,0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+.dyo-earth-sphere {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #4a9eda 0%, #1a5276 40%, #0d2f4f 70%, #071a2e 100%);
+  box-shadow:
+    0 0 15px rgba(80,160,255,0.4),
+    inset -8px -6px 12px rgba(0,0,0,0.5);
+  overflow: hidden;
+  animation: dyo-earth-rotate 60s linear infinite;
+}
+.dyo-earth-land {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 18px 12px at 55% 35%, #2d7a3a 0%, transparent 100%),
+    radial-gradient(ellipse 14px 18px at 40% 50%, #3a8a4a 0%, transparent 100%),
+    radial-gradient(ellipse 10px 7px at 65% 55%, #2d6a35 0%, transparent 100%),
+    radial-gradient(ellipse 8px 10px at 30% 30%, #4a9a5a 0%, transparent 100%),
+    radial-gradient(ellipse 12px 6px at 50% 70%, #3a7a45 0%, transparent 100%),
+    radial-gradient(ellipse 6px 8px at 70% 40%, #2a6a30 0%, transparent 100%);
+  animation: dyo-earth-rotate 60s linear infinite;
+}
+.dyo-earth-cloud {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 20px 4px at 30% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(ellipse 15px 3px at 60% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(ellipse 18px 3px at 45% 65%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(ellipse 10px 3px at 70% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
+  animation: dyo-earth-rotate 45s linear infinite reverse;
+}
+.dyo-earth-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%);
+  pointer-events: none;
+}
+@keyframes dyo-earth-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+/* 클릭 애니메이션 */
+.dyo-earth-clicked {
+  animation: dyo-earth-click 0.8s ease forwards !important;
+  pointer-events: none;
+}
+@keyframes dyo-earth-click {
+  0%   { transform: translate(-50%, -50%) scale(1); }
+  100% { transform: translate(-50%, -50%) scale(4); }
+}
+
 /* ── 달 지형 (SVG) ── */
 .dyo-moon-terrain {
   position: absolute;
@@ -2908,15 +2992,15 @@ html, body {
 /* -5vw ~ 105vw 왕복, 바운스(-12px)는 5% 간격으로 삽입 */
 @keyframes dyo-astro-walk-r {
   0%    { transform: translateX(-5vw) translateY(0px) scaleX(1); }
-  5%    { transform: translateX(0.5vw) translateY(-12px) scaleX(1); }
-  10%   { transform: translateX(6vw) translateY(0px) scaleX(1); }
-  15%   { transform: translateX(11.5vw) translateY(-12px) scaleX(1); }
-  20%   { transform: translateX(17vw) translateY(0px) scaleX(1); }
-  25%   { transform: translateX(22.5vw) translateY(-12px) scaleX(1); }
-  30%   { transform: translateX(28vw) translateY(0px) scaleX(1); }
-  35%   { transform: translateX(33.5vw) translateY(-12px) scaleX(1); }
-  40%   { transform: translateX(39vw) translateY(0px) scaleX(1); }
-  45%   { transform: translateX(44.5vw) translateY(-12px) scaleX(1); }
+  5%    { transform: translateX(6vw) translateY(-12px) scaleX(1); }
+  10%   { transform: translateX(17vw) translateY(0px) scaleX(1); }
+  15%   { transform: translateX(28vw) translateY(-12px) scaleX(1); }
+  20%   { transform: translateX(39vw) translateY(0px) scaleX(1); }
+  25%   { transform: translateX(50vw) translateY(-12px) scaleX(1); }
+  30%   { transform: translateX(61vw) translateY(0px) scaleX(1); }
+  35%   { transform: translateX(72vw) translateY(-12px) scaleX(1); }
+  40%   { transform: translateX(83vw) translateY(0px) scaleX(1); }
+  45%   { transform: translateX(94vw) translateY(-12px) scaleX(1); }
   49.9% { transform: translateX(105vw) translateY(0px) scaleX(1); }
   50%   { transform: translateX(105vw) translateY(0px) scaleX(-1); }
   55%   { transform: translateX(94vw) translateY(-12px) scaleX(-1); }
@@ -2975,6 +3059,16 @@ html, body {
 .dyo-astronaut.a4 {
   animation: dyo-astro-walk-l 50s linear infinite;
   animation-delay: -40s;
+}
+/* 우주인 5: 왼→오, 42초 */
+.dyo-astronaut.a5 {
+  animation: dyo-astro-walk-r 42s linear infinite;
+  animation-delay: -10s;
+}
+/* 우주인 6: 오→왼, 48초 */
+.dyo-astronaut.a6 {
+  animation: dyo-astro-walk-l 48s linear infinite;
+  animation-delay: -32s;
 }
 
 /* 팔 흔들기 */
