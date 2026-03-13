@@ -2589,8 +2589,14 @@ html, body {
    */
 
   background:
-    url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbVSlHP%2FdJMcadnwusT%2FAAAAAAAAAAAAAAAAAAAAANQwzVrWYleMazulbZvaPnk5T-8-kymCRR9qhnPdmpE_%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DAID%252Buv6WNn3EhAm55qG2V5Wsj2E%253D') center / cover no-repeat,
-    linear-gradient(135deg, #0a0e16 0%, #1a2235 50%, #0a0e16 100%);
+    radial-gradient(ellipse 140% 50% at 25% 52%, rgba(120, 60, 200, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 35% at 65% 38%, rgba(40, 100, 220, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 30% at 48% 55%, rgba(180, 100, 255, 0.12) 0%, transparent 45%),
+    radial-gradient(ellipse 50% 20% at 80% 60%, rgba(220, 80, 180, 0.1) 0%, transparent 40%),
+    radial-gradient(ellipse 90% 15% at 35% 45%, rgba(100, 180, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 15% 70%, rgba(60, 20, 120, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 25% at 90% 25%, rgba(30, 60, 160, 0.12) 0%, transparent 45%),
+    #000000;
   display: none;
   flex-direction: column;
   overflow: hidden;
@@ -2598,9 +2604,413 @@ html, body {
 
 .dyo-desktop.show { display: flex; }
 
-/* 미세한 격자 패턴 오버레이 */
+/* ── 은하수 성운 오버레이 ── */
 .dyo-desktop::before {
-  display: none;
+  content: '';
+  position: absolute;
+  inset: -10%;
+  width: 120%;
+  height: 120%;
+  background:
+    radial-gradient(ellipse 160% 45% at 30% 52%, rgba(130, 60, 220, 0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 120% 30% at 65% 42%, rgba(50, 120, 255, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 25% at 50% 55%, rgba(200, 140, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 18% at 75% 50%, rgba(255, 100, 200, 0.12) 0%, transparent 45%),
+    radial-gradient(ellipse 100% 12% at 40% 48%, rgba(80, 200, 255, 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 35% at 20% 65%, rgba(100, 40, 180, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 20% at 85% 30%, rgba(60, 80, 200, 0.14) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: dyo-nebula-drift 25s ease-in-out infinite alternate;
+}
+
+@keyframes dyo-nebula-drift {
+  0%   { opacity: 0.75; transform: scale(1) translate(0, 0) rotate(0deg); }
+  33%  { opacity: 1;    transform: scale(1.06) translate(-1.5%, 0.5%) rotate(0.3deg); }
+  66%  { opacity: 0.85; transform: scale(1.03) translate(1%, -0.5%) rotate(-0.2deg); }
+  100% { opacity: 0.9;  transform: scale(1.04) translate(-0.5%, 0.8%) rotate(0.1deg); }
+}
+
+/* ── 별빛 레이어 1: 작은 별 (많이) ── */
+.dyo-desktop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: transparent;
+  box-shadow:
+    /* 작은 별들 — 약 120개 */
+    12px 30px 1px 0px rgba(255,255,255,0.7),
+    50px 80px 0px 0px rgba(255,255,255,0.5),
+    90px 20px 1px 0px rgba(255,255,255,0.6),
+    130px 150px 0px 0px rgba(255,255,255,0.4),
+    180px 60px 1px 0px rgba(255,255,255,0.8),
+    220px 200px 0px 0px rgba(255,255,255,0.5),
+    270px 35px 0px 0px rgba(255,255,255,0.6),
+    310px 180px 1px 0px rgba(255,255,255,0.7),
+    350px 90px 0px 0px rgba(255,255,255,0.4),
+    400px 250px 1px 0px rgba(255,255,255,0.9),
+    440px 130px 0px 0px rgba(255,255,255,0.5),
+    480px 40px 1px 0px rgba(255,255,255,0.6),
+    520px 300px 0px 0px rgba(255,255,255,0.4),
+    570px 170px 1px 0px rgba(255,255,255,0.7),
+    610px 70px 0px 0px rgba(255,255,255,0.5),
+    650px 350px 1px 0px rgba(255,255,255,0.8),
+    700px 110px 0px 0px rgba(255,255,255,0.4),
+    740px 280px 0px 0px rgba(255,255,255,0.6),
+    790px 50px 1px 0px rgba(255,255,255,0.7),
+    830px 220px 0px 0px rgba(255,255,255,0.5),
+    870px 380px 1px 0px rgba(255,255,255,0.9),
+    920px 160px 0px 0px rgba(255,255,255,0.4),
+    960px 310px 1px 0px rgba(255,255,255,0.6),
+    1010px 80px 0px 0px rgba(255,255,255,0.7),
+    1050px 400px 1px 0px rgba(255,255,255,0.5),
+    1100px 190px 0px 0px rgba(255,255,255,0.8),
+    1150px 55px 0px 0px rgba(255,255,255,0.4),
+    1190px 340px 1px 0px rgba(255,255,255,0.6),
+    1240px 120px 0px 0px rgba(255,255,255,0.7),
+    1280px 270px 1px 0px rgba(255,255,255,0.5),
+    1330px 430px 0px 0px rgba(255,255,255,0.9),
+    1370px 30px 1px 0px rgba(255,255,255,0.4),
+    1420px 360px 0px 0px rgba(255,255,255,0.6),
+    1460px 140px 1px 0px rgba(255,255,255,0.7),
+    1510px 460px 0px 0px rgba(255,255,255,0.5),
+    1550px 95px 0px 0px rgba(255,255,255,0.8),
+    1600px 320px 1px 0px rgba(255,255,255,0.4),
+    1640px 500px 0px 0px rgba(255,255,255,0.6),
+    1690px 210px 1px 0px rgba(255,255,255,0.7),
+    1730px 50px 0px 0px rgba(255,255,255,0.5),
+    1780px 410px 1px 0px rgba(255,255,255,0.9),
+    1820px 260px 0px 0px rgba(255,255,255,0.4),
+    1870px 540px 0px 0px rgba(255,255,255,0.6),
+    1910px 150px 1px 0px rgba(255,255,255,0.7),
+    30px 480px 0px 0px rgba(255,255,255,0.5),
+    75px 560px 1px 0px rgba(255,255,255,0.6),
+    120px 620px 0px 0px rgba(255,255,255,0.8),
+    170px 510px 1px 0px rgba(255,255,255,0.4),
+    215px 680px 0px 0px rgba(255,255,255,0.7),
+    265px 590px 1px 0px rgba(255,255,255,0.5),
+    315px 720px 0px 0px rgba(255,255,255,0.6),
+    360px 530px 0px 0px rgba(255,255,255,0.9),
+    410px 780px 1px 0px rgba(255,255,255,0.4),
+    455px 650px 0px 0px rgba(255,255,255,0.7),
+    505px 570px 1px 0px rgba(255,255,255,0.5),
+    555px 740px 0px 0px rgba(255,255,255,0.6),
+    600px 490px 1px 0px rgba(255,255,255,0.8),
+    650px 810px 0px 0px rgba(255,255,255,0.4),
+    695px 600px 0px 0px rgba(255,255,255,0.7),
+    745px 700px 1px 0px rgba(255,255,255,0.5),
+    795px 520px 0px 0px rgba(255,255,255,0.6),
+    840px 760px 1px 0px rgba(255,255,255,0.9),
+    890px 640px 0px 0px rgba(255,255,255,0.4),
+    935px 550px 1px 0px rgba(255,255,255,0.7),
+    985px 830px 0px 0px rgba(255,255,255,0.5),
+    1030px 710px 0px 0px rgba(255,255,255,0.6),
+    1080px 580px 1px 0px rgba(255,255,255,0.8),
+    1125px 850px 0px 0px rgba(255,255,255,0.4),
+    1175px 660px 1px 0px rgba(255,255,255,0.7),
+    1220px 500px 0px 0px rgba(255,255,255,0.5),
+    1270px 770px 1px 0px rgba(255,255,255,0.6),
+    1315px 610px 0px 0px rgba(255,255,255,0.9),
+    1365px 880px 1px 0px rgba(255,255,255,0.4),
+    1410px 540px 0px 0px rgba(255,255,255,0.7),
+    1460px 730px 0px 0px rgba(255,255,255,0.5),
+    1505px 900px 1px 0px rgba(255,255,255,0.6),
+    1555px 630px 0px 0px rgba(255,255,255,0.8),
+    1600px 800px 1px 0px rgba(255,255,255,0.4),
+    1650px 550px 0px 0px rgba(255,255,255,0.7),
+    1695px 860px 1px 0px rgba(255,255,255,0.5),
+    1745px 690px 0px 0px rgba(255,255,255,0.6),
+    1790px 940px 1px 0px rgba(255,255,255,0.9),
+    1840px 580px 0px 0px rgba(255,255,255,0.4),
+    1885px 820px 0px 0px rgba(255,255,255,0.7),
+    1920px 740px 1px 0px rgba(255,255,255,0.5),
+    25px 910px 0px 0px rgba(255,255,255,0.6),
+    85px 820px 1px 0px rgba(255,255,255,0.8),
+    145px 960px 0px 0px rgba(255,255,255,0.4),
+    205px 870px 1px 0px rgba(255,255,255,0.7),
+    335px 930px 0px 0px rgba(255,255,255,0.5),
+    465px 890px 1px 0px rgba(255,255,255,0.6),
+    595px 950px 0px 0px rgba(255,255,255,0.9),
+    725px 880px 0px 0px rgba(255,255,255,0.4),
+    855px 970px 1px 0px rgba(255,255,255,0.7),
+    985px 920px 0px 0px rgba(255,255,255,0.5),
+    1115px 960px 1px 0px rgba(255,255,255,0.6),
+    1245px 900px 0px 0px rgba(255,255,255,0.8),
+    1375px 980px 1px 0px rgba(255,255,255,0.4),
+    1505px 930px 0px 0px rgba(255,255,255,0.7),
+    1635px 970px 0px 0px rgba(255,255,255,0.5),
+    1765px 1000px 1px 0px rgba(255,255,255,0.6),
+    1895px 950px 0px 0px rgba(255,255,255,0.9);
+  animation: dyo-stars-twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes dyo-stars-twinkle {
+  0%   { opacity: 0.8; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+
+/* ── 달 지형 (SVG) ── */
+.dyo-moon-terrain {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  display: block;
+  z-index: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* ── 달 기지 ── */
+.dyo-moon-base {
+  position: absolute;
+  bottom: 52px;
+  right: 30%;
+  z-index: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.dyo-moon-base > svg {
+  width: 300px;
+  height: auto;
+  display: block;
+}
+
+/* 안테나 깜빡이 */
+.dyo-base-blink {
+  animation: dyo-blink 1.5s ease-in-out infinite;
+}
+@keyframes dyo-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.15; }
+}
+
+/* 태극기 */
+.dyo-moon-flag {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.dyo-flag-pole {
+  width: 2px;
+  height: 52px;
+  background: linear-gradient(to bottom, #d0d0c8, #a0a098, #888880);
+  border-radius: 1px;
+  margin-left: 1px;
+}
+
+.dyo-flag-canvas {
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  width: 30px;
+  height: 20px;
+  display: block;
+  animation: dyo-flag-wave 4s ease-in-out infinite;
+  transform-origin: left center;
+  filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.25));
+}
+
+@keyframes dyo-flag-wave {
+  0%, 100% { transform: perspective(80px) rotateY(0deg) skewY(0deg); }
+  30%      { transform: perspective(80px) rotateY(-4deg) skewY(0.5deg); }
+  70%      { transform: perspective(80px) rotateY(4deg) skewY(-0.5deg); }
+}
+
+/* ── 우주선 ── */
+.dyo-spaceship {
+  position: absolute;
+  bottom: 52px;
+  z-index: 0;
+  pointer-events: none;
+}
+.dyo-spaceship > svg {
+  width: 120px;
+  height: auto;
+  display: block;
+}
+
+/* ── 우주인 ── */
+.dyo-astronaut-layer {
+  position: absolute;
+  bottom: 52px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dyo-astronaut {
+  position: absolute;
+  bottom: 0;
+  width: 32px;
+  height: 48px;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.dyo-astronaut svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 이동 경로: 왼→오→왼 왕복 */
+@keyframes dyo-astro-walk-r {
+  0%   { left: -5%;  transform: scaleX(1); }
+  49.9%{ left: 105%; transform: scaleX(1); }
+  50%  { left: 105%; transform: scaleX(-1); }
+  99.9%{ left: -5%;  transform: scaleX(-1); }
+  100% { left: -5%;  transform: scaleX(1); }
+}
+/* 오→왼→오 왕복 */
+@keyframes dyo-astro-walk-l {
+  0%   { left: 105%; transform: scaleX(-1); }
+  49.9%{ left: -5%;  transform: scaleX(-1); }
+  50%  { left: -5%;  transform: scaleX(1); }
+  99.9%{ left: 105%; transform: scaleX(1); }
+  100% { left: 105%; transform: scaleX(-1); }
+}
+
+/* 우주인 1: 왼→오, 45초 */
+.dyo-astronaut.a1 {
+  animation: dyo-astro-walk-r 45s linear infinite, dyo-astro-bounce 2s ease-in-out infinite;
+}
+/* 우주인 2: 오→왼, 55초 */
+.dyo-astronaut.a2 {
+  animation: dyo-astro-walk-l 55s linear infinite, dyo-astro-bounce 2.2s ease-in-out infinite;
+  animation-delay: -15s, -0.5s;
+}
+/* 우주인 3: 왼→오, 38초 */
+.dyo-astronaut.a3 {
+  animation: dyo-astro-walk-r 38s linear infinite, dyo-astro-bounce 1.8s ease-in-out infinite;
+  animation-delay: -28s, -1.2s;
+}
+/* 우주인 4: 오→왼, 50초 */
+.dyo-astronaut.a4 {
+  animation: dyo-astro-walk-l 50s linear infinite, dyo-astro-bounce 2.4s ease-in-out infinite;
+  animation-delay: -40s, -0.8s;
+}
+
+@keyframes dyo-astro-bounce {
+  0%, 100% { margin-bottom: 0; }
+  50%      { margin-bottom: 12px; }
+}
+
+/* 팔 흔들기 */
+.dyo-astro-arm-l {
+  transform-origin: 13px 24px;
+  animation: dyo-astro-swing-l 2s ease-in-out infinite;
+}
+.dyo-astro-arm-r {
+  transform-origin: 27px 24px;
+  animation: dyo-astro-swing-r 2s ease-in-out infinite;
+}
+@keyframes dyo-astro-swing-l {
+  0%, 100% { transform: rotate(8deg); }
+  50%      { transform: rotate(-8deg); }
+}
+@keyframes dyo-astro-swing-r {
+  0%, 100% { transform: rotate(-8deg); }
+  50%      { transform: rotate(8deg); }
+}
+
+/* 다리 걷기 */
+.dyo-astro-leg-l {
+  transform-origin: 17px 39px;
+  animation: dyo-astro-step-l 2s ease-in-out infinite;
+}
+.dyo-astro-leg-r {
+  transform-origin: 23px 39px;
+  animation: dyo-astro-step-r 2s ease-in-out infinite;
+}
+@keyframes dyo-astro-step-l {
+  0%, 100% { transform: rotate(10deg); }
+  50%      { transform: rotate(-10deg); }
+}
+@keyframes dyo-astro-step-r {
+  0%, 100% { transform: rotate(-10deg); }
+  50%      { transform: rotate(10deg); }
+}
+
+/* ── 별빛 레이어: 점 별 ── */
+.dyo-star-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.dyo-star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: dyo-star-flicker var(--dur, 3s) ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s);
+}
+
+/* 크기 변형 */
+.dyo-star.xs  { width: 1px; height: 1px; }
+.dyo-star.sm  { width: 1.5px; height: 1.5px; }
+.dyo-star.md  { width: 2px; height: 2px; box-shadow: 0 0 3px 1px rgba(200, 220, 255, 0.3); }
+.dyo-star.lg  { width: 2.5px; height: 2.5px; box-shadow: 0 0 5px 1px rgba(180, 200, 255, 0.4), 0 0 10px 2px rgba(140, 170, 255, 0.15); }
+
+/* 색온도 변형 */
+.dyo-star.cool { background: #cce0ff; }
+.dyo-star.warm { background: #ffeedd; box-shadow: 0 0 4px 1px rgba(255, 200, 150, 0.35); }
+.dyo-star.blue { background: #aaccff; box-shadow: 0 0 4px 1px rgba(150, 190, 255, 0.3); }
+
+@keyframes dyo-star-flicker {
+  0%   { opacity: 0.2; }
+  30%  { opacity: 0.9; }
+  60%  { opacity: 0.4; }
+  80%  { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+/* ── 유성 (Shooting star) ── */
+@keyframes dyo-shooting-star {
+  0%   { transform: rotate(var(--angle, 25deg)) translate(0, 0) scaleX(1); opacity: 0; }
+  5%   { opacity: 1; }
+  60%  { opacity: 0.8; }
+  100% { transform: rotate(var(--angle, 25deg)) translate(var(--dx, 350px), var(--dy, 220px)) scaleX(0.3); opacity: 0; }
+}
+
+.dyo-shooting-star {
+  position: absolute;
+  height: 1.5px;
+  width: var(--len, 100px);
+  background: linear-gradient(270deg, rgba(255,255,255,0.9) 0%, rgba(200, 220, 255, 0.6) 30%, transparent 100%);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  animation: dyo-shooting-star var(--speed, 1s) ease-out forwards;
+}
+.dyo-shooting-star::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -1px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 2px rgba(200, 220, 255, 0.7);
 }
 
 /* 아이콘 그리드 영역 */
@@ -2705,6 +3115,11 @@ html, body {
   background: linear-gradient(145deg, #c13584, #e1306c);
   border: 1px solid rgba(225,48,108,0.4);
   box-shadow: 0 6px 16px rgba(193,53,132,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+#desktopIconPortfolio .dyo-di-wrap {
+  background: linear-gradient(145deg, #7c3aed, #a78bfa);
+  border: 1px solid rgba(167,139,250,0.4);
+  box-shadow: 0 6px 16px rgba(124,58,237,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
 }
 #desktopIconFeatures .dyo-di-wrap {
   background: linear-gradient(145deg, #667eea, #764ba2);
