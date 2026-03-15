@@ -16,10 +16,11 @@
 7. [카테고리 트리 (FS / Explorer 공용)](#7-카테고리-트리-fs--explorer-공용)
 8. [Tistory API 연동 목록](#8-tistory-api-연동-목록)
 9. [커스터마이징 포인트](#9-커스터마이징-포인트)
-10. [창 공통 패턴 (드래그·리사이즈·최소화·최대화)](#10-창-공통-패턴-드래그리사이즈최소화최대화)
-11. [z-index 관리 방식](#11-z-index-관리-방식)
-12. [주요 CSS 클래스 레퍼런스](#12-주요-css-클래스-레퍼런스)
-13. [style.css 구조 상세](#13-stylecss-구조-상세)
+10. [테마 시스템 (Default · Astronaut · Sakura)](#10-테마-시스템-default--astronaut--sakura)
+11. [창 공통 패턴 (드래그·리사이즈·최소화·최대화)](#11-창-공통-패턴-드래그리사이즈최소화최대화)
+12. [z-index 관리 방식](#12-z-index-관리-방식)
+13. [주요 CSS 클래스 레퍼런스](#13-주요-css-클래스-레퍼런스)
+14. [style.css 구조 상세](#14-stylecss-구조-상세)
 
 ---
 
@@ -27,8 +28,8 @@
 
 ```
 tistory/
-├── index.html          # 스킨 메인 (7,114 줄, ~340 KB) — 모든 HTML + JS 인라인
-├── style.css           # 전체 스타일 (6,134 줄, 외부 파일)
+├── index.html          # 스킨 메인 (~10,400 줄) — 모든 HTML + JS 인라인
+├── style.css           # 전체 스타일 (~8,700 줄, 외부 파일)
 ├── images/
 │   ├── font.css        # 커스텀 폰트 정의
 │   └── script.js       # 외부 공통 유틸 (dyoAnimOpen 등 일부 정의 가능)
@@ -968,7 +969,76 @@ var GALLERY_CATEGORY = '';  // 빈 문자열로 변경 필요
 
 ---
 
-## 10. 창 공통 패턴 (드래그·리사이즈·최소화·최대화)
+## 10. 테마 시스템 (Default · Astronaut · Sakura)
+
+태스크바의 🎨 팔레트 아이콘 클릭으로 3가지 테마를 전환. `#dyoDesktop`에 `.theme-astronaut` 또는 `.theme-sakura` 클래스를 토글하여 전환.
+
+### 테마 구조
+
+| 테마 | CSS 클래스 | 레이어 | 주요 요소 |
+|------|-----------|--------|----------|
+| Default | (없음) | — | 기본 바탕화면 |
+| Astronaut | `.theme-astronaut` | `.dyo-astro-layer` | 우주인 캐릭터, 별, 행성 |
+| Sakura | `.theme-sakura` | `.dyo-sakura-layer` | 고양이 4마리, 벚꽃나무 3그루, 나비(최대 6마리) |
+
+### 테마별 요소 가시성
+
+```
+.dyo-astro-layer   → .theme-astronaut 일 때만 display
+.dyo-sakura-layer  → .theme-sakura 일 때만 display
+
+개별 요소 숨김 (드래그로 레이어 밖으로 이동된 경우 대비):
+  .dyo-desktop:not(.theme-astronaut) .dyo-astronaut      { display: none !important; }
+  .dyo-desktop:not(.theme-sakura)    .dyo-sakura-cat      { display: none !important; }
+```
+
+### 캐릭터 드래그 & 물리 시스템
+
+우주인(Astronaut)과 고양이(Sakura)는 포인터 캡처 기반 드래그를 지원.
+
+```
+드래그 시작: pointerdown → setPointerCapture()
+드래그 중:   pointermove → 캐릭터 위치 업데이트 (inline style)
+드래그 종료: pointerup   → releasePointerCapture() → 물리 시뮬레이션
+
+물리 시뮬레이션:
+  1. 드래그 속도(velocity) 계산
+  2. 중력 적용 → 낙하
+  3. 지면 충돌 → 바운스 (감쇠)
+  4. 정지 후 → 걸어가기 애니메이션 (원래 위치로 복귀)
+
+지면 높이 계산: getGroundY()
+  - SVG terrain (viewBox 0 0 1920 240) 기반
+  - 3개의 언덕 중 가장 앞쪽(front hill) 기준
+  - Sakura: gr.height * 0.70
+```
+
+### 말풍선 시스템
+
+캐릭터 클릭 시 말풍선 표시. 캐릭터의 `scaleX(-1)` 상태에서도 올바르게 위치하도록 `--bubble-flip` CSS 변수 사용.
+
+```css
+transform: translateX(-50%) scaleX(var(--bubble-flip, 1));
+```
+
+### 나비 (Sakura 테마)
+
+- 최대 6마리 제한 (`maxButterflies = 6`)
+- 랜덤 생성 + 날아다니기 애니메이션
+- 테마 전환 시 카운트 체크로 무한 증가 방지
+
+### 테마 전환 시 정리
+
+```js
+resetThemeObjects()
+  — desktop.appendChild()로 레이어 밖으로 이동된 오브젝트를
+    원래 레이어로 복귀시킴
+  — inline style 제거하여 CSS 기본 위치로 리셋
+```
+
+---
+
+## 11. 창 공통 패턴 (드래그·리사이즈·최소화·최대화)
 
 모든 창이 동일한 패턴을 각각 독립적으로 구현.
 
@@ -1005,7 +1075,7 @@ z-index: win.addEventListener('mousedown') → window._dyoZTop++ + win.style.zIn
 
 ---
 
-## 11. z-index 관리 방식
+## 12. z-index 관리 방식
 
 ```
 window._dyoZTop (초기값 9000)
@@ -1022,7 +1092,7 @@ window._dyoZTop (초기값 9000)
 
 ---
 
-## 12. 주요 CSS 클래스 레퍼런스
+## 13. 주요 CSS 클래스 레퍼런스
 
 > 상세 스타일은 `style.css` 참고. 여기서는 JS에서 토글되는 동작 관련 클래스만 정리.
 
@@ -1063,12 +1133,16 @@ window._dyoZTop (초기값 9000)
 | `.dirty` | `.dyo-brd-clipboard-btn`, `.dyo-memo-action-btn` | 변경사항 있음 (빨간 점 표시) |
 | `.editing` | `.dyo-memo-item` | Memo 항목 인라인 편집 중 |
 | `.open` | `.dyo-brd-detail-panel` | Board 카드 상세 패널 열림 |
+| `.theme-astronaut` | `#dyoDesktop` | 우주인 테마 활성화 |
+| `.theme-sakura` | `#dyoDesktop` | 벚꽃 테마 활성화 |
+| `.dyo-astronaut` | 우주인 element | 개별 요소 테마 전환 시 숨김용 |
+| `.dyo-sakura-cat` | 고양이 element | 개별 요소 테마 전환 시 숨김용 |
 
 ---
 
-## 13. style.css 구조 상세
+## 14. style.css 구조 상세
 
-전체 **6,134 줄**. 다크 사이드바 + 라이트 콘텐츠 이중 테마.
+전체 **~8,700 줄**. 다크 사이드바 + 라이트 콘텐츠 이중 테마 + 3가지 데스크탑 테마(Default · Astronaut · Sakura).
 
 ---
 
@@ -1148,6 +1222,8 @@ window._dyoZTop (초기값 9000)
 | 5494~5630 | Bookmarks 위젯 | `.dyo-bm-widget`, favicon + 링크 목록, 접기/펼치기 |
 | 5631~5750 | 캘린더 팝업 + 태스크바 Board 버튼 | `.dyo-cal-popup`, `.dyo-bar-board`, 배지 |
 | 5751~6700+ | Board Window | `.dyo-brd-win`, 컬럼·카드·상세 패널·CRUD·드래그 앤 드롭, 모바일 반응형 |
+| 6700~8000+ | Astronaut 테마 | `.theme-astronaut`, 우주인 캐릭터, 드래그 물리, 말풍선, 별/행성 배경 |
+| 8000~8700+ | Sakura 테마 | `.theme-sakura`, 고양이 4마리, 벚꽃나무, 나비, 언덕 terrain, 말풍선 |
 
 ---
 

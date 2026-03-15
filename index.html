@@ -489,15 +489,6 @@
     </div>
     <!-- 데스크탑 홈화면 (인덱스 페이지 전용) -->
     <div class="dyo-desktop" id="dyoDesktop">
-      <!-- 지구 (포트폴리오 링크) -->
-      <a href="https://dyomyo-portfolio.tistory.com/" class="dyo-earth" id="dyoEarth" title="Portfolio">
-        <div class="dyo-earth-glow"></div>
-        <div class="dyo-earth-sphere">
-          <div class="dyo-earth-land"></div>
-          <div class="dyo-earth-cloud"></div>
-          <div class="dyo-earth-shine"></div>
-        </div>
-      </a>
       <!-- 달 지형 -->
       <svg class="dyo-moon-terrain" viewBox="0 0 1920 200" preserveAspectRatio="none" aria-hidden="true">
         <defs>
@@ -757,6 +748,127 @@
       </div>
       <!-- 별빛 레이어 -->
       <div class="dyo-star-layer" id="dyoStarLayer"></div>
+
+      <!-- ══════ 벚꽃 테마 요소 ══════ -->
+      <!-- 태양 -->
+      <div class="dyo-sakura-sun"></div>
+      <!-- 구름 -->
+      <div class="dyo-sakura-cloud skc1"></div>
+      <div class="dyo-sakura-cloud skc2"></div>
+      <div class="dyo-sakura-cloud skc3"></div>
+      <!-- 언덕 -->
+      <svg class="dyo-sakura-ground" viewBox="0 0 1920 240" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="skHill1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7ec850"/>
+            <stop offset="100%" stop-color="#5aad30"/>
+          </linearGradient>
+          <linearGradient id="skHill2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5aad30"/>
+            <stop offset="100%" stop-color="#3d8a1e"/>
+          </linearGradient>
+          <linearGradient id="skHill3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3d8a1e"/>
+            <stop offset="100%" stop-color="#2e6e14"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,150 C160,100 320,140 520,95 C720,50 900,110 1100,80 C1300,50 1500,120 1700,90 C1820,72 1880,100 1920,85 L1920,240 L0,240 Z" fill="url(#skHill1)"/>
+        <path d="M0,175 C200,145 450,180 700,150 C950,120 1100,170 1350,145 C1550,125 1750,165 1920,140 L1920,240 L0,240 Z" fill="url(#skHill2)"/>
+        <path d="M0,200 C300,185 600,210 900,190 C1200,170 1400,205 1700,188 C1840,180 1900,195 1920,190 L1920,240 L0,240 Z" fill="url(#skHill3)"/>
+        <!-- 잔디 디테일 -->
+        <g stroke="#4a9928" stroke-width="1.2" stroke-linecap="round" opacity="0.5">
+          <line x1="80" y1="175" x2="78" y2="165"/><line x1="82" y1="175" x2="85" y2="164"/>
+          <line x1="250" y1="155" x2="248" y2="145"/><line x1="253" y1="155" x2="256" y2="144"/>
+          <line x1="500" y1="140" x2="498" y2="130"/><line x1="503" y1="140" x2="506" y2="129"/>
+          <line x1="750" y1="155" x2="748" y2="145"/><line x1="753" y1="155" x2="756" y2="144"/>
+          <line x1="1000" y1="135" x2="998" y2="125"/><line x1="1003" y1="135" x2="1006" y2="124"/>
+          <line x1="1250" y1="148" x2="1248" y2="138"/><line x1="1253" y1="148" x2="1256" y2="137"/>
+          <line x1="1500" y1="155" x2="1498" y2="145"/><line x1="1503" y1="155" x2="1506" y2="144"/>
+          <line x1="1750" y1="145" x2="1748" y2="135"/><line x1="1753" y1="145" x2="1756" y2="134"/>
+        </g>
+      </svg>
+      <!-- 벚꽃 나무 3그루 -->
+      <div class="dyo-sakura-tree skt1">
+        <svg viewBox="0 0 220 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="110" cy="330" rx="50" ry="6" fill="rgba(0,0,0,0.08)"/>
+          <path d="M100,340 Q96,290 92,250 Q88,220 85,200 Q82,185 86,170 Q92,158 110,152 Q128,158 134,170 Q138,185 135,200 Q132,220 128,250 Q124,290 120,340 Z" fill="#6B4226"/>
+          <path d="M88,195 Q62,175 42,160" stroke="#7B5236" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M84,225 Q55,210 35,200" stroke="#7B5236" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M132,195 Q158,175 178,160" stroke="#7B5236" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M136,225 Q165,210 185,200" stroke="#7B5236" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M90,172 Q75,155 60,148" stroke="#7B5236" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M130,172 Q145,155 160,148" stroke="#7B5236" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="110" cy="95" r="55" fill="#FFB7C5" opacity="0.85"/>
+          <circle cx="60" cy="120" r="40" fill="#FFC4D1" opacity="0.8"/>
+          <circle cx="160" cy="120" r="40" fill="#FFC4D1" opacity="0.8"/>
+          <circle cx="42" cy="155" r="28" fill="#FFD0DC" opacity="0.75"/>
+          <circle cx="178" cy="155" r="28" fill="#FFD0DC" opacity="0.75"/>
+          <circle cx="35" cy="195" r="20" fill="#FFD8E2" opacity="0.65"/>
+          <circle cx="185" cy="195" r="20" fill="#FFD8E2" opacity="0.65"/>
+          <circle cx="90" cy="70" r="35" fill="#FFDDE5" opacity="0.65"/>
+          <circle cx="135" cy="75" r="38" fill="#FFDDE5" opacity="0.65"/>
+          <circle cx="60" cy="148" r="18" fill="#FFE8ED" opacity="0.5"/>
+          <circle cx="160" cy="148" r="18" fill="#FFE8ED" opacity="0.5"/>
+          <circle cx="110" cy="55" r="15" fill="#fff" opacity="0.3"/>
+          <circle cx="80" cy="100" r="8" fill="#fff" opacity="0.25"/>
+          <circle cx="145" cy="90" r="6" fill="#fff" opacity="0.2"/>
+        </svg>
+      </div>
+      <div class="dyo-sakura-tree skt2">
+        <svg viewBox="0 0 220 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="110" cy="330" rx="45" ry="5" fill="rgba(0,0,0,0.08)"/>
+          <path d="M102,340 Q98,295 95,260 Q92,235 90,215 Q87,200 90,185 Q96,175 110,170 Q124,175 130,185 Q133,200 130,215 Q128,235 125,260 Q122,295 118,340 Z" fill="#7B5236"/>
+          <path d="M92,210 Q68,192 50,180" stroke="#8B6346" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+          <path d="M128,210 Q152,192 170,180" stroke="#8B6346" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+          <path d="M94,240 Q72,228 55,220" stroke="#8B6346" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M126,240 Q148,228 165,220" stroke="#8B6346" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <circle cx="110" cy="115" r="50" fill="#FFB0C0" opacity="0.85"/>
+          <circle cx="65" cy="138" r="35" fill="#FFBFCD" opacity="0.8"/>
+          <circle cx="155" cy="138" r="35" fill="#FFBFCD" opacity="0.8"/>
+          <circle cx="48" cy="175" r="25" fill="#FFCDD8" opacity="0.7"/>
+          <circle cx="172" cy="175" r="25" fill="#FFCDD8" opacity="0.7"/>
+          <circle cx="52" cy="215" r="16" fill="#FFD5E0" opacity="0.6"/>
+          <circle cx="168" cy="215" r="16" fill="#FFD5E0" opacity="0.6"/>
+          <circle cx="90" cy="90" r="32" fill="#FFD8E2" opacity="0.6"/>
+          <circle cx="132" cy="95" r="34" fill="#FFD8E2" opacity="0.6"/>
+          <circle cx="110" cy="75" r="12" fill="#fff" opacity="0.25"/>
+        </svg>
+      </div>
+      <div class="dyo-sakura-tree skt3">
+        <svg viewBox="0 0 180 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="90" cy="270" rx="35" ry="4" fill="rgba(0,0,0,0.06)"/>
+          <path d="M82,280 Q80,245 78,215 Q76,195 78,180 Q82,170 90,166 Q98,170 102,180 Q104,195 102,215 Q100,245 98,280 Z" fill="#7B5236"/>
+          <path d="M80,195 Q60,180 45,172" stroke="#8B6346" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M100,195 Q120,180 135,172" stroke="#8B6346" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <circle cx="90" cy="110" r="42" fill="#FFC0CC" opacity="0.85"/>
+          <circle cx="55" cy="130" r="28" fill="#FFCDD8" opacity="0.78"/>
+          <circle cx="125" cy="130" r="28" fill="#FFCDD8" opacity="0.78"/>
+          <circle cx="42" cy="168" r="18" fill="#FFD8E2" opacity="0.65"/>
+          <circle cx="138" cy="168" r="18" fill="#FFD8E2" opacity="0.65"/>
+          <circle cx="75" cy="88" r="25" fill="#FFE0E8" opacity="0.6"/>
+          <circle cx="108" cy="92" r="27" fill="#FFE0E8" opacity="0.6"/>
+          <circle cx="90" cy="78" r="10" fill="#fff" opacity="0.2"/>
+        </svg>
+      </div>
+      <!-- 꽃잎 레이어 -->
+      <div class="dyo-sakura-petal-layer" id="dyoPetalLayer"></div>
+      <!-- 고양이 캐릭터 -->
+      <div class="dyo-sakura-cat-layer">
+        <div class="dyo-sakura-cat skcat1">
+          <svg viewBox="0 0 36 36" fill="none"><path d="M28,24 Q34,18 32,12" stroke="#E8985E" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="18" cy="25" rx="9" ry="7" fill="#F4A460"/><circle cx="18" cy="13" r="7" fill="#F4A460"/><path d="M12,8 L13.5,2 L16,9 Z" fill="#F4A460"/><path d="M20,9 L22.5,2 L24,8 Z" fill="#F4A460"/><path d="M12.8,7.8 L13.8,3.5 L15.5,8.8 Z" fill="#FFB88C"/><path d="M20.5,8.8 L22.2,3.5 L23.2,7.8 Z" fill="#FFB88C"/><ellipse cx="15.5" cy="12.5" rx="1.2" ry="1.6" fill="#333"/><ellipse cx="20.5" cy="12.5" rx="1.2" ry="1.6" fill="#333"/><circle cx="15" cy="12" r="0.5" fill="#fff"/><circle cx="20" cy="12" r="0.5" fill="#fff"/><path d="M17.5,15 L18.5,15 L18,15.8 Z" fill="#FF8C8C"/><g stroke="#D4A87C" stroke-width="0.5"><line x1="10" y1="14" x2="15" y2="14.5"/><line x1="10" y1="16" x2="15" y2="15.5"/><line x1="21" y1="14.5" x2="26" y2="14"/><line x1="21" y1="15.5" x2="26" y2="16"/></g><g class="dyo-scat-leg-l"><ellipse cx="12" cy="31" rx="3" ry="2" fill="#F4A460"/></g><g class="dyo-scat-leg-r"><ellipse cx="24" cy="31" rx="3" ry="2" fill="#F4A460"/></g></svg>
+        </div>
+        <div class="dyo-sakura-cat skcat2">
+          <svg viewBox="0 0 36 36" fill="none"><path d="M28,24 Q34,18 32,12" stroke="#555" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="18" cy="25" rx="9" ry="7" fill="#3a3a3a"/><circle cx="18" cy="13" r="7" fill="#3a3a3a"/><path d="M12,8 L13.5,2 L16,9 Z" fill="#3a3a3a"/><path d="M20,9 L22.5,2 L24,8 Z" fill="#3a3a3a"/><path d="M12.8,7.8 L13.8,3.5 L15.5,8.8 Z" fill="#555"/><path d="M20.5,8.8 L22.2,3.5 L23.2,7.8 Z" fill="#555"/><ellipse cx="15.5" cy="12.5" rx="1.2" ry="1.6" fill="#ffe066"/><ellipse cx="20.5" cy="12.5" rx="1.2" ry="1.6" fill="#ffe066"/><circle cx="15" cy="12" r="0.5" fill="#fff"/><circle cx="20" cy="12" r="0.5" fill="#fff"/><path d="M17.5,15 L18.5,15 L18,15.8 Z" fill="#FF8C8C"/><g stroke="#666" stroke-width="0.5"><line x1="10" y1="14" x2="15" y2="14.5"/><line x1="10" y1="16" x2="15" y2="15.5"/><line x1="21" y1="14.5" x2="26" y2="14"/><line x1="21" y1="15.5" x2="26" y2="16"/></g><g class="dyo-scat-leg-l"><ellipse cx="12" cy="31" rx="3" ry="2" fill="#3a3a3a"/></g><g class="dyo-scat-leg-r"><ellipse cx="24" cy="31" rx="3" ry="2" fill="#3a3a3a"/></g></svg>
+        </div>
+        <div class="dyo-sakura-cat skcat3">
+          <svg viewBox="0 0 36 36" fill="none"><path d="M28,24 Q34,18 32,12" stroke="#ddd" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="18" cy="25" rx="9" ry="7" fill="#f0ece8"/><circle cx="18" cy="13" r="7" fill="#f0ece8"/><path d="M12,8 L13.5,2 L16,9 Z" fill="#f0ece8"/><path d="M20,9 L22.5,2 L24,8 Z" fill="#f0ece8"/><path d="M12.8,7.8 L13.8,3.5 L15.5,8.8 Z" fill="#FFD5CC"/><path d="M20.5,8.8 L22.2,3.5 L23.2,7.8 Z" fill="#FFD5CC"/><ellipse cx="15.5" cy="12.5" rx="1.2" ry="1.6" fill="#5b9bd5"/><ellipse cx="20.5" cy="12.5" rx="1.2" ry="1.6" fill="#5b9bd5"/><circle cx="15" cy="12" r="0.5" fill="#fff"/><circle cx="20" cy="12" r="0.5" fill="#fff"/><path d="M17.5,15 L18.5,15 L18,15.8 Z" fill="#FFB0B0"/><g stroke="#ccc" stroke-width="0.5"><line x1="10" y1="14" x2="15" y2="14.5"/><line x1="10" y1="16" x2="15" y2="15.5"/><line x1="21" y1="14.5" x2="26" y2="14"/><line x1="21" y1="15.5" x2="26" y2="16"/></g><g class="dyo-scat-leg-l"><ellipse cx="12" cy="31" rx="3" ry="2" fill="#f0ece8"/></g><g class="dyo-scat-leg-r"><ellipse cx="24" cy="31" rx="3" ry="2" fill="#f0ece8"/></g></svg>
+        </div>
+        <div class="dyo-sakura-cat skcat4">
+          <svg viewBox="0 0 36 36" fill="none"><path d="M28,24 Q34,18 32,12" stroke="#B0B0B0" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="18" cy="25" rx="9" ry="7" fill="#9e9e9e"/><circle cx="18" cy="13" r="7" fill="#9e9e9e"/><path d="M12,8 L13.5,2 L16,9 Z" fill="#9e9e9e"/><path d="M20,9 L22.5,2 L24,8 Z" fill="#9e9e9e"/><path d="M12.8,7.8 L13.8,3.5 L15.5,8.8 Z" fill="#b5b5b5"/><path d="M20.5,8.8 L22.2,3.5 L23.2,7.8 Z" fill="#b5b5b5"/><ellipse cx="15.5" cy="12.5" rx="1.2" ry="1.6" fill="#5a5"/><ellipse cx="20.5" cy="12.5" rx="1.2" ry="1.6" fill="#5a5"/><circle cx="15" cy="12" r="0.5" fill="#fff"/><circle cx="20" cy="12" r="0.5" fill="#fff"/><path d="M17.5,15 L18.5,15 L18,15.8 Z" fill="#FF8C8C"/><g stroke="#aaa" stroke-width="0.5"><line x1="10" y1="14" x2="15" y2="14.5"/><line x1="10" y1="16" x2="15" y2="15.5"/><line x1="21" y1="14.5" x2="26" y2="14"/><line x1="21" y1="15.5" x2="26" y2="16"/></g><g class="dyo-scat-leg-l"><ellipse cx="12" cy="31" rx="3" ry="2" fill="#9e9e9e"/></g><g class="dyo-scat-leg-r"><ellipse cx="24" cy="31" rx="3" ry="2" fill="#9e9e9e"/></g></svg>
+        </div>
+      </div>
+      <!-- ══════ /벚꽃 테마 요소 ══════ -->
+
       <div class="dyo-desktop-grid">
 
         <!-- README 아이콘 -->
@@ -1258,9 +1370,21 @@
           </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 관리자 메뉴 <span style="color:#5c6370;font-weight:400;font-size:12px">(메인화면 우하단)</span></div>
-          <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:22px">
             <span style="color:#61afef">글쓰기</span><span>새 포스트 작성</span>
             <span style="color:#61afef">관리</span><span>Tistory 관리 페이지</span>
+          </div>
+
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 테마 <span style="color:#5c6370;font-weight:400;font-size:12px">(바탕화면 우클릭 → Theme)</span></div>
+          <div style="padding-left:12px">
+            <div>바탕화면 우클릭 메뉴에서 3가지 테마 전환</div>
+            <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin-top:6px">
+              <span style="color:#61afef">Default</span><span>기본 데스크탑 테마</span>
+              <span style="color:#61afef">Astronaut</span><span>우주 테마 — 우주인 캐릭터 드래그 · 던지기 · 말풍선</span>
+              <span style="color:#61afef">Sakura</span><span>벚꽃 테마 — 고양이 4마리 · 벚꽃나무 · 나비 · 말풍선</span>
+            </div>
+            <div style="margin-top:6px">캐릭터를 드래그해서 던지면 물리 효과(낙하·바운스·걸어가기) 적용</div>
+            <div style="color:#5c6370">테마 전환 시 던져진 오브젝트는 자동으로 원래 위치로 복귀</div>
           </div>
 
         </div>
@@ -1882,6 +2006,9 @@
       if (!desktop) return;
 
       // 데스크탑 표시 + 바디 스크롤 잠금
+      var savedTheme = localStorage.getItem('dyo_desktop_theme') || 'default';
+      if (savedTheme === 'astronaut') desktop.classList.add('theme-astronaut');
+      else if (savedTheme === 'sakura') desktop.classList.add('theme-sakura');
       desktop.classList.add('show');
       document.body.style.overflow = 'hidden';
 
@@ -1927,9 +2054,9 @@
           el.addEventListener('animationend', function() { el.remove(); });
         }
 
-        // 4~5초에 1개씩 생성
+        // 4~5초에 1개씩 생성 (레이어 숨김 상태면 건너뜀)
         function scheduleShootingStars() {
-          spawnShootingStar();
+          if (layer.offsetParent !== null) spawnShootingStar();
           setTimeout(scheduleShootingStars, 4000 + Math.random() * 1000);
         }
         setTimeout(scheduleShootingStars, 3000);
@@ -2029,7 +2156,7 @@
           var throwVX = Math.max(-MAX_V, Math.min(MAX_V, dragged.velX * 0.3));
           var throwVY = Math.max(-MAX_V, Math.min(MAX_V, dragged.velY * 0.3));
           dragged = null;
-          el.releasePointerCapture(e.pointerId);
+          try { el.releasePointerCapture(e.pointerId); } catch(ex) {}
 
           var curX = parseFloat(el.style.left) || 0;
           var curY = parseFloat(el.style.top) || 0;
@@ -2129,6 +2256,782 @@
         }
       })();
 
+      // ── 우주인 말풍선 ──
+      (function() {
+        var QUOTES = [
+          '여기 와이파이 되나요?',
+          '지구 가고싶다...',
+          '점심 추천 좀..',
+          '여긴 배달이 안돼...',
+          '퇴근하고 싶다',
+          '아 커피 마시고싶어',
+          '여기 편의점 없나..',
+          '오늘 지구 날씨 어때?',
+          '월급이 밀리고 있어..',
+          '충전기 안가져왔다',
+          '집 보일러 껐나..',
+          '내일도 출근이네..',
+          '심심하다...',
+          '카톡 왜 안오지',
+          '아 졸려..'
+        ];
+
+        var astros = document.querySelectorAll('.dyo-astronaut');
+        if (!astros.length) return;
+
+        function showBubble() {
+          // css 상태 우주인만 대상
+          var candidates = [];
+          astros.forEach(function(el) {
+            if (el._astro && el._astro.phase === 'css' && !el._bubble) {
+              candidates.push(el);
+            }
+          });
+          if (!candidates.length) return;
+
+          var el = candidates[Math.floor(Math.random() * candidates.length)];
+          var msg = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+
+          var bubble = document.createElement('div');
+          bubble.className = 'dyo-astro-bubble';
+          bubble.textContent = msg;
+          el.appendChild(bubble);
+          el._bubble = true;
+
+          // 방향 추적 (말풍선 살아있는 동안 매 프레임 체크)
+          var flipRaf;
+          function trackFlip() {
+            if (!bubble.parentNode) return;
+            var matrix = window.getComputedStyle(el).transform;
+            var flip = '1';
+            if (matrix && matrix !== 'none') {
+              var m = matrix.match(/matrix\(([^)]+)\)/);
+              if (m && parseFloat(m[1].split(',')[0]) < 0) flip = '-1';
+            }
+            bubble.style.setProperty('--bubble-flip', flip);
+            flipRaf = requestAnimationFrame(trackFlip);
+          }
+          flipRaf = requestAnimationFrame(trackFlip);
+
+          // 3초 후 제거
+          setTimeout(function() {
+            bubble.classList.add('dyo-astro-bubble-out');
+            setTimeout(function() {
+              cancelAnimationFrame(flipRaf);
+              if (bubble.parentNode) bubble.remove();
+              el._bubble = false;
+            }, 400);
+          }, 3000);
+        }
+
+        // 3~6초 간격으로 랜덤 출현
+        function schedule() {
+          var delay = 3000 + Math.random() * 3000;
+          setTimeout(function() {
+            showBubble();
+            schedule();
+          }, delay);
+        }
+        // 첫 등장은 2초 후
+        setTimeout(function() {
+          showBubble();
+          schedule();
+        }, 2000);
+      })();
+
+      // ══════ 벚꽃 테마 JS ══════
+
+      // ── 꽃잎 생성 ──
+      (function() {
+        var petalLayer = document.getElementById('dyoPetalLayer');
+        if (!petalLayer) return;
+
+        var PETAL_COUNT = 70;
+        var colors = ['#ffb7c5','#ffc4d1','#ffd0dc','#ffe0e8','#fff0f3','#ffa6b8'];
+        var frag = document.createDocumentFragment();
+
+        for (var i = 0; i < PETAL_COUNT; i++) {
+          var p = document.createElement('div');
+          p.className = 'dyo-sakura-petal';
+          var size = 5 + Math.random() * 9;
+          p.style.width = size + 'px';
+          p.style.height = size + 'px';
+          p.style.left = (Math.random() * 110 - 5) + '%';
+          p.style.top = -(Math.random() * 15) + '%';
+          p.style.background = colors[Math.floor(Math.random() * colors.length)];
+          p.style.setProperty('--dur', (7 + Math.random() * 10) + 's');
+          p.style.setProperty('--delay', (Math.random() * 12) + 's');
+          p.style.setProperty('--opa', (0.5 + Math.random() * 0.4).toFixed(2));
+          p.style.setProperty('--dx1', (Math.random() * 80 - 40) + 'px');
+          p.style.setProperty('--dx2', (Math.random() * 140 - 70) + 'px');
+          p.style.setProperty('--rot', (270 + Math.random() * 180) + 'deg');
+          frag.appendChild(p);
+        }
+        petalLayer.appendChild(frag);
+
+        // ── 나비 (최대 6마리) ──
+        var wingColors = ['#ff9ecd','#ffb347','#87ceeb','#dda0dd','#f0e68c'];
+        var maxButterflies = 6;
+        function spawnButterfly() {
+          if (petalLayer.offsetParent === null) return;
+          var current = petalLayer.querySelectorAll('.dyo-sakura-butterfly').length;
+          if (current >= maxButterflies) return;
+          var b = document.createElement('div');
+          b.className = 'dyo-sakura-butterfly';
+          var startLeft = Math.random() * 80;
+          var startTop = 20 + Math.random() * 40;
+          b.style.left = startLeft + '%';
+          b.style.top = startTop + '%';
+          var speed = 6 + Math.random() * 6;
+          var bx = (Math.random() > 0.5 ? 1 : -1) * (200 + Math.random() * 400);
+          var by = -(80 + Math.random() * 200);
+          b.style.setProperty('--speed', speed + 's');
+          b.style.setProperty('--bx', bx + 'px');
+          b.style.setProperty('--by', by + 'px');
+          b.style.setProperty('--wing', wingColors[Math.floor(Math.random() * wingColors.length)]);
+          petalLayer.appendChild(b);
+          b.addEventListener('animationend', function() { b.remove(); });
+        }
+        function scheduleButterfly() {
+          spawnButterfly();
+          setTimeout(scheduleButterfly, 6000 + Math.random() * 4000);
+        }
+        setTimeout(scheduleButterfly, 4000);
+      })();
+
+      // ── 고양이 드래그 & 중력 낙하 ──
+      (function() {
+        var catLayer = document.querySelector('.dyo-sakura-cat-layer');
+        var desktop = document.getElementById('dyoDesktop');
+        if (!catLayer || !desktop) return;
+
+        var GRAVITY = 0.06;
+        var WALK_SPEED = 0.9;
+        var dragged = null;
+
+        catLayer.querySelectorAll('.dyo-sakura-cat').forEach(function(el, i) {
+          el._scat = { phase: 'css', raf: null, idx: i };
+        });
+
+        function getGroundY() {
+          var ground = document.querySelector('.dyo-sakura-ground');
+          if (ground) {
+            var dr = desktop.getBoundingClientRect();
+            var gr = ground.getBoundingClientRect();
+            return gr.top - dr.top + (gr.height * 0.70) - 36;
+          }
+          return desktop.offsetHeight * 0.86;
+        }
+
+        function grab(el) {
+          var dr = desktop.getBoundingClientRect();
+          var er = el.getBoundingClientRect();
+          return { x: er.left - dr.left, y: er.top - dr.top };
+        }
+
+        function setCatInline(el, left, top, extra) {
+          el.style.cssText = 'position:absolute;left:'+left+'px;top:'+top+'px;width:32px;height:36px;z-index:9999;pointer-events:auto;animation:none !important;' + (extra || '');
+        }
+
+        document.addEventListener('pointerdown', function(e) {
+          var el = e.target.closest('.dyo-sakura-cat');
+          if (!el || !el._scat) return;
+          e.preventDefault();
+          var a = el._scat;
+          if (a.raf) { cancelAnimationFrame(a.raf); a.raf = null; }
+          var pos = grab(el);
+          a.phase = 'dragging';
+          el.classList.add('dyo-dragging');
+          el.classList.remove('dyo-falling', 'dyo-walking');
+          desktop.appendChild(el);
+          setCatInline(el, pos.x, pos.y, 'cursor:grabbing;');
+          var dr = desktop.getBoundingClientRect();
+          dragged = { el: el, offX: e.clientX - dr.left - pos.x, offY: e.clientY - dr.top - pos.y, prevX: e.clientX, prevY: e.clientY, prevT: performance.now(), velX: 0, velY: 0 };
+          el.setPointerCapture(e.pointerId);
+        });
+
+        document.addEventListener('pointermove', function(e) {
+          if (!dragged) return;
+          e.preventDefault();
+          var dr = desktop.getBoundingClientRect();
+          var nx = e.clientX - dr.left - dragged.offX;
+          var ny = e.clientY - dr.top - dragged.offY;
+          dragged.el.style.left = nx + 'px';
+          dragged.el.style.top = ny + 'px';
+          var now = performance.now();
+          var dt = now - dragged.prevT;
+          if (dt > 0) {
+            var vx = (e.clientX - dragged.prevX) / dt * 16;
+            var vy = (e.clientY - dragged.prevY) / dt * 16;
+            dragged.velX = dragged.velX * 0.5 + vx * 0.5;
+            dragged.velY = dragged.velY * 0.5 + vy * 0.5;
+          }
+          dragged.prevX = e.clientX;
+          dragged.prevY = e.clientY;
+          dragged.prevT = now;
+        });
+
+        document.addEventListener('pointerup', function(e) {
+          if (!dragged) return;
+          var el = dragged.el;
+          var MAX_V = 5;
+          var tvx = Math.max(-MAX_V, Math.min(MAX_V, dragged.velX * 0.3));
+          var tvy = Math.max(-MAX_V, Math.min(MAX_V, dragged.velY * 0.3));
+          dragged = null;
+          try { el.releasePointerCapture(e.pointerId); } catch(ex) {}
+          startThrow(el, parseFloat(el.style.left) || 0, parseFloat(el.style.top) || 0, tvx, tvy, getGroundY());
+        });
+
+        function startThrow(el, posX, posY, velX, velY, groundY) {
+          var a = el._scat;
+          a.phase = 'falling';
+          el.classList.add('dyo-falling');
+          el.classList.remove('dyo-dragging');
+          setCatInline(el, posX, posY, 'cursor:default;');
+          var bounces = 0;
+          var dw = desktop.offsetWidth;
+          function step() {
+            if (a.phase !== 'falling') return;
+            velY += GRAVITY;
+            velX *= 0.99;
+            posX += velX;
+            posY += velY;
+            if (posY >= groundY) {
+              posY = groundY;
+              bounces++;
+              if (bounces < 3 && (Math.abs(velY) > 1.5 || Math.abs(velX) > 1)) { velY = -velY * 0.3; velX *= 0.6; }
+              else { el.style.left = posX + 'px'; el.style.top = groundY + 'px'; startWalk(el); return; }
+            }
+            if (posX < -20) { posX = -20; velX = Math.abs(velX) * 0.5; }
+            if (posX > dw - 12) { posX = dw - 12; velX = -Math.abs(velX) * 0.5; }
+            el.style.left = posX + 'px';
+            el.style.top = posY + 'px';
+            a.raf = requestAnimationFrame(step);
+          }
+          a.raf = requestAnimationFrame(step);
+        }
+
+        function startWalk(el) {
+          var a = el._scat;
+          a.phase = 'walking';
+          el.classList.remove('dyo-dragging', 'dyo-falling');
+          el.classList.add('dyo-walking');
+          var posX = parseFloat(el.style.left) || 0;
+          var groundY = getGroundY();
+          var dw = desktop.offsetWidth;
+          var dir = (posX < dw / 2) ? 1 : -1;
+          var t = 0;
+          var flip = dir === 1 ? 'scaleX(1)' : 'scaleX(-1)';
+          el.style.top = groundY + 'px';
+          el.style.cursor = 'grab';
+          el.style.transform = flip;
+          function step() {
+            if (a.phase !== 'walking') return;
+            t++;
+            posX += WALK_SPEED * dir;
+            var bounce = Math.abs(Math.sin(t * 0.1)) * 6;
+            el.style.left = posX + 'px';
+            el.style.top = (groundY - bounce) + 'px';
+            if (posX > dw + 60 || posX < -60) {
+              a.phase = 'css';
+              a.raf = null;
+              el.style.cssText = '';
+              el.classList.remove('dyo-dragging', 'dyo-falling', 'dyo-walking');
+              catLayer.appendChild(el);
+              return;
+            }
+            a.raf = requestAnimationFrame(step);
+          }
+          a.raf = requestAnimationFrame(step);
+        }
+      })();
+
+      // ── 고양이 말풍선 ──
+      (function() {
+        var CAT_QUOTES = [
+          '냥~',
+          '꽃잎이다 냥!',
+          '졸려...',
+          '참치 줘...',
+          '여기 따뜻하다 냥',
+          '나비다!',
+          '간식 시간 아냥?',
+          '쓰다듬어 줘...',
+          '벚꽃 구경 중이다냥',
+          '꿀잠 자고싶다...',
+          '개 어디갔냥',
+          '집사 보고싶다...',
+          '캣닢 냄새 난다...',
+          '높은 데 올라가고 싶다냥',
+          '가르릉...'
+        ];
+        var cats = document.querySelectorAll('.dyo-sakura-cat');
+        if (!cats.length) return;
+
+        function showBubble() {
+          var candidates = [];
+          cats.forEach(function(el) {
+            if (el._scat && el._scat.phase === 'css' && !el._bubble) candidates.push(el);
+          });
+          if (!candidates.length) return;
+          var el = candidates[Math.floor(Math.random() * candidates.length)];
+          var msg = CAT_QUOTES[Math.floor(Math.random() * CAT_QUOTES.length)];
+          var bubble = document.createElement('div');
+          bubble.className = 'dyo-scat-bubble';
+          bubble.textContent = msg;
+          el.appendChild(bubble);
+          el._bubble = true;
+          var flipRaf;
+          function trackFlip() {
+            if (!bubble.parentNode) return;
+            var matrix = window.getComputedStyle(el).transform;
+            var flip = '1';
+            if (matrix && matrix !== 'none') {
+              var m = matrix.match(/matrix\(([^)]+)\)/);
+              if (m && parseFloat(m[1].split(',')[0]) < 0) flip = '-1';
+            }
+            bubble.style.setProperty('--bubble-flip', flip);
+            flipRaf = requestAnimationFrame(trackFlip);
+          }
+          flipRaf = requestAnimationFrame(trackFlip);
+          setTimeout(function() {
+            bubble.classList.add('dyo-scat-bubble-out');
+            setTimeout(function() {
+              cancelAnimationFrame(flipRaf);
+              if (bubble.parentNode) bubble.remove();
+              el._bubble = false;
+            }, 300);
+          }, 3000);
+        }
+        function schedule() {
+          setTimeout(function() { showBubble(); schedule(); }, 4000 + Math.random() * 4000);
+        }
+        setTimeout(function() { showBubble(); schedule(); }, 3000);
+      })();
+
+      // ══════ /벚꽃 테마 JS ══════
+
+      // ── 이스터에그: 태극기 20번 클릭 → 외계인 침공 ──
+      (function() {
+        var flag = document.querySelector('.dyo-moon-flag');
+        if (!flag) return;
+        var clickCount = 0;
+        var invaded = false;
+        flag.style.cursor = 'pointer';
+        flag.style.pointerEvents = 'auto';
+
+        flag.addEventListener('click', function() {
+          if (invaded) return;
+          clickCount++;
+          // 깃발 흔들기 피드백
+          flag.style.transform = 'rotate(' + (clickCount % 2 ? 3 : -3) + 'deg)';
+          setTimeout(function() { flag.style.transform = ''; }, 150);
+
+          if (clickCount >= 10) {
+            invaded = true;
+            startInvasion();
+          }
+        });
+
+        function makeAlienSvg() {
+          return '<svg viewBox="0 0 28 38" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<!-- 머리 -->' +
+            '<ellipse cx="14" cy="10" rx="10" ry="9" fill="#4a7a3a"/>' +
+            '<ellipse cx="14" cy="10" rx="9" ry="8" fill="#5a9a4a"/>' +
+            '<!-- 눈 (큰 검은 아몬드) -->' +
+            '<ellipse cx="9" cy="9" rx="4" ry="3" fill="#111" transform="rotate(-10 9 9)"/>' +
+            '<ellipse cx="19" cy="9" rx="4" ry="3" fill="#111" transform="rotate(10 19 9)"/>' +
+            '<ellipse cx="8.5" cy="8.5" rx="1.5" ry="1" fill="rgba(100,255,100,0.4)"/>' +
+            '<ellipse cx="18.5" cy="8.5" rx="1.5" ry="1" fill="rgba(100,255,100,0.4)"/>' +
+            '<!-- 몸 -->' +
+            '<rect x="9" y="18" width="10" height="10" rx="3" fill="#5a9a4a"/>' +
+            '<!-- 팔 -->' +
+            '<path d="M9,20 Q4,24 3,28" stroke="#4a8a3a" stroke-width="2" stroke-linecap="round" fill="none"/>' +
+            '<path d="M19,20 Q24,24 25,28" stroke="#4a8a3a" stroke-width="2" stroke-linecap="round" fill="none"/>' +
+            '<circle cx="3" cy="28.5" r="1.5" fill="#4a8a3a"/>' +
+            '<circle cx="25" cy="28.5" r="1.5" fill="#4a8a3a"/>' +
+            '<!-- 다리 -->' +
+            '<path d="M11,28 L10,35" stroke="#4a8a3a" stroke-width="2" stroke-linecap="round"/>' +
+            '<path d="M17,28 L18,35" stroke="#4a8a3a" stroke-width="2" stroke-linecap="round"/>' +
+            '<ellipse cx="9.5" cy="36" rx="2.5" ry="1.2" fill="#3a7a2a"/>' +
+            '<ellipse cx="18.5" cy="36" rx="2.5" ry="1.2" fill="#3a7a2a"/>' +
+          '</svg>';
+        }
+
+        function makeUfoSvg() {
+          return '<svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<ellipse cx="60" cy="48" rx="50" ry="12" fill="#5a5a6a" stroke="#7a7a8a" stroke-width="1"/>' +
+            '<ellipse cx="60" cy="46" rx="42" ry="8" fill="#6a6a7a"/>' +
+            '<circle cx="35" cy="48" r="3" fill="#0f0" opacity="0.8"><animate attributeName="opacity" values="0.8;0.3;0.8" dur="0.6s" repeatCount="indefinite"/></circle>' +
+            '<circle cx="50" cy="50" r="3" fill="#0f0" opacity="0.6"><animate attributeName="opacity" values="0.6;0.2;0.6" dur="0.5s" repeatCount="indefinite"/></circle>' +
+            '<circle cx="70" cy="50" r="3" fill="#0f0" opacity="0.8"><animate attributeName="opacity" values="0.8;0.3;0.8" dur="0.7s" repeatCount="indefinite"/></circle>' +
+            '<circle cx="85" cy="48" r="3" fill="#0f0" opacity="0.6"><animate attributeName="opacity" values="0.6;0.2;0.6" dur="0.55s" repeatCount="indefinite"/></circle>' +
+            '<path d="M35,42 Q60,10 85,42" fill="#8888aa" stroke="#9999bb" stroke-width="0.8"/>' +
+            '<ellipse cx="60" cy="28" rx="12" ry="10" fill="#aaaacc" opacity="0.3"/>' +
+          '</svg>';
+        }
+
+        function startInvasion() {
+          var desktop = document.getElementById('dyoDesktop');
+          if (!desktop) return;
+          var aliens = [];
+          var alienKills = 0;
+          var standoffActive = false;
+          var defeated = false;
+          var astroLayer = document.querySelector('.dyo-astronaut-layer');
+          var dw = desktop.offsetWidth;
+          var baseX = dw * 0.65;
+          var timers = []; // 취소 가능한 타이머들
+
+          function grab(el) {
+            var dr = desktop.getBoundingClientRect();
+            var er = el.getBoundingClientRect();
+            return { x: er.left - dr.left, y: er.top - dr.top };
+          }
+
+          function later(fn, ms) {
+            var t = setTimeout(fn, ms);
+            timers.push(t);
+            return t;
+          }
+
+          function resetAll() {
+            timers.forEach(clearTimeout);
+            if (overlay && overlay.parentNode) overlay.remove();
+            if (txt && txt.parentNode) txt.remove();
+            var astros = document.querySelectorAll('.dyo-astronaut');
+            astros.forEach(function(el) {
+              el.classList.remove('dyo-panic', 'dyo-panic-run-l', 'dyo-panic-run-r', 'dyo-celebrate');
+              el.style.cssText = '';
+              if (el._astro) { el._astro.phase = 'css'; el._astro.raf = null; }
+              if (astroLayer && el.parentNode !== astroLayer) astroLayer.appendChild(el);
+            });
+            invaded = false;
+            clickCount = 0;
+          }
+
+          // ── 0s: 화면 깜빡임 + 경고 텍스트 ──
+          var flash = document.createElement('div');
+          flash.className = 'dyo-invasion-flash';
+          desktop.appendChild(flash);
+          later(function() { flash.remove(); }, 1000);
+
+          var txt = document.createElement('div');
+          txt.className = 'dyo-invasion-text';
+          txt.textContent = '⚠ ALIEN INVASION ⚠';
+          desktop.appendChild(txt);
+
+          var overlay = document.createElement('div');
+          overlay.className = 'dyo-invasion-overlay';
+          desktop.appendChild(overlay);
+
+          // ── 0.3~0.9s: UFO 3대 왼쪽에 등장 ──
+          var ufoData = [
+            { left: '10%', y: '10%', delay: 300, alienLeft: '12%' },
+            { left: '22%', y: '6%',  delay: 600, alienLeft: '24%' },
+            { left: '34%', y: '12%', delay: 900, alienLeft: '36%' }
+          ];
+
+          ufoData.forEach(function(d) {
+            later(function() {
+              var ufo = document.createElement('div');
+              ufo.className = 'dyo-ufo dyo-ufo-enter';
+              ufo.style.left = d.left;
+              ufo.style.setProperty('--ufo-y', d.y);
+              ufo.innerHTML = makeUfoSvg() + '<div class="dyo-ufo-beam-ray"></div>';
+              overlay.appendChild(ufo);
+
+              later(function() {
+                ufo.classList.remove('dyo-ufo-enter');
+                ufo.classList.add('dyo-ufo-hover');
+                ufo.style.top = d.y;
+                ufo.style.opacity = '1';
+              }, 2000);
+
+              later(function() {
+                ufo.classList.add('dyo-ufo-beam-on');
+                var alien = document.createElement('div');
+                alien.className = 'dyo-alien dyo-alien-descend';
+                alien.style.left = d.alienLeft;
+                alien.style.bottom = '52px';
+                alien.style.pointerEvents = 'none';
+                alien.innerHTML = makeAlienSvg();
+                overlay.appendChild(alien);
+                aliens.push(alien);
+
+                later(function() {
+                  alien.classList.remove('dyo-alien-descend');
+                  alien.classList.add('dyo-alien-standoff');
+                }, 1200);
+              }, 2800);
+            }, d.delay);
+          });
+
+          // ── 2s: 우주인 현재 위치 캡처 → 기지쪽에 모으기 ──
+          later(function() {
+            var astros = document.querySelectorAll('.dyo-astronaut');
+            var groundY = astroLayer
+              ? (astroLayer.getBoundingClientRect().bottom - desktop.getBoundingClientRect().top - 48)
+              : (desktop.offsetHeight - 100);
+
+            astros.forEach(function(el, i) {
+              // 현재 CSS 애니메이션 위치 캡처
+              var pos = grab(el);
+
+              if (el._astro && el._astro.raf) {
+                cancelAnimationFrame(el._astro.raf);
+                el._astro.raf = null;
+              }
+              if (el._astro) el._astro.phase = 'panic';
+              el.classList.remove('dyo-dragging', 'dyo-falling', 'dyo-walking');
+              el.classList.add('dyo-panic');
+
+              // 먼저 캡처된 위치에 배치 (순간이동 방지)
+              desktop.appendChild(el);
+              el.style.cssText = 'position:absolute;left:' + pos.x + 'px;top:' + pos.y + 'px;width:32px;height:48px;z-index:9999;pointer-events:none;animation:none !important;';
+
+              // 다음 프레임에 기지 위치로 트랜지션
+              var gatherX = baseX + (i - 2.5) * 22;
+              requestAnimationFrame(function() {
+                el.style.transition = 'left 1.5s ease, top 1.5s ease';
+                el.style.left = gatherX + 'px';
+                el.style.top = groundY + 'px';
+              });
+            });
+          }, 2000);
+
+          // ── 5.5s: 대치 시작 — 외계인 클릭 가능하게 ──
+          later(function() {
+            standoffActive = true;
+            overlay.style.pointerEvents = 'auto';
+            aliens.forEach(function(alien) {
+              alien.style.pointerEvents = 'auto';
+              alien.style.cursor = 'crosshair';
+            });
+
+            overlay.addEventListener('click', function(e) {
+              if (!standoffActive) return;
+              var alien = e.target.closest('.dyo-alien');
+              if (!alien) return;
+
+              // 외계인 제거 애니메이션
+              alien.style.pointerEvents = 'none';
+              alien.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+              alien.style.transform = 'scale(0) rotate(180deg)';
+              alien.style.opacity = '0';
+              setTimeout(function() { alien.remove(); }, 300);
+
+              alienKills++;
+              if (alienKills >= 3) {
+                // 전부 제거! 승리!
+                standoffActive = false;
+                defeated = true;
+                triggerVictory();
+              }
+            });
+          }, 5500);
+
+          // ── 8.5s: 대치 3초 후, 아직 안 잡았으면 → 도망 ──
+          later(function() {
+            if (defeated) return; // 이미 승리했으면 스킵
+            standoffActive = false;
+            overlay.style.pointerEvents = 'none';
+
+            txt.style.transition = 'opacity 0.5s ease';
+            txt.style.opacity = '0';
+
+            overlay.querySelectorAll('.dyo-ufo').forEach(function(ufo) {
+              ufo.classList.remove('dyo-ufo-beam-on');
+            });
+
+            // 우주인 오른쪽으로 도망
+            var astros = document.querySelectorAll('.dyo-astronaut');
+            astros.forEach(function(el, i) {
+              el.classList.remove('dyo-panic');
+              el.style.transition = 'none';
+              el.style.animation = '';
+              later(function() {
+                el.classList.add('dyo-panic-run-r');
+              }, i * 150);
+            });
+
+            // 외계인 추격
+            later(function() {
+              aliens.forEach(function(alien, i) {
+                if (!alien.parentNode) return;
+                alien.classList.remove('dyo-alien-standoff');
+                later(function() {
+                  alien.classList.add('dyo-alien-chase-r');
+                }, i * 100);
+              });
+            }, 500);
+          }, 8500);
+
+          // ── 13s: 패배 시나리오 ──
+          later(function() {
+            if (defeated) return;
+
+            // UFO 퇴장
+            overlay.querySelectorAll('.dyo-ufo').forEach(function(ufo) {
+              ufo.style.transition = 'top 1.5s ease-in, opacity 1.5s ease-in';
+              ufo.style.top = '-80px';
+              ufo.style.opacity = '0';
+            });
+
+            later(function() {
+              overlay.remove();
+              if (txt.parentNode) txt.remove();
+              triggerDefeat();
+            }, 2000);
+          }, 13000);
+
+          // ── 승리 시나리오 ──
+          function triggerVictory() {
+            // 빔 끄기
+            overlay.querySelectorAll('.dyo-ufo').forEach(function(ufo) {
+              ufo.classList.remove('dyo-ufo-beam-on');
+            });
+
+            // 텍스트 변경
+            txt.textContent = '🎉 VICTORY! 🎉';
+            txt.style.color = '#44ff44';
+            txt.style.textShadow = '0 0 20px rgba(0,255,0,0.8), 0 0 40px rgba(0,255,0,0.4)';
+            txt.style.opacity = '1';
+            txt.style.animation = 'dyo-invasion-text-in 0.5s ease-out forwards';
+
+            // 폭죽 파티클 생성
+            for (var f = 0; f < 40; f++) {
+              (function(idx) {
+                later(function() { spawnFirework(overlay); }, idx * 80);
+              })(f);
+            }
+
+            // 우주인 축하 (팔 흔들기)
+            var astros = document.querySelectorAll('.dyo-astronaut');
+            astros.forEach(function(el) {
+              el.classList.remove('dyo-panic');
+              el.style.animation = 'dyo-celebrate-jump 0.5s ease-in-out infinite alternate';
+            });
+
+            // UFO 도망
+            later(function() {
+              overlay.querySelectorAll('.dyo-ufo').forEach(function(ufo) {
+                ufo.style.transition = 'top 1s ease-in, opacity 1s ease-in';
+                ufo.style.top = '-80px';
+                ufo.style.opacity = '0';
+              });
+            }, 1000);
+
+            // 4초 후 정리
+            later(function() {
+              resetAll();
+            }, 4000);
+          }
+
+          function spawnFirework(container) {
+            var colors = ['#ff4444','#44ff44','#4488ff','#ffaa00','#ff44ff','#44ffff','#ffff44'];
+            var x = 20 + Math.random() * 60;
+            var y = 20 + Math.random() * 40;
+            for (var p = 0; p < 8; p++) {
+              var dot = document.createElement('div');
+              var angle = (p / 8) * Math.PI * 2;
+              var dist = 30 + Math.random() * 40;
+              var dx = Math.cos(angle) * dist;
+              var dy = Math.sin(angle) * dist;
+              var c = colors[Math.floor(Math.random() * colors.length)];
+              dot.style.cssText = 'position:absolute;left:' + x + '%;top:' + y + '%;width:4px;height:4px;border-radius:50%;background:' + c + ';pointer-events:none;z-index:60;opacity:1;box-shadow:0 0 6px ' + c + ';transition:all 0.8s ease-out;';
+              container.appendChild(dot);
+              requestAnimationFrame(function() {
+                dot.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+                dot.style.opacity = '0';
+              });
+              setTimeout(function() { dot.remove(); }, 900);
+            }
+          }
+
+          // ── 패배 시나리오 ──
+          function triggerDefeat() {
+            // 우주인 숨기기 (도망간 채로)
+            var astros = document.querySelectorAll('.dyo-astronaut');
+            astros.forEach(function(el) {
+              el.style.display = 'none';
+              el.classList.remove('dyo-panic', 'dyo-panic-run-l', 'dyo-panic-run-r');
+              if (el._astro) { el._astro.phase = 'defeated'; el._astro.raf = null; }
+            });
+
+            // 달 어두워지기
+            var darkOverlay = document.createElement('div');
+            darkOverlay.className = 'dyo-moon-dark';
+            darkOverlay.id = 'dyoMoonDark';
+            desktop.appendChild(darkOverlay);
+            requestAnimationFrame(function() {
+              darkOverlay.classList.add('active');
+            });
+
+            // 외계인 3마리 걸어다니기
+            var alienWalkers = [];
+            var walkData = [
+              { dur: '18s', anim: 'dyo-alien-walk-r', delay: '0s' },
+              { dur: '22s', anim: 'dyo-alien-walk-l', delay: '-8s' },
+              { dur: '15s', anim: 'dyo-alien-walk-r', delay: '-12s' }
+            ];
+            walkData.forEach(function(w) {
+              var walker = document.createElement('div');
+              walker.className = 'dyo-alien-walker';
+              walker.innerHTML = makeAlienSvg();
+              walker.style.setProperty('--walk-anim', w.anim + ' ' + w.dur);
+              walker.style.animationDelay = w.delay;
+              desktop.appendChild(walker);
+              alienWalkers.push(walker);
+            });
+
+            // 패배 상태 저장 (태극기 10번 클릭으로 해방 가능)
+            invaded = true;
+            clickCount = 0;
+
+            // 태극기 클릭으로 해방
+            var liberateCount = 0;
+            function liberateHandler() {
+              liberateCount++;
+              flag.style.transform = 'rotate(' + (liberateCount % 2 ? 5 : -5) + 'deg)';
+              setTimeout(function() { flag.style.transform = ''; }, 150);
+
+              if (liberateCount >= 10) {
+                flag.removeEventListener('click', liberateHandler);
+
+                // 화면 밝아지기
+                darkOverlay.classList.remove('active');
+                setTimeout(function() {
+                  if (darkOverlay.parentNode) darkOverlay.remove();
+                }, 3000);
+
+                // 외계인 도망
+                alienWalkers.forEach(function(w) {
+                  w.style.transition = 'opacity 1s ease';
+                  w.style.opacity = '0';
+                  setTimeout(function() { w.remove(); }, 1000);
+                });
+
+                // 우주인 복귀
+                setTimeout(function() {
+                  astros.forEach(function(el) {
+                    el.style.display = '';
+                    el.style.cssText = '';
+                    el.classList.remove('dyo-panic', 'dyo-panic-run-l', 'dyo-panic-run-r');
+                    if (el._astro) { el._astro.phase = 'css'; el._astro.raf = null; }
+                    if (astroLayer && el.parentNode !== astroLayer) astroLayer.appendChild(el);
+                  });
+                  invaded = false;
+                  clickCount = 0;
+                }, 1500);
+              }
+            }
+            // 기존 invasion 핸들러 무시하고 liberate로 전환
+            flag.addEventListener('click', liberateHandler);
+          }
+        }
+      })();
+
       // 태스크바 표시 (dyo-desktop 외부에 위치)
       var desktopBar = document.getElementById('dyoDesktopBar');
       if (desktopBar) desktopBar.classList.add('show');
@@ -2199,18 +3102,6 @@
         });
       }
 
-      // 지구 클릭 → 커졌다 작아지는 애니메이션 후 포트폴리오 이동
-      var earthEl = document.getElementById('dyoEarth');
-      if (earthEl) {
-        earthEl.addEventListener('click', function(e) {
-          e.preventDefault();
-          this.classList.add('dyo-earth-clicked');
-          var self = this;
-          setTimeout(function() {
-            window.location.href = 'https://dyomyo-portfolio.tistory.com/';
-          }, 500);
-        });
-      }
 
       // File Explorer 아이콘 클릭
       var iconExplorer = document.getElementById('desktopIconExplorer');
@@ -4279,7 +5170,7 @@
       var btn      = document.getElementById('btnFullscreen');
       var iconExp  = document.getElementById('fsIconExpand');
       var iconComp = document.getElementById('fsIconCompress');
-      if (!btn) return;
+      if (!btn || !iconExp || !iconComp) return;
 
       function updateIcons() {
         var isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
@@ -4782,24 +5673,54 @@
       };
 
       // 메뉴 아이템 동적 빌드
+      function buildMenuItem(item, parent) {
+        if (item === 'sep') {
+          var sep = document.createElement('div');
+          sep.className = 'dyo-ctx-sep';
+          parent.appendChild(sep);
+        } else if (item.sub) {
+          // 서브메뉴
+          var wrap = document.createElement('div');
+          wrap.className = 'dyo-ctx-sub';
+          var trigger = document.createElement('button');
+          trigger.className = 'dyo-ctx-item';
+          trigger.textContent = item.label;
+          trigger.type = 'button';
+          wrap.appendChild(trigger);
+          var subMenu = document.createElement('div');
+          subMenu.className = 'dyo-ctx-submenu';
+          item.sub.forEach(function(si) { buildMenuItem(si, subMenu); });
+          wrap.appendChild(subMenu);
+          parent.appendChild(wrap);
+          // 화면 오른쪽 넘침 방지
+          wrap.addEventListener('mouseenter', function() {
+            var r = subMenu.getBoundingClientRect();
+            if (r.right > window.innerWidth - 8) subMenu.classList.add('flip-left');
+            else subMenu.classList.remove('flip-left');
+          });
+        } else {
+          var el = document.createElement('button');
+          el.className = 'dyo-ctx-item' +
+            (item.disabled ? ' disabled' : '') +
+            (item.danger   ? ' danger'   : '');
+          if (item.checked !== undefined) {
+            var chk = document.createElement('span');
+            chk.className = 'dyo-ctx-check';
+            chk.textContent = item.checked ? '✓' : '';
+            el.appendChild(chk);
+            el.appendChild(document.createTextNode(item.label));
+          } else {
+            el.textContent = item.label;
+          }
+          el.dataset.action = item.action || '';
+          if (item.disabled) el.setAttribute('disabled', '');
+          parent.appendChild(el);
+        }
+      }
+
       function buildMenu(items) {
         menu.innerHTML = '';
-        items.forEach(function(item) {
-          if (item === 'sep') {
-            var sep = document.createElement('div');
-            sep.className = 'dyo-ctx-sep';
-            menu.appendChild(sep);
-          } else {
-            var el = document.createElement('button');
-            el.className = 'dyo-ctx-item' +
-              (item.disabled ? ' disabled' : '') +
-              (item.danger   ? ' danger'   : '');
-            el.textContent = item.label;
-            el.dataset.action = item.action || '';
-            if (item.disabled) el.setAttribute('disabled', '');
-            menu.appendChild(el);
-          }
-        });
+        items.forEach(function(item) { buildMenuItem(item, menu); });
       }
 
       function showMenu(x, y) {
@@ -4855,9 +5776,18 @@
         } else {
           // ── 배경 우클릭
           currentCtx = { type: 'bg' };
+          var curTheme = localStorage.getItem('dyo_desktop_theme') || 'default';
           buildMenu([
             { label: 'New Terminal',       action: 'terminal'  },
             { label: 'Dev Blog',           action: 'blog'      },
+            'sep',
+            { label: 'Theme', sub: [
+              { label: 'Default',    action: 'theme-default',    checked: curTheme === 'default' },
+              { label: 'Astronaut',  action: 'theme-astronaut',  checked: curTheme === 'astronaut' },
+              { label: 'Sakura',     action: 'theme-sakura',     checked: curTheme === 'sakura' },
+              'sep',
+              { label: 'Coming Soon...', action: '', disabled: true },
+            ]},
             'sep',
             { label: 'Tutorial',           action: 'tutorial'  },
             { label: 'Refresh Desktop',    action: 'refresh'   }
@@ -4931,6 +5861,36 @@
           case 'explorer':  if (window.dyoOpenExplorer) window.dyoOpenExplorer();          break;
           case 'gallery':    if (window.dyoOpenGallery)   window.dyoOpenGallery();           break;
           case 'tutorial':   if (window.dyoStartTutorial) window.dyoStartTutorial();         break;
+          case 'theme-default':
+          case 'theme-astronaut':
+          case 'theme-sakura':
+            // 드래그로 레이어 밖에 나간 오브젝트를 원래 레이어로 복귀
+            (function resetThemeObjects() {
+              var astroLayer = document.querySelector('.dyo-astronaut-layer');
+              var catLayer = document.querySelector('.dyo-sakura-cat-layer');
+              if (astroLayer) {
+                desktop.querySelectorAll(':scope > .dyo-astronaut').forEach(function(el) {
+                  el.style.cssText = '';
+                  el.classList.remove('dyo-dragging', 'dyo-falling', 'dyo-walking');
+                  if (el._astro) { if (el._astro.raf) cancelAnimationFrame(el._astro.raf); el._astro.phase = 'idle'; }
+                  astroLayer.appendChild(el);
+                });
+              }
+              if (catLayer) {
+                desktop.querySelectorAll(':scope > .dyo-sakura-cat').forEach(function(el) {
+                  el.style.cssText = '';
+                  el.classList.remove('dyo-dragging', 'dyo-falling', 'dyo-walking');
+                  if (el._scat) { if (el._scat.raf) cancelAnimationFrame(el._scat.raf); el._scat.phase = 'idle'; }
+                  catLayer.appendChild(el);
+                });
+              }
+            })();
+            desktop.classList.remove('theme-astronaut', 'theme-sakura');
+            if (action === 'theme-astronaut') desktop.classList.add('theme-astronaut');
+            else if (action === 'theme-sakura') desktop.classList.add('theme-sakura');
+            localStorage.setItem('dyo_desktop_theme', action.replace('theme-', ''));
+            if (window.dyoToast) window.dyoToast(action.replace('theme-', '').charAt(0).toUpperCase() + action.replace('theme-', '').slice(1) + ' theme applied', 'success', 2000);
+            break;
           case 'refresh':   location.reload();                                             break;
           // Explorer 아이템
           case 'exp-open':

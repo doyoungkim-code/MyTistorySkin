@@ -2604,6 +2604,36 @@ html, body {
 
 .dyo-desktop.show { display: flex; }
 
+/* ── 테마: default — 배경 이미지 ── */
+.dyo-desktop:not(.theme-astronaut):not(.theme-sakura) {
+  background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbVSlHP%2FdJMcadnwusT%2FAAAAAAAAAAAAAAAAAAAAANQwzVrWYleMazulbZvaPnk5T-8-kymCRR9qhnPdmpE_%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DAID%252Buv6WNn3EhAm55qG2V5Wsj2E%253D') center/cover no-repeat !important;
+}
+
+/* ── 우주 요소: astronaut 아닐 때 숨김 ── */
+.dyo-desktop:not(.theme-astronaut) .dyo-moon-terrain,
+.dyo-desktop:not(.theme-astronaut) .dyo-moon-base,
+.dyo-desktop:not(.theme-astronaut) .dyo-spaceship,
+.dyo-desktop:not(.theme-astronaut) .dyo-astronaut-layer,
+.dyo-desktop:not(.theme-astronaut) .dyo-astronaut,
+.dyo-desktop:not(.theme-astronaut) .dyo-star-layer {
+  display: none !important;
+}
+.dyo-desktop:not(.theme-astronaut)::before,
+.dyo-desktop:not(.theme-astronaut)::after {
+  display: none !important;
+}
+
+/* ── 벚꽃 요소: sakura 아닐 때 숨김 ── */
+.dyo-desktop:not(.theme-sakura) .dyo-sakura-sun,
+.dyo-desktop:not(.theme-sakura) .dyo-sakura-cloud,
+.dyo-desktop:not(.theme-sakura) .dyo-sakura-ground,
+.dyo-desktop:not(.theme-sakura) .dyo-sakura-tree,
+.dyo-desktop:not(.theme-sakura) .dyo-sakura-petal-layer,
+.dyo-desktop:not(.theme-sakura) .dyo-sakura-cat-layer,
+.dyo-desktop:not(.theme-sakura) .dyo-sakura-cat {
+  display: none !important;
+}
+
 /* ── 은하수 성운 오버레이 ── */
 .dyo-desktop::before {
   content: '';
@@ -2753,88 +2783,202 @@ html, body {
 }
 
 
-/* ── 지구 (포트폴리오 링크) ── */
-.dyo-earth {
+/* ── 외계인 침공 이스터에그 ── */
+.dyo-invasion-overlay {
   position: absolute;
-  top: 18%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
-  z-index: 3;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.3s ease;
-}
-.dyo-earth:hover {
-  transform: translate(-50%, -50%) scale(1.15);
-}
-.dyo-earth-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 90px;
-  height: 90px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(100,180,255,0.25) 0%, transparent 70%);
+  inset: 0;
+  z-index: 50;
   pointer-events: none;
-}
-.dyo-earth-sphere {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #4a9eda 0%, #1a5276 40%, #0d2f4f 70%, #071a2e 100%);
-  box-shadow:
-    0 0 15px rgba(80,160,255,0.4),
-    inset -8px -6px 12px rgba(0,0,0,0.5);
   overflow: hidden;
-  animation: dyo-earth-rotate 60s linear infinite;
 }
-.dyo-earth-land {
+
+/* UFO */
+.dyo-ufo {
+  position: absolute;
+  width: 70px;
+  height: 40px;
+  top: -60px;
+  opacity: 0;
+}
+.dyo-ufo.dyo-ufo-enter {
+  animation: dyo-ufo-descend 2s ease-out forwards;
+}
+.dyo-ufo.dyo-ufo-hover {
+  animation: dyo-ufo-float 2s ease-in-out infinite;
+}
+@keyframes dyo-ufo-descend {
+  0%   { top: -60px; opacity: 0; }
+  100% { top: var(--ufo-y, 15%); opacity: 1; }
+}
+@keyframes dyo-ufo-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* 빔 (UFO 아래로 넓어지는 삼각형) */
+.dyo-ufo-beam-ray {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 120px;
+  opacity: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 255, 100, 0.25) 0%,
+    rgba(0, 255, 100, 0.05) 100%
+  );
+  clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%);
+  filter: blur(2px);
+  transition: opacity 0.6s ease, width 0.6s ease;
+}
+.dyo-ufo.dyo-ufo-beam-on .dyo-ufo-beam-ray {
+  opacity: 1;
+  width: 60px;
+}
+
+/* 화면 깜빡임 경고 */
+.dyo-invasion-flash {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  background:
-    radial-gradient(ellipse 18px 12px at 55% 35%, #2d7a3a 0%, transparent 100%),
-    radial-gradient(ellipse 14px 18px at 40% 50%, #3a8a4a 0%, transparent 100%),
-    radial-gradient(ellipse 10px 7px at 65% 55%, #2d6a35 0%, transparent 100%),
-    radial-gradient(ellipse 8px 10px at 30% 30%, #4a9a5a 0%, transparent 100%),
-    radial-gradient(ellipse 12px 6px at 50% 70%, #3a7a45 0%, transparent 100%),
-    radial-gradient(ellipse 6px 8px at 70% 40%, #2a6a30 0%, transparent 100%);
-  animation: dyo-earth-rotate 60s linear infinite;
-}
-.dyo-earth-cloud {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background:
-    radial-gradient(ellipse 20px 4px at 30% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
-    radial-gradient(ellipse 15px 3px at 60% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
-    radial-gradient(ellipse 18px 3px at 45% 65%, rgba(255,255,255,0.35) 0%, transparent 100%),
-    radial-gradient(ellipse 10px 3px at 70% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
-  animation: dyo-earth-rotate 45s linear infinite reverse;
-}
-.dyo-earth-shine {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%);
+  z-index: 49;
   pointer-events: none;
+  animation: dyo-invasion-blink 0.15s linear 6;
 }
-@keyframes dyo-earth-rotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+@keyframes dyo-invasion-blink {
+  0%, 100% { background: transparent; }
+  50%      { background: rgba(255, 0, 0, 0.08); }
 }
-/* 클릭 애니메이션 */
-.dyo-earth-clicked {
-  animation: dyo-earth-click 0.8s ease forwards !important;
+
+/* 외계인 (UFO에서 내려옴) */
+.dyo-alien {
+  position: absolute;
+  width: 28px;
+  height: 38px;
+  opacity: 0;
+  transition: none;
+}
+.dyo-alien.dyo-alien-descend {
+  animation: dyo-alien-down 1.2s ease-out forwards;
+}
+@keyframes dyo-alien-down {
+  0%   { opacity: 0; transform: translateY(-60px); }
+  30%  { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* 외계인 대치 자세 (좌우 흔들) */
+.dyo-alien.dyo-alien-standoff {
+  opacity: 1;
+  animation: dyo-alien-menace 0.5s ease-in-out infinite alternate;
+}
+@keyframes dyo-alien-menace {
+  0%   { transform: translateX(-2px) rotate(-3deg); }
+  100% { transform: translateX(2px) rotate(3deg); }
+}
+
+/* 외계인 추격 */
+.dyo-alien.dyo-alien-chase-l {
+  opacity: 1;
+  animation: dyo-alien-chase-left 4s ease-in forwards;
+}
+.dyo-alien.dyo-alien-chase-r {
+  opacity: 1;
+  animation: dyo-alien-chase-right 4s ease-in forwards;
+}
+@keyframes dyo-alien-chase-left {
+  0%   { transform: translateX(0) scaleX(1); }
+  5%   { transform: translateX(8px) scaleX(1); }
+  100% { transform: translateX(-110vw) scaleX(1); }
+}
+@keyframes dyo-alien-chase-right {
+  0%   { transform: translateX(0); }
+  5%   { transform: translateX(-8px); }
+  100% { transform: translateX(110vw); }
+}
+
+/* 우주인 도망 (느리게) */
+.dyo-astronaut.dyo-panic {
+  animation: none !important;
+}
+.dyo-astronaut.dyo-panic-run-l {
+  animation: dyo-panic-left 4s ease-in forwards !important;
+}
+.dyo-astronaut.dyo-panic-run-r {
+  animation: dyo-panic-right 4s ease-in forwards !important;
+}
+@keyframes dyo-panic-left {
+  0%   { transform: translateX(0) scaleX(1); }
+  5%   { transform: translateX(10px) scaleX(1) translateY(-10px); }
+  100% { transform: translateX(-110vw) scaleX(1) translateY(-10px); }
+}
+@keyframes dyo-panic-right {
+  0%   { transform: translateX(0) scaleX(-1); }
+  5%   { transform: translateX(-10px) scaleX(-1) translateY(-10px); }
+  100% { transform: translateX(110vw) scaleX(-1) translateY(-10px); }
+}
+
+/* 우주인 축하 점프 */
+@keyframes dyo-celebrate-jump {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-18px); }
+}
+
+/* ── 패배: 달 어두워짐 ── */
+.dyo-moon-dark {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 0;
   pointer-events: none;
+  transition: background 3s ease;
 }
-@keyframes dyo-earth-click {
-  0%   { transform: translate(-50%, -50%) scale(1); }
-  100% { transform: translate(-50%, -50%) scale(4); }
+.dyo-moon-dark.active {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* 패배: 외계인 순찰 걷기 */
+.dyo-alien-walker {
+  position: absolute;
+  bottom: 52px;
+  width: 28px;
+  height: 38px;
+  z-index: 2;
+  pointer-events: none;
+  animation: var(--walk-anim) linear infinite;
+}
+@keyframes dyo-alien-walk-r {
+  0%   { transform: translateX(-5vw); }
+  100% { transform: translateX(105vw); }
+}
+@keyframes dyo-alien-walk-l {
+  0%   { transform: translateX(105vw) scaleX(-1); }
+  100% { transform: translateX(-5vw) scaleX(-1); }
+}
+
+/* 침공 텍스트 */
+.dyo-invasion-text {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Courier New', monospace;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff3333;
+  text-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.4);
+  letter-spacing: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  z-index: 51;
+  pointer-events: none;
+  animation: dyo-invasion-text-in 0.8s 0.5s ease-out forwards;
+}
+@keyframes dyo-invasion-text-in {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  50%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 /* ── 달 지형 (SVG) ── */
@@ -2855,7 +2999,7 @@ html, body {
   position: absolute;
   bottom: 52px;
   right: 30%;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
   display: flex;
   align-items: flex-end;
@@ -2884,6 +3028,8 @@ html, body {
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 4px;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .dyo-flag-pole {
@@ -2948,6 +3094,46 @@ html, body {
   user-select: none;
   will-change: transform;
 }
+/* 우주인 말풍선 */
+.dyo-astro-bubble {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px) scaleX(var(--bubble-flip, 1));
+  background: rgba(255, 255, 255, 0.92);
+  color: #222;
+  font-size: 11px;
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  line-height: 1.3;
+  padding: 5px 8px;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  animation: dyo-bubble-in 0.35s ease-out forwards;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.dyo-astro-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(255, 255, 255, 0.92);
+}
+.dyo-astro-bubble-out {
+  animation: dyo-bubble-out 0.4s ease-in forwards !important;
+}
+@keyframes dyo-bubble-in {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(4px) scaleX(var(--bubble-flip, 1)) scale(0.7); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(-4px) scaleX(var(--bubble-flip, 1)) scale(1); }
+}
+@keyframes dyo-bubble-out {
+  0%   { opacity: 1; transform: translateX(-50%) translateY(-4px) scaleX(var(--bubble-flip, 1)) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-12px) scaleX(var(--bubble-flip, 1)) scale(0.8); }
+}
+
 .dyo-astronaut.dyo-dragging,
 .dyo-astronaut.dyo-falling,
 .dyo-astronaut.dyo-walking {
@@ -3188,8 +3374,10 @@ html, body {
   align-content: flex-start;
   gap: 8px;
   position: relative;
-  z-index: 1;
+  z-index: 5;
+  pointer-events: none;
 }
+.dyo-desktop-icon { pointer-events: auto; }
 
 /* 개별 아이콘 */
 .dyo-desktop-icon {
@@ -4324,6 +4512,46 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   height: 1px;
   background: #21262d;
   margin: 3px 6px;
+}
+/* ── 서브메뉴 ── */
+.dyo-ctx-sub {
+  position: relative;
+}
+.dyo-ctx-sub > .dyo-ctx-item::after {
+  content: '▸';
+  margin-left: auto;
+  font-size: 10px;
+  opacity: 0.5;
+}
+.dyo-ctx-sub:hover > .dyo-ctx-item::after { opacity: 1; }
+.dyo-ctx-submenu {
+  display: none;
+  position: absolute;
+  top: -4px;
+  left: 100%;
+  min-width: 160px;
+  background: rgba(13,17,23,0.96);
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  flex-direction: column;
+}
+.dyo-ctx-sub:hover > .dyo-ctx-submenu {
+  display: flex;
+}
+/* 화면 오른쪽 공간 부족 시 왼쪽으로 */
+.dyo-ctx-submenu.flip-left {
+  left: auto;
+  right: 100%;
+}
+.dyo-ctx-item .dyo-ctx-check {
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 /* ── Properties Window ── */
@@ -8100,5 +8328,305 @@ body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
   .dyo-algomon-win { min-width: 320px; }
   .dyo-algomon-stats { grid-template-columns: repeat(2, 1fr); }
   .dyo-algomon-grass-grid { grid-template-columns: repeat(26, 1fr); }
+}
+
+/* ============================================
+   SAKURA (벚꽃) THEME
+   ============================================ */
+
+/* ── 배경: 봄 하늘 그라디언트 ── */
+.dyo-desktop.theme-sakura {
+  background:
+    linear-gradient(
+      180deg,
+      #7ec8e3 0%,
+      #a8d8ea 25%,
+      #d4e8f0 45%,
+      #f5dde5 65%,
+      #fce4ec 80%,
+      #f8d0d8 100%
+    ) !important;
+}
+
+/* ── 태양 ── */
+.dyo-sakura-sun {
+  position: absolute;
+  top: 6%;
+  right: 12%;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff9c4 0%, #ffe082 40%, rgba(255,224,130,0) 70%);
+  box-shadow:
+    0 0 40px 15px rgba(255,236,179,0.5),
+    0 0 100px 40px rgba(255,224,130,0.2);
+  z-index: 1;
+  animation: dyo-sakura-sun-pulse 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes dyo-sakura-sun-pulse {
+  0%   { transform: scale(1); opacity: 0.95; }
+  100% { transform: scale(1.08); opacity: 1; }
+}
+
+/* ── 구름 ── */
+.dyo-sakura-cloud {
+  position: absolute;
+  background: #fff;
+  border-radius: 50px;
+  opacity: 0.7;
+  z-index: 1;
+  pointer-events: none;
+  filter: blur(1px);
+}
+.dyo-sakura-cloud::before,
+.dyo-sakura-cloud::after {
+  content: '';
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+}
+.dyo-sakura-cloud.skc1 {
+  width: 160px; height: 50px;
+  top: 10%; left: 8%;
+  animation: dyo-cloud-drift 50s linear infinite;
+}
+.dyo-sakura-cloud.skc1::before { width: 70px; height: 60px; top: -25px; left: 25px; }
+.dyo-sakura-cloud.skc1::after  { width: 50px; height: 45px; top: -15px; left: 80px; }
+
+.dyo-sakura-cloud.skc2 {
+  width: 120px; height: 40px;
+  top: 18%; left: 45%;
+  opacity: 0.5;
+  animation: dyo-cloud-drift 65s linear infinite;
+  animation-delay: -20s;
+}
+.dyo-sakura-cloud.skc2::before { width: 55px; height: 48px; top: -22px; left: 18px; }
+.dyo-sakura-cloud.skc2::after  { width: 40px; height: 38px; top: -12px; left: 60px; }
+
+.dyo-sakura-cloud.skc3 {
+  width: 100px; height: 35px;
+  top: 8%; left: 70%;
+  opacity: 0.45;
+  animation: dyo-cloud-drift 55s linear infinite;
+  animation-delay: -35s;
+}
+.dyo-sakura-cloud.skc3::before { width: 45px; height: 40px; top: -18px; left: 15px; }
+.dyo-sakura-cloud.skc3::after  { width: 35px; height: 32px; top: -10px; left: 50px; }
+
+@keyframes dyo-cloud-drift {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(100vw + 200px)); }
+}
+
+/* ── 언덕 (지면) ── */
+.dyo-sakura-ground {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 22%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── 벚꽃 나무 ── */
+.dyo-sakura-tree {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+.dyo-sakura-tree svg { width: 100%; height: 100%; }
+
+.dyo-sakura-tree.skt1 {
+  width: 260px; height: 400px;
+  bottom: 8%; left: 5%;
+}
+.dyo-sakura-tree.skt2 {
+  width: 220px; height: 340px;
+  bottom: 9%; left: 55%;
+}
+.dyo-sakura-tree.skt3 {
+  width: 170px; height: 260px;
+  bottom: 7%; right: 8%;
+}
+
+/* ── 꽃잎 레이어 ── */
+.dyo-sakura-petal-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 꽃잎 개별 */
+.dyo-sakura-petal {
+  position: absolute;
+  border-radius: 50% 0 50% 50%;
+  pointer-events: none;
+  animation: dyo-petal-fall var(--dur) var(--delay) linear infinite;
+  opacity: 0;
+}
+@keyframes dyo-petal-fall {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0; }
+  5%   { opacity: var(--opa); }
+  50%  { transform: translate(var(--dx1), 50vh) rotate(180deg) scale(0.9); }
+  90%  { opacity: var(--opa); }
+  100% { transform: translate(var(--dx2), calc(100vh + 30px)) rotate(var(--rot)) scale(0.7); opacity: 0; }
+}
+
+/* 나비 */
+.dyo-sakura-butterfly {
+  position: absolute;
+  width: 18px; height: 14px;
+  pointer-events: none;
+  z-index: 5;
+  animation: dyo-butterfly-fly var(--speed) linear forwards;
+}
+.dyo-sakura-butterfly::before,
+.dyo-sakura-butterfly::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  width: 8px; height: 10px;
+  border-radius: 50% 50% 50% 0;
+  animation: dyo-butterfly-wing 0.3s ease-in-out infinite alternate;
+}
+.dyo-sakura-butterfly::before {
+  left: 0;
+  background: var(--wing, #ff9ecd);
+  transform-origin: right center;
+}
+.dyo-sakura-butterfly::after {
+  right: 0;
+  background: var(--wing, #ff9ecd);
+  transform-origin: left center;
+  animation-delay: 0.15s;
+}
+@keyframes dyo-butterfly-wing {
+  0%   { transform: rotateY(0deg) scale(1); }
+  100% { transform: rotateY(65deg) scale(0.8); }
+}
+@keyframes dyo-butterfly-fly {
+  0%   { transform: translate(0, 0); opacity: 0; }
+  5%   { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translate(var(--bx), var(--by)); opacity: 0; }
+}
+
+/* ── 고양이 캐릭터 ── */
+.dyo-sakura-cat-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.dyo-sakura-cat {
+  position: absolute;
+  width: 32px; height: 36px;
+  pointer-events: auto;
+  cursor: grab;
+  z-index: 3;
+}
+.dyo-sakura-cat svg { width: 100%; height: 100%; }
+
+.dyo-sakura-cat.skcat1 {
+  bottom: 6%; left: 18%;
+  animation: dyo-cat-walk-1 28s linear infinite;
+}
+.dyo-sakura-cat.skcat2 {
+  bottom: 6%; left: 40%;
+  animation: dyo-cat-walk-2 35s linear infinite;
+  animation-delay: -8s;
+}
+.dyo-sakura-cat.skcat3 {
+  bottom: 6%; left: 65%;
+  animation: dyo-cat-walk-3 32s linear infinite;
+  animation-delay: -15s;
+}
+.dyo-sakura-cat.skcat4 {
+  bottom: 6%; left: 82%;
+  animation: dyo-cat-walk-4 40s linear infinite;
+  animation-delay: -22s;
+}
+
+@keyframes dyo-cat-walk-1 {
+  0%   { transform: translateX(0) translateY(0) scaleX(1); }
+  48%  { transform: translateX(60vw) translateY(-8px) scaleX(1); }
+  50%  { transform: translateX(60vw) translateY(0) scaleX(-1); }
+  98%  { transform: translateX(0) translateY(-8px) scaleX(-1); }
+  100% { transform: translateX(0) translateY(0) scaleX(1); }
+}
+@keyframes dyo-cat-walk-2 {
+  0%   { transform: translateX(0) translateY(0) scaleX(-1); }
+  48%  { transform: translateX(-35vw) translateY(-6px) scaleX(-1); }
+  50%  { transform: translateX(-35vw) translateY(0) scaleX(1); }
+  98%  { transform: translateX(0) translateY(-6px) scaleX(1); }
+  100% { transform: translateX(0) translateY(0) scaleX(-1); }
+}
+@keyframes dyo-cat-walk-3 {
+  0%   { transform: translateX(0) translateY(0) scaleX(1); }
+  48%  { transform: translateX(25vw) translateY(-10px) scaleX(1); }
+  50%  { transform: translateX(25vw) translateY(0) scaleX(-1); }
+  98%  { transform: translateX(0) translateY(-10px) scaleX(-1); }
+  100% { transform: translateX(0) translateY(0) scaleX(1); }
+}
+@keyframes dyo-cat-walk-4 {
+  0%   { transform: translateX(0) translateY(0) scaleX(-1); }
+  48%  { transform: translateX(-50vw) translateY(-5px) scaleX(-1); }
+  50%  { transform: translateX(-50vw) translateY(0) scaleX(1); }
+  98%  { transform: translateX(0) translateY(-5px) scaleX(1); }
+  100% { transform: translateX(0) translateY(0) scaleX(-1); }
+}
+
+/* 고양이 걷기 바운스 */
+.dyo-sakura-cat:not(.dyo-dragging):not(.dyo-falling):not(.dyo-walking) svg {
+  animation: dyo-cat-bob 0.6s ease-in-out infinite;
+}
+@keyframes dyo-cat-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+/* 고양이 드래그 상태 */
+.dyo-sakura-cat.dyo-dragging { cursor: grabbing; }
+
+/* 고양이 말풍선 */
+.dyo-scat-bubble {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px) scaleX(var(--bubble-flip, 1));
+  background: #fff;
+  color: #333;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  padding: 5px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  pointer-events: none;
+  animation: dyo-scat-bubble-in 0.3s ease-out;
+  z-index: 10;
+}
+.dyo-scat-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(var(--bubble-flip, 1));
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+}
+@keyframes dyo-scat-bubble-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px) scaleX(var(--bubble-flip, 1)); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(-4px) scaleX(var(--bubble-flip, 1)); }
+}
+.dyo-scat-bubble-out {
+  animation: dyo-scat-bubble-out 0.3s ease-in forwards;
+}
+@keyframes dyo-scat-bubble-out {
+  from { opacity: 1; transform: translateX(-50%) translateY(-4px) scaleX(var(--bubble-flip, 1)); }
+  to   { opacity: 0; transform: translateX(-50%) translateY(-12px) scaleX(var(--bubble-flip, 1)); }
 }
 
