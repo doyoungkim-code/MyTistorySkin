@@ -703,63 +703,6 @@ html, body {
 .list_visitor dt, .list_total dt { float: left; height: 22px; margin-right: 8px; padding: 0 8px; border-radius: 4px; font-size: 11px; font-family: var(--font-mono); line-height: 22px; background-color: var(--sb-bg3); color: var(--sb-green); }
 .list_visitor dd, .list_total dd { float: left; font-size: 13px; font-family: var(--font-mono); line-height: 22px; color: var(--sb-text2); margin-right: 20px; }
 
-/* ── Admin Controls (shell-only) ── */
-.list_control {
-  position: fixed;
-  right: 16px;
-  top: 16px;
-  display: flex;
-  gap: 0;
-  z-index: 1001;
-  background: transparent;
-  padding: 0;
-  border: none;
-  box-shadow: none;
-  list-style: none;
-  margin: 0;
-}
-
-.list_control li { display: flex; }
-
-.list_control .link_ctrl {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  color: var(--ct-text2);
-  transition: all var(--tr);
-}
-
-/* Shell 토글 버튼 - 크게 */
-#btnShell {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: var(--sb-bg2);
-  border: 1px solid var(--sb-border2);
-  color: var(--sb-text3);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-#btnShell svg { width: 22px; height: 22px; pointer-events: none; }
-
-#btnShell:hover {
-  background: var(--sb-bg3);
-  color: var(--sb-green);
-  box-shadow: 0 4px 20px rgba(63,185,80,0.18);
-}
-
-#btnShell.active {
-  background: rgba(63,185,80,0.12);
-  color: var(--sb-green);
-  border-color: var(--sb-green);
-  box-shadow: 0 0 20px rgba(63,185,80,0.25);
-}
-
 /* ── navi_on expanded state (when toggled by JS) ── */
 .wrap_skin.navi_on { padding-left: 960px; }
 .navi_on .area_head .area_profile { display: none; }
@@ -2604,6 +2547,175 @@ html, body {
 
 .dyo-desktop.show { display: flex; }
 
+/* ============================================
+   LANDING PAGE (모드 선택)
+   ============================================ */
+.dyo-landing {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 100000;
+  background:
+    radial-gradient(ellipse 140% 50% at 25% 52%, rgba(120, 60, 200, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 35% at 65% 38%, rgba(40, 100, 220, 0.18) 0%, transparent 55%),
+    #0a0e14;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+.dyo-landing.show { display: flex; }
+
+.dyo-landing-stars {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dyo-landing-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 20px;
+}
+
+.dyo-landing-header { margin-bottom: 48px; }
+
+.dyo-landing-logo {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+.dyo-landing-prompt { color: var(--sb-cyan); margin-right: 8px; }
+.dyo-landing-cmd { color: #e6edf3; }
+.dyo-landing-cursor {
+  display: inline-block;
+  width: 10px; height: 22px;
+  background: var(--sb-green);
+  margin-left: 4px;
+  vertical-align: text-bottom;
+  animation: landingBlink 1s step-end infinite;
+}
+@keyframes landingBlink { 50% { opacity: 0; } }
+
+.dyo-landing-subtitle {
+  color: var(--sb-text3);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.dyo-landing-cards {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dyo-landing-card {
+  width: 200px;
+  padding: 36px 24px;
+  border-radius: 12px;
+  background: rgba(22, 27, 34, 0.8);
+  border: 1px solid var(--sb-border2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--sb-text3);
+  font-family: var(--font-mono);
+  outline: none;
+}
+.dyo-landing-card:hover {
+  border-color: var(--sb-green);
+  background: rgba(22, 27, 34, 0.95);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(63, 185, 80, 0.15);
+}
+.dyo-landing-card:focus-visible {
+  border-color: var(--sb-cyan);
+  box-shadow: 0 0 0 2px var(--sb-cyan);
+}
+.dyo-landing-card-icon { color: var(--sb-green); }
+.dyo-landing-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #e6edf3;
+}
+.dyo-landing-card-desc {
+  font-size: 12px;
+  color: var(--sb-text3);
+  font-family: var(--font-sans);
+}
+
+.dyo-landing-card--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dyo-landing-remember {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 32px;
+  color: var(--sb-text3);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+.dyo-landing-remember input[type="checkbox"] {
+  accent-color: var(--sb-green);
+}
+
+/* 관리자바 Home 버튼 */
+.dyo-admin-home svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Blog 모드: 위젯·오버레이 일괄 숨김 ── */
+.dyo-blog-mode .dyo-memo-widget,
+.dyo-blog-mode .dyo-bm-widget,
+.dyo-blog-mode .dyo-eng-widget,
+.dyo-blog-mode .dyo-algo-widget,
+.dyo-blog-mode .dyo-desktop,
+.dyo-blog-mode .dyo-desktop-bar,
+.dyo-blog-mode #dyoTutorial,
+.dyo-blog-mode #dyoCtxMenu,
+.dyo-blog-mode #dyoBrowserWin,
+.dyo-blog-mode #dyoShellWin,
+.dyo-blog-mode #dyoReadmeWin,
+.dyo-blog-mode #dyoGuestWin,
+.dyo-blog-mode #dyoBoardWin,
+.dyo-blog-mode #dyoAlgoMonWin,
+.dyo-blog-mode #dyoMusicWin,
+.dyo-blog-mode #dyoExplorerWin,
+.dyo-blog-mode #dyoPropsWin,
+.dyo-blog-mode #dyoGalleryWin,
+.dyo-blog-mode #dyoConfirmOverlay { display: none !important; }
+
+/* early script용 (body 태그 전에 html에 적용) */
+.dyo-blog-mode-early .dyo-memo-widget,
+.dyo-blog-mode-early .dyo-bm-widget,
+.dyo-blog-mode-early .dyo-eng-widget,
+.dyo-blog-mode-early .dyo-algo-widget,
+.dyo-blog-mode-early .dyo-desktop,
+.dyo-blog-mode-early .dyo-desktop-bar { display: none !important; }
+
+/* Blog 모드: 관리자바 위치 조정 (taskbar 없으므로 하단 고정) */
+.dyo-blog-mode .dyo-admin-bar {
+  bottom: 20px;
+}
+
+@media (max-width: 680px) {
+  .dyo-landing-cards { flex-direction: column; align-items: center; }
+  .dyo-landing-card { width: 240px; }
+}
+
 /* ── 테마: default — 배경 이미지 ── */
 .dyo-desktop:not(.theme-astronaut):not(.theme-sakura) {
   background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbVSlHP%2FdJMcadnwusT%2FAAAAAAAAAAAAAAAAAAAAANQwzVrWYleMazulbZvaPnk5T-8-kymCRR9qhnPdmpE_%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1774969199%26allow_ip%3D%26allow_referer%3D%26signature%3DAID%252Buv6WNn3EhAm55qG2V5Wsj2E%253D') center/cover no-repeat !important;
@@ -4233,9 +4345,10 @@ html, body {
   to { transform: rotate(360deg); }
 }
 
-/* ── 메인(인덱스) 외 페이지: shell 버튼 · 관리바 숨김 ── */
+/* ── 메인(인덱스) 외 페이지: shell 버튼 숨김 ── */
 body:not(#tt-body-index) .list_control  { display: none !important; }
-body:not(#tt-body-index) .dyo-admin-bar { display: none !important; }
+/* 관리바: 비인덱스 페이지에서도 표시, taskbar 없으므로 하단 고정 */
+body:not(#tt-body-index) .dyo-admin-bar { bottom: 20px; }
 
 /* ============================================================
    Guestbook 채팅창
