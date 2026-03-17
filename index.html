@@ -500,41 +500,53 @@
     <div class="dyo-landing" id="dyoLanding">
       <div class="dyo-landing-stars" id="dyoLandingStars"></div>
       <div class="dyo-landing-content">
+        <!-- 인사말 -->
+        <div class="dyo-landing-greeting" id="dyoLandingGreeting"></div>
         <div class="dyo-landing-header">
           <div class="dyo-landing-logo">
             <span class="dyo-landing-prompt">~$</span>
             <span class="dyo-landing-cmd">select --mode</span>
             <span class="dyo-landing-cursor"></span>
           </div>
-          <p class="dyo-landing-subtitle">블로그 모드를 선택하세요</p>
+          <p class="dyo-landing-subtitle">어떤 모드로 볼까요?</p>
         </div>
         <div class="dyo-landing-cards">
-          <button class="dyo-landing-card" data-mode="desktop">
+          <button class="dyo-landing-card dyo-landing-card--desktop" data-mode="desktop">
+            <div class="dyo-landing-card-badge">INTERACTIVE</div>
             <div class="dyo-landing-card-icon">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
             <span class="dyo-landing-card-title">Desktop</span>
-            <span class="dyo-landing-card-desc">인터랙티브 데스크탑 환경</span>
+            <span class="dyo-landing-card-desc">위젯 & 앱이 있는<br>인터랙티브 데스크탑</span>
           </button>
-          <button class="dyo-landing-card" data-mode="blog">
+          <button class="dyo-landing-card dyo-landing-card--blog" data-mode="blog">
+            <div class="dyo-landing-card-badge">MINIMAL</div>
             <div class="dyo-landing-card-icon">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
             <span class="dyo-landing-card-title">Blog</span>
-            <span class="dyo-landing-card-desc">심플 포스트 리스트</span>
+            <span class="dyo-landing-card-desc">깔끔한 포스트 리스트<br>읽기에 집중</span>
           </button>
-          <button class="dyo-landing-card dyo-landing-card--disabled" data-mode="coming">
+          <button class="dyo-landing-card dyo-landing-card--coming dyo-landing-card--disabled" data-mode="coming">
+            <div class="dyo-landing-card-badge">SOON</div>
             <div class="dyo-landing-card-icon">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
             <span class="dyo-landing-card-title">???</span>
-            <span class="dyo-landing-card-desc">준비중</span>
+            <span class="dyo-landing-card-desc">새로운 모드<br>준비중</span>
           </button>
         </div>
-        <label class="dyo-landing-remember">
-          <input type="checkbox" id="dyoLandingRemember">
-          <span>선택 기억하기</span>
-        </label>
+        <!-- 설정 영역 -->
+        <div class="dyo-landing-settings">
+          <label class="dyo-landing-remember">
+            <input type="checkbox" id="dyoLandingRemember">
+            <span>선택 기억하기</span>
+          </label>
+        </div>
+        <!-- 하단 정보 -->
+        <div class="dyo-landing-footer">
+          <span>dyomyo.tistory.com</span>
+        </div>
       </div>
     </div>
 
@@ -1188,6 +1200,12 @@
             <svg viewBox="0 0 24 24" fill="none"><path d="M18 20V10" stroke="white" stroke-width="2.2" stroke-linecap="round"/><path d="M12 20V4" stroke="white" stroke-width="2.2" stroke-linecap="round"/><path d="M6 20v-6" stroke="white" stroke-width="2.2" stroke-linecap="round"/></svg>
           </div>
           <span>Algo Monitor</span>
+        </div>
+        <div class="dyo-folder-item" id="fpLinks" title="Links">
+          <div class="dyo-di-wrap" style="background:linear-gradient(145deg,#0c4a6e,#0284c7);border:1px solid rgba(56,189,248,.4);box-shadow:0 4px 12px rgba(2,132,199,.4),inset 0 1px 0 rgba(255,255,255,.1)">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="white" stroke-width="1.8" stroke-linecap="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <span>Links</span>
         </div>
       </div>
     </div>
@@ -1868,6 +1886,33 @@
       </div>
     </div>
 
+    <!-- Links 창 -->
+    <div class="dyo-shell-win dyo-links-win" id="dyoLinksWin" style="width:600px;height:500px;top:80px;left:200px;">
+      <div class="dyo-brs-handle n"></div><div class="dyo-brs-handle ne"></div>
+      <div class="dyo-brs-handle e"></div><div class="dyo-brs-handle se"></div>
+      <div class="dyo-brs-handle s"></div><div class="dyo-brs-handle sw"></div>
+      <div class="dyo-brs-handle w"></div><div class="dyo-brs-handle nw"></div>
+      <div class="dyo-shell-titlebar" id="dyoLinksTitlebar">
+        <span class="dyo-term-dot red"    id="dyoLinksClose" title="Close"></span>
+        <span class="dyo-term-dot yellow" id="dyoLinksMin"   title="Minimize"></span>
+        <span class="dyo-term-dot green"  id="dyoLinksMax"   title="Maximize"></span>
+        <span class="dyo-shell-title">🔗 Links</span>
+      </div>
+      <div class="dyo-links-toolbar">
+        <div class="dyo-links-search-bar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b949e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="dyoLinksSearch" placeholder="링크 검색..." autocomplete="off" spellcheck="false">
+        </div>
+        <span class="dyo-links-count" id="dyoLinksCount">0</span>
+        <a class="dyo-links-ext-btn" href="https://dyomyo.tistory.com/notice/133" target="_blank" rel="noopener" title="원본 게시물">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+      <div class="dyo-links-body" id="dyoLinksBody">
+        <div class="dyo-links-main" id="dyoLinksMain"></div>
+      </div>
+    </div>
+
     <!-- Properties Window -->
     <div class="dyo-shell-win dyo-props-win" id="dyoPropsWin" style="width:360px;height:480px;top:100px;left:420px;">
       <div class="dyo-brs-handle n"></div><div class="dyo-brs-handle ne"></div>
@@ -2161,6 +2206,18 @@
         }
         layer.appendChild(frag);
       }
+
+      // 인사말 설정
+      (function setGreeting() {
+        var el = document.getElementById('dyoLandingGreeting');
+        if (!el) return;
+        var h = new Date().getHours();
+        var msg = h < 6  ? 'Good Night \u2014 늦은 밤이네요'
+                : h < 12 ? 'Good Morning \u2014 좋은 아침이에요'
+                : h < 18 ? 'Good Afternoon \u2014 좋은 오후예요'
+                :          'Good Evening \u2014 좋은 저녁이에요';
+        el.textContent = msg;
+      })();
 
       // 저장된 모드 확인
       var savedMode = localStorage.getItem(STORAGE_KEY);
@@ -3282,7 +3339,6 @@
         });
       }
 
-
       // File Explorer 아이콘 클릭
       var iconExplorer = document.getElementById('desktopIconExplorer');
       if (iconExplorer) {
@@ -3371,15 +3427,22 @@
         closeFeaturesPopup();
         if (window.dyoOpenAlgoMon) window.dyoOpenAlgoMon();
       });
+      var fpLinks = document.getElementById('fpLinks');
+      if (fpLinks) fpLinks.addEventListener('click', function() {
+        closeFeaturesPopup();
+        window._dyoAnimSrc = fpLinks;
+        if (window.dyoOpenLinks) window.dyoOpenLinks();
+      });
 
       // 팝업 아이템 우클릭 → 컨텍스트 메뉴 (오픈 후 처리를 위해 defer)
       var fpCtxMap = {
         fpBlogram: 'desktopIconGallery',
         fpMusic:   'desktopIconMusic',
         fpGithub:  'desktopIconGithub',
-        fpAlgoMon: 'desktopIconAlgoMon'
+        fpAlgoMon: 'desktopIconAlgoMon',
+        fpLinks:   'fpLinks'
       };
-      ['fpBlogram', 'fpMusic', 'fpGithub', 'fpAlgoMon'].forEach(function(id) {
+      ['fpBlogram', 'fpMusic', 'fpGithub', 'fpAlgoMon', 'fpLinks'].forEach(function(id) {
         var el = document.getElementById(id);
         if (!el) return;
         el.addEventListener('contextmenu', function(e) {
@@ -4196,7 +4259,6 @@
 
       function openBrowser(url) {
         var fullUrl = url.startsWith('http') ? url : (window.location.origin + url);
-        bFrame.src = fullUrl;
         bUrlBar.textContent = window.location.hostname + (url.startsWith('/') ? url : '/' + url);
         var wasOpen = bwin.classList.contains('open');
         if (!wasOpen) {
@@ -4216,6 +4278,12 @@
         window._dyoZTop = (window._dyoZTop || 9000) + 1;
         bwin.style.zIndex = window._dyoZTop;
         if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(bwin);
+        // iframe은 애니메이션 완료 후 로드 (CSS에서 애니메이션 중 visibility:hidden)
+        if (!wasOpen) {
+          requestAnimationFrame(function() { bFrame.src = fullUrl; });
+        } else {
+          bFrame.src = fullUrl;
+        }
       }
 
       function closeBrowser() {
@@ -4277,6 +4345,37 @@
       }
 
       // URL 업데이트 + iframe 내 링크 클릭 인터셉트
+      function _bFrameClickHandler(e) {
+        var link = e.target.closest ? e.target.closest('a[href]') : null;
+        if (!link) {
+          var el = e.target;
+          while (el && el.tagName !== 'A') el = el.parentElement;
+          if (el && el.hasAttribute('href')) link = el;
+        }
+        if (!link) return;
+
+        var href = link.getAttribute('href');
+        if (!href || href === '#' || href.startsWith('#') || href.startsWith('javascript:')) return;
+
+        var isExternal = false;
+        try {
+          var linkUrl = new URL(href, bFrame.contentWindow.location.href);
+          if (linkUrl.origin !== window.location.origin) isExternal = true;
+          href = isExternal ? linkUrl.href : linkUrl.pathname + linkUrl.search + linkUrl.hash;
+        } catch(ex) {}
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (isExternal) {
+          if (window.dyoOpenExternal) window.dyoOpenExternal(href);
+          else window.open(href, '_blank', 'noopener');
+        } else {
+          openBrowser(href);
+        }
+      }
+
+      var _lastIframeDoc = null;
       bFrame.addEventListener('load', function() {
         try {
           var loc = bFrame.contentWindow.location.href;
@@ -4284,41 +4383,14 @@
             bUrlBar.textContent = loc.replace(/^https?:\/\//, '');
           }
 
-          // iframe 내부 링크 클릭을 인터셉트하여 가상 브라우저에서 처리
           var iframeDoc = bFrame.contentDocument || bFrame.contentWindow.document;
-          iframeDoc.addEventListener('click', function(e) {
-            var link = e.target.closest ? e.target.closest('a[href]') : null;
-            if (!link) {
-              // closest 미지원 시 fallback
-              var el = e.target;
-              while (el && el.tagName !== 'A') el = el.parentElement;
-              if (el && el.hasAttribute('href')) link = el;
-            }
-            if (!link) return;
+          // 이전 문서의 리스너 제거 후 새 문서에 등록 (중복 방지)
+          if (_lastIframeDoc && _lastIframeDoc !== iframeDoc) {
+            try { _lastIframeDoc.removeEventListener('click', _bFrameClickHandler, true); } catch(ex) {}
+          }
+          iframeDoc.addEventListener('click', _bFrameClickHandler, true);
+          _lastIframeDoc = iframeDoc;
 
-            var href = link.getAttribute('href');
-            if (!href || href === '#' || href.startsWith('#') || href.startsWith('javascript:')) return;
-
-            // 외부 링크(다른 도메인)는 새 탭으로 열기
-            var isExternal = false;
-            try {
-              var linkUrl = new URL(href, bFrame.contentWindow.location.href);
-              if (linkUrl.origin !== window.location.origin) isExternal = true;
-              href = isExternal ? linkUrl.href : linkUrl.pathname + linkUrl.search + linkUrl.hash;
-            } catch(ex) {}
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            if (isExternal) {
-              if (window.dyoOpenExternal) window.dyoOpenExternal(href);
-              else window.open(href, '_blank', 'noopener');
-            } else {
-              openBrowser(href);
-            }
-          }, true);
-
-          // iframe 내부에서 top/parent 네비게이션 방지
           try {
             bFrame.contentWindow.__dyoInBrowser = true;
           } catch(ex) {}
@@ -5412,6 +5484,11 @@
           open: function() { if (window.dyoOpenExplorer) window.dyoOpenExplorer(); }
         },
         {
+          id: 'dyoLinksWin', label: 'Links',
+          icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+          open: function() { if (window.dyoOpenLinks) window.dyoOpenLinks(); }
+        },
+        {
           id: 'dyoGalleryWin', label: 'Blogram',
           icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>',
           open: function() { if (window.dyoOpenGallery) window.dyoOpenGallery(); }
@@ -5537,6 +5614,12 @@
           style: 'background:linear-gradient(145deg,#f0fdf4,#dcfce7);border:1px solid rgba(34,197,94,.35)',
           icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 20V10" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/><path d="M12 20V4" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/><path d="M6 20v-6" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/></svg>',
           open: function() { if (window.dyoOpenAlgoMon) window.dyoOpenAlgoMon(); }
+        },
+        {
+          id: 'dyoLinksWin', label: 'Links',
+          style: 'background:linear-gradient(145deg,#e0f2fe,#bae6fd);border:1px solid rgba(56,189,248,.4)',
+          icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/></svg>',
+          open: function() { if (window.dyoOpenLinks) window.dyoOpenLinks(); }
         },
       ];
 
@@ -6722,6 +6805,358 @@
             if (dir.includes('n')) { nh = Math.max(250, sh - dy); nt = st + sh - nh; }
             w.style.width = nw + 'px'; w.style.height = nh + 'px';
             w.style.left  = nl + 'px'; w.style.top    = nt + 'px';
+          }
+          function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        });
+      });
+    })();
+
+    // ============================================================
+    // Links 창
+    // ============================================================
+    (function() {
+      var LINKS_POST_URL = '/notice/133';
+
+      var w         = document.getElementById('dyoLinksWin');
+      var titlebar  = document.getElementById('dyoLinksTitlebar');
+      var closeBtn  = document.getElementById('dyoLinksClose');
+      var minBtn    = document.getElementById('dyoLinksMin');
+      var maxBtn    = document.getElementById('dyoLinksMax');
+      var main      = document.getElementById('dyoLinksMain');
+      var searchInp = document.getElementById('dyoLinksSearch');
+      var countEl   = document.getElementById('dyoLinksCount');
+      if (!w) return;
+
+      var prevRect = null;
+      var _data = []; // [{ type:'folder', name, open, children:[{title,url}] }, { type:'link', title, url }]
+      var _loaded = false;
+
+      function bringToFront() {
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+      }
+function escHtml(s) {
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+      function getFavicon(url) {
+        try { return 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(new URL(url).origin) + '&sz=32'; }
+        catch(e) { return ''; }
+      }
+      function getHost(url) {
+        try { return new URL(url).hostname.replace(/^www\./, ''); } catch(e) { return ''; }
+      }
+      function countAll() {
+        var n = 0;
+        _data.forEach(function(d) { n += d.type === 'folder' ? d.children.length : 1; });
+        return n;
+      }
+
+      // ── 파싱 ──
+      // 양식: 폴더는 [폴더명] 으로 시작하는 줄, 링크는 "이름, URL" 형식
+      // Tistory가 URL을 <a>로 변환하므로 북마크 위젯과 동일한 방식 사용
+      function fetchData(url, cb) {
+        fetch(url)
+          .then(function(r) { return r.text(); })
+          .then(function(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var content = doc.querySelector('.article-view, #article-view, .tt_article_useless_p_margin, .entry-content');
+            if (!content) { cb([]); return; }
+            var result = [], currentFolder = null;
+
+            // 줄 단위로 분리하여 처리 (Tistory는 <br>로 줄을 나눔)
+            // innerHTML을 <br> 기준으로 쪼개고, 각 줄을 개별 처리
+            function processLine(lineHtml) {
+              var tmp = document.createElement('div');
+              tmp.innerHTML = lineHtml;
+              var txt = tmp.textContent.trim();
+              if (!txt) return;
+
+              // 폴더 판별: [폴더명] (줄 전체 또는 앞부분)
+              var folderMatch = txt.match(/^\[([^\]]+)\]\s*$/);
+              if (folderMatch) {
+                currentFolder = { type:'folder', name:folderMatch[1].trim(), open:false, children:[] };
+                result.push(currentFolder);
+                return;
+              }
+
+              // <b> 또는 <strong>만 있는 줄 (URL 없음) → 폴더
+              var boldEl = tmp.querySelector('b, strong');
+              if (boldEl && !tmp.querySelector('a[href]') && !/https?:\/\//i.test(txt)) {
+                currentFolder = { type:'folder', name:txt, open:false, children:[] };
+                result.push(currentFolder);
+                return;
+              }
+
+              // URL 추출: <a href> 우선, 없으면 텍스트 regex
+              var anchors = tmp.querySelectorAll('a[href]');
+              var href = '';
+              for (var ai = 0; ai < anchors.length; ai++) {
+                var h = anchors[ai].getAttribute('href').trim();
+                if (/^https?:\/\//i.test(h)) { href = h; break; }
+              }
+              if (!href) {
+                var m = txt.match(/https?:\/\/[^\s<>"']+/);
+                if (!m) return;
+                href = m[0].replace(/[.,)!?]+$/, '');
+              }
+
+              // 이름 추출: 쉼표 앞 텍스트, 없으면 <a> 앞 텍스트, 없으면 도메인
+              var name = '';
+              var commaIdx = txt.indexOf(',');
+              if (commaIdx !== -1) {
+                var before = txt.slice(0, commaIdx).trim();
+                // URL이 아닌 경우만 이름으로 사용
+                if (before && !/^https?:\/\//i.test(before)) name = before;
+              }
+              if (!name && anchors.length) {
+                var anchorText = anchors[0].textContent.trim();
+                var pos = txt.indexOf(anchorText);
+                if (pos > 0) {
+                  var beforeAnchor = txt.slice(0, pos).trim().replace(/[,\s]+$/, '');
+                  if (beforeAnchor && !/^https?:\/\//i.test(beforeAnchor)) name = beforeAnchor;
+                }
+                if (!name && anchorText && !/^https?:\/\//i.test(anchorText)) name = anchorText;
+              }
+              if (!name) { try { name = new URL(href).hostname.replace(/^www\./, ''); } catch(e) { name = href; } }
+
+              var item = { title: name, url: href };
+              if (currentFolder) currentFolder.children.push(item);
+              else result.push({ type:'link', title:name, url:href });
+            }
+
+            content.querySelectorAll('p, li, h2, h3, h4').forEach(function(el) {
+              var tag = el.tagName.toLowerCase();
+
+              // h2/h3/h4 → 폴더
+              if (tag === 'h2' || tag === 'h3' || tag === 'h4') {
+                var txt = el.textContent.trim();
+                if (txt) {
+                  currentFolder = { type:'folder', name:txt, open:false, children:[] };
+                  result.push(currentFolder);
+                }
+                return;
+              }
+
+              // <br>이 있으면 줄 단위로 분리해서 처리
+              var innerHtml = el.innerHTML;
+              if (/<br\s*\/?>/i.test(innerHtml)) {
+                var lines = innerHtml.split(/<br\s*\/?>/i);
+                lines.forEach(function(line) { processLine(line); });
+              } else {
+                processLine(innerHtml);
+              }
+            });
+            cb(result);
+          })
+          .catch(function() { cb([]); });
+      }
+
+      // ── 통합 렌더 (중복 방지) ──
+      var _renderQueued = false;
+      function renderAll() {
+        if (_renderQueued) return;
+        _renderQueued = true;
+        requestAnimationFrame(function() {
+          _renderQueued = false;
+          _renderMain();
+        });
+      }
+
+      // ── 메인 영역 렌더 (폴더 트리 스타일) ──
+      function _renderMain() {
+        main.innerHTML = '';
+        var q = (searchInp ? searchInp.value : '').toLowerCase();
+        var total = 0;
+
+        function matchFilter(link) {
+          if (!q) return true;
+          return link.title.toLowerCase().indexOf(q) !== -1 || link.url.toLowerCase().indexOf(q) !== -1;
+        }
+
+        function createLinkEl(link) {
+          var li = document.createElement('div');
+          li.className = 'dyo-links-item';
+          var fav = getFavicon(link.url);
+          var host = getHost(link.url);
+          li.innerHTML =
+            (fav ? '<img class="dyo-links-fav" src="' + fav + '" alt="" draggable="false">' : '<span class="dyo-links-fav-fb"></span>') +
+            '<span class="dyo-links-item-text">' +
+              '<span class="dyo-links-item-title">' + escHtml(link.title) + '</span>' +
+              (host ? '<span class="dyo-links-item-host">' + escHtml(host) + '</span>' : '') +
+            '</span>';
+          li.dataset.url = link.url;
+          total++;
+          return li;
+        }
+
+        _data.forEach(function(item, di) {
+          if (item.type === 'folder') {
+            var filtered = item.children.filter(matchFilter);
+            if (!filtered.length && q) return;
+
+            // 폴더 헤더
+            var folderDiv = document.createElement('div');
+            folderDiv.className = 'dyo-links-folder';
+
+            var hdr = document.createElement('div');
+            hdr.className = 'dyo-links-folder-header';
+            hdr.dataset.folderIdx = di;
+            var isOpen = item.open || (q && filtered.length > 0);
+            hdr.innerHTML =
+              '<span class="dyo-links-folder-arrow' + (isOpen ? ' open' : '') + '">▶</span>' +
+              '<span class="dyo-links-folder-icon">📁</span>' +
+              '<span class="dyo-links-folder-name">' + escHtml(item.name) + '</span>' +
+              '<span class="dyo-links-folder-count">' + item.children.length + '</span>';
+            folderDiv.appendChild(hdr);
+
+            // 폴더 내용
+            var body = document.createElement('div');
+            body.className = 'dyo-links-folder-body';
+            body.style.display = isOpen ? '' : 'none';
+            filtered.forEach(function(link) {
+              body.appendChild(createLinkEl(link));
+            });
+            folderDiv.appendChild(body);
+            main.appendChild(folderDiv);
+          } else {
+            if (matchFilter(item)) main.appendChild(createLinkEl(item));
+          }
+        });
+
+        if (!total && !_data.some(function(d) { return d.type === 'folder'; })) {
+          main.innerHTML = '<div class="dyo-links-empty">' + (q ? '검색 결과 없음' : '링크가 없습니다') + '</div>';
+        }
+        if (countEl) countEl.textContent = countAll() + ' links';
+      }
+
+      // 메인 이벤트 위임 (한 번만 등록)
+      main.addEventListener('click', function(e) {
+        // 폴더 토글
+        var hdr = e.target.closest('.dyo-links-folder-header');
+        if (hdr) {
+          var idx = parseInt(hdr.dataset.folderIdx, 10);
+          _data[idx].open = !_data[idx].open;
+          var arrow = hdr.querySelector('.dyo-links-folder-arrow');
+          var body = hdr.nextElementSibling;
+          if (_data[idx].open) {
+            arrow.classList.add('open');
+            body.style.display = '';
+          } else {
+            arrow.classList.remove('open');
+            body.style.display = 'none';
+          }
+          return;
+        }
+        // 링크 클릭
+        var item = e.target.closest('.dyo-links-item');
+        if (item && item.dataset.url) {
+          window.open(item.dataset.url, '_blank', 'noopener');
+        }
+      });
+
+      // ── 이벤트 ──
+      var _searchTimer = 0;
+      if (searchInp) searchInp.addEventListener('input', function() {
+        clearTimeout(_searchTimer);
+        _searchTimer = setTimeout(function() { renderAll(); }, 150);
+      });
+
+      // ── 창 열기 ──
+      function openLinks() {
+        var wasOpen = w.classList.contains('open');
+        if (!wasOpen) {
+          var W = 600, H = 500;
+          var left = Math.max(10, Math.round((window.innerWidth - W) / 2));
+          var _m = document.getElementById('dyoMemoWidget');
+          var top = _m ? _m.getBoundingClientRect().top : 28;
+          w.style.width = W + 'px'; w.style.height = H + 'px';
+          w.style.left = left + 'px'; w.style.top = top + 'px';
+        }
+        w.classList.remove('minimized', 'maximized');
+        w.classList.add('open');
+        bringToFront();
+        if (!_loaded) {
+          main.innerHTML = '<div class="dyo-links-empty">로딩 중…</div>';
+          fetchData(LINKS_POST_URL, function(data) {
+            _data = data;
+            _loaded = true;
+            _renderMain();
+          });
+        }
+        if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(w);
+      }
+      window.dyoOpenLinks = openLinks;
+
+      // ── 창 제어 ──
+      w.addEventListener('mousedown', bringToFront);
+      if (closeBtn) closeBtn.addEventListener('click', function() {
+        if (window.dyoAnimDismiss) window.dyoAnimDismiss(w, function() { w.classList.remove('open', 'minimized', 'maximized'); });
+        else w.classList.remove('open', 'minimized', 'maximized');
+      });
+      if (minBtn) minBtn.addEventListener('click', function() {
+        if (w.classList.contains('minimized')) {
+          var tb = document.querySelector('.dyo-dock-item[data-win-id="dyoLinksWin"]') || document.querySelector('.dyo-taskbtn[data-win-id="dyoLinksWin"]');
+          window._dyoAnimSrc = tb || null;
+          w.classList.remove('minimized');
+          if (window.dyoAnimOpen) window.dyoAnimOpen(w);
+        } else {
+          if (window.dyoAnimMinimize) window.dyoAnimMinimize(w, function() { w.classList.add('minimized'); });
+          else w.classList.add('minimized');
+        }
+      });
+      if (maxBtn) maxBtn.addEventListener('click', function() {
+        if (w.classList.contains('maximized')) {
+          if (prevRect) { w.style.left = prevRect.l + 'px'; w.style.top = prevRect.t + 'px'; w.style.width = prevRect.w + 'px'; w.style.height = prevRect.h + 'px'; }
+          w.classList.remove('maximized');
+          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(w);
+        } else {
+          w.classList.remove('minimized');
+          var r = w.getBoundingClientRect();
+          prevRect = { l: r.left, t: r.top, w: r.width, h: r.height };
+          w.style.left = ''; w.style.top = ''; w.style.width = ''; w.style.height = '';
+          w.classList.add('maximized');
+          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(w);
+        }
+      });
+
+      // ── 타이틀바 더블클릭 최대화 ──
+      titlebar.addEventListener('dblclick', function(e) {
+        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+        maxBtn.click();
+      });
+
+      // ── 타이틀바 드래그 ──
+      titlebar.addEventListener('mousedown', function(e) {
+        if (w.classList.contains('maximized')) return;
+        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+        var r = w.getBoundingClientRect();
+        w.style.left = r.left + 'px'; w.style.top = r.top + 'px';
+        var ox = e.clientX - r.left, oy = e.clientY - r.top;
+        function onMove(ev) { w.style.left = (ev.clientX - ox) + 'px'; w.style.top = (ev.clientY - oy) + 'px'; }
+        function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+
+      // ── 리사이즈 ──
+      w.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
+        handle.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized')) return;
+          e.preventDefault(); e.stopPropagation();
+          var dir = handle.className.replace('dyo-brs-handle', '').trim();
+          var r = w.getBoundingClientRect();
+          var sx = e.clientX, sy = e.clientY, sl = r.left, st = r.top, sw = r.width, sh = r.height;
+          function onMove(ev) {
+            var dx = ev.clientX - sx, dy = ev.clientY - sy;
+            var nl = sl, nt = st, nw = sw, nh = sh;
+            if (dir.includes('e')) nw = Math.max(380, sw + dx);
+            if (dir.includes('s')) nh = Math.max(300, sh + dy);
+            if (dir.includes('w')) { nw = Math.max(380, sw - dx); nl = sl + sw - nw; }
+            if (dir.includes('n')) { nh = Math.max(300, sh - dy); nt = st + sh - nh; }
+            w.style.width = nw + 'px'; w.style.height = nh + 'px';
+            w.style.left = nl + 'px'; w.style.top = nt + 'px';
           }
           function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
           document.addEventListener('mousemove', onMove);

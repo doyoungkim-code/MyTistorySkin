@@ -2555,9 +2555,10 @@ html, body {
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 100000;
   background:
-    radial-gradient(ellipse 140% 50% at 25% 52%, rgba(120, 60, 200, 0.22) 0%, transparent 60%),
-    radial-gradient(ellipse 100% 35% at 65% 38%, rgba(40, 100, 220, 0.18) 0%, transparent 55%),
-    #0a0e14;
+    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(120, 60, 200, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 40%, rgba(40, 100, 220, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 90%, rgba(63, 185, 80, 0.06) 0%, transparent 50%),
+    #080c12;
   display: none;
   flex-direction: column;
   align-items: center;
@@ -2579,13 +2580,28 @@ html, body {
   z-index: 1;
   text-align: center;
   padding: 20px;
+  animation: dyo-landing-fadeIn 0.6s ease-out;
+}
+@keyframes dyo-landing-fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.dyo-landing-header { margin-bottom: 48px; }
+/* 인사말 */
+.dyo-landing-greeting {
+  font-size: 14px;
+  color: var(--sb-text3);
+  font-family: var(--font-sans);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+}
+
+.dyo-landing-header { margin-bottom: 44px; }
 
 .dyo-landing-logo {
-  font-size: 28px;
-  margin-bottom: 12px;
+  font-size: 26px;
+  margin-bottom: 10px;
 }
 .dyo-landing-prompt { color: var(--sb-cyan); margin-right: 8px; }
 .dyo-landing-cmd { color: #e6edf3; }
@@ -2602,66 +2618,141 @@ html, body {
 .dyo-landing-subtitle {
   color: var(--sb-text3);
   font-family: var(--font-sans);
-  font-size: 15px;
-  margin-top: 8px;
+  font-size: 14px;
+  margin-top: 6px;
 }
 
+/* 카드 컨테이너 */
 .dyo-landing-cards {
   display: flex;
-  gap: 24px;
+  gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
+/* 카드 공통 */
 .dyo-landing-card {
-  width: 200px;
-  padding: 36px 24px;
-  border-radius: 12px;
-  background: rgba(22, 27, 34, 0.8);
-  border: 1px solid var(--sb-border2);
+  position: relative;
+  width: 190px;
+  padding: 28px 20px 24px;
+  border-radius: 16px;
+  background: rgba(22, 27, 34, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.06);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(.4,0,.2,1);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   color: var(--sb-text3);
   font-family: var(--font-mono);
   outline: none;
+  overflow: hidden;
 }
-.dyo-landing-card:hover {
-  border-color: var(--sb-green);
-  background: rgba(22, 27, 34, 0.95);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(63, 185, 80, 0.15);
+.dyo-landing-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 16px 16px 0 0;
+  opacity: 0;
+  transition: opacity 0.35s;
 }
+.dyo-landing-card:hover::before { opacity: 1; }
+
+/* 카드 배지 */
+.dyo-landing-card-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.3);
+  font-family: var(--font-mono);
+}
+
+/* Desktop 카드 */
+.dyo-landing-card--desktop .dyo-landing-card-icon { color: #58a6ff; }
+.dyo-landing-card--desktop::before { background: linear-gradient(90deg, #58a6ff, #a855f7); }
+.dyo-landing-card--desktop:hover {
+  border-color: rgba(88,166,255,0.4);
+  background: rgba(22, 27, 34, 0.9);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(88, 166, 255, 0.12), 0 0 0 1px rgba(88,166,255,0.1);
+}
+.dyo-landing-card--desktop:hover .dyo-landing-card-badge {
+  background: rgba(88,166,255,0.15);
+  color: #58a6ff;
+}
+
+/* Blog 카드 */
+.dyo-landing-card--blog .dyo-landing-card-icon { color: #3fb950; }
+.dyo-landing-card--blog::before { background: linear-gradient(90deg, #3fb950, #56d364); }
+.dyo-landing-card--blog:hover {
+  border-color: rgba(63,185,80,0.4);
+  background: rgba(22, 27, 34, 0.9);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(63, 185, 80, 0.12), 0 0 0 1px rgba(63,185,80,0.1);
+}
+.dyo-landing-card--blog:hover .dyo-landing-card-badge {
+  background: rgba(63,185,80,0.15);
+  color: #3fb950;
+}
+
+/* Coming Soon 카드 */
+.dyo-landing-card--coming .dyo-landing-card-icon { color: #f0883e; }
+.dyo-landing-card--coming::before { background: linear-gradient(90deg, #f0883e, #f9826c); }
+
 .dyo-landing-card:focus-visible {
   border-color: var(--sb-cyan);
   box-shadow: 0 0 0 2px var(--sb-cyan);
 }
-.dyo-landing-card-icon { color: var(--sb-green); }
+
+.dyo-landing-card-icon {
+  margin-top: 4px;
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+}
+.dyo-landing-card:hover .dyo-landing-card-icon {
+  transform: scale(1.1);
+}
+
 .dyo-landing-card-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: #e6edf3;
 }
 .dyo-landing-card-desc {
-  font-size: 12px;
+  font-size: 11px;
+  line-height: 1.5;
   color: var(--sb-text3);
   font-family: var(--font-sans);
 }
 
 .dyo-landing-card--disabled {
-  opacity: 0.45;
+  opacity: 0.35;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/* 설정 영역 */
+.dyo-landing-settings {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
 .dyo-landing-remember {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 32px;
   color: var(--sb-text3);
   font-size: 13px;
   font-family: var(--font-sans);
@@ -2669,6 +2760,15 @@ html, body {
 }
 .dyo-landing-remember input[type="checkbox"] {
   accent-color: var(--sb-green);
+}
+
+/* 하단 정보 */
+.dyo-landing-footer {
+  margin-top: 40px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.15);
+  font-family: var(--font-sans);
+  letter-spacing: 1px;
 }
 
 /* 관리자바 Home 버튼 */
@@ -2693,6 +2793,7 @@ html, body {
 .dyo-blog-mode #dyoBoardWin,
 .dyo-blog-mode #dyoAlgoMonWin,
 .dyo-blog-mode #dyoMusicWin,
+.dyo-blog-mode #dyoLinksWin,
 .dyo-blog-mode #dyoExplorerWin,
 .dyo-blog-mode #dyoPropsWin,
 .dyo-blog-mode #dyoGalleryWin,
@@ -2713,7 +2814,8 @@ html, body {
 
 @media (max-width: 680px) {
   .dyo-landing-cards { flex-direction: column; align-items: center; }
-  .dyo-landing-card { width: 240px; }
+  .dyo-landing-card { width: 220px; }
+  .dyo-landing-footer { margin-top: 28px; }
 }
 
 /* ── 테마: default — 배경 이미지 ── */
@@ -3588,6 +3690,12 @@ html, body {
   border: 1px solid rgba(118,75,162,0.4);
   box-shadow: 0 6px 16px rgba(102,126,234,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
 }
+#desktopIconLinks .dyo-di-wrap {
+  background: linear-gradient(145deg, #0d9488, #06b6d4);
+  border: 1px solid rgba(6,182,212,0.4);
+  box-shadow: 0 6px 16px rgba(13,148,136,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+#desktopIconLinks .dyo-di-wrap svg { stroke: #ffffff; }
 #desktopIconBoard .dyo-di-wrap {
   background: linear-gradient(145deg, #1e3a5f, #2563eb);
   border: 1px solid rgba(59,130,246,0.4);
@@ -4089,6 +4197,7 @@ html, body {
   border: 1px solid #30363d;
   display: none;
   flex-direction: column;
+  background: #fff;
 }
 
 .dyo-browser-win.open { display: flex; }
@@ -4214,6 +4323,18 @@ html, body {
   }
 }
 
+
+/* ── Browser iframe: 애니메이션 중 숨김 (성능) ── */
+.dyo-browser-win {
+  will-change: transform, opacity;
+}
+.dyo-browser-win.dyo-win-pop .dyo-browser-frame,
+.dyo-browser-win.dyo-win-dismissing .dyo-browser-frame,
+.dyo-browser-win.dyo-win-minimizing .dyo-browser-frame,
+.dyo-browser-win.dyo-win-zoom-in .dyo-browser-frame,
+.dyo-browser-win.dyo-win-zoom-out .dyo-browser-frame {
+  visibility: hidden !important;
+}
 
 /* ============================================
    WINDOW ANIMATIONS (open / close / minimize)
@@ -6251,10 +6372,7 @@ body:not(#tt-body-index) .dyo-admin-bar { bottom: 20px; }
   z-index: 8500;
   background: #fef9c3;
   border-radius: 3px;
-  box-shadow:
-    3px 6px 20px rgba(0,0,0,0.32),
-    0 1px 4px rgba(0,0,0,0.18),
-    inset 0 -3px 0 rgba(0,0,0,0.06);
+  box-shadow: none;
   font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
   user-select: none;
   transition: top 0.25s ease;
@@ -6503,10 +6621,7 @@ body:not(#tt-body-index) .dyo-admin-bar { bottom: 20px; }
   z-index: 8490; /* memo 위젯(8500)보다 한 단계 낮게 */
   background: #f5f3ff;
   border-radius: 3px;
-  box-shadow:
-    3px 6px 20px rgba(109,40,217,0.18),
-    0 1px 4px rgba(109,40,217,0.12),
-    inset 0 -3px 0 rgba(109,40,217,0.08);
+  box-shadow: none;
   font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
   user-select: none;
   transition: top 0.25s ease;
@@ -6639,10 +6754,7 @@ body:not(#tt-body-index) .dyo-admin-bar { bottom: 20px; }
   z-index: 8480;
   background: #ecfdf5;
   border-radius: 3px;
-  box-shadow:
-    3px 6px 20px rgba(5,150,105,0.18),
-    0 1px 4px rgba(5,150,105,0.12),
-    inset 0 -3px 0 rgba(5,150,105,0.08);
+  box-shadow: none;
   font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
   user-select: none;
   transition: top 0.25s ease;
@@ -6787,10 +6899,7 @@ body:not(#tt-body-index) .dyo-admin-bar { bottom: 20px; }
   z-index: 8470;
   background: #eff6ff;
   border-radius: 3px;
-  box-shadow:
-    3px 6px 20px rgba(37,99,235,0.18),
-    0 1px 4px rgba(37,99,235,0.12),
-    inset 0 -3px 0 rgba(37,99,235,0.08);
+  box-shadow: none;
   font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
   user-select: none;
   transition: top 0.25s ease;
@@ -6943,6 +7052,186 @@ body:not(#tt-body-index) .dyo-admin-bar { bottom: 20px; }
   color: #93c5fd;
   text-align: center;
   padding: 16px;
+}
+
+/* ============================================================
+   Links 창
+   ============================================================ */
+.dyo-links-win { background: #0d1117; }
+.dyo-links-win.minimized { display: none !important; }
+.dyo-links-win.maximized .dyo-brs-handle { display: none; }
+.dyo-links-win.maximized .dyo-shell-titlebar { cursor: default; }
+
+/* 툴바 */
+.dyo-links-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+  flex-shrink: 0;
+}
+.dyo-links-search-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 0 8px;
+  height: 26px;
+}
+.dyo-links-search-bar input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #c9d1d9;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  outline: none;
+}
+.dyo-links-search-bar input::placeholder { color: #484f58; }
+.dyo-links-count {
+  font-size: 11px;
+  color: #8b949e;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.dyo-links-ext-btn {
+  display: flex;
+  align-items: center;
+  color: #8b949e;
+  padding: 2px;
+  transition: color 0.15s;
+  text-decoration: none;
+}
+.dyo-links-ext-btn:hover { color: #c9d1d9; }
+
+/* 본문 */
+.dyo-links-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.dyo-links-main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 4px 0;
+  background: #0d1117;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139,148,158,0.2) transparent;
+}
+.dyo-links-main::-webkit-scrollbar { width: 4px; }
+.dyo-links-main::-webkit-scrollbar-thumb { background: rgba(139,148,158,0.2); border-radius: 2px; }
+
+/* 폴더 헤더 (Explorer 리스트뷰 참고) */
+.dyo-links-folder { border-bottom: 1px solid #21262d; }
+.dyo-links-folder:last-child { border-bottom: none; }
+.dyo-links-folder-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  user-select: none;
+  color: #c9d1d9;
+  transition: background 0.12s;
+}
+.dyo-links-folder-header:hover { background: #161b22; }
+.dyo-links-folder-arrow {
+  font-size: 10px;
+  color: #8b949e;
+  transition: transform 0.2s;
+  display: inline-block;
+  width: 12px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.dyo-links-folder-arrow.open { transform: rotate(90deg); }
+.dyo-links-folder-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.dyo-links-folder-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dyo-links-folder-count {
+  font-size: 11px;
+  color: #484f58;
+  flex-shrink: 0;
+}
+
+/* 폴더 내용 (링크들) */
+.dyo-links-folder-body {
+  padding-left: 20px;
+  border-top: 1px solid #161b22;
+}
+
+/* 링크 아이템 */
+.dyo-links-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.dyo-links-item:hover { background: #161b22; }
+.dyo-links-fav {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.dyo-links-fav-fb {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: #21262d;
+  flex-shrink: 0;
+}
+.dyo-links-item-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.dyo-links-item-title {
+  font-size: 13px;
+  color: #c9d1d9;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dyo-links-item-host {
+  font-size: 11px;
+  color: #484f58;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dyo-links-empty {
+  font-size: 13px;
+  color: #484f58;
+  text-align: center;
+  padding: 32px 16px;
 }
 
 .dyo-eng-list {
