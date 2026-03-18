@@ -49,8 +49,11 @@
       if (saved === 'desktop') {
         s.textContent = '#tt-body-index #dyoLanding{display:none!important}#tt-body-index #dyoDesktop{display:flex!important}#tt-body-index #dyoDesktopBar{display:flex!important}';
       } else if (saved === 'blog') {
-        s.textContent = '#tt-body-index #dyoLanding{display:none!important}#tt-body-index #dkWrap{visibility:visible!important}';
-        document.documentElement.className += ' dyo-blog-mode-early';
+        var p = window.location.pathname;
+        if (p === '/' || p === '') {
+          window.location.href = '/category';
+          return;
+        }
       }
       document.head.appendChild(s);
     })();
@@ -83,7 +86,7 @@
                 <legend class="screen_out">검색하기</legend>
                 <label for="[##_search_name_##]" class="lab_search screen_out">블로그 내 검색</label>
                 <input type="text" name="[##_search_name_##]" id="[##_search_name_##]" class="tf_search"
-                  placeholder="grep -r &quot;keyword&quot;" value="[##_search_text_##]" data-value="[##_search_text_##]">
+                  placeholder="검색어를 입력하세요" value="[##_search_text_##]" data-value="[##_search_text_##]">
               </fieldset>
             </form>
           </s_search>
@@ -95,7 +98,7 @@
             <span class="prompt-cmd">whoami</span>
           </div>
           <div class="tit_post">
-            <a href="/" class="link_post">[##_title_##]</a>
+            <a href="/category" class="link_post">[##_title_##]</a>
           </div>
           <a href="/category" class="thumb_profile">
             <img src="[##_image_##]" class="img_profile" alt="프로필사진">
@@ -465,9 +468,7 @@
 
       <div id="dkFoot" role="contentinfo" class="area_foot">
         <small class="info_copyright">
-          <span class="footer-prompt">$</span> echo "Powered by
-          <a href="http://www.kakaocorp.com" class="emph_t" target="_blank">Kakao</a> // Designed by
-          <a href="https://dyomyo.tistory.com" class="emph_t" target="_blank">Doyoucode</a>"
+          © [##_title_##]
         </small>
       </div>
     </div>
@@ -535,6 +536,21 @@
             <span class="dyo-landing-card-title">???</span>
             <span class="dyo-landing-card-desc">새로운 모드<br>준비중</span>
           </button>
+        </div>
+        <!-- 바로가기 -->
+        <div class="dyo-landing-shortcuts">
+          <a href="/manage/newpost" class="dyo-landing-shortcut" title="글쓰기">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <span>글쓰기</span>
+          </a>
+          <a href="/manage" class="dyo-landing-shortcut" title="블로그 설정">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>블로그 설정</span>
+          </a>
+          <a href="https://dyomyo-portfolio.tistory.com/" class="dyo-landing-shortcut" title="포트폴리오">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            <span>포트폴리오</span>
+          </a>
         </div>
         <!-- 설정 영역 -->
         <div class="dyo-landing-settings">
@@ -2114,6 +2130,7 @@
       var btn = document.getElementById('btnLandingHome');
       if (btn) btn.addEventListener('click', function(e) {
         e.preventDefault();
+        localStorage.removeItem('dyo_landing_mode');
         window.location.href = '/';
       });
     })();
@@ -2173,6 +2190,17 @@
         landing.style.display = 'none';
         if (mode === 'desktop') activateDesktop();
         else if (mode === 'blog') activateBlog();
+        // 뒤로가기 시 랜딩 페이지로 복귀
+        history.replaceState({ dyoLanding: true }, '');
+        history.pushState({ dyoMode: mode }, '');
+        window.addEventListener('popstate', function(e) {
+          if (e.state && e.state.dyoLanding) {
+            showLanding();
+          } else {
+            // about:blank 등으로 이탈 방지
+            history.pushState({ dyoMode: mode }, '');
+          }
+        });
       }
 
       function showLanding() {
@@ -2221,7 +2249,10 @@
 
       // 저장된 모드 확인
       var savedMode = localStorage.getItem(STORAGE_KEY);
-      if (savedMode === 'desktop' || savedMode === 'blog') {
+      if (savedMode === 'blog') {
+        window.location.href = '/category';
+        return;
+      } else if (savedMode === 'desktop') {
         activateMode(savedMode);
       } else {
         landing.classList.add('show');
@@ -2237,6 +2268,10 @@
           if (rememberCb && rememberCb.checked) {
             localStorage.setItem(STORAGE_KEY, mode);
           }
+          if (mode === 'blog') {
+            window.location.href = '/category';
+            return;
+          }
           activateMode(mode);
         });
       }
@@ -2245,7 +2280,12 @@
       if (homeBtn) {
         homeBtn.addEventListener('click', function(e) {
           e.preventDefault();
-          showLanding();
+          localStorage.removeItem(STORAGE_KEY);
+          if (document.body.id !== 'tt-body-index') {
+            window.location.href = '/';
+          } else {
+            showLanding();
+          }
         });
       }
 
@@ -4257,6 +4297,15 @@
       var savedPos = null;
       var MIN_W = 360, MIN_H = 200;
 
+      // 브라우저 내비게이션 히스토리 추적
+      var bNavHistory = [];
+      var bNavIdx = -1;
+
+      function updateBrowserNavBtns() {
+        if (bBack) bBack.disabled = bNavIdx <= 0;
+        if (bFwd)  bFwd.disabled  = bNavIdx >= bNavHistory.length - 1;
+      }
+
       function openBrowser(url) {
         var fullUrl = url.startsWith('http') ? url : (window.location.origin + url);
         bUrlBar.textContent = window.location.hostname + (url.startsWith('/') ? url : '/' + url);
@@ -4272,7 +4321,16 @@
           bwin.style.top    = _mT2 + 'px';
           bwin.style.right  = 'auto';
           bwin.style.bottom = 'auto';
+          // 새로 열 때 히스토리 초기화
+          bNavHistory = [fullUrl];
+          bNavIdx = 0;
+        } else {
+          // 현재 위치 이후 히스토리 잘라내고 새 URL 추가
+          bNavHistory = bNavHistory.slice(0, bNavIdx + 1);
+          bNavHistory.push(fullUrl);
+          bNavIdx = bNavHistory.length - 1;
         }
+        updateBrowserNavBtns();
         bwin.classList.add('open');
         bwin.classList.remove('minimized');
         window._dyoZTop = (window._dyoZTop || 9000) + 1;
@@ -4287,6 +4345,9 @@
       }
 
       function closeBrowser() {
+        bNavHistory = [];
+        bNavIdx = -1;
+        updateBrowserNavBtns();
         if (window.dyoAnimDismiss) {
           window.dyoAnimDismiss(bwin, function() {
             bwin.classList.remove('open', 'minimized', 'maximized');
@@ -4376,11 +4437,20 @@
       }
 
       var _lastIframeDoc = null;
+      var _bNavFromBtn = false; // 뒤로/앞으로 버튼에 의한 로드 여부
       bFrame.addEventListener('load', function() {
         try {
           var loc = bFrame.contentWindow.location.href;
           if (loc && loc !== 'about:blank' && loc !== 'about:srcdoc') {
             bUrlBar.textContent = loc.replace(/^https?:\/\//, '');
+            // 뒤로/앞으로 버튼이 아닌 iframe 내부 네비게이션 추적
+            if (!_bNavFromBtn && bNavHistory.length > 0 && loc !== bNavHistory[bNavIdx]) {
+              bNavHistory = bNavHistory.slice(0, bNavIdx + 1);
+              bNavHistory.push(loc);
+              bNavIdx = bNavHistory.length - 1;
+              updateBrowserNavBtns();
+            }
+            _bNavFromBtn = false;
           }
 
           var iframeDoc = bFrame.contentDocument || bFrame.contentWindow.document;
@@ -4410,8 +4480,22 @@
       if (bClose)  bClose.addEventListener('click',  closeBrowser);
       if (bMin)    bMin.addEventListener('click',    minimizeBrowser);
       if (bMax)    bMax.addEventListener('click',    maximizeBrowser);
-      if (bBack)   bBack.addEventListener('click',   function() { try { bFrame.contentWindow.history.back(); } catch(e){} });
-      if (bFwd)    bFwd.addEventListener('click',    function() { try { bFrame.contentWindow.history.forward(); } catch(e){} });
+      if (bBack) bBack.addEventListener('click', function() {
+        if (bNavIdx <= 0) return;
+        bNavIdx--;
+        _bNavFromBtn = true;
+        bFrame.src = bNavHistory[bNavIdx];
+        updateBrowserNavBtns();
+        bUrlBar.textContent = bNavHistory[bNavIdx].replace(/^https?:\/\//, '');
+      });
+      if (bFwd) bFwd.addEventListener('click', function() {
+        if (bNavIdx >= bNavHistory.length - 1) return;
+        bNavIdx++;
+        _bNavFromBtn = true;
+        bFrame.src = bNavHistory[bNavIdx];
+        updateBrowserNavBtns();
+        bUrlBar.textContent = bNavHistory[bNavIdx].replace(/^https?:\/\//, '');
+      });
       if (bReload) bReload.addEventListener('click', function() { try { bFrame.contentWindow.location.reload(); } catch(e){ bFrame.src = bFrame.src; } });
       var bNewTab = document.getElementById('dyoBrowserNewTab');
       if (bNewTab) bNewTab.addEventListener('click', function() {
@@ -10993,6 +11077,16 @@ function escHtml(s) {
         .catch(function() {});
     })();
 
+    // '전체 글' → '전체글' 통일
+    (function() {
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+      while (walker.nextNode()) {
+        var node = walker.currentNode;
+        if (node.textContent.indexOf('전체 글') !== -1) {
+          node.textContent = node.textContent.replace(/전체 글/g, '전체글');
+        }
+      }
+    })();
 
   </script>
 </body>
