@@ -1,50 +1,4 @@
 <!doctype html>
-<!--
-  ============================================================
-  MyTistorySkin · 파일 구조 목차
-  ============================================================
-  본 목차 주석은 L 2~ 45 (44줄). 아래 라인 번호는 본 주석 포함 기준.
-
-  HEAD                                              L   48- 86
-    · meta · 폰트 · 외부 라이브러리
-        L  58    : blueimp-md5
-        L  61- 62: highlight.js (github-dark)
-        L  66- 76: 인라인 critical CSS (홈 진입 상태 제어)
-        L  78- 84: jQuery IE 조건부 분기 (<IE9 → 1.12.4 / else → 3.5.1)
-
-  BODY · 티스토리 본문 영역 (s_t3 블록)              L   89-2036
-    L   91-  93 : skip nav (#dkIndex)
-    L   95- 510 : 블로그 본체 (#dkWrap)
-         L  96- 141 : 헤더 (#dkHead) — 검색 · 사이드바
-                      · s_search        L 108-117
-                      · s_sidebar × 2   L 154-247
-         L 142- 493 : 본문 (#dkContent)
-                      · s_article_rep         L 272-366 (글 + 관련글)
-                      · s_notice_rep          L 380-416 (공지)
-                      · s_article_protected   L 418-458 (보호글)
-                      · s_tag                 L 460-467
-                      · s_paging              L 473-487
-         L 494- 510 : 푸터 (#dkFoot)
-    L  511- 527 : 튜토리얼 오버레이 (#dyoTutorial)
-    L  528-1187 : 데스크탑 OS 본체 (#dyoDesktop) — 홈에서만 표시
-                  · Astronaut 테마 (달 표면 · 돔 · 태양광 · 캐릭터)
-                  · Sakura 테마 (태양 · 구름 · 벚꽃 · 꽃잎 · 고양이)
-                  · YouTube 플레이어 (#dyoYTPlayer, L 1819)
-    L 1188-2036 : 태스크바 · Dock (#dyoDesktopBar)
-
-  SCRIPTS (s_t3 외부)                                L 2037-10927
-    L  2037      : 외부 ./images/script.js
-    L  2038-4440 : [#1] 타이핑 + 데스크탑/위젯 초기화         (≈2,400줄)
-    L  4442-5147 : [#2] README 창 매니저 (드래그 · 리사이즈)   (≈700줄)
-    L  5149-7099 : [#3] 외부 링크 다이얼로그 + 위젯 모듈       (≈1,950줄)
-    L  7101-10927: [#4] Blogram(갤러리) + 나머지 창 매니저     (≈3,800줄)
-
-  L 10928-10930 : </body></html>
-
-  ※ 라인 번호는 편집 후 빠르게 stale 됩니다. 큰 폭의 추가/삭제 시
-     본 목차도 함께 갱신하거나, "어디에 무엇이 있는지" 정도의
-     큰 그림만 신뢰하세요.
--->
 <html lang="ko">
 
 <head>
@@ -1064,12 +1018,6 @@
           </div>
           <span>GitHub</span>
         </div>
-        <div class="dyo-folder-item" id="fpAlgoMon" title="Algo Monitor">
-          <div class="dyo-di-wrap" style="background:linear-gradient(145deg,#065f46,#059669);border:1px solid rgba(34,197,94,.4);box-shadow:0 4px 12px rgba(5,150,105,.35),inset 0 1px 0 rgba(255,255,255,.1)">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M18 20V10" stroke="white" stroke-width="2.2" stroke-linecap="round"/><path d="M12 20V4" stroke="white" stroke-width="2.2" stroke-linecap="round"/><path d="M6 20v-6" stroke="white" stroke-width="2.2" stroke-linecap="round"/></svg>
-          </div>
-          <span>Algo Monitor</span>
-        </div>
         <div class="dyo-folder-item" id="fpLinks" title="Links">
           <div class="dyo-di-wrap" style="background:linear-gradient(145deg,#0c4a6e,#0284c7);border:1px solid rgba(56,189,248,.4);box-shadow:0 4px 12px rgba(2,132,199,.4),inset 0 1px 0 rgba(255,255,255,.1)">
             <svg viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="white" stroke-width="1.8" stroke-linecap="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -1565,37 +1513,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="dyo-brs-handle n"  data-dir="n"></div>
-      <div class="dyo-brs-handle ne" data-dir="ne"></div>
-      <div class="dyo-brs-handle e"  data-dir="e"></div>
-      <div class="dyo-brs-handle se" data-dir="se"></div>
-      <div class="dyo-brs-handle s"  data-dir="s"></div>
-      <div class="dyo-brs-handle sw" data-dir="sw"></div>
-      <div class="dyo-brs-handle w"  data-dir="w"></div>
-      <div class="dyo-brs-handle nw" data-dir="nw"></div>
-    </div>
-
-    <!-- Algorithm Monitor 창 -->
-    <div class="dyo-shell-win dyo-algomon-win" id="dyoAlgoMonWin">
-      <div class="dyo-shell-titlebar" id="dyoAlgoMonTitlebar">
-        <span class="dyo-term-dot red"    id="dyoAlgoMonClose"  title="닫기"></span>
-        <span class="dyo-term-dot yellow" id="dyoAlgoMonMin"    title="최소화"></span>
-        <span class="dyo-term-dot green"  id="dyoAlgoMonMax"    title="최대화"></span>
-        <span class="dyo-algomon-win-title">📊 algo monitor</span>
-        <button class="dyo-algomon-refresh-btn" id="dyoAlgoMonRefresh" title="새로고침">↺</button>
-        <a class="dyo-algomon-link-btn" href="https://solved.ac/profile/kwat1" target="_blank" rel="noopener" title="solved.ac 프로필">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-      </div>
-      <div class="dyo-algomon-searchbar">
-        <svg class="dyo-algomon-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" class="dyo-algomon-search-input" id="dyoAlgoMonSearch" placeholder="Search handle..." spellcheck="false" autocomplete="off">
-        <button class="dyo-algomon-search-btn" id="dyoAlgoMonSearchBtn">GO</button>
-        <button class="dyo-algomon-home-btn" id="dyoAlgoMonHomeBtn" title="kwat1으로 돌아가기">⌂</button>
-      </div>
-      <div class="dyo-algomon-body" id="dyoAlgoMonBody">
-        <div class="dyo-algomon-loading">loading...</div>
       </div>
       <div class="dyo-brs-handle n"  data-dir="n"></div>
       <div class="dyo-brs-handle ne" data-dir="ne"></div>
@@ -3185,11 +3102,6 @@
         closeFeaturesPopup();
         if (window.dyoOpenExternal) window.dyoOpenExternal('https://github.com/doyoungkim-code');
       });
-      var fpAlgoMon = document.getElementById('fpAlgoMon');
-      if (fpAlgoMon) fpAlgoMon.addEventListener('click', function() {
-        closeFeaturesPopup();
-        if (window.dyoOpenAlgoMon) window.dyoOpenAlgoMon();
-      });
       var fpLinks = document.getElementById('fpLinks');
       if (fpLinks) fpLinks.addEventListener('click', function() {
         closeFeaturesPopup();
@@ -3202,10 +3114,9 @@
         fpBlogram: 'desktopIconGallery',
         fpMusic:   'desktopIconMusic',
         fpGithub:  'desktopIconGithub',
-        fpAlgoMon: 'desktopIconAlgoMon',
         fpLinks:   'fpLinks'
       };
-      ['fpBlogram', 'fpMusic', 'fpGithub', 'fpAlgoMon', 'fpLinks'].forEach(function(id) {
+      ['fpBlogram', 'fpMusic', 'fpGithub', 'fpLinks'].forEach(function(id) {
         var el = document.getElementById(id);
         if (!el) return;
         el.addEventListener('contextmenu', function(e) {
@@ -5310,11 +5221,6 @@
           icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="18" rx="1.5"/><rect x="9.5" y="3" width="5" height="13" rx="1.5"/><rect x="16" y="3" width="5" height="9" rx="1.5"/></svg>',
           open: function() { if (window.dyoOpenBoard) window.dyoOpenBoard(); }
         },
-        {
-          id: 'dyoAlgoMonWin', label: 'Algo Monitor',
-          icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>',
-          open: function() { if (window.dyoOpenAlgoMon) window.dyoOpenAlgoMon(); }
-        },
       ];
 
       winDefs.forEach(function(def) {
@@ -5415,12 +5321,6 @@
           style: 'background:linear-gradient(145deg,#e8f4fd,#d1e9fb);border:1px solid rgba(59,130,246,.35)',
           icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="5" height="18" rx="1.5" stroke="#3b82f6" stroke-width="1.8"/><rect x="9.5" y="3" width="5" height="13" rx="1.5" stroke="#3b82f6" stroke-width="1.8"/><rect x="16" y="3" width="5" height="9" rx="1.5" stroke="#3b82f6" stroke-width="1.8"/></svg>',
           open: function() { if (window.dyoOpenBoard) window.dyoOpenBoard(); }
-        },
-        {
-          id: 'dyoAlgoMonWin', label: 'Algo Monitor',
-          style: 'background:linear-gradient(145deg,#f0fdf4,#dcfce7);border:1px solid rgba(34,197,94,.35)',
-          icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 20V10" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/><path d="M12 20V4" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/><path d="M6 20v-6" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/></svg>',
-          open: function() { if (window.dyoOpenAlgoMon) window.dyoOpenAlgoMon(); }
         },
         {
           id: 'dyoLinksWin', label: 'Links',
@@ -5703,18 +5603,6 @@
           iconBg: 'linear-gradient(145deg,#1e3a5f,#2563eb)',
           iconBorder: 'rgba(59,130,246,0.4)', iconColor: '#fff', iconChar: '📋',
           action: function() { if (window.dyoOpenBoard) window.dyoOpenBoard(); }
-        },
-        desktopIconAlgoMon: {
-          name: 'Algo Monitor', ext: '.app', type: 'Application',
-          desc: 'solved.ac 프로필, 티어, 풀이 통계, 잔디를 모니터링하는 대시보드.',
-          location: '/home/doyoucode/algo-monitor',
-          size: '—', disk: '—',
-          created: '2026-03-11', modified: '2026-03-11',
-          owner: 'doyoucode', group: 'staff',
-          permissions: 'Read / Execute', version: '1.0.0',
-          iconBg: 'linear-gradient(145deg,#065f46,#059669)',
-          iconBorder: 'rgba(34,197,94,0.4)', iconColor: '#fff', iconChar: '📊',
-          action: function() { if (window.dyoOpenAlgoMon) window.dyoOpenAlgoMon(); }
         },
         fpLinks: {
           name: 'Links', ext: '.app', type: 'Application',
@@ -9437,437 +9325,6 @@ function escHtml(s) {
 
       window.dyoOpenBoard = openWindow;
 
-    })();
-
-    // ============================================================
-    // Algorithm Monitor
-    // ============================================================
-    (function () {
-      var DEFAULT_HANDLE = 'kwat1';
-      var _handle = DEFAULT_HANDLE;
-      var PROXY  = 'https://api.codetabs.com/v1/proxy/?quest=';
-      var API    = 'https://solved.ac/api/v3/';
-      var MIN_W  = 420, MIN_H = 360;
-
-      var win        = document.getElementById('dyoAlgoMonWin');
-      var titlebar   = document.getElementById('dyoAlgoMonTitlebar');
-      var body       = document.getElementById('dyoAlgoMonBody');
-      var closeBtn   = document.getElementById('dyoAlgoMonClose');
-      var minBtn     = document.getElementById('dyoAlgoMonMin');
-      var maxBtn     = document.getElementById('dyoAlgoMonMax');
-      var refreshBtn = document.getElementById('dyoAlgoMonRefresh');
-      var searchInput = document.getElementById('dyoAlgoMonSearch');
-      var searchBtn   = document.getElementById('dyoAlgoMonSearchBtn');
-      var homeBtn     = document.getElementById('dyoAlgoMonHomeBtn');
-      var linkBtn     = win ? win.querySelector('.dyo-algomon-link-btn') : null;
-      if (!win) return;
-
-      // ── 검색 기능 ────────────────────────────────────────
-      function searchHandle(h) {
-        h = (h || '').trim();
-        if (!h) return;
-        _handle = h;
-        _loaded = false;
-        if (linkBtn) linkBtn.href = 'https://solved.ac/profile/' + _handle;
-        homeBtn.style.display = (_handle === DEFAULT_HANDLE) ? 'none' : 'flex';
-        loadData();
-      }
-      searchBtn.addEventListener('click', function() { searchHandle(searchInput.value); });
-      searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') { e.preventDefault(); searchHandle(searchInput.value); }
-      });
-      homeBtn.addEventListener('click', function() {
-        searchInput.value = '';
-        searchHandle(DEFAULT_HANDLE);
-      });
-      homeBtn.style.display = 'none';
-
-      // ── 티어 매핑 ────────────────────────────────────────
-      var TIER_NAMES = [
-        'Unrated',
-        'Bronze V','Bronze IV','Bronze III','Bronze II','Bronze I',
-        'Silver V','Silver IV','Silver III','Silver II','Silver I',
-        'Gold V','Gold IV','Gold III','Gold II','Gold I',
-        'Platinum V','Platinum IV','Platinum III','Platinum II','Platinum I',
-        'Diamond V','Diamond IV','Diamond III','Diamond II','Diamond I',
-        'Ruby V','Ruby IV','Ruby III','Ruby II','Ruby I',
-        'Master'
-      ];
-      function tierClass(level) {
-        if (level === 0)  return 'sprout';
-        if (level <= 5)   return 'bronze';
-        if (level <= 10)  return 'silver';
-        if (level <= 15)  return 'gold';
-        if (level <= 20)  return 'platinum';
-        if (level <= 25)  return 'diamond';
-        if (level <= 30)  return 'ruby';
-        return 'master';
-      }
-
-      // ── 레벨 분포 그룹 ──────────────────────────────────
-      var DIST_GROUPS = [
-        { label: 'Bronze',   from: 1,  to: 5,  color: '#ad5600' },
-        { label: 'Silver',   from: 6,  to: 10, color: '#435f7a' },
-        { label: 'Gold',     from: 11, to: 15, color: '#ec9a00' },
-        { label: 'Platinum', from: 16, to: 20, color: '#27e2a4' },
-        { label: 'Diamond',  from: 21, to: 25, color: '#00b4fc' },
-        { label: 'Ruby',     from: 26, to: 30, color: '#ff0062' }
-      ];
-
-      // ── API fetch (CORS 프록시) ─────────────────────────
-      function apiFetch(endpoint, cb) {
-        var url = PROXY + encodeURIComponent(API + endpoint);
-        fetch(url)
-          .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-          .then(function(data) { cb(null, data); })
-          .catch(function(e) { cb(e, null); });
-      }
-
-      // ── 렌더 ────────────────────────────────────────────
-      function render(profile, stats, grass) {
-        body.innerHTML = '';
-
-        // 1) 프로필 카드
-        var profileCard = document.createElement('div');
-        profileCard.className = 'dyo-algomon-profile';
-        var imgUrl = profile.profileImageUrl || '';
-        var tName = TIER_NAMES[profile.tier] || 'Unrated';
-        var tCls  = tierClass(profile.tier);
-        profileCard.innerHTML =
-          (imgUrl ? '<img class="dyo-algomon-avatar" src="' + imgUrl + '" alt="' + _handle + '">' :
-           '<div class="dyo-algomon-avatar" style="background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:24px;color:#94a3b8">?</div>') +
-          '<div class="dyo-algomon-profile-info">' +
-            '<div class="dyo-algomon-handle"><a href="https://solved.ac/profile/' + _handle + '" target="_blank" rel="noopener">' + _handle + '</a>' +
-            '<span class="dyo-algomon-tier-badge ' + tCls + '">' + tName + '</span></div>' +
-            (profile.bio ? '<div class="dyo-algomon-bio">' + escHtml(profile.bio) + '</div>' : '') +
-            '<div class="dyo-algomon-rank">Rank #' + (profile.rank || '—') + '</div>' +
-          '</div>';
-        body.appendChild(profileCard);
-
-        // 2) 통계
-        var statsGrid = document.createElement('div');
-        statsGrid.className = 'dyo-algomon-stats';
-        var statItems = [
-          { val: profile.solvedCount || 0, label: 'Solved' },
-          { val: profile.rating || 0, label: 'Rating' },
-          { val: 'C' + (profile.class || 0), label: 'Class' },
-          { val: profile.maxStreak || 0, label: 'Max Streak' }
-        ];
-        statItems.forEach(function(s) {
-          var d = document.createElement('div');
-          d.className = 'dyo-algomon-stat';
-          d.innerHTML = '<div class="dyo-algomon-stat-val">' + s.val + '</div>' +
-                        '<div class="dyo-algomon-stat-label">' + s.label + '</div>';
-          statsGrid.appendChild(d);
-        });
-        body.appendChild(statsGrid);
-
-        // 3) 레벨 분포
-        if (stats && stats.length) {
-          var distBox = document.createElement('div');
-          distBox.className = 'dyo-algomon-dist';
-          distBox.innerHTML = '<div class="dyo-algomon-dist-title">Tier Distribution</div>';
-          var barsDiv = document.createElement('div');
-          barsDiv.className = 'dyo-algomon-dist-bars';
-          var maxCount = 0;
-          var groupCounts = DIST_GROUPS.map(function(g) {
-            var cnt = 0;
-            for (var i = g.from; i <= g.to; i++) {
-              var found = stats.find(function(s) { return s.level === i; });
-              if (found) cnt += found.solved;
-            }
-            if (cnt > maxCount) maxCount = cnt;
-            return cnt;
-          });
-          DIST_GROUPS.forEach(function(g, gi) {
-            var cnt = groupCounts[gi];
-            var pct = maxCount > 0 ? (cnt / maxCount * 100) : 0;
-            var row = document.createElement('div');
-            row.className = 'dyo-algomon-dist-row';
-            row.innerHTML =
-              '<span class="dyo-algomon-dist-lbl">' + g.label + '</span>' +
-              '<div class="dyo-algomon-dist-track"><div class="dyo-algomon-dist-fill" style="width:' + pct + '%;background:' + g.color + '"></div></div>' +
-              '<span class="dyo-algomon-dist-cnt">' + cnt + '</span>';
-            barsDiv.appendChild(row);
-          });
-          distBox.appendChild(barsDiv);
-          body.appendChild(distBox);
-        }
-
-        // 4) 잔디
-        if (grass && grass.grass) {
-          var grassBox = document.createElement('div');
-          grassBox.className = 'dyo-algomon-grass';
-          grassBox.innerHTML =
-            '<div class="dyo-algomon-grass-title">' +
-              '<span>Grass</span>' +
-              '<span class="dyo-algomon-grass-streak">' +
-                'current: ' + (grass.currentStreak || 0) + 'd / max: ' + (grass.longestStreak || 0) + 'd' +
-              '</span>' +
-            '</div>';
-
-          // 잔디 그리드: 최근 1년 (53주 x 7일)
-          var grid = document.createElement('div');
-          grid.className = 'dyo-algomon-grass-grid';
-          var grassMap = {};
-          grass.grass.forEach(function(g) { grassMap[g.date] = g.value; });
-          var today = new Date();
-          var dayOfWeek = today.getDay(); // 0=Sun
-          var startDate = new Date(today);
-          startDate.setDate(startDate.getDate() - (52 * 7 + dayOfWeek));
-          for (var i = 0; i < 53 * 7; i++) {
-            var d = new Date(startDate);
-            d.setDate(d.getDate() + i);
-            var key = d.getFullYear() + '-' +
-              String(d.getMonth() + 1).padStart(2, '0') + '-' +
-              String(d.getDate()).padStart(2, '0');
-            var val = grassMap[key];
-            var cell = document.createElement('div');
-            cell.className = 'dyo-algomon-grass-cell';
-            if (d > today) {
-              cell.style.visibility = 'hidden';
-            } else if (typeof val === 'string') {
-              if (val === 'frozen') cell.classList.add('frozen');
-              else if (val.indexOf('repaired') !== -1) cell.classList.add('repaired');
-            } else if (typeof val === 'number') {
-              if (val >= 7) cell.classList.add('lv4');
-              else if (val >= 4) cell.classList.add('lv3');
-              else if (val >= 2) cell.classList.add('lv2');
-              else if (val >= 1) cell.classList.add('lv1');
-            }
-            cell.title = key + (val != null ? ' (' + val + ')' : '');
-            grid.appendChild(cell);
-          }
-          grassBox.appendChild(grid);
-
-          // 범례
-          var legend = document.createElement('div');
-          legend.className = 'dyo-algomon-grass-legend';
-          legend.innerHTML = 'Less ' +
-            '<div class="dyo-algomon-grass-legend-cell" style="background:#ebedf0"></div>' +
-            '<div class="dyo-algomon-grass-legend-cell" style="background:#9be9a8"></div>' +
-            '<div class="dyo-algomon-grass-legend-cell" style="background:#40c463"></div>' +
-            '<div class="dyo-algomon-grass-legend-cell" style="background:#30a14e"></div>' +
-            '<div class="dyo-algomon-grass-legend-cell" style="background:#216e39"></div>' +
-            ' More' +
-            '<div class="dyo-algomon-grass-legend-cell frozen" style="background:#a5d8ff;margin-left:6px"></div> Frozen';
-          grassBox.appendChild(legend);
-          body.appendChild(grassBox);
-        }
-      }
-
-      function escHtml(s) {
-        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      }
-
-      // ── 데이터 로드 ──────────────────────────────────────
-      var _loaded = false;
-      function loadData() {
-        body.innerHTML = '<div class="dyo-algomon-loading">loading...</div>';
-        var results = { profile: null, stats: null, grass: null };
-        var pending = 3;
-        function check() {
-          pending--;
-          if (pending > 0) return;
-          if (!results.profile) {
-            body.innerHTML = '<div class="dyo-algomon-loading" style="color:#f85149">\'' + escHtml(_handle) + '\' 불러오기 실패</div>';
-            return;
-          }
-          _loaded = true;
-          render(results.profile, results.stats, results.grass);
-        }
-        apiFetch('user/show?handle=' + _handle, function(err, data) {
-          if (!err && data) results.profile = data;
-          check();
-        });
-        apiFetch('user/problem_stats?handle=' + _handle, function(err, data) {
-          if (!err && data) results.stats = data;
-          check();
-        });
-        apiFetch('user/grass?handle=' + _handle + '&topic=default', function(err, data) {
-          if (!err && data) results.grass = data;
-          check();
-        });
-      }
-      refreshBtn.addEventListener('click', function() { _loaded = false; loadData(); });
-
-      // ── 창 조작 (드래그/리사이즈/닫기/최소화/최대화) ────
-      var dragging = false, dragOX, dragOY;
-      var resizing = false, resizeDir, resizeSX, resizeSY, resizeSRect;
-      var savedPos = null;
-
-      function syncWinButtons(isOpen, isMin) {
-        var tb = document.querySelector('.dyo-taskbtn[data-win-id="dyoAlgoMonWin"]');
-        if (tb) {
-          tb.classList.toggle('open', isOpen);
-          tb.classList.toggle('active', isOpen && !isMin);
-          tb.classList.toggle('minimized', isOpen && isMin);
-        }
-        var dk = document.querySelector('.dyo-dock-item[data-win-id="dyoAlgoMonWin"]');
-        if (dk) {
-          dk.classList.toggle('open', isOpen);
-          dk.classList.toggle('minimized', isOpen && isMin);
-          var dock = document.getElementById('dyoDock');
-          if (dock) dock.style.display = dock.querySelector('.dyo-dock-item.open') ? 'flex' : 'none';
-        }
-      }
-
-      titlebar.addEventListener('mousedown', function(e) {
-        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
-        if (win.classList.contains('maximized')) return;
-        var rect = win.getBoundingClientRect();
-        win.style.left = rect.left + 'px'; win.style.top = rect.top + 'px';
-        win.style.right = 'auto'; win.style.bottom = 'auto';
-        dragging = true; dragOX = e.clientX - rect.left; dragOY = e.clientY - rect.top;
-        e.preventDefault();
-      });
-      titlebar.addEventListener('touchstart', function(e) {
-        if (win.classList.contains('maximized')) return;
-        var t = e.touches[0]; var rect = win.getBoundingClientRect();
-        win.style.left = rect.left + 'px'; win.style.top = rect.top + 'px';
-        win.style.right = 'auto'; win.style.bottom = 'auto';
-        dragging = true; dragOX = t.clientX - rect.left; dragOY = t.clientY - rect.top;
-      }, { passive: true });
-
-      win.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
-        handle.addEventListener('mousedown', function(e) {
-          if (win.classList.contains('maximized') || win.classList.contains('minimized')) return;
-          e.stopPropagation(); e.preventDefault();
-          resizing = true; resizeDir = handle.getAttribute('data-dir');
-          resizeSX = e.clientX; resizeSY = e.clientY;
-          var rect = win.getBoundingClientRect();
-          resizeSRect = { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
-          win.style.left = rect.left + 'px'; win.style.top = rect.top + 'px';
-          win.style.width = rect.width + 'px'; win.style.height = rect.height + 'px';
-          win.style.right = 'auto'; win.style.bottom = 'auto';
-        });
-      });
-
-      document.addEventListener('mousemove', function(e) {
-        if (dragging) {
-          win.style.left = Math.max(0, Math.min(window.innerWidth - win.offsetWidth, e.clientX - dragOX)) + 'px';
-          win.style.top  = Math.max(0, Math.min(window.innerHeight - 40, e.clientY - dragOY)) + 'px';
-        }
-        if (resizing) {
-          var dx = e.clientX - resizeSX, dy = e.clientY - resizeSY;
-          var r = resizeSRect;
-          var nL = r.left, nT = r.top, nW = r.width, nH = r.height;
-          if (resizeDir.indexOf('e') !== -1) nW = Math.max(MIN_W, r.width + dx);
-          if (resizeDir.indexOf('s') !== -1) nH = Math.max(MIN_H, r.height + dy);
-          if (resizeDir.indexOf('w') !== -1) { nW = Math.max(MIN_W, r.width - dx); nL = r.left + r.width - nW; }
-          if (resizeDir.indexOf('n') !== -1) { nH = Math.max(MIN_H, r.height - dy); nT = r.top + r.height - nH; }
-          win.style.left = nL + 'px'; win.style.top = nT + 'px';
-          win.style.width = nW + 'px'; win.style.height = nH + 'px';
-        }
-      });
-      document.addEventListener('touchmove', function(e) {
-        if (!dragging) return;
-        var t = e.touches[0];
-        win.style.left = Math.max(0, Math.min(window.innerWidth - win.offsetWidth, t.clientX - dragOX)) + 'px';
-        win.style.top  = Math.max(0, Math.min(window.innerHeight - 40, t.clientY - dragOY)) + 'px';
-      }, { passive: true });
-      document.addEventListener('mouseup', function() { dragging = false; resizing = false; });
-      document.addEventListener('touchend', function() { dragging = false; });
-
-      function closeWindow() {
-        if (window.dyoAnimDismiss) {
-          window.dyoAnimDismiss(win, function() {
-            win.classList.remove('open', 'minimized', 'maximized');
-            savedPos = null; syncWinButtons(false, false);
-          });
-        } else {
-          win.classList.remove('open', 'minimized', 'maximized');
-          savedPos = null; syncWinButtons(false, false);
-        }
-      }
-      closeBtn.addEventListener('click', closeWindow);
-
-      function minimizeWindow() {
-        if (win.classList.contains('minimized')) {
-          var tb = document.querySelector('.dyo-taskbtn[data-win-id="dyoAlgoMonWin"]');
-          window._dyoAnimSrc = tb || null;
-          win.classList.remove('minimized'); syncWinButtons(true, false);
-          if (window.dyoAnimOpen) window.dyoAnimOpen(win);
-        } else {
-          if (win.classList.contains('maximized')) {
-            win.classList.remove('maximized');
-            if (savedPos) {
-              win.style.left = savedPos.left; win.style.top = savedPos.top;
-              win.style.right = savedPos.right; win.style.bottom = savedPos.bottom;
-              win.style.width = savedPos.width; win.style.height = savedPos.height;
-              savedPos = null;
-            }
-          }
-          if (window.dyoAnimMinimize) {
-            window.dyoAnimMinimize(win, function() { win.classList.add('minimized'); syncWinButtons(true, true); });
-          } else {
-            win.classList.add('minimized'); syncWinButtons(true, true);
-          }
-        }
-      }
-      minBtn.addEventListener('click', minimizeWindow);
-
-      function maximizeWindow() {
-        if (win.classList.contains('maximized')) {
-          win.classList.remove('maximized');
-          if (savedPos) {
-            win.style.left = savedPos.left; win.style.top = savedPos.top;
-            win.style.right = savedPos.right; win.style.bottom = savedPos.bottom;
-            win.style.width = savedPos.width; win.style.height = savedPos.height;
-            savedPos = null;
-          }
-          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(win);
-        } else {
-          win.classList.remove('minimized');
-          savedPos = {
-            left: win.style.left, top: win.style.top,
-            right: win.style.right, bottom: win.style.bottom,
-            width: win.style.width, height: win.style.height
-          };
-          win.classList.add('maximized');
-          win.style.left = win.style.top = win.style.right =
-          win.style.bottom = win.style.width = win.style.height = '';
-          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(win);
-        }
-      }
-      maxBtn.addEventListener('click', maximizeWindow);
-      titlebar.addEventListener('dblclick', function(e) {
-        if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
-        maximizeWindow();
-      });
-
-      win.addEventListener('mousedown', function() {
-        window._dyoZTop = (window._dyoZTop || 9000) + 1;
-        win.style.zIndex = window._dyoZTop;
-      });
-
-      // ── 창 열기 ──────────────────────────────────────────
-      function openWindow() {
-        var wasOpen = win.classList.contains('open');
-        if (!wasOpen) {
-          var vw = window.innerWidth, vh = window.innerHeight;
-          var iw = Math.min(520, vw - 40), ih = Math.min(720, vh - 80);
-          win.style.width  = iw + 'px';
-          win.style.height = ih + 'px';
-          var memoEl = document.getElementById('dyoMemoWidget');
-          var mTop = memoEl ? memoEl.getBoundingClientRect().top : 28;
-          win.style.left   = Math.round((vw - iw) / 2) + 'px';
-          win.style.top    = mTop + 'px';
-          win.style.right  = 'auto';
-          win.style.bottom = 'auto';
-        }
-        win.classList.add('open');
-        win.classList.remove('minimized');
-        window._dyoZTop = (window._dyoZTop || 9000) + 1;
-        win.style.zIndex = window._dyoZTop;
-        syncWinButtons(true, false);
-        if (!wasOpen) {
-          if (!_loaded) loadData();
-          if (window.dyoAnimOpen) window.dyoAnimOpen(win);
-        }
-      }
-
-      window.dyoOpenAlgoMon = openWindow;
     })();
 
     // ── 태스크바 칸반 배지 (독립 실행) ──────────────────────

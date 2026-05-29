@@ -70,8 +70,6 @@ tistory/
     #dyoTutorial               ← 튜토리얼 오버레이
     #dyoDesktop                ← 바탕화면 (홈 전용)
     #dyoCalPopup               ← 태스크바 캘린더 팝업 (시계 클릭으로 열기)
-    #dyoBmWidget               ← Bookmarks 위젯 (홈 전용, 드래그 가능)
-    #dyoMemoWidget             ← 메모 위젯 (홈 전용, CRUD 지원, 드래그 가능)
     #dyoFeaturesPopup          ← Features 폴더 팝업 (Blogram/Music/GitHub)
     #dyoDesktopBar             ← 하단 태스크바
     [각종 .dyo-shell-win 창들]
@@ -141,8 +139,6 @@ tistory/
 | `#dyoTutorial` | 튜토리얼 | 전체화면 오버레이 | 스팟라이트 + 박스 + 창 미리보기 |
 | `#dyoFeaturesPopup` | Features 폴더 팝업 | 아이콘 옆 동적 위치 | Blogram, Music, GitHub 3개 아이템 |
 | `#dyoCalPopup` | 캘린더 팝업 | 태스크바 시계 위 | 월별 달력, 이전/다음 월, 오늘 표시 |
-| `#dyoBmWidget` | Bookmarks 위젯 | Memo 아래 | 게시물(`/notice/129`)에서 링크 파싱, favicon 표시, 접기/펼치기, 드래그 이동 |
-| `#dyoMemoWidget` | Memo 위젯 | 우상단 | 게시물(`/notice/126`)에서 할일 파싱, CRUD, 클립보드 복사, 드래그 이동 |
 | `#dyoConfirmOverlay` | 외부 링크 다이얼로그 | 중앙 모달 | `dyoOpenExternal()` 로 호출 |
 | `#dyoCtxMenu` | 컨텍스트 메뉴 | 동적 | 우클릭 위치 기준 |
 | `.dyo-admin-bar` | 관리자 바 | 우하단 고정 | 글쓰기 / 관리 / 전체화면 |
@@ -584,79 +580,6 @@ steps[] 7개:
 
 ---
 
-### [Script 5] Memo 위젯 (`dyoMemoWidget`)
-
-홈 페이지(`tt-body-index`) 전용. 게시물에서 할일 목록을 파싱하여 스티커 메모 형태로 표시.
-CRUD 지원 — 추가, 인라인 수정(더블클릭), 삭제, 체크 토글, 클립보드 복사.
-
-```
-PLAN_POST_URL = '/notice/126'
-_memoItems = []   // IIFE 스코프 배열
-_dirty = false    // 변경사항 추적
-
-fetchPostItems(url, cb):
-  게시물 HTML 파싱 → p, li 개별 element의 innerHTML에서 <br> → \n 치환
-  텍스트 형식: "X, 할일 내용" (X=미완료) / "O, 할일 내용" (O=완료)
-  결과: [{ id, text, done }]
-
-render(items):
-  _memoItems에 저장
-  체크박스 + 라벨 + 삭제 버튼(×) 리스트 렌더
-  countEl: "완료수/전체수" 표시
-  더블클릭: 인라인 수정 (input field → Enter/blur 저장, Esc 취소)
-  삭제: × 버튼 클릭 시 _memoItems에서 제거 → _dirty → re-render
-  체크 변경 시 _dirty = true
-
-addMemo():
-  하단 입력란 + 버튼으로 새 메모 추가
-  _memoItems에 push → _dirty → re-render
-
-클립보드 복사:
-  _memoItems를 "O, text" / "X, text" 형식으로 변환 → 클립보드
-  변경 시 .dirty 클래스 → 빨간 점 표시
-
-접기/펼치기:
-  localStorage 키: 'dyo_memo_collapsed'
-  toggleBtn 클릭 시 body display 토글
-
-드래그:
-  헤더 mousedown → document mousemove/mouseup 패턴
-  widget z-index: mousedown 시 _dyoZTop++ 적용
-
-초기화 순서:
-  fetchPostItems → render → dispatchEvent('dyoMemoReady')
-```
-
----
-
-### [Script 5] Bookmarks 위젯 (`dyoBmWidget`)
-
-홈 페이지 전용. 게시물에서 링크를 파싱하여 북마크 목록으로 표시.
-
-```
-BM_POST_URL = '/notice/129'
-
-fetchLinks(url, cb):
-  게시물 HTML 파싱 → p, li 순회
-  URL: <a href> 우선, 없으면 텍스트 regex
-  이름: 텍스트에서 첫 쉼표 앞 부분 (없으면 hostname)
-  결과: [{ title, url }]
-
-render():
-  favicon: Google S2 Favicons API 사용
-  각 항목: favicon + 제목 + 호스트명
-
-위치: dyoMemoWidget 바로 아래 (reposition)
-드래그: 헤더 드래그 + z-index 관리
-접기/펼치기: localStorage 'dyo_bm_collapsed'
-
-초기화 순서:
-  document 'dyoMemoReady' 이벤트 후 → fetchLinks → render → reposition
-  → dispatchEvent('dyoBmReady')
-```
-
----
-
 ### [Script 5] 캘린더 팝업 (`dyoCalPopup`)
 
 태스크바 시계/날짜 클릭 시 표시되는 캘린더 팝업. 흰색 배경 + 검은 글씨.
@@ -672,8 +595,6 @@ renderCal():
 위치: 태스크바 시계 위 (bottom 기준 positioning)
 열기/닫기: #dyoBarClock 클릭 시 토글, 팝업 외부 클릭 시 닫힘
 ```
-
-위젯 초기화 체인: **Memo → (dyoMemoReady) → Bookmarks → (dyoBmReady)**
 
 ---
 
@@ -906,9 +827,7 @@ blueimp-md5가 없으면 `encodeURIComponent()` 값을 그대로 SHA-256 처리.
 | line 2737 | `'doyoucode'` | Guestbook ADMIN_NICK |
 | line 4341 | tree[] 전체 | File Explorer 카테고리 트리 |
 | line 4761 | `'/category/Pictures'` | Blogram 파싱 카테고리 |
-| line 5519 | `'/notice/126'` | Memo 위젯 게시물 URL (`PLAN_POST_URL`) |
 | line 6038 | PLAYLIST[] 4개 | 뮤직 플레이어 YouTube ID |
-| line 6412 | `'/notice/129'` | Bookmarks 위젯 게시물 URL (`BM_POST_URL`) |
 | line 6703 | `'/notice/130'` | Board 데이터 게시글 URL (`BOARD_URL`) |
 | line 1187 | img src (긴 CDN URL) | Blogram 프로필 아바타 이미지 |
 
@@ -933,15 +852,7 @@ var GALLERY_CATEGORY = '';  // 빈 문자열로 변경 필요
 2. File Explorer tree 배열 (line ~4341) 동일하게 수정
 3. README 창 내부 HTML 텍스트 (line ~793) 에도 명령어 설명이 하드코딩되어 있음
 
-### 9-5. Memo 위젯 데이터 변경
-게시물 URL 변경: `PLAN_POST_URL` (line ~5519)
-게시물 텍스트 형식: 한 줄에 하나씩, `"O, 완료 항목"` 또는 `"X, 미완료 항목"`
-
-### 9-6. Bookmarks 위젯 데이터 변경
-게시물 URL 변경: `BM_POST_URL` (line ~6412)
-게시물 텍스트 형식: 한 줄에 `"이름, https://url"` 또는 `<a>` 태그 포함 텍스트
-
-### 9-7. Board 데이터 변경
+### 9-5. Board 데이터 변경
 게시물 URL 변경: `BOARD_URL` (line ~6703)
 게시물 텍스트 형식: `"컬럼번호, 제목[, 라벨[, 우선순위[, 설명[, 마감일]]]]"`
 - 컬럼번호: 1=Todo, 2=InProgress, 3=Done
@@ -1127,11 +1038,8 @@ window._dyoZTop (초기값 9000)
 | `.hidden` | `#dyoTutPreview`, `#dyoTutLauncher` | 숨김 상태 |
 | `.copied` | `.code-copy-btn` | 복사 완료 상태 (2초) |
 | `.open` | `#dyoFeaturesPopup` | Features 폴더 팝업 표시 |
-| `.collapsed` | `.dyo-memo-widget`, `.dyo-bm-widget` | 위젯 접힌 상태 |
-| `.done` | `.dyo-memo-item` | Memo 항목 완료 상태 |
 | `.done` | `.dyo-brd-card-title` | Board Done 컬럼 카드 제목 취소선 |
-| `.dirty` | `.dyo-brd-clipboard-btn`, `.dyo-memo-action-btn` | 변경사항 있음 (빨간 점 표시) |
-| `.editing` | `.dyo-memo-item` | Memo 항목 인라인 편집 중 |
+| `.dirty` | `.dyo-brd-clipboard-btn` | 변경사항 있음 (빨간 점 표시) |
 | `.open` | `.dyo-brd-detail-panel` | Board 카드 상세 패널 열림 |
 | `.theme-astronaut` | `#dyoDesktop` | 우주인 테마 활성화 |
 | `.theme-sakura` | `#dyoDesktop` | 벚꽃 테마 활성화 |
@@ -1218,8 +1126,6 @@ window._dyoZTop (초기값 9000)
 | 4902~5057 | Boot Screen | `#dyoBootScreen` (사용 여부 확인 필요) |
 | 5058~5066 | Music Player 아이콘 | 뮤직 아이콘 스타일 |
 | 5067~5321 | Music Player Window | `#dyoMusicWin`, 플레이리스트, 진행바, seek knob, 볼륨 |
-| 5322~5493 | Memo 위젯 | `.dyo-memo-widget`, CRUD 버튼, 인라인 편집, 클립보드 복사 |
-| 5494~5630 | Bookmarks 위젯 | `.dyo-bm-widget`, favicon + 링크 목록, 접기/펼치기 |
 | 5631~5750 | 캘린더 팝업 + 태스크바 Board 버튼 | `.dyo-cal-popup`, `.dyo-bar-board`, 배지 |
 | 5751~6700+ | Board Window | `.dyo-brd-win`, 컬럼·카드·상세 패널·CRUD·드래그 앤 드롭, 모바일 반응형 |
 | 6700~8000+ | Astronaut 테마 | `.theme-astronaut`, 우주인 캐릭터, 드래그 물리, 말풍선, 별/행성 배경 |
