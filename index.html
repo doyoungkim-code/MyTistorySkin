@@ -19,6 +19,19 @@
 
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./images/font.css">
+  <script>
+    /* 데스크탑 모드 클래스(Windows/Linux)를 paint 전 적용 — 깜빡임 방지.
+       저장된 값 없으면 'windows' 기본값. */
+    (function() {
+      try {
+        var m = localStorage.getItem('dyo_desktop_mode');
+        if (m !== 'windows' && m !== 'linux') m = 'windows';
+        document.documentElement.classList.add('dyo-mode-' + m);
+      } catch (e) {
+        document.documentElement.classList.add('dyo-mode-windows');
+      }
+    })();
+  </script>
   <style>
     /* 홈화면: 블로그 본문 숨김, 데스크탑 표시 */
     #tt-body-index #dkWrap { visibility: hidden; }
@@ -876,7 +889,7 @@
               <line x1="8" y1="18" x2="13" y2="18" stroke="#3b82f6" stroke-width="1.4" opacity="0.4"/>
             </svg>
           </div>
-          <span class="dyo-di-label">README</span>
+          <span class="dyo-di-label" data-label-win="README">README</span>
         </div>
 
         <!-- Dev Blog 아이콘 (Tistory) -->
@@ -888,7 +901,7 @@
               <rect x="10.4" y="8.8" width="3.2" height="10.2" rx="1.6" fill="white"/>
             </svg>
           </div>
-          <span class="dyo-di-label">Dev Blog</span>
+          <span class="dyo-di-label" data-label-win="개발 블로그">Dev Blog</span>
         </div>
 
         <!-- Terminal 아이콘 (Windows CMD 스타일) -->
@@ -900,7 +913,7 @@
               <line x1="12" y1="16" x2="20" y2="16"></line>
             </svg>
           </div>
-          <span class="dyo-di-label">Command Prompt</span>
+          <span class="dyo-di-label" data-label-win="bash">Command Prompt</span>
         </div>
 
         <!-- File Explorer 아이콘 -->
@@ -911,7 +924,7 @@
               <path d="M3 11h18" stroke="#fff" stroke-width="1.3"/>
             </svg>
           </div>
-          <span class="dyo-di-label">File Explorer</span>
+          <span class="dyo-di-label" data-label-win="파일 탐색기">File Explorer</span>
         </div>
 
         <!-- Guestbook 채팅 아이콘 -->
@@ -924,7 +937,7 @@
               <circle cx="15.5" cy="11" r="1.2" fill="#c8a800"/>
             </svg>
           </div>
-          <span class="dyo-di-label">Guestbook</span>
+          <span class="dyo-di-label" data-label-win="방명록">Guestbook</span>
         </div>
 
         <!-- Board 아이콘 -->
@@ -936,7 +949,7 @@
               <rect x="16" y="3" width="5" height="9" rx="1.5" stroke="white" stroke-width="1.8"/>
             </svg>
           </div>
-          <span class="dyo-di-label">Board</span>
+          <span class="dyo-di-label" data-label-win="보드">Board</span>
         </div>
 
 
@@ -950,7 +963,7 @@
               <circle cx="16" cy="13.5" r="1.2" fill="rgba(255,255,255,0.55)"/>
             </svg>
           </div>
-          <span class="dyo-di-label">Features</span>
+          <span class="dyo-di-label" data-label-win="폴더">Features</span>
         </div>
 
         <!-- Blogram 아이콘 -->
@@ -962,7 +975,7 @@
               <circle cx="17.5" cy="6.5" r="1.3" fill="white"/>
             </svg>
           </div>
-          <span class="dyo-di-label">Blogram</span>
+          <span class="dyo-di-label" data-label-win="Blogram">Blogram</span>
         </div>
 
         <!-- Music Player 아이콘 -->
@@ -974,7 +987,7 @@
               <circle cx="18" cy="16" r="3" stroke="white" stroke-width="1.8"/>
             </svg>
           </div>
-          <span class="dyo-di-label">Music</span>
+          <span class="dyo-di-label" data-label-win="음악">Music</span>
         </div>
 
       </div>
@@ -1063,6 +1076,67 @@
       </div>
     </div>
 
+    <!-- ============================================
+         WINDOWS 시작 메뉴 (Windows 모드 전용)
+         ============================================ -->
+    <div class="dyo-win-startmenu" id="dyoWinStartMenu">
+      <div class="dyo-winsm-head">
+        <input class="dyo-winsm-search" id="dyoWinSmSearch" type="text"
+               placeholder="검색하려면 여기에 입력하세요" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="dyo-winsm-section">
+        <div class="dyo-winsm-section-title">고정됨</div>
+        <div class="dyo-winsm-list" id="dyoWinStartList"></div>
+      </div>
+      <div class="dyo-winsm-foot">
+        <div class="dyo-winsm-user">
+          <div class="dyo-winsm-user-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <span class="dyo-winsm-user-name">doyoucode</span>
+        </div>
+        <button class="dyo-winsm-power" id="dyoWinSmPower" title="전원">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================
+         WINDOWS 11 태스크바 (Windows 모드 전용)
+         html.dyo-mode-windows 일 때만 표시.
+         ============================================ -->
+    <div class="dyo-win-tb" id="dyoWinTaskbar">
+      <!-- 중앙: 시작 버튼 + 앱 핀 -->
+      <div class="dyo-win-tb-center" id="dyoWinCenter">
+        <button class="dyo-win-start" id="dyoWinStart" title="시작">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 5.5 11 4.3v7.4H3z"/>
+            <path d="M12 4.15l9-1.35V11.7h-9z"/>
+            <path d="M3 12.7h8v7l-8-1.2z"/>
+            <path d="M12 12.7h9v8.85L12 20.2z"/>
+          </svg>
+        </button>
+        <!-- 앱 핀 컨테이너 (JS가 채움) -->
+        <div class="dyo-win-apps" id="dyoWinApps"></div>
+      </div>
+
+      <!-- 우측 시스템 트레이 -->
+      <div class="dyo-win-tb-tray">
+        <button class="dyo-win-tray-board" id="dyoWinBoard" title="Board">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="5" height="18" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+            <rect x="9.5" y="3" width="5" height="13" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+            <rect x="16" y="3" width="5" height="9" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+          <span class="dyo-win-tray-badge" id="dyoWinBoardBadge"></span>
+        </button>
+        <div class="dyo-win-tray-clock" id="dyoWinClockWrap" title="캘린더">
+          <span class="dyo-win-tray-time" id="dyoWinClock">00:00</span>
+          <span class="dyo-win-tray-date" id="dyoWinDate">----/--/--</span>
+        </div>
+      </div>
+    </div>
+
     <!-- 가상 브라우저 창 (드래그 가능) -->
     <div class="dyo-browser-win" id="dyoBrowserWin">
       <div class="dyo-browser-titlebar" id="dyoBrowserTitlebar">
@@ -1132,7 +1206,15 @@
         <div style="font-family:'Noto Sans KR','Apple SD Gothic Neo',-apple-system,sans-serif;font-size:13px;line-height:1.85;color:#abb2bf">
 
           <div style="color:#e6e6e6;font-size:15px;font-weight:700;margin-bottom:2px"># doyoucode · README</div>
-          <div style="color:#5c6370;font-size:12px;margin-bottom:16px">개발자 테마의 Tistory 블로그 · 데스크탑 UI + 터미널 인터페이스</div>
+          <div style="color:#5c6370;font-size:12px;margin-bottom:16px">개발자 테마의 Tistory 블로그 · 데스크탑 UI · Windows 11 / Linux 듀얼 모드</div>
+
+          <div style="background:#1c2330;border:1px solid #58a6ff44;border-left:3px solid #58a6ff;border-radius:7px;padding:11px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">
+            <span style="font-size:18px;flex-shrink:0;line-height:1.3">🪟</span>
+            <div>
+              <div style="color:#58a6ff;font-weight:700;font-size:12px;letter-spacing:0.4px;margin-bottom:4px">TIP — 데스크탑 모드 전환</div>
+              <div style="color:#8b949e;font-size:12px;line-height:1.65">우하단 관리바의 <kbd style="background:#0d1117;border:1px solid #484f58;border-bottom:2px solid #30363d;border-radius:4px;padding:1px 6px;color:#c9d1d9;font-family:'Fira Code',monospace;font-size:11px">🖥️</kbd> 버튼으로 <b style="color:#58a6ff">Windows ↔ Linux</b> 모드를 자유롭게 전환할 수 있습니다.<br>모드별로 테마·아이콘·라벨이 자동으로 변환됩니다. ✨</div>
+            </div>
+          </div>
 
           <div style="background:#1c2330;border:1px solid #e5c07b44;border-left:3px solid #e5c07b;border-radius:7px;padding:11px 14px;margin-bottom:22px;display:flex;align-items:flex-start;gap:10px">
             <span style="font-size:18px;flex-shrink:0;line-height:1.3">💡</span>
@@ -1142,17 +1224,44 @@
             </div>
           </div>
 
-          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 데스크탑 아이콘</div>
-          <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:22px">
-            <span style="color:#61afef">README</span><span>이 도움말 페이지</span>
-            <span style="color:#61afef">Terminal</span><span>터미널 창 열기</span>
-            <span style="color:#61afef">Dev Blog</span><span>전체 포스트 보기 (브라우저 창)</span>
-            <span style="color:#61afef">Blogram</span><span>Instagram 스타일 사진 피드</span>
-            <span style="color:#61afef">Guestbook</span><span>방명록 채팅 / 메시지 남기기</span>
-            <span style="color:#61afef">GitHub</span><span>GitHub 프로필 새 탭으로 열기</span>
-            <span style="color:#61afef">File Explorer</span><span>블로그 카테고리 탐색기</span>
-            <span style="color:#61afef">Music</span><span>YouTube 기반 뮤직 플레이어</span>
-            <span style="color:#61afef">Board</span><span>할 일 관리 보드 (To Do · In Progress · Done)</span>
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 데스크탑 모드 <span style="color:#5c6370;font-weight:400;font-size:12px">(Windows / Linux)</span></div>
+          <div style="padding-left:12px;margin-bottom:22px">
+            <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin-bottom:8px">
+              <span style="color:#58a6ff;font-weight:600">🪟 Windows</span><span style="color:#c9d1d9">기본값 — 라이트 mica 태스크바 · 시작 메뉴 · 한글 라벨 · Chrome 풍 브라우저 · 평면 컬러 아이콘</span>
+              <span style="color:#3fb950;font-weight:600">🐧 Linux</span><span style="color:#c9d1d9">다크 우주 배경 · macOS Dock · 영문 라벨 · Astronaut / Sakura 장식 테마 활성화</span>
+            </div>
+            <div style="color:#5c6370;font-size:11.5px">선택한 모드는 브라우저에 저장되어 다음 방문 시 그대로 유지됩니다.</div>
+          </div>
+
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 데스크탑 아이콘 <span style="color:#5c6370;font-weight:400;font-size:12px">(모드별 라벨 자동 전환)</span></div>
+          <div style="margin-bottom:6px;font-size:11px;color:#5c6370;padding-left:12px">📌 좌: Linux 라벨 / 우: Windows 라벨</div>
+          <div style="display:grid;grid-template-columns:auto auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:22px">
+            <span style="color:#61afef">README</span><span style="color:#79c0ff">README</span><span>이 도움말 페이지</span>
+            <span style="color:#61afef">Dev Blog</span><span style="color:#79c0ff">개발 블로그</span><span>전체 포스트 보기 (브라우저 창)</span>
+            <span style="color:#61afef">Command Prompt</span><span style="color:#79c0ff">bash</span><span>커스텀 터미널 창</span>
+            <span style="color:#61afef">File Explorer</span><span style="color:#79c0ff">파일 탐색기</span><span>블로그 카테고리 탐색기</span>
+            <span style="color:#61afef">Guestbook</span><span style="color:#79c0ff">방명록</span><span>카카오톡 풍 방명록 채팅</span>
+            <span style="color:#61afef">Board</span><span style="color:#79c0ff">보드</span><span>할 일 관리 보드 (To Do · In Progress · Done)</span>
+            <span style="color:#61afef">Features</span><span style="color:#79c0ff">폴더</span><span>Blogram · Music · GitHub · Links 모음</span>
+            <span style="color:#61afef">Blogram</span><span style="color:#79c0ff">Blogram</span><span>Instagram 스타일 사진 피드</span>
+            <span style="color:#61afef">Music</span><span style="color:#79c0ff">음악</span><span>YouTube 기반 뮤직 플레이어</span>
+            <span style="color:#61afef">Links</span><span style="color:#79c0ff">링크</span><span>즐겨찾기 링크 모음</span>
+          </div>
+
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 시작 메뉴 <span style="color:#5c6370;font-weight:400;font-size:12px">(Windows 모드 전용)</span></div>
+          <div style="padding-left:12px;margin-bottom:22px">
+            <div>좌하단 <b style="color:#58a6ff">시작 버튼</b> 클릭 → 시작 메뉴 표시</div>
+            <div>9개 앱 3열 그리드 + 사용자/전원 푸터</div>
+            <div>앱 클릭 시 해당 창 열기 + 메뉴 자동 닫힘</div>
+            <div style="color:#5c6370">ESC 키 또는 외부 클릭으로 닫기</div>
+          </div>
+
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 태스크바</div>
+          <div style="padding-left:12px;margin-bottom:22px">
+            <div><b style="color:#58a6ff">Windows 모드</b>: 실행 중인 앱만 표시 · 중앙 정렬 · 라이트 mica · 가로 막대 인디케이터</div>
+            <div><b style="color:#3fb950">Linux 모드</b>: macOS Dock · 호버 시 확대 · 컬러풀 그라데이션 아이콘</div>
+            <div>우측: Board 배지 · 시계 (클릭 시 캘린더 팝업)</div>
+            <div style="color:#5c6370">태스크바 우클릭 → 최소화 / 복원 / 닫기 (Windows 모드는 한글)</div>
           </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 터미널 명령어</div>
@@ -1172,15 +1281,16 @@
             <span style="color:#58a6ff">[doyoucode@blog ~]$</span> <span style="color:#e6edf3">cd Backend</span><br>
             <span style="color:#58a6ff">[doyoucode@blog ~/Backend]$</span> <span style="color:#e6edf3">ls</span><br>
             <span style="color:#58a6ff">☕ Java/</span>&nbsp;&nbsp;<span style="color:#58a6ff">🍃 Spring Boot/</span>&nbsp;&nbsp;<span style="color:#58a6ff">💾 Database/</span><br>
-            <span style="color:#58a6ff">[doyoucode@blog ~/Backend]$</span> <span style="color:#e6edf3">open Spring Boot</span><br>
-            <span style="color:#3fb950">🌐 Opening Spring Boot ...</span>
+            <span style="color:#58a6ff">[doyoucode@blog ~/Backend]$</span> <span style="color:#e6edf3">cd Spring Boot</span><br>
+            <span style="color:#3fb950">🌐 Spring Boot 을(를) 브라우저에서 열기...</span>
           </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 브라우저 창</div>
           <div style="padding-left:12px;margin-bottom:22px">
             <div>드래그로 이동 / 모서리로 크기 조절</div>
-            <div>닫기(빨강) · 최소화(노랑) · 최대화(초록)</div>
-            <div>뒤로 · 앞으로 · 새로고침 지원</div>
+            <div>뒤로 · 앞으로 · 새로고침 · 새 탭으로 열기</div>
+            <div><b style="color:#58a6ff">Windows 모드</b>: Chrome 풍 라이트 타이틀바 · 알약형 URL바</div>
+            <div><b style="color:#3fb950">Linux 모드</b>: 다크 타이틀바 · traffic-light 컨트롤</div>
           </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## Blogram <span style="color:#5c6370;font-weight:400;font-size:12px">(인스타그램 스타일 사진 피드)</span></div>
@@ -1211,7 +1321,16 @@
             <div>뒤로 · 앞으로 내비게이션 및 주소바 표시</div>
             <div>폴더 클릭 → 하위 카테고리로 이동</div>
             <div>파일(최하위 카테고리) 클릭 → 브라우저 창으로 열기</div>
-            <div style="color:#5c6370">우클릭 → Open / Properties 메뉴 사용 가능</div>
+            <div><b style="color:#58a6ff">Windows 모드</b>에선 라이트 테마 적용</div>
+            <div style="color:#5c6370">우클릭 → 열기 / 속성 메뉴 사용 가능</div>
+          </div>
+
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## Links <span style="color:#5c6370;font-weight:400;font-size:12px">(즐겨찾기 링크 모음)</span></div>
+          <div style="padding-left:12px;margin-bottom:22px">
+            <div>폴더별로 분류된 즐겨찾기 링크 목록</div>
+            <div>각 링크에 파비콘 자동 표시</div>
+            <div>상단 검색바로 빠른 필터링</div>
+            <div style="color:#5c6370">폴더 아이콘 / 시작 메뉴 / Features 폴더에서 접근 가능</div>
           </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## Music Player <span style="color:#5c6370;font-weight:400;font-size:12px">(YouTube 기반 뮤직 플레이어)</span></div>
@@ -1229,6 +1348,7 @@
             <div>To Do · In Progress · Done 3열 칸반 보드</div>
             <div>이슈 추가 · 수정 · 삭제 및 라벨/우선순위 관리</div>
             <div>카드 클릭 시 상세 패널 (설명 · 체크리스트 · 기한)</div>
+            <div>드래그 앤 드롭으로 카드 컬럼 이동</div>
             <div>클립보드 복사 — Tistory 붙여넣기 형식으로 내보내기</div>
             <div style="color:#5c6370">태스크바 Board 버튼으로 빠른 접근 · 미완료 배지 표시</div>
           </div>
@@ -1240,29 +1360,45 @@
             <div style="color:#5c6370">오늘 날짜 하이라이트 표시</div>
           </div>
 
-          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 우클릭 컨텍스트 메뉴</div>
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 우클릭 컨텍스트 메뉴 <span style="color:#5c6370;font-weight:400;font-size:12px">(Windows 모드는 한글 + 라이트 스타일)</span></div>
           <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:22px">
-            <span style="color:#61afef">배경 우클릭</span><span>Terminal · README · Guestbook · Dev Blog · File Explorer · Blogram 열기 / Tutorial · Refresh</span>
-            <span style="color:#61afef">아이콘 우클릭</span><span>Open — 앱 실행 / Properties — 앱 정보 보기</span>
-            <span style="color:#61afef">태스크바 우클릭</span><span>Bring to Front · Minimize · Close</span>
+            <span style="color:#61afef">배경 우클릭</span><span>bash 열기 / 개발 블로그 / Theme (Linux 전용) / 튜토리얼 / 바탕화면 새로 고침</span>
+            <span style="color:#61afef">아이콘 우클릭</span><span>열기 — 앱 실행 / 속성 — 앱 정보 보기</span>
+            <span style="color:#61afef">태스크바 우클릭</span><span>맨 앞으로 가져오기 / 최소화 / 창 닫기</span>
+            <span style="color:#61afef">파일 탐색기 우클릭</span><span>폴더 열기 · 브라우저로 열기 · 속성</span>
           </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 관리자 메뉴 <span style="color:#5c6370;font-weight:400;font-size:12px">(메인화면 우하단)</span></div>
           <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:22px">
-            <span style="color:#61afef">글쓰기</span><span>새 포스트 작성</span>
-            <span style="color:#61afef">관리</span><span>Tistory 관리 페이지</span>
+            <span style="color:#61afef">✏️ 글쓰기</span><span>새 포스트 작성 페이지로 이동</span>
+            <span style="color:#61afef">⚙️ 관리</span><span>Tistory 관리 페이지</span>
+            <span style="color:#61afef">🏠 홈으로</span><span>메인 데스크탑 화면으로 이동</span>
+            <span style="color:#61afef">🖥️ 모드 전환</span><span>Windows ↔ Linux 데스크탑 모드 토글</span>
+            <span style="color:#61afef">⛶ 전체화면</span><span>브라우저 전체화면 진입/종료</span>
           </div>
 
-          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 테마 <span style="color:#5c6370;font-weight:400;font-size:12px">(바탕화면 우클릭 → Theme)</span></div>
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 우상단: 스킨 소스 보러가기</div>
+          <div style="padding-left:12px;margin-bottom:22px">
+            <div>화면 우상단의 <b style="color:#58a6ff">Tistory Skin 개발 보러가기</b> 버튼</div>
+            <div>GitHub 저장소(<span style="color:#5c6370">doyoungkim-code/MyTistorySkin</span>)로 새 탭 이동</div>
+            <div style="color:#5c6370">스킨의 전체 소스 코드를 확인하고 직접 커스터마이징할 수 있습니다</div>
+          </div>
+
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 장식 테마 <span style="color:#5c6370;font-weight:400;font-size:12px">(Linux 모드 전용 · 바탕화면 우클릭 → Theme)</span></div>
           <div style="padding-left:12px">
-            <div>바탕화면 우클릭 메뉴에서 3가지 테마 전환</div>
+            <div>Linux 모드에서 바탕화면 우클릭 → Theme 서브메뉴로 3가지 테마 전환</div>
             <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin-top:6px">
-              <span style="color:#61afef">Default</span><span>기본 데스크탑 테마</span>
-              <span style="color:#61afef">Astronaut</span><span>우주 테마 — 우주인 캐릭터 드래그 · 던지기 · 말풍선</span>
-              <span style="color:#61afef">Sakura</span><span>벚꽃 테마 — 고양이 4마리 · 벚꽃나무 · 나비 · 말풍선</span>
+              <span style="color:#61afef">Default</span><span>기본 우주 배경 (별 · 달 · 우주 기지)</span>
+              <span style="color:#61afef">Astronaut</span><span>우주인 캐릭터 6명 — 드래그 · 던지기 · 말풍선</span>
+              <span style="color:#61afef">Sakura</span><span>벚꽃 — 고양이 4마리 · 벚꽃나무 · 나비 · 말풍선</span>
             </div>
             <div style="margin-top:6px">캐릭터를 드래그해서 던지면 물리 효과(낙하·바운스·걸어가기) 적용</div>
+            <div style="color:#5c6370">⚠️ Windows 모드에서는 Theme 메뉴가 표시되지 않습니다. 모드를 Linux 로 전환 후 사용하세요.</div>
             <div style="color:#5c6370">테마 전환 시 던져진 오브젝트는 자동으로 원래 위치로 복귀</div>
+          </div>
+
+          <div style="margin-top:24px;padding-top:14px;border-top:1px solid #21262d;color:#5c6370;font-size:11px;text-align:center">
+            🎮 데스크탑처럼 즐기는 개발자 블로그 · <span style="color:#58a6ff">github.com/doyoungkim-code/MyTistorySkin</span>
           </div>
 
         </div>
@@ -1524,6 +1660,16 @@
       <div class="dyo-brs-handle nw" data-dir="nw"></div>
     </div>
 
+    <!-- 우상단: 스킨 소스 보러가기 -->
+    <a class="dyo-source-link" href="https://github.com/doyoungkim-code/MyTistorySkin"
+       target="_blank" rel="noopener noreferrer"
+       title="Tistory Skin 개발 보러가기">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.92.57.1.78-.25.78-.55v-1.93c-3.2.7-3.87-1.54-3.87-1.54-.52-1.32-1.28-1.67-1.28-1.67-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.16 1.17a10.95 10.95 0 0 1 5.74 0c2.2-1.48 3.16-1.17 3.16-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.37-5.25 5.66.41.35.78 1.06.78 2.14v3.17c0 .31.21.66.79.55 4.57-1.53 7.85-5.84 7.85-10.92C23.5 5.65 18.35.5 12 .5Z"/>
+      </svg>
+      <span>Tistory Skin 개발 보러가기</span>
+    </a>
+
     <!-- 관리자 빠른 메뉴바 -->
     <div class="dyo-admin-bar">
       <a href="/manage/newpost/?type=post&returnURL=%2Fmanage%2Fposts%2F" class="dyo-admin-btn" title="글쓰기">
@@ -1542,6 +1688,18 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m3 9 9-7 9 7"/>
           <path d="M9 22V12h6v10"/>
+        </svg>
+      </button>
+      <button class="dyo-admin-btn dyo-admin-mode" id="btnModeToggle" title="데스크탑 모드 전환">
+        <!-- Windows 모드일 때: Linux(터미널) 아이콘 노출 -->
+        <svg class="dyo-mode-ic dyo-mode-ic-linux" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="2"/>
+          <path d="m7 9 3 3-3 3"/>
+          <path d="M13 15h4"/>
+        </svg>
+        <!-- Linux 모드일 때: Windows(4분할) 아이콘 노출 -->
+        <svg class="dyo-mode-ic dyo-mode-ic-win" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 4h8v8H3zM13 4h8v8h-8zM3 14h8v8H3zM13 14h8v8h-8z"/>
         </svg>
       </button>
       <div class="dyo-admin-sep"></div>
@@ -1878,11 +2036,13 @@
       setTimeout(tick, 1000);
     })();
 
-    // ── iframe 내부면 관리자바 숨김 ──
+    // ── iframe 내부면 관리자바 + 소스 링크 숨김 ──
     (function() {
       if (window.self !== window.top) {
         var bar = document.querySelector('.dyo-admin-bar');
         if (bar) bar.style.setProperty('display', 'none', 'important');
+        var src = document.querySelector('.dyo-source-link');
+        if (src) src.style.setProperty('display', 'none', 'important');
       }
     })();
 
@@ -1906,10 +2066,138 @@
       var homeBtn    = document.getElementById('btnLandingHome');
       if (!desktop) return;
 
-      // 테마 적용
+      // 모드 적용 (Windows / Linux) — html 클래스는 early script가 이미 적용
+      // 단, 테마(Astronaut/Sakura)는 Linux 모드에서만 활성화
+      var savedMode = localStorage.getItem('dyo_desktop_mode');
+      if (savedMode !== 'windows' && savedMode !== 'linux') savedMode = 'windows';
+
+      // 테마 적용 — Linux 모드일 때만
       var savedTheme = localStorage.getItem('dyo_desktop_theme') || 'default';
-      if (savedTheme === 'astronaut') desktop.classList.add('theme-astronaut');
-      else if (savedTheme === 'sakura') desktop.classList.add('theme-sakura');
+      if (savedMode === 'linux') {
+        if (savedTheme === 'astronaut') desktop.classList.add('theme-astronaut');
+        else if (savedTheme === 'sakura') desktop.classList.add('theme-sakura');
+      }
+
+      // 모드별 라벨 스왑 — data-label-win / data-label-linux 보존 후 교체
+      function applyModeLabels(mode) {
+        document.querySelectorAll('[data-label-win]').forEach(function(el) {
+          if (!el.hasAttribute('data-label-linux')) {
+            el.setAttribute('data-label-linux', el.textContent.trim());
+          }
+          el.textContent = mode === 'windows'
+            ? el.getAttribute('data-label-win')
+            : el.getAttribute('data-label-linux');
+        });
+      }
+      applyModeLabels(savedMode);
+
+      // ── 데스크탑 아이콘 SVG를 모드별로 스왑 ──────────────────
+      // Windows 모드용 평면 SVG (40x40 viewBox) — 배경 박스 없이 단일 그래픽
+      var WIN_DESKTOP_ICONS = {
+        desktopIconReadme:
+          '<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<path d="M9 5h16l6 6v22a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" fill="#ffffff" stroke="#a4c2e6" stroke-width="0.8"/>' +
+            '<path d="M25 5v6h6" fill="none" stroke="#a4c2e6" stroke-width="0.8" stroke-linejoin="round"/>' +
+            '<line x1="12" y1="16" x2="27" y2="16" stroke="#0078d4" stroke-width="1.6" stroke-linecap="round"/>' +
+            '<line x1="12" y1="21" x2="27" y2="21" stroke="#0078d4" stroke-width="1.6" stroke-linecap="round"/>' +
+            '<line x1="12" y1="26" x2="22" y2="26" stroke="#0078d4" stroke-width="1.6" stroke-linecap="round"/>' +
+          '</svg>',
+        desktopIconBlog:
+          '<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<defs><radialGradient id="edgeG" cx="40%" cy="35%" r="65%">' +
+              '<stop offset="0%" stop-color="#3ecbff"/>' +
+              '<stop offset="55%" stop-color="#0078d4"/>' +
+              '<stop offset="100%" stop-color="#063e7a"/>' +
+            '</radialGradient></defs>' +
+            '<circle cx="20" cy="20" r="16" fill="url(#edgeG)"/>' +
+            '<path d="M11 18c0-5 4-9 9-9 4.5 0 8 3 9 7-1-1-3-2-6-2-4 0-7 3-7 7 0 3 2 5 4 6-5-1-9-5-9-9z" fill="#fff" opacity="0.95"/>' +
+            '<path d="M14 28c2 2 5 3 8 3 4 0 7-2 8-5-1 1-3 2-6 2-4 0-7-2-8-5 0 1-1 3-2 5z" fill="#3ecbff" opacity="0.85"/>' +
+          '</svg>',
+        desktopIconShell:
+          '<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<rect x="4" y="7" width="32" height="26" rx="2.5" fill="#1e1e1e"/>' +
+            '<rect x="4" y="7" width="32" height="5" rx="2.5" fill="#2d2d2d"/>' +
+            '<circle cx="8" cy="9.5" r="1" fill="#ff5f56"/>' +
+            '<circle cx="11" cy="9.5" r="1" fill="#ffbd2e"/>' +
+            '<circle cx="14" cy="9.5" r="1" fill="#27c93f"/>' +
+            '<text x="9" y="27" font-family="\'Fira Code\',monospace" font-size="11" font-weight="700" fill="#3fb950">$</text>' +
+            '<rect x="17" y="19" width="6" height="8" fill="#abb2bf" opacity="0.8"/>' +
+          '</svg>',
+        desktopIconExplorer:
+          '<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<path d="M4 11a2 2 0 0 1 2-2h8l3 3h15a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="#ffd166"/>' +
+            '<path d="M4 14h30" stroke="#d99a14" stroke-width="0.6" opacity="0.4"/>' +
+            '<path d="M4 11a2 2 0 0 1 2-2h8l3 3h15a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="none" stroke="#d99a14" stroke-width="0.6"/>' +
+          '</svg>',
+        desktopIconGuest:
+          '<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<path d="M5 9a2 2 0 0 1 2-2h26a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H16l-7 6v-6H7a2 2 0 0 1-2-2z" fill="#0078d4"/>' +
+            '<circle cx="14" cy="18" r="1.8" fill="#fff"/>' +
+            '<circle cx="20" cy="18" r="1.8" fill="#fff"/>' +
+            '<circle cx="26" cy="18" r="1.8" fill="#fff"/>' +
+          '</svg>',
+        desktopIconBoard:
+          '<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<rect x="5" y="8" width="8" height="24" rx="1.5" fill="#0078d4"/>' +
+            '<rect x="16" y="8" width="8" height="17" rx="1.5" fill="#50c0e6"/>' +
+            '<rect x="27" y="8" width="8" height="12" rx="1.5" fill="#9bd9f0"/>' +
+          '</svg>',
+        desktopIconFeatures:
+          '<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<path d="M4 11a2 2 0 0 1 2-2h8l3 3h15a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" fill="#ffd166" stroke="#d99a14" stroke-width="0.6"/>' +
+            '<circle cx="14" cy="22" r="2" fill="#a06a08"/>' +
+            '<circle cx="20" cy="22" r="2" fill="#a06a08"/>' +
+            '<circle cx="26" cy="22" r="2" fill="#a06a08"/>' +
+          '</svg>',
+        desktopIconGallery:
+          '<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<rect x="4" y="8" width="32" height="24" rx="3" fill="#0078d4"/>' +
+            '<circle cx="20" cy="21" r="7" fill="none" stroke="#fff" stroke-width="2.4"/>' +
+            '<circle cx="29" cy="13" r="1.8" fill="#fff"/>' +
+          '</svg>',
+        desktopIconMusic:
+          '<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<path d="M15 28V10l18-3v18" stroke="#0078d4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' +
+            '<circle cx="11" cy="28" r="4" fill="#0078d4"/>' +
+            '<circle cx="29" cy="25" r="4" fill="#0078d4"/>' +
+          '</svg>'
+      };
+
+      // ── 태스크바/시작 메뉴 공용 아이콘 맵 (window-id 키) ─────
+      // 데스크탑 아이콘 SVG를 그대로 재사용 → 통일성 확보.
+      // Links 는 데스크탑 아이콘이 없어 자체 정의.
+      window.WIN_TASKBAR_ICONS = {
+        dyoReadmeWin:   WIN_DESKTOP_ICONS.desktopIconReadme,
+        dyoBrowserWin:  WIN_DESKTOP_ICONS.desktopIconBlog,
+        dyoShellWin:    WIN_DESKTOP_ICONS.desktopIconShell,
+        dyoExplorerWin: WIN_DESKTOP_ICONS.desktopIconExplorer,
+        dyoGuestWin:    WIN_DESKTOP_ICONS.desktopIconGuest,
+        dyoBoardWin:    WIN_DESKTOP_ICONS.desktopIconBoard,
+        dyoGalleryWin:  WIN_DESKTOP_ICONS.desktopIconGallery,
+        dyoMusicWin:    WIN_DESKTOP_ICONS.desktopIconMusic,
+        dyoLinksWin:
+          '<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<path d="M16 24a7 7 0 0 0 10 0.5l4-4a7 7 0 0 0-9.9-9.9l-2 2" stroke="#0078d4" stroke-width="2.8" stroke-linecap="round" fill="none"/>' +
+            '<path d="M24 16a7 7 0 0 0-10-0.5l-4 4a7 7 0 0 0 9.9 9.9l2-2" stroke="#0078d4" stroke-width="2.8" stroke-linecap="round" fill="none"/>' +
+          '</svg>'
+      };
+
+      function applyModeIcons(mode) {
+        Object.keys(WIN_DESKTOP_ICONS).forEach(function(iconId) {
+          var iconEl = document.getElementById(iconId);
+          if (!iconEl) return;
+          var wrap = iconEl.querySelector('.dyo-di-wrap');
+          if (!wrap) return;
+          // 최초 1회 원본 SVG HTML 저장
+          if (!wrap.hasAttribute('data-svg-linux')) {
+            wrap.setAttribute('data-svg-linux', wrap.innerHTML);
+          }
+          wrap.innerHTML = mode === 'windows'
+            ? WIN_DESKTOP_ICONS[iconId]
+            : wrap.getAttribute('data-svg-linux');
+        });
+      }
+      applyModeIcons(savedMode);
 
       // 데스크탑 활성화
       desktop.style.display = 'flex';
@@ -1929,6 +2217,45 @@
           window.location.href = '/';
         });
       }
+
+      // 관리자바 모드 토글 버튼 → Windows ↔ Linux 전환
+      var modeBtn = document.getElementById('btnModeToggle');
+      if (modeBtn) {
+        modeBtn.addEventListener('click', function() {
+          var cur = localStorage.getItem('dyo_desktop_mode');
+          if (cur !== 'windows' && cur !== 'linux') cur = 'windows';
+          var next = cur === 'windows' ? 'linux' : 'windows';
+
+          // html 클래스 갱신
+          document.documentElement.classList.remove('dyo-mode-windows', 'dyo-mode-linux');
+          document.documentElement.classList.add('dyo-mode-' + next);
+
+          // Windows → 장식 테마 클래스 제거 (테마 저장값은 보존)
+          if (next === 'windows') {
+            desktop.classList.remove('theme-astronaut', 'theme-sakura');
+          } else {
+            // Linux → 저장된 테마 복원
+            var t = localStorage.getItem('dyo_desktop_theme') || 'default';
+            desktop.classList.remove('theme-astronaut', 'theme-sakura');
+            if (t === 'astronaut') desktop.classList.add('theme-astronaut');
+            else if (t === 'sakura') desktop.classList.add('theme-sakura');
+          }
+
+          // 모드별 라벨 갱신 (데스크탑 아이콘 + Win 태스크바 툴팁)
+          applyModeLabels(next);
+          // 모드별 데스크탑 아이콘 SVG 스왑
+          applyModeIcons(next);
+          // 시작 메뉴가 열려있으면 닫기
+          var sm = document.getElementById('dyoWinStartMenu');
+          if (sm) sm.classList.remove('open');
+
+          localStorage.setItem('dyo_desktop_mode', next);
+          if (window.dyoToast) {
+            window.dyoToast((next === 'windows' ? 'Windows' : 'Linux') + ' 모드로 전환', 'success', 1800);
+          }
+        });
+      }
+
       // ── 별빛 생성 ──
       (function generateStars() {
         var layer = document.getElementById('dyoStarLayer');
@@ -2953,7 +3280,7 @@
       var desktopBar = document.getElementById('dyoDesktopBar');
       if (desktopBar) desktopBar.classList.add('show');
 
-      // 시계 업데이트
+      // 시계 업데이트 (Linux 바 + Windows 바 양쪽 갱신)
       function updateClock() {
         var now = new Date();
         var hh = String(now.getHours()).padStart(2, '0');
@@ -2961,10 +3288,16 @@
         var yyyy = now.getFullYear();
         var mo = String(now.getMonth() + 1).padStart(2, '0');
         var dd = String(now.getDate()).padStart(2, '0');
-        var clockEl = document.getElementById('desktopClock');
-        var dateEl  = document.getElementById('desktopDate');
-        if (clockEl) clockEl.textContent = hh + ':' + mm;
-        if (dateEl)  dateEl.textContent  = yyyy + '/' + mo + '/' + dd;
+        var timeStr = hh + ':' + mm;
+        var dateStr = yyyy + '/' + mo + '/' + dd;
+        ['desktopClock', 'dyoWinClock'].forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = timeStr;
+        });
+        ['desktopDate', 'dyoWinDate'].forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = dateStr;
+        });
       }
       updateClock();
       setInterval(updateClock, 1000);
@@ -2973,6 +3306,190 @@
       var barBoard = document.getElementById('dyoBarBoard');
       if (barBoard) barBoard.addEventListener('click', function() {
         if (window.dyoOpenBoard) window.dyoOpenBoard();
+      });
+
+      // ── Windows 시작 메뉴 (Windows 모드 전용) ─────────────
+      // 앱 정의 — 시작 메뉴 + Win 태스크바 툴팁이 같은 한글명 공유
+      // Start 메뉴 + Win 태스크바 정의 — 데스크탑 아이콘 SVG와 동일 사용
+      // keywords: 검색용 별칭 (한글/영문 모두). label 자체도 검색 대상에 포함됨.
+      var WIN_APP_DEFS = [
+        { id: 'dyoBrowserWin',  label: '개발 블로그',     svg: window.WIN_TASKBAR_ICONS.dyoBrowserWin,
+          keywords: ['blog', 'dev blog', '블로그', '개발블로그', '포스트', '글', '카테고리', 'tistory', '티스토리'],
+          open: function() { if (window.dyoOpenBrowser) window.dyoOpenBrowser('/category'); } },
+        { id: 'dyoShellWin',    label: 'bash',           svg: window.WIN_TASKBAR_ICONS.dyoShellWin,
+          keywords: ['shell', 'terminal', 'cmd', 'command', 'powershell', '터미널', '명령어', '커맨드', '쉘', '콘솔', 'console'],
+          open: function() { if (window.dyoOpenShell)    window.dyoOpenShell();    } },
+        { id: 'dyoExplorerWin', label: '파일 탐색기',     svg: window.WIN_TASKBAR_ICONS.dyoExplorerWin,
+          keywords: ['file explorer', 'files', 'explorer', '탐색기', '파일', '폴더', 'folder', '디렉토리'],
+          open: function() { if (window.dyoOpenExplorer) window.dyoOpenExplorer(); } },
+        { id: 'dyoReadmeWin',   label: 'README',          svg: window.WIN_TASKBAR_ICONS.dyoReadmeWin,
+          keywords: ['readme', 'help', '도움말', '안내', '사용법', '리드미', 'guide'],
+          open: function() { if (window.dyoOpenReadme)   window.dyoOpenReadme();   } },
+        { id: 'dyoGuestWin',    label: '방명록',          svg: window.WIN_TASKBAR_ICONS.dyoGuestWin,
+          keywords: ['guestbook', 'chat', '채팅', '방명록', '메시지', '댓글', 'message', '카톡', 'kakao'],
+          open: function() { if (window.dyoOpenGuest)    window.dyoOpenGuest();    } },
+        { id: 'dyoBoardWin',    label: '보드',            svg: window.WIN_TASKBAR_ICONS.dyoBoardWin,
+          keywords: ['board', '보드', '칸반', 'kanban', '할일', 'todo', 'task', '일정', '관리', 'trello'],
+          open: function() { if (window.dyoOpenBoard)    window.dyoOpenBoard();    } },
+        { id: 'dyoLinksWin',    label: '링크',            svg: window.WIN_TASKBAR_ICONS.dyoLinksWin,
+          keywords: ['links', '링크', '즐겨찾기', '북마크', 'bookmark', 'favorite', '바로가기'],
+          open: function() { if (window.dyoOpenLinks)    window.dyoOpenLinks();    } },
+        { id: 'dyoGalleryWin',  label: 'Blogram',         svg: window.WIN_TASKBAR_ICONS.dyoGalleryWin,
+          keywords: ['blogram', 'gallery', 'photo', 'instagram', '갤러리', '사진', '인스타', '이미지', 'image'],
+          open: function() { if (window.dyoOpenGallery)  window.dyoOpenGallery();  } },
+        { id: 'dyoMusicWin',    label: '음악',            svg: window.WIN_TASKBAR_ICONS.dyoMusicWin,
+          keywords: ['music', '뮤직', '음악', 'song', '노래', 'youtube', 'mp3', 'player', '플레이어', 'audio'],
+          open: function() { if (window.dyoOpenMusic)    window.dyoOpenMusic();    } }
+      ];
+
+      var winStart    = document.getElementById('dyoWinStart');
+      var winStartMenu = document.getElementById('dyoWinStartMenu');
+      var winStartList = document.getElementById('dyoWinStartList');
+
+      // Win 태스크바 앱 툴팁 한글화 (DOM이 동적으로 추가되므로 MutationObserver)
+      function applyWinAppTooltips() {
+        WIN_APP_DEFS.forEach(function(def) {
+          var btn = document.querySelector('.dyo-win-app[data-win-id="' + def.id + '"]');
+          if (!btn) return;
+          var tip = btn.querySelector('.dyo-win-app-tooltip');
+          if (tip) tip.textContent = def.label;
+        });
+      }
+      // 즉시 + 100ms 후 한 번 더 (dock init은 같은 turn에 실행됨)
+      setTimeout(applyWinAppTooltips, 0);
+      setTimeout(applyWinAppTooltips, 200);
+
+      // Start 메뉴 populate + 검색 기능
+      var winStartItems = []; // [{ el, def }]
+      var winStartNoResults = null;
+      if (winStartList) {
+        WIN_APP_DEFS.forEach(function(def) {
+          var item = document.createElement('button');
+          item.className = 'dyo-winsm-item';
+          item.dataset.winId = def.id;
+          item.innerHTML =
+            '<span class="dyo-winsm-icon">' + def.svg + '</span>' +
+            '<span class="dyo-winsm-name">' + def.label + '</span>';
+          item.addEventListener('click', function() {
+            closeWinStartMenu();
+            def.open();
+          });
+          winStartList.appendChild(item);
+          winStartItems.push({ el: item, def: def });
+        });
+        // "검색 결과 없음" 표시 영역
+        winStartNoResults = document.createElement('div');
+        winStartNoResults.className = 'dyo-winsm-noresults';
+        winStartNoResults.textContent = '검색 결과 없음';
+        winStartList.appendChild(winStartNoResults);
+      }
+
+      // 검색 입력 핸들러 — 라벨 + keywords 매칭 (대소문자 무시)
+      var winSmSearch = document.getElementById('dyoWinSmSearch');
+      function applyStartSearch(q) {
+        q = (q || '').trim().toLowerCase();
+        var anyVisible = false;
+        winStartItems.forEach(function(it) {
+          if (!q) {
+            it.el.style.display = '';
+            anyVisible = true;
+            return;
+          }
+          var hay = (it.def.label + ' ' + (it.def.keywords || []).join(' ')).toLowerCase();
+          var match = hay.indexOf(q) !== -1;
+          it.el.style.display = match ? '' : 'none';
+          if (match) anyVisible = true;
+        });
+        if (winStartNoResults) {
+          winStartNoResults.style.display = (q && !anyVisible) ? '' : 'none';
+        }
+      }
+      if (winSmSearch) {
+        winSmSearch.addEventListener('input', function() { applyStartSearch(this.value); });
+        winSmSearch.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            // 첫 번째로 보이는 항목 실행
+            for (var i = 0; i < winStartItems.length; i++) {
+              if (winStartItems[i].el.style.display !== 'none') {
+                winStartItems[i].el.click();
+                break;
+              }
+            }
+          }
+        });
+      }
+
+      function openWinStartMenu() {
+        if (!winStartMenu) return;
+        var r = winStart ? winStart.getBoundingClientRect() : { left: 14, top: window.innerHeight - 48 };
+        winStartMenu.style.left = Math.max(8, r.left) + 'px';
+        winStartMenu.style.bottom = (window.innerHeight - r.top + 6) + 'px';
+        winStartMenu.classList.add('open');
+        // 검색 상태 초기화 + 입력란 자동 포커스
+        if (winSmSearch) {
+          winSmSearch.value = '';
+          applyStartSearch('');
+          setTimeout(function() { winSmSearch.focus(); }, 50);
+        }
+      }
+      function closeWinStartMenu() {
+        if (!winStartMenu) return;
+        winStartMenu.classList.remove('open');
+        // 검색 필터 리셋 — 다음 오픈 시 전체 목록부터 시작
+        if (winSmSearch) {
+          winSmSearch.value = '';
+          applyStartSearch('');
+        }
+      }
+
+      if (winStart) winStart.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (winStartMenu && winStartMenu.classList.contains('open')) closeWinStartMenu();
+        else openWinStartMenu();
+      });
+      // 외부 클릭 닫기
+      document.addEventListener('click', function(e) {
+        if (!winStartMenu || !winStartMenu.classList.contains('open')) return;
+        if (winStart && winStart.contains(e.target)) return;
+        if (winStartMenu.contains(e.target)) return;
+        closeWinStartMenu();
+      });
+      // ESC 닫기
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && winStartMenu && winStartMenu.classList.contains('open')) closeWinStartMenu();
+      });
+      var winSmPower = document.getElementById('dyoWinSmPower');
+      if (winSmPower) winSmPower.addEventListener('click', function() {
+        closeWinStartMenu();
+        if (window.dyoToast) window.dyoToast('시스템 종료 — 데모용 입니다 😉', 'info', 1800);
+      });
+
+      var winBoardBtn = document.getElementById('dyoWinBoard');
+      if (winBoardBtn) winBoardBtn.addEventListener('click', function() {
+        if (window.dyoOpenBoard) window.dyoOpenBoard();
+      });
+
+      // Windows 시계 → 기존 캘린더 팝업 토글 핸들러로 forward
+      var winClock = document.getElementById('dyoWinClockWrap');
+      if (winClock) winClock.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var origin = document.getElementById('dyoBarClock');
+        var popup  = document.getElementById('dyoCalPopup');
+        if (!origin || !popup) return;
+        // 팝업이 닫혀있으면 — Win 시계 위치 기준으로 띄움
+        var isOpen = popup.classList.contains('open');
+        if (isOpen) {
+          popup.classList.remove('open');
+          return;
+        }
+        // bar-clock 핸들러를 직접 호출하기 어려우니, 위치만 재계산 후 toggle
+        origin.click(); // 내부에서 팝업 토글
+        // 위치는 Win clock 위로 강제 이동
+        var cr = winClock.getBoundingClientRect();
+        var pw = popup.offsetWidth || 280;
+        popup.style.left = Math.max(8, cr.right - pw) + 'px';
+        popup.style.bottom = (window.innerHeight - cr.top + 8) + 'px';
       });
 
       // README 아이콘 클릭
@@ -5035,6 +5552,20 @@
       // 아이콘 → 창이 튀어나오는 팝 애니메이션
       // 사용법: 각 open 함수에서 window.dyoAnimOpen(winEl) 호출
       //         아이콘 클릭 시 window._dyoAnimSrc = iconEl; 설정
+      // 현재 모드에 맞는 태스크바 아이템 찾기.
+      //   Windows 모드: .dyo-win-app 우선 (Linux dock은 display:none 부모 안이라 rect=0)
+      //   Linux   모드: .dyo-dock-item 우선
+      // → 최소화 애니메이션이 항상 보이는 태스크바 쪽으로 향함.
+      function getModeAwareTaskbarItem(winId) {
+        if (!winId) return null;
+        var isWin = document.documentElement.classList.contains('dyo-mode-windows');
+        var winApp   = document.querySelector('.dyo-win-app[data-win-id="'   + winId + '"]');
+        var dockItem = document.querySelector('.dyo-dock-item[data-win-id="' + winId + '"]');
+        var taskBtn  = document.querySelector('.dyo-taskbtn[data-win-id="'   + winId + '"]');
+        return isWin ? (winApp   || dockItem || taskBtn)
+                     : (dockItem || winApp   || taskBtn);
+      }
+
       // 닫기/숨김: 페이드아웃 후 콜백
       window.dyoAnimDismiss = function(winEl, cb) {
         // 최소화 상태(display:none)면 animation이 실행 안 되므로 즉시 콜백
@@ -5059,8 +5590,8 @@
           if (cb) cb();
           return;
         }
-        var dockItem = document.querySelector('.dyo-dock-item[data-win-id="' + winEl.id + '"]');
-        var taskBtn  = dockItem || document.querySelector('.dyo-taskbtn[data-win-id="' + winEl.id + '"]');
+        // 모드별로 올바른 태스크바 아이템 (Win 모드면 .dyo-win-app)
+        var taskBtn = getModeAwareTaskbarItem(winEl.id);
         var wr = winEl.getBoundingClientRect();
         var wx = wr.left + wr.width  / 2;
         var wy = wr.top  + wr.height / 2;
@@ -5069,8 +5600,11 @@
         var ty = window.innerHeight - wy;
         if (taskBtn) {
           var tr = taskBtn.getBoundingClientRect();
-          tx = (tr.left + tr.width  / 2) - wx;
-          ty = (tr.top  + tr.height / 2) - wy;
+          // 보이지 않는 요소(width=0)는 무시하고 기본값 유지
+          if (tr.width > 0 && tr.height > 0) {
+            tx = (tr.left + tr.width  / 2) - wx;
+            ty = (tr.top  + tr.height / 2) - wy;
+          }
         }
         winEl.style.setProperty('--min-tx', tx + 'px');
         winEl.style.setProperty('--min-ty', ty + 'px');
@@ -5107,13 +5641,23 @@
         var src = window._dyoAnimSrc || null;
         window._dyoAnimSrc = null;
 
+        // src가 winId를 가진 태스크바 아이템이면, 현재 모드에 맞는 요소로 재매핑.
+        // (Linux dock-item 이 Win 모드에서 width=0 으로 잡혀 애니메이션이 좌상단으로 튀는 문제 방지)
+        if (src && src.dataset && src.dataset.winId) {
+          var preferred = getModeAwareTaskbarItem(src.dataset.winId);
+          if (preferred) {
+            var pr = preferred.getBoundingClientRect();
+            if (pr.width > 0 && pr.height > 0) src = preferred;
+          }
+        }
+
         // 기준점(transform-origin) 계산: 아이콘 중심 → 창 기준 상대 좌표
         var wr = winEl.getBoundingClientRect();
         var ox, oy;
-        if (src) {
-          var sr = src.getBoundingClientRect();
-          ox = sr.left + sr.width  / 2;
-          oy = sr.top  + sr.height / 2;
+        var srcRect = src ? src.getBoundingClientRect() : null;
+        if (src && srcRect && srcRect.width > 0 && srcRect.height > 0) {
+          ox = srcRect.left + srcRect.width  / 2;
+          oy = srcRect.top  + srcRect.height / 2;
         } else {
           ox = window.innerWidth  / 2;
           oy = window.innerHeight / 2;
@@ -5389,6 +5933,8 @@
           menu.style.left = e.clientX + 'px';
           menu.style.top  = (e.clientY - 8) + 'px';
 
+          // 모드별 라벨 헬퍼 (dock 컨텍스트 메뉴용)
+          var __isWin = document.documentElement.classList.contains('dyo-mode-windows');
           function addItem(label, disabled, action) {
             var btn = document.createElement('button');
             btn.className = 'dyo-ctx-item' + (disabled ? ' disabled' : '');
@@ -5398,7 +5944,7 @@
             menu.appendChild(btn);
           }
 
-          addItem('Minimize', !isOpen || isMin, function() {
+          addItem(__isWin ? '최소화' : 'Minimize', !isOpen || isMin, function() {
             if (window.dyoAnimMinimize) {
               window.dyoAnimMinimize(winEl, function() { winEl.classList.add('minimized'); });
             } else {
@@ -5406,7 +5952,7 @@
             }
           });
 
-          addItem('Restore', !isOpen || !isMin, function() {
+          addItem(__isWin ? '복원' : 'Restore', !isOpen || !isMin, function() {
             window._dyoAnimSrc = item;
             winEl.classList.remove('minimized');
             window._dyoZTop = (window._dyoZTop || 9000) + 1;
@@ -5414,7 +5960,7 @@
             if (window.dyoAnimOpen) window.dyoAnimOpen(winEl);
           });
 
-          addItem('Close', !isOpen, function() {
+          addItem(__isWin ? '창 닫기' : 'Close', !isOpen, function() {
             if (window.dyoAnimDismiss) {
               window.dyoAnimDismiss(winEl, function() {
                 winEl.classList.remove('open','minimized','maximized');
@@ -5439,6 +5985,37 @@
           document.addEventListener('mousedown', closeMenu);
         });
 
+        // ── Windows 태스크바 아이템 (병렬 생성) ───────────────
+        var winApps = document.getElementById('dyoWinApps');
+        var winItem = null;
+        if (winApps && def.id) {
+          winItem = document.createElement('button');
+          winItem.className = 'dyo-win-app';
+          winItem.dataset.winId = def.id;
+          // Windows 모드는 데스크탑 아이콘과 같은 SVG를 재사용 (없으면 dock 아이콘 폴백)
+          var winSvg = (window.WIN_TASKBAR_ICONS && window.WIN_TASKBAR_ICONS[def.id])
+            ? window.WIN_TASKBAR_ICONS[def.id]
+            : def.icon;
+          winItem.innerHTML =
+            '<span class="dyo-win-app-icon">' + winSvg + '</span>' +
+            '<span class="dyo-win-app-indicator"></span>' +
+            '<span class="dyo-win-app-tooltip">' + def.label + '</span>';
+          winItem.addEventListener('click', function() {
+            // Linux dock item과 동일 동작 — 동일 핸들러 트리거
+            item.click();
+          });
+          winItem.addEventListener('contextmenu', function(e) {
+            // 컨텍스트 메뉴는 Linux dock 핸들러 재사용
+            var ev = new MouseEvent('contextmenu', {
+              bubbles: true, cancelable: true,
+              clientX: e.clientX, clientY: e.clientY
+            });
+            e.preventDefault();
+            item.dispatchEvent(ev);
+          });
+          winApps.appendChild(winItem);
+        }
+
         if (def.id) {
           var winEl = document.getElementById(def.id);
           if (winEl) {
@@ -5447,6 +6024,11 @@
               var isMin  = winEl.classList.contains('minimized');
               item.classList.toggle('open',      isOpen);
               item.classList.toggle('minimized', isOpen && isMin);
+              if (winItem) {
+                winItem.classList.toggle('open',      isOpen);
+                winItem.classList.toggle('active',    isOpen && !isMin);
+                winItem.classList.toggle('minimized', isOpen && isMin);
+              }
               updateDockVisibility();
             });
             obs.observe(winEl, { attributes: true, attributeFilter: ['class'] });
@@ -5630,14 +6212,20 @@
         },
       };
 
+      // 모드별 라벨 헬퍼 (Windows 모드일 때 한글)
+      function isWinMode() {
+        return document.documentElement.classList.contains('dyo-mode-windows');
+      }
+      function L(en, ko) { return isWinMode() ? ko : en; }
+
       // 팝업 아이템 우클릭용 글로벌 헬퍼
       window.dyoShowIconCtxMenu = function(metaKey, clientX, clientY) {
         var meta = iconMeta[metaKey];
         currentCtx = { type: 'icon', meta: meta };
         buildMenu([
-          { label: 'Open',       action: 'icon-open' },
+          { label: L('Open', '열기'),       action: 'icon-open' },
           'sep',
-          { label: 'Properties', action: 'icon-props', disabled: !meta }
+          { label: L('Properties', '속성'), action: 'icon-props', disabled: !meta }
         ]);
         showMenu(clientX, clientY);
       };
@@ -5724,9 +6312,9 @@
           var meta = iconMeta[iconEl.id];
           currentCtx = { type: 'icon', meta: meta };
           buildMenu([
-            { label: 'Open',       action: 'icon-open' },
+            { label: L('Open', '열기'),             action: 'icon-open' },
             'sep',
-            { label: 'Properties', action: 'icon-props', disabled: !meta }
+            { label: L('Properties', '속성'),       action: 'icon-props', disabled: !meta }
           ]);
 
         } else if (taskBtn) {
@@ -5737,31 +6325,36 @@
           var isMini = !!(winEl && winEl.classList.contains('minimized'));
           currentCtx = { type: 'task', winEl: winEl };
           buildMenu([
-            { label: 'Bring to Front', action: 'task-front',    disabled: !isOpen },
-            { label: 'Minimize',       action: 'task-minimize', disabled: !isOpen || isMini },
+            { label: L('Bring to Front', '맨 앞으로 가져오기'), action: 'task-front',    disabled: !isOpen },
+            { label: L('Minimize', '최소화'),                    action: 'task-minimize', disabled: !isOpen || isMini },
             'sep',
-            { label: 'Close',          action: 'task-close', danger: true, disabled: !isOpen }
+            { label: L('Close', '창 닫기'),                      action: 'task-close', danger: true, disabled: !isOpen }
           ]);
 
         } else {
           // ── 배경 우클릭
           currentCtx = { type: 'bg' };
           var curTheme = localStorage.getItem('dyo_desktop_theme') || 'default';
-          buildMenu([
-            { label: 'New Terminal',       action: 'terminal'  },
-            { label: 'Dev Blog',           action: 'blog'      },
-            'sep',
-            { label: 'Theme', sub: [
+          var curMode  = localStorage.getItem('dyo_desktop_mode') || 'windows';
+          // Theme 서브메뉴는 Linux 모드일 때만 (장식 테마는 Linux 전용)
+          var bgItems = [
+            { label: L('New Terminal', 'bash 열기'),  action: 'terminal'  },
+            { label: L('Dev Blog', '개발 블로그'),     action: 'blog'      },
+            'sep'
+          ];
+          if (curMode === 'linux') {
+            bgItems.push({ label: 'Theme', sub: [
               { label: 'Default',    action: 'theme-default',    checked: curTheme === 'default' },
               { label: 'Astronaut',  action: 'theme-astronaut',  checked: curTheme === 'astronaut' },
               { label: 'Sakura',     action: 'theme-sakura',     checked: curTheme === 'sakura' },
               'sep',
               { label: 'Coming Soon...', action: '', disabled: true },
-            ]},
-            'sep',
-            { label: 'Tutorial',           action: 'tutorial'  },
-            { label: 'Refresh Desktop',    action: 'refresh'   }
-          ]);
+            ]});
+            bgItems.push('sep');
+          }
+          bgItems.push({ label: L('Tutorial', '튜토리얼'),                action: 'tutorial' });
+          bgItems.push({ label: L('Refresh Desktop', '바탕화면 새로 고침'), action: 'refresh'  });
+          buildMenu(bgItems);
         }
 
         showMenu(e.clientX, e.clientY);
@@ -5899,13 +6492,16 @@
         var isFolder = !!(child.children && child.children.length);
         currentCtx = { type: 'exp-item', child: child, isFolder: isFolder, openFn: openFn };
         var items = [
-          { label: isFolder ? '📂 Open Folder' : '🌐 Open in Browser', action: 'exp-open' }
+          { label: isFolder
+              ? L('📂 Open Folder',     '📂 폴더 열기')
+              : L('🌐 Open in Browser', '🌐 브라우저로 열기'),
+            action: 'exp-open' }
         ];
         if (isFolder && child.url) {
-          items.push({ label: '🌐 Open in Browser', action: 'exp-browser' });
+          items.push({ label: L('🌐 Open in Browser', '🌐 브라우저로 열기'), action: 'exp-browser' });
         }
         items.push('sep');
-        items.push({ label: 'Properties', action: 'exp-props' });
+        items.push({ label: L('Properties', '속성'), action: 'exp-props' });
         buildMenu(items);
         showMenu(x, y);
       };
@@ -8628,13 +9224,14 @@ function escHtml(s) {
         var pct   = total ? Math.round(done / total * 100) : 0;
         if (progressFill) progressFill.style.width = pct + '%';
         if (progressText) progressText.textContent = done + '/' + total + ' Done (' + pct + '%)';
-        // 태스크바 배지 업데이트
-        var badge = document.getElementById('dyoBarBoardBadge');
+        // 태스크바 배지 업데이트 (Linux + Windows 양쪽)
         var remaining = total - done;
-        if (badge) {
-          badge.textContent = remaining > 0 ? remaining : '';
-          badge.style.display = remaining > 0 ? 'inline-block' : 'none';
-        }
+        ['dyoBarBoardBadge', 'dyoWinBoardBadge'].forEach(function(id) {
+          var b = document.getElementById(id);
+          if (!b) return;
+          b.textContent = remaining > 0 ? remaining : '';
+          b.style.display = remaining > 0 ? '' : 'none';
+        });
       }
 
       // ── D-day 계산 ─────────────────────────────────────────
@@ -9329,8 +9926,9 @@ function escHtml(s) {
 
     // ── 태스크바 칸반 배지 (독립 실행) ──────────────────────
     (function() {
-      var badge = document.getElementById('dyoBarBoardBadge');
-      if (!badge) return;
+      var badgeLinux = document.getElementById('dyoBarBoardBadge');
+      var badgeWin   = document.getElementById('dyoWinBoardBadge');
+      if (!badgeLinux && !badgeWin) return;
       var BOARD_URL = '/notice/130';
       var COLS_IDS = ['todo', 'inprogress', 'done'];
       fetch(BOARD_URL, { credentials: 'include' })
@@ -9357,8 +9955,15 @@ function escHtml(s) {
             if (colNum === 3) done++;
           });
           var remaining = total - done;
-          badge.textContent = remaining > 0 ? remaining : '';
-          badge.style.display = remaining > 0 ? 'inline-block' : 'none';
+          var txt = remaining > 0 ? remaining : '';
+          if (badgeLinux) {
+            badgeLinux.textContent = txt;
+            badgeLinux.style.display = remaining > 0 ? 'inline-block' : 'none';
+          }
+          if (badgeWin) {
+            badgeWin.textContent = txt;
+            badgeWin.style.display = remaining > 0 ? '' : 'none';
+          }
         })
         .catch(function() {});
     })();

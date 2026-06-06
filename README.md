@@ -16,7 +16,7 @@
 7. [카테고리 트리 (FS / Explorer 공용)](#7-카테고리-트리-fs--explorer-공용)
 8. [Tistory API 연동 목록](#8-tistory-api-연동-목록)
 9. [커스터마이징 포인트](#9-커스터마이징-포인트)
-10. [테마 시스템 (Default · Astronaut · Sakura)](#10-테마-시스템-default--astronaut--sakura)
+10. [모드 & 테마 시스템](#10-모드--테마-시스템)
 11. [창 공통 패턴 (드래그·리사이즈·최소화·최대화)](#11-창-공통-패턴-드래그리사이즈최소화최대화)
 12. [z-index 관리 방식](#12-z-index-관리-방식)
 13. [주요 CSS 클래스 레퍼런스](#13-주요-css-클래스-레퍼런스)
@@ -880,9 +880,55 @@ var GALLERY_CATEGORY = '';  // 빈 문자열로 변경 필요
 
 ---
 
-## 10. 테마 시스템 (Default · Astronaut · Sakura)
+## 10. 모드 & 테마 시스템
 
-태스크바의 🎨 팔레트 아이콘 클릭으로 3가지 테마를 전환. `#dyoDesktop`에 `.theme-astronaut` 또는 `.theme-sakura` 클래스를 토글하여 전환.
+### 10-0. 데스크탑 모드 (Windows · Linux)
+
+전체 셸의 **두 가지 형태**를 우하단 관리자 바의 `#btnModeToggle` 버튼으로 전환.
+
+| 모드 | `<html>` 클래스 | 기본값 | 태스크바 | 특징 |
+|------|----------------|--------|----------|------|
+| Windows | `.dyo-mode-windows` | ✅ | `#dyoWinTaskbar` (별도) | Windows 11 Fluent 풍 — bloom gradient 배경, mica 태스크바, 좌측 시작 로고, 직사각 창 컨트롤, 가로 막대 인디케이터 |
+| Linux | `.dyo-mode-linux` | | `#dyoDesktopBar` (기존) | macOS/Linux 풍 — 어두운 우주 배경, traffic-light 도트, macOS Dock, 장식 테마(Astronaut/Sakura) 활성화 |
+
+> **태스크바는 두 모드가 별도 요소**입니다. Windows 모드: `#dyoDesktopBar` 숨김 + `#dyoWinTaskbar` 노출. Linux 모드: 그 반대. 시계·Board 배지 등 공유 데이터는 양쪽 요소에 동시 업데이트됨.
+
+#### Windows 모드 추가 특성
+
+- **배경**: 사용자 지정 이미지 (Tistory CDN, [style.css:7634-7642](style.css#L7634-L7642))
+- **테마**: 라이트 mica — `rgba(243,243,243,0.82)` + `backdrop-filter: blur(40px) saturate(180%)`
+- **태스크바 정책**: 실행 중인 앱만 표시 (`.dyo-win-app { display: none } .dyo-win-app.open { display: flex }`) — 핀 고정 없음
+- **시작 메뉴**: `#dyoWinStartMenu` 별도 컴포넌트, Start 버튼 클릭 시 토글, 9개 앱 그리드 + 검색바(데모) + 사용자/전원 푸터
+- **한글화**: 데스크탑 아이콘 `<span class="dyo-di-label" data-label-win="...">` 패턴으로 모드별 자동 스왑 (Command Prompt → Windows PowerShell, File Explorer → 파일 탐색기, Dev Blog → 블로그 바로가기 등)
+- **창 크롬**: 흰 그라데이션 타이틀바, 검정 stroke traffic-light 아이콘, close hover 시에만 빨강 + 흰색 X
+- **속성 창**: Windows 클래식 다이얼로그 풍 — 흰 배경, `#0078d4` 섹션 헤더
+
+- `localStorage.dyo_desktop_mode` 에 `'windows'` 또는 `'linux'` 저장
+- `<head>` 내 early script가 paint 전에 모드 클래스를 `<html>` 에 적용 → 깜빡임 방지
+- **장식 테마(Astronaut / Sakura)는 Linux 모드 전용** — 우클릭 컨텍스트 메뉴의 Theme 서브메뉴도 Linux 모드에서만 노출
+- Windows 모드는 `.dyo-astro-layer / .dyo-sakura-layer / .dyo-astronaut / .dyo-sakura-cat / .dyo-star-layer / ...` 등 장식 레이어를 모두 `display: none !important` 처리
+
+#### Windows 모드 주요 오버라이드 (`style.css` 끝 모듈)
+
+| 영역 | 셀렉터 | 효과 |
+|------|--------|------|
+| 배경 | `.dyo-mode-windows .dyo-desktop` | Fluent bloom 그라디언트 |
+| 태스크바 | `.dyo-mode-windows .dyo-desktop-bar` | mica(blur+saturate) + 48px 높이 |
+| 시작 로고 | `.dyo-mode-windows .dyo-desktop-bar::before` | 좌측 절대 위치, SVG mask (4분할 로고) |
+| Dock 아이콘 | `.dyo-mode-windows .dyo-dock-item` | 호버 bg + bouncy 스케일 제거, 가로 막대 인디케이터 |
+| 창 크롬 | `.dyo-mode-windows .dyo-shell-titlebar` | 36px 헤더, 왼쪽 정렬 타이틀, 사각 모서리(8px) |
+| 창 컨트롤 | `.dyo-mode-windows .dyo-term-dot` | `flex order` 로 min/max/close 재배치, 직사각 hover bg |
+| 데스크탑 아이콘 | `.dyo-mode-windows .dyo-desktop-icon` | 48px wrap, 11.5px 라벨 |
+| 관리자 바 | `.dyo-mode-windows .dyo-admin-bar` | mica + 8px radius |
+| 컨텍스트 메뉴 | `.dyo-mode-windows .dyo-ctx-menu` | mica + 4px item radius |
+
+---
+
+## 10-1. 테마 시스템 (Default · Astronaut · Sakura)
+
+> ⚠️ **Linux 모드 전용** — Windows 모드에서는 비활성화됨.
+
+태스크바 우클릭 → Theme 서브메뉴로 3가지 테마를 전환. `#dyoDesktop`에 `.theme-astronaut` 또는 `.theme-sakura` 클래스를 토글하여 전환.
 
 ### 테마 구조
 
