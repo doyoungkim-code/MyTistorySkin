@@ -70,12 +70,15 @@ tistory/
     #dyoTutorial               ← 튜토리얼 오버레이
     #dyoDesktop                ← 바탕화면 (홈 전용)
     #dyoCalPopup               ← 태스크바 캘린더 팝업 (시계 클릭으로 열기)
-    #dyoFeaturesPopup          ← Features 폴더 팝업 (Blogram/Music/GitHub)
-    #dyoDesktopBar             ← 하단 태스크바
+    #dyoFeaturesPopup          ← Features 폴더 팝업 (Blogram/Music/GitHub/Links)
+    #dyoDesktopBar             ← Linux 모드 태스크바 (macOS Dock)
+    #dyoWinStartMenu           ← Windows 시작 메뉴 (Windows 모드 전용, 검색바 포함)
+    #dyoWinTaskbar             ← Windows 태스크바 (Windows 모드 전용, mica)
     [각종 .dyo-shell-win 창들]
-    .dyo-admin-bar             ← 관리자 버튼 (우하단)
+    .dyo-source-link           ← 우상단 GitHub 소스 링크 (z-index 8001 — 배경 위/창 아래)
+    .dyo-admin-bar             ← 관리자 버튼 (우하단) — 글쓰기/관리/홈/모드토글/전체화면
     #dyoConfirmOverlay         ← 외부 링크 확인 다이얼로그
-    #dyoCtxMenu                ← 우클릭 컨텍스트 메뉴
+    #dyoCtxMenu                ← 우클릭 컨텍스트 메뉴 (모드별 한/영 라벨)
   </s_t3>
   <script src="./images/script.js">
   <script> ...인라인 JS... </script>
@@ -124,38 +127,45 @@ tistory/
 
 | ID | 타입 | 크기(초기) | 설명 |
 |----|------|-----------|------|
-| `#dyoDesktop` | 바탕화면 | 전체화면 | 6개 아이콘 그리드 + Features 폴더, 홈(`tt-body-index`)에서만 표시 |
-| `#dyoDesktopBar` | 태스크바 | 하단 고정 52px | 태스크 버튼 + macOS Dock + 시계 + 뮤직 미니 |
+| `#dyoDesktop` | 바탕화면 | 전체화면 | 7개 아이콘 그리드 + Features 폴더, 홈(`tt-body-index`)에서만 표시 |
+| `#dyoDesktopBar` | 태스크바 (Linux) | 하단 고정 52px | macOS Dock + 시계 + Board 배지 + 뮤직 미니 |
+| `#dyoWinTaskbar` | 태스크바 (Windows) | 하단 고정 48px | 시작 버튼 + 실행 중 앱만 표시 + 시스템 트레이 (mica blur) |
+| `#dyoWinStartMenu` | Windows 시작 메뉴 | 좌하단 동적 | 검색 입력란 + 9개 앱 그리드 + 사용자/전원 푸터 |
 | `#dyoBrowserWin` | 브라우저 창 | min(1200,vw-40) × min(700,vh-40) | iframe 기반 |
 | `#dyoShellWin` | 터미널 창 | 680 × 440 | 중앙 정렬 |
 | `#dyoReadmeWin` | README 창 | min(700,vw-40) × min(480,vh-40) | 중앙 정렬 |
 | `#dyoGuestWin` | 방명록 채팅 | min(360,vw-40) × min(580,vh-40) | 우측 정렬 |
 | `#dyoMusicWin` | 뮤직 플레이어 | 260 × (vh-76) | 우측 상단 고정 |
-| `#dyoExplorerWin` | 파일 탐색기 | 680 × 480 | 중앙 정렬 |
+| `#dyoExplorerWin` | 파일 탐색기 | 580 × 400 | top:80, left:180 |
+| `#dyoLinksWin` | Links | 600 × 500 | 폴더별 즐겨찾기 + 검색 |
 | `#dyoPropsWin` | Properties | 360 × 480 | top:100, left:420 |
 | `#dyoGalleryWin` | Blogram | min(400,vw-40) × min(580,vh-40) | 우측 정렬 |
 | `#dyoBoardWin` | Board | 884 × 624 | memoTop 정렬, min 728×416 |
 | `#dyoLightbox` | 라이트박스 | 전체화면 오버레이 | 사진 + Instagram 사이드바 |
 | `#dyoTutorial` | 튜토리얼 | 전체화면 오버레이 | 스팟라이트 + 박스 + 창 미리보기 |
-| `#dyoFeaturesPopup` | Features 폴더 팝업 | 아이콘 옆 동적 위치 | Blogram, Music, GitHub 3개 아이템 |
+| `#dyoFeaturesPopup` | Features 폴더 팝업 | 아이콘 옆 동적 위치 | Blogram, Music, GitHub, Links 4개 아이템 |
 | `#dyoCalPopup` | 캘린더 팝업 | 태스크바 시계 위 | 월별 달력, 이전/다음 월, 오늘 표시 |
 | `#dyoConfirmOverlay` | 외부 링크 다이얼로그 | 중앙 모달 | `dyoOpenExternal()` 로 호출 |
-| `#dyoCtxMenu` | 컨텍스트 메뉴 | 동적 | 우클릭 위치 기준 |
-| `.dyo-admin-bar` | 관리자 바 | 우하단 고정 | 글쓰기 / 관리 / 전체화면 |
+| `#dyoCtxMenu` | 컨텍스트 메뉴 | 동적 | 우클릭 위치 기준 — 모드별 한/영 라벨 |
+| `.dyo-source-link` | 우상단 GitHub 링크 | top:14 right:16 | "Tistory Skin 개발 보러가기" — z-index 8001 (창에 가려짐) |
+| `.dyo-admin-bar` | 관리자 바 | 우하단 고정 | 글쓰기 / 관리 / 홈 / 모드 토글 (`#btnModeToggle`) / 전체화면 |
 
 ### 데스크탑 아이콘 ID → 열리는 창
 
-| 아이콘 ID | 행동 | 비고 |
-|-----------|------|------|
-| `desktopIconReadme` | `dyoOpenReadme()` | |
-| `desktopIconBlog` | `dyoOpenBrowser('/category')` | |
-| `desktopIconShell` | `dyoOpenShell()` | |
-| `desktopIconExplorer` | `dyoOpenExplorer()` | |
-| `desktopIconGuest` | `dyoOpenGuest()` | |
-| `desktopIconBoard` | `dyoOpenBoard()` | 바탕화면 아이콘 (Features 앞 배치) |
-| `desktopIconFeatures` | `dyoOpenFeatures()` — 폴더 팝업 토글 | |
-| `desktopIconGallery` | `dyoOpenGallery()` | `display:none` — Features 폴더 안 |
-| `desktopIconMusic` | `dyoOpenMusic()` | `display:none` — Features 폴더 안 |
+라벨은 `data-label-win` 속성으로 모드별 자동 스왑 (좌: Linux / 우: Windows).
+SVG 아이콘도 `applyModeIcons()` 가 모드별로 교체 (`WIN_DESKTOP_ICONS` 맵 사용).
+
+| 아이콘 ID | 행동 | Linux 라벨 / Windows 라벨 |
+|-----------|------|-------------------------|
+| `desktopIconReadme` | `dyoOpenReadme()` | README / README |
+| `desktopIconBlog` | `dyoOpenBrowser('/category')` | Dev Blog / 개발 블로그 |
+| `desktopIconShell` | `dyoOpenShell()` | Command Prompt / bash |
+| `desktopIconExplorer` | `dyoOpenExplorer()` | File Explorer / 파일 탐색기 |
+| `desktopIconGuest` | `dyoOpenGuest()` | Guestbook / 방명록 |
+| `desktopIconBoard` | `dyoOpenBoard()` | Board / 보드 |
+| `desktopIconFeatures` | `dyoOpenFeatures()` — 폴더 팝업 토글 | Features / 폴더 |
+| `desktopIconGallery` | `dyoOpenGallery()` | Blogram / Blogram (Features 폴더 안) |
+| `desktopIconMusic` | `dyoOpenMusic()` | Music / 음악 (Features 폴더 안) |
 
 ### 태스크바 Board 버튼
 
@@ -171,6 +181,9 @@ tistory/
 | `fpBlogram` | `dyoOpenGallery()` |
 | `fpMusic` | `dyoOpenMusic()` |
 | `fpGithub` | `dyoOpenExternal('https://github.com/doyoungkim-code')` |
+| `fpLinks` | `dyoOpenLinks()` |
+
+각 아이템 우클릭 시 → `dyoShowIconCtxMenu(metaKey, x, y)` 호출 (`fpCtxMap` 으로 메타데이터 매핑).
 
 ---
 
@@ -383,8 +396,17 @@ toast 클릭 시 즉시 dismiss
 
 #### 창 애니메이션 헬퍼
 ```js
+// 모드 인식 헬퍼 — 현재 모드에 맞는 보이는 태스크바 아이템 반환
+// Windows 모드: .dyo-win-app 우선 (Linux dock은 display:none 부모 안이라 rect=0)
+// Linux   모드: .dyo-dock-item 우선
+getModeAwareTaskbarItem(winId)
+  → .dyo-win-app / .dyo-dock-item / .dyo-taskbtn 중에서 선택
+
 window.dyoAnimOpen(winEl)
   window._dyoAnimSrc (아이콘 element)를 기준으로 transform-origin 계산
+  src.dataset.winId 가 있으면 → 모드에 맞는 요소로 재매핑
+    (Linux dock-item 이 Win 모드에서 width=0 으로 잡혀 좌상단으로 튀는 문제 방지)
+  src 가 width=0/height=0 인 경우 → 화면 중앙으로 fallback
   .dyo-win-pop 클래스 → animationend 후 제거
 
 window.dyoAnimDismiss(winEl, cb)
@@ -392,7 +414,8 @@ window.dyoAnimDismiss(winEl, cb)
   .dyo-win-dismissing → animationend 후 cb()
 
 window.dyoAnimMinimize(winEl, cb)
-  독/태스크바 버튼 위치 계산 (없으면 화면 하단 중앙)
+  getModeAwareTaskbarItem(winEl.id) 로 올바른 태스크바 아이템 검색
+  보이지 않으면(width=0) 화면 하단 중앙으로 fallback
   --min-tx, --min-ty CSS 변수 설정
   .dyo-win-minimizing → animationend 후 cb()
 
@@ -432,14 +455,19 @@ scale = 1 + (MAX_SCALE-1) * Math.pow(1 - dist/INFLUENCE, 1.2)
 
 #### 우클릭 컨텍스트 메뉴
 
+라벨은 모드별 한/영 자동 스왑 — `L(en, ko)` 헬퍼와 `isWinMode()` 로 분기.
+
 3가지 케이스:
-1. **아이콘 우클릭** → Open / Properties
-2. **태스크바 버튼 우클릭** → Bring to Front / Minimize / Close
-3. **배경 우클릭** → New Terminal / Open README / Open Guestbook / Dev Blog / Open File Explorer / Open Blogram / Tutorial / Refresh Desktop
+1. **아이콘 우클릭** → Open / Properties (Windows: 열기 / 속성)
+2. **태스크바 버튼 우클릭** → Bring to Front / Minimize / Close (Windows: 맨 앞으로 가져오기 / 최소화 / 창 닫기)
+3. **배경 우클릭** → New Terminal / Dev Blog / Theme(Linux 전용 서브메뉴) / Tutorial / Refresh Desktop (Windows: bash 열기 / 개발 블로그 / 튜토리얼 / 바탕화면 새로 고침)
+   - **Theme 서브메뉴는 Linux 모드에서만 노출** — 장식 테마(Astronaut/Sakura)가 Linux 전용
 
-`iconMeta` 객체에 9개 아이콘(7개 바탕화면(Board 포함) + Features 폴더 + 숨겨진 Blogram/Music)의 메타데이터(name, ext, type, desc, location, url, size, disk, created, modified, owner, group, permissions, version, iconBg, iconBorder, iconColor, iconChar, action) 정의.
+`iconMeta` 객체에 10개 아이콘 메타데이터 정의 — 바탕화면 7개(README, Blog, Shell, Explorer, Guest, Board, Features) + 숨김 2개(Gallery, Music) + Links(`fpLinks`). 필드: `name, ext, type, desc, location, url, size, disk, created, modified, owner, group, permissions, version, iconBg, iconBorder, iconColor, iconChar, action`.
 
-`window.dyoShowExpItemCtx(child, openFn, x, y)` — File Explorer 아이템 우클릭용.
+전역 헬퍼:
+- `window.dyoShowExpItemCtx(child, openFn, x, y)` — File Explorer 아이템 우클릭용
+- `window.dyoShowIconCtxMenu(metaKey, clientX, clientY)` — Features 폴더 팝업 아이템 우클릭용
 
 ---
 
@@ -452,6 +480,45 @@ scale = 1 + (MAX_SCALE-1) * Math.pow(1 - dist/INFLUENCE, 1.2)
 - **Details**: Owner, Group, Permissions, Version, Encoding(UTF-8), Platform(Web/Browser)
 
 `window.dyoOpenProps(meta)` — 열기. `window._dyoLastPropsMeta` 에도 저장.
+
+---
+
+### [Script 3] Windows 시작 메뉴 (`dyoWinStartMenu`)
+
+Windows 모드 전용. 좌하단 시작 버튼(`#dyoWinStart`) 클릭 시 토글.
+
+```
+WIN_APP_DEFS — 9개 앱 (각 항목: id, label, svg, keywords, open)
+  Windows 태스크바 툴팁 한글화 + 시작 메뉴 아이템 생성 + 검색에 동시 사용.
+
+검색 기능 (`#dyoWinSmSearch`):
+  applyStartSearch(q):
+    각 아이템의 label + keywords[]를 lower-case로 합쳐 부분 매칭
+    검색 결과 없으면 `.dyo-winsm-noresults` 표시
+  Enter 키 → 첫 번째 보이는 항목 실행
+  메뉴 열기/닫기 시 검색어 리셋 + 자동 포커스 (setTimeout 50ms)
+```
+
+`keywords[]` 예시 — bash 항목: `['shell','terminal','cmd','command','powershell','터미널','명령어','커맨드','쉘','콘솔','console']`
+
+외부 클릭 / ESC 키 / 앱 클릭 시 닫힘. 전원 버튼은 데모용 Toast만 표시.
+
+---
+
+### [Script 3] Links 창 (`dyoLinksWin`)
+
+```
+LINKS_POST_URL = '/notice/133'
+```
+
+게시물 본문에서 폴더와 링크를 파싱:
+- 폴더: `[폴더명]` 또는 `<b>/<strong>` 만 있는 줄
+- 링크: `"이름, URL"` 또는 `<a href>`
+- `h2/h3/h4` 태그 → 폴더 헤더
+
+각 링크에 파비콘 자동 표시 (`https://www.google.com/s2/favicons?domain=...`).
+검색 입력란(`#dyoLinksSearch`)으로 실시간 필터링 (debounce 150ms).
+폴더 헤더 클릭 → 펼침/접힘. 링크 클릭 → `window.open(url, '_blank', 'noopener')`.
 
 ---
 
@@ -750,9 +817,12 @@ MIN_W = 728, MIN_H = 416
 | `window.dyoOpenGallery()` | Blogram 모듈 | 갤러리 창 열기 |
 | `window.dyoOpenMusic()` | Music 모듈 | 뮤직 플레이어 창 열기 |
 | `window.dyoOpenBoard()` | Board 모듈 | Board 창 열기 |
+| `window.dyoOpenLinks()` | Links 모듈 | Links 창 열기 |
 | `window.dyoOpenFeatures()` | Features 폴더 모듈 | Features 폴더 팝업 열기 |
 | `window.dyoOpenProps(meta)` | Properties 모듈 | Properties 창 열기 |
 | `window.dyoShowExpItemCtx(child, openFn, x, y)` | CtxMenu 모듈 | 탐색기 아이템 우클릭 메뉴 |
+| `window.dyoShowIconCtxMenu(metaKey, x, y)` | CtxMenu 모듈 | Features 폴더 아이템 우클릭 메뉴 |
+| `window.WIN_TASKBAR_ICONS` | 데스크탑 초기화 | Win 모드용 SVG 아이콘 맵 (win-id 키) — 시작 메뉴/태스크바 공용 |
 | `window.dyoToast(msg, type, duration)` | Toast 모듈 | Toast 알림 표시 |
 | `window.dyoAnimOpen(winEl)` | 애니메이션 모듈 | 창 열기 팝 애니메이션 |
 | `window.dyoAnimDismiss(winEl, cb)` | 애니메이션 모듈 | 창 닫기 애니메이션 |
@@ -807,6 +877,14 @@ children가 없거나 빈 배열 → 파일 (클릭 시 dyoOpenBrowser(url))
 
 모든 API 호출에 `credentials: 'include'` 포함.
 
+**게시물 HTML 파싱 (API 아님):**
+
+| URL | 용도 | 파서 |
+|-----|------|------|
+| `/notice/130` | Board 카드 데이터 | `fetchBoardCards()` — `<br>` → `\n` 후 라인 파싱 |
+| `/notice/133` | Links 폴더/링크 | `fetchData()` — `[폴더명]` / `이름, URL` / `<a href>` 파싱 |
+| `/category/Pictures` | Blogram 사진 목록 | `fetchCategoryPosts()` — `.list_content` 순회 |
+
 **비밀번호 해싱 공통 방식:**
 ```
 SHA-256( md5( encodeURIComponent(plaintext) ) )
@@ -821,15 +899,20 @@ blueimp-md5가 없으면 `encodeURIComponent()` 값을 그대로 SHA-256 처리.
 
 | 위치(약) | 값 | 변수/ID |
 |---------|-----|---------|
-| line 1307 | `'Do You Coding?'` | 타이핑 텍스트 |
-| line 1411 | `'https://github.com/doyoungkim-code'` | GitHub URL (Features 폴더 아이콘 클릭) |
-| line 1776 | FS 객체 전체 | Terminal 가상 파일시스템 |
-| line 2737 | `'doyoucode'` | Guestbook ADMIN_NICK |
-| line 4341 | tree[] 전체 | File Explorer 카테고리 트리 |
-| line 4761 | `'/category/Pictures'` | Blogram 파싱 카테고리 |
-| line 6038 | PLAYLIST[] 4개 | 뮤직 플레이어 YouTube ID |
-| line 6703 | `'/notice/130'` | Board 데이터 게시글 URL (`BOARD_URL`) |
-| line 1187 | img src (긴 CDN URL) | Blogram 프로필 아바타 이미지 |
+| index.html | `'Do You Coding?'` | 타이핑 텍스트 |
+| index.html | `'https://github.com/doyoungkim-code'` | GitHub URL (Features 폴더 아이콘 클릭) |
+| index.html | `https://github.com/doyoungkim-code/MyTistorySkin` | 우상단 `.dyo-source-link` href |
+| index.html | FS 객체 전체 | Terminal 가상 파일시스템 |
+| index.html | `'doyoucode'` | Guestbook ADMIN_NICK |
+| index.html | tree[] 전체 | File Explorer 카테고리 트리 |
+| index.html | `'/category/Pictures'` | Blogram 파싱 카테고리 |
+| index.html | PLAYLIST[] 4개 | 뮤직 플레이어 YouTube ID |
+| index.html | `'/notice/130'` | Board 데이터 게시글 URL (`BOARD_URL`) |
+| index.html | `'/notice/133'` | Links 데이터 게시글 URL (`LINKS_POST_URL`) |
+| index.html | `WIN_APP_DEFS` 의 `keywords` | 시작 메뉴 검색 키워드 (한/영) |
+| index.html | `WIN_DESKTOP_ICONS` 맵 | Windows 모드 데스크탑 아이콘 SVG |
+| index.html | `data-label-win` 속성 | 데스크탑 아이콘 Windows 모드 한글 라벨 |
+| index.html | img src (긴 CDN URL) | Blogram 프로필 아바타 이미지 |
 
 ### 9-2. 뮤직 플레이어 곡 추가/변경
 ```js
@@ -862,10 +945,28 @@ var GALLERY_CATEGORY = '';  // 빈 문자열로 변경 필요
 - 설명 내 `[ ] 항목` / `[x] 항목` → 서브태스크 자동 파싱
 - UI에서 추가/수정/삭제 가능 (변경사항은 클립보드 복사 → 게시물에 반영)
 
-### 9-8. 튜토리얼 단계 수정
+### 9-6. Links 데이터 변경
+게시물 URL 변경: `LINKS_POST_URL` (Links IIFE 시작부)
+게시물 본문 형식:
+- 폴더: `[폴더명]` (한 줄), 또는 `<b>/<strong>` 만 있는 줄
+- 링크: `이름, https://example.com` 또는 `<a href>` 태그
+- `<h2>/<h3>/<h4>` 태그 → 폴더 헤더로 인식
+- 파비콘은 자동 생성됨 (Google s2/favicons API)
+
+### 9-7. Windows 모드 라벨/아이콘 추가
+새 데스크탑 아이콘 추가 시:
+1. HTML에 `<span class="dyo-di-label" data-label-win="한글라벨">English</span>` 형태로 라벨 입력
+2. `WIN_DESKTOP_ICONS` 맵에 평면 SVG 추가 (key = 아이콘 ID)
+3. `window.WIN_TASKBAR_ICONS` 에 win-id 키로 등록 (시작 메뉴 + 태스크바에서 재사용)
+4. `WIN_APP_DEFS` 에 항목 추가 (id, label, svg, keywords, open) — 시작 메뉴 검색 키워드 포함
+
+### 9-8. 시작 메뉴 검색 키워드 확장
+`WIN_APP_DEFS[i].keywords` 배열에 한/영 단어 추가. label 자체도 검색 대상에 포함됨.
+
+### 9-9. 튜토리얼 단계 수정
 `steps[]` 배열 — `target`, `emoji`, `title`, `desc`, `previewWin` 필드 수정.
 
-### 9-9. 전체화면 모드 CSS (홈화면)
+### 9-10. 전체화면 모드 CSS (홈화면)
 ```css
 /* index.html <style> 블록 */
 #tt-body-index #dkWrap { visibility: hidden; }     /* 스킨 본문 숨김 */
@@ -895,13 +996,16 @@ var GALLERY_CATEGORY = '';  // 빈 문자열로 변경 필요
 
 #### Windows 모드 추가 특성
 
-- **배경**: 사용자 지정 이미지 (Tistory CDN, [style.css:7634-7642](style.css#L7634-L7642))
+- **배경**: 사용자 지정 이미지 (Tistory CDN)
 - **테마**: 라이트 mica — `rgba(243,243,243,0.82)` + `backdrop-filter: blur(40px) saturate(180%)`
 - **태스크바 정책**: 실행 중인 앱만 표시 (`.dyo-win-app { display: none } .dyo-win-app.open { display: flex }`) — 핀 고정 없음
-- **시작 메뉴**: `#dyoWinStartMenu` 별도 컴포넌트, Start 버튼 클릭 시 토글, 9개 앱 그리드 + 검색바(데모) + 사용자/전원 푸터
-- **한글화**: 데스크탑 아이콘 `<span class="dyo-di-label" data-label-win="...">` 패턴으로 모드별 자동 스왑 (Command Prompt → Windows PowerShell, File Explorer → 파일 탐색기, Dev Blog → 블로그 바로가기 등)
+- **시작 메뉴**: `#dyoWinStartMenu` 별도 컴포넌트, Start 버튼 클릭 시 토글, 9개 앱 그리드 + 사용자/전원 푸터
+  - **검색 기능 동작**: 라벨 + `WIN_APP_DEFS.keywords[]` (한/영) 부분 매칭 → 실시간 필터링. Enter 키 → 첫 번째 보이는 항목 실행. 결과 없으면 `.dyo-winsm-noresults` 표시. 메뉴 오픈 시 자동 포커스 + 검색어 리셋.
+- **한글화**: 데스크탑 아이콘 `<span class="dyo-di-label" data-label-win="...">` 패턴으로 모드별 자동 스왑 (`applyModeLabels()`) — Command Prompt → bash, File Explorer → 파일 탐색기, Dev Blog → 개발 블로그, Guestbook → 방명록 등
+- **아이콘 스왑**: `applyModeIcons()` 가 `WIN_DESKTOP_ICONS` 맵에서 Windows 평면 SVG로 교체. Linux 모드 SVG는 `data-svg-linux` 속성에 백업되어 복원 가능. `window.WIN_TASKBAR_ICONS` 가 시작 메뉴 + 태스크바에서 재사용.
 - **창 크롬**: 흰 그라데이션 타이틀바, 검정 stroke traffic-light 아이콘, close hover 시에만 빨강 + 흰색 X
 - **속성 창**: Windows 클래식 다이얼로그 풍 — 흰 배경, `#0078d4` 섹션 헤더
+- **모드 인식 애니메이션**: `getModeAwareTaskbarItem(winId)` 헬퍼가 Windows 모드에선 `.dyo-win-app` 우선, Linux 모드에선 `.dyo-dock-item` 우선 선택 → 최소화/복원 애니메이션이 항상 보이는 태스크바 쪽으로 향함 ([index.html:5555-5567](index.html#L5555-L5567))
 
 - `localStorage.dyo_desktop_mode` 에 `'windows'` 또는 `'linux'` 저장
 - `<head>` 내 early script가 paint 전에 모드 클래스를 `<html>` 에 적용 → 깜빡임 방지
@@ -1087,10 +1191,15 @@ window._dyoZTop (초기값 9000)
 | `.done` | `.dyo-brd-card-title` | Board Done 컬럼 카드 제목 취소선 |
 | `.dirty` | `.dyo-brd-clipboard-btn` | 변경사항 있음 (빨간 점 표시) |
 | `.open` | `.dyo-brd-detail-panel` | Board 카드 상세 패널 열림 |
-| `.theme-astronaut` | `#dyoDesktop` | 우주인 테마 활성화 |
-| `.theme-sakura` | `#dyoDesktop` | 벚꽃 테마 활성화 |
+| `.theme-astronaut` | `#dyoDesktop` | 우주인 테마 활성화 (Linux 모드에서만) |
+| `.theme-sakura` | `#dyoDesktop` | 벚꽃 테마 활성화 (Linux 모드에서만) |
 | `.dyo-astronaut` | 우주인 element | 개별 요소 테마 전환 시 숨김용 |
 | `.dyo-sakura-cat` | 고양이 element | 개별 요소 테마 전환 시 숨김용 |
+| `.dyo-mode-windows` | `<html>` | Windows 모드 활성화 (paint 전 early script 로 적용) |
+| `.dyo-mode-linux` | `<html>` | Linux 모드 활성화 |
+| `.open` | `#dyoWinStartMenu` | 시작 메뉴 열림 |
+| `.open` / `.active` / `.minimized` | `.dyo-win-app` | Windows 태스크바 앱 상태 (실행/포커스/최소화) |
+| `.dyo-winsm-noresults` | 시작 메뉴 내 | 검색 결과 없을 때 표시 (`display: none` 기본) |
 
 ---
 
