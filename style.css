@@ -4052,6 +4052,16 @@ body:not(#tt-body-index) .dyo-source-link:hover {
   .dyo-source-link svg { width: 15px; height: 15px; }
 }
 
+/* 두 번째 링크(개발자 포트폴리오) — 스킨 소스 링크 바로 아래 위치
+   기본 .dyo-source-link top:14px + 높이 28px + gap 6px = 48px */
+.dyo-portfolio-link {
+  top: 48px;
+}
+@media only screen and (max-width: 520px) {
+  /* 모바일에서는 둥근 아이콘(32px) + gap 6px */
+  .dyo-portfolio-link { top: 52px; }
+}
+
 
 /* ============================================
    모드 토글 안내 말풍선

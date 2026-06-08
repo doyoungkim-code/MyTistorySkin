@@ -1670,6 +1670,16 @@
       <span>Tistory Skin 개발 보러가기</span>
     </a>
 
+    <!-- 우상단: 개발자 포트폴리오 (스킨 소스 링크 바로 아래) -->
+    <a class="dyo-source-link dyo-portfolio-link" href="https://dyomyo-portfolio.tistory.com/"
+       target="_blank" rel="noopener noreferrer"
+       title="개발자 포트폴리오 보러가기">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M20 7h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Zm-9-2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2h-4V5Zm9 14H4V13h4v1a1 1 0 0 0 2 0v-1h4v1a1 1 0 0 0 2 0v-1h4v6Zm0-8h-4v-1a1 1 0 0 0-2 0v1h-4v-1a1 1 0 0 0-2 0v1H4V9h16v2Z"/>
+      </svg>
+      <span>개발자 포트폴리오 보러가기</span>
+    </a>
+
     <!-- 관리자 빠른 메뉴바 -->
     <div class="dyo-admin-bar">
       <a href="/manage/newpost/?type=post&returnURL=%2Fmanage%2Fposts%2F" class="dyo-admin-btn" title="글쓰기">
@@ -2041,8 +2051,10 @@
       if (window.self !== window.top) {
         var bar = document.querySelector('.dyo-admin-bar');
         if (bar) bar.style.setProperty('display', 'none', 'important');
-        var src = document.querySelector('.dyo-source-link');
-        if (src) src.style.setProperty('display', 'none', 'important');
+        // 두 개 모두(.dyo-source-link / .dyo-portfolio-link) 숨김
+        document.querySelectorAll('.dyo-source-link').forEach(function(src) {
+          src.style.setProperty('display', 'none', 'important');
+        });
       }
     })();
 
