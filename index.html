@@ -2218,9 +2218,7 @@
       desktopBar.classList.add('show');
       dkWrap.style.visibility = 'hidden';
       document.body.style.overflow = 'hidden';
-      setTimeout(function() {
-        if (window.dyoMaybeStartTutorial) window.dyoMaybeStartTutorial();
-      }, 500);
+      // 튜토리얼 자동 실행 제거 — 우클릭 컨텍스트 메뉴의 Tutorial 항목으로만 시작
 
       // 관리자바 Home 버튼 → 홈으로 이동
       if (homeBtn) {
