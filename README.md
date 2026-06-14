@@ -70,7 +70,7 @@ tistory/
     #dyoTutorial               ← 튜토리얼 오버레이
     #dyoDesktop                ← 바탕화면 (홈 전용)
     #dyoCalPopup               ← 태스크바 캘린더 팝업 (시계 클릭으로 열기)
-    #dyoFeaturesPopup          ← Features 폴더 팝업 (Blogram/Music/GitHub/Links)
+    #dyoFeaturesWin            ← Features 폴더 창 (File Explorer 스타일, Blogram/Music/GitHub/Links)
     #dyoDesktopBar             ← Linux 모드 태스크바 (macOS Dock)
     #dyoWinStartMenu           ← Windows 시작 메뉴 (Windows 모드 전용, 검색바 포함)
     #dyoWinTaskbar             ← Windows 태스크바 (Windows 모드 전용, mica)
@@ -143,7 +143,7 @@ tistory/
 | `#dyoBoardWin` | Board | 884 × 624 | memoTop 정렬, min 728×416 |
 | `#dyoLightbox` | 라이트박스 | 전체화면 오버레이 | 사진 + Instagram 사이드바 |
 | `#dyoTutorial` | 튜토리얼 | 전체화면 오버레이 | 스팟라이트 + 박스 + 창 미리보기 |
-| `#dyoFeaturesPopup` | Features 폴더 팝업 | 아이콘 옆 동적 위치 | Blogram, Music, GitHub, Links 4개 아이템 |
+| `#dyoFeaturesWin` | Features 폴더 창 | 중앙 (600×420) | **File Explorer와 동일 레이아웃** — 네비바(`.dyo-explorer-navbar`) + 사이드바 트리(`.dyo-explorer-sidebar`) + 메인 그리드/리스트(`.dyo-explorer-main`). 탐색기 클래스 재사용으로 테마 자동 통일. Blogram/Music/GitHub/Links 4개 아이템 |
 | `#dyoCalPopup` | 캘린더 팝업 | 태스크바 시계 위 | 월별 달력, 이전/다음 월, 오늘 표시 |
 | `#dyoConfirmOverlay` | 외부 링크 다이얼로그 | 중앙 모달 | `dyoOpenExternal()` 로 호출 |
 | `#dyoCtxMenu` | 컨텍스트 메뉴 | 동적 | 우클릭 위치 기준 — 모드별 한/영 라벨 |
@@ -216,7 +216,7 @@ SVG 아이콘도 `applyModeIcons()` 가 모드별로 교체 (`WIN_DESKTOP_ICONS`
 - `#dyoDesktopBar`에 `.show` 클래스 추가
 - `setInterval(updateClock, 1000)` — `#desktopClock`, `#desktopDate` 갱신
 - 7개 바탕화면 아이콘(Board 포함) + Features 폴더 아이콘 클릭 이벤트 등록
-- Features 폴더: 클릭 시 `#dyoFeaturesPopup` 토글 (Blogram/Music/GitHub 3개 아이템)
+- Features 폴더: 클릭 시 `#dyoFeaturesWin` 창 열기 — **File Explorer와 동일한 UI**(네비바 + 사이드바 트리 + 메인 그리드/리스트, 뷰 전환 지원). 별도 IIFE의 `dyoOpenFeatures`가 창 열기 + 내부 렌더링 담당. `FEAT_ITEMS` 데이터(Blogram/Music/GitHub/Links)로 사이드바·메인을 렌더, 탐색기 클래스(`.dyo-explorer-*`, `.dyo-exp-item`) 재사용. 창은 드래그/리사이즈/최소화/최대화 가능
 - 태스크바 Board 버튼: 클릭 시 `dyoOpenBoard()`, 배지에 미완료 카드 수 표시
 - 태스크바 시계 클릭: 캘린더 팝업 토글 (`#dyoCalPopup`)
   - 팝업 위치: 아이콘 오른쪽, 화면 밖이면 왼쪽으로 전환
@@ -1187,7 +1187,7 @@ window._dyoZTop (초기값 9000)
 | `.no-target` | `#dyoTutSpotlight` | 튜토리얼 타겟 없는 단계 |
 | `.hidden` | `#dyoTutPreview`, `#dyoTutLauncher` | 숨김 상태 |
 | `.copied` | `.code-copy-btn` | 복사 완료 상태 (2초) |
-| `.open` | `#dyoFeaturesPopup` | Features 폴더 팝업 표시 |
+| `.open` | `#dyoFeaturesWin` | Features 폴더 창 표시 |
 | `.done` | `.dyo-brd-card-title` | Board Done 컬럼 카드 제목 취소선 |
 | `.dirty` | `.dyo-brd-clipboard-btn` | 변경사항 있음 (빨간 점 표시) |
 | `.open` | `.dyo-brd-detail-panel` | Board 카드 상세 패널 열림 |

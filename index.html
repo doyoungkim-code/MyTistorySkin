@@ -1006,37 +1006,42 @@
       </div>
     </div>
 
-    <!-- Features 폴더 팝업 -->
-    <div class="dyo-folder-popup" id="dyoFeaturesPopup">
-      <div class="dyo-folder-popup-header">
-        <span class="dyo-folder-popup-title">Features</span>
-        <button class="dyo-folder-popup-close" id="dyoFeaturePopupClose">×</button>
+    <!-- Features 폴더 창 (File Explorer 스타일) -->
+    <div class="dyo-shell-win dyo-features-win" id="dyoFeaturesWin" style="width:600px;height:420px;top:90px;left:220px;">
+      <div class="dyo-brs-handle n"  data-dir="n"></div>
+      <div class="dyo-brs-handle ne" data-dir="ne"></div>
+      <div class="dyo-brs-handle e"  data-dir="e"></div>
+      <div class="dyo-brs-handle se" data-dir="se"></div>
+      <div class="dyo-brs-handle s"  data-dir="s"></div>
+      <div class="dyo-brs-handle sw" data-dir="sw"></div>
+      <div class="dyo-brs-handle w"  data-dir="w"></div>
+      <div class="dyo-brs-handle nw" data-dir="nw"></div>
+      <div class="dyo-shell-titlebar" id="dyoFeaturesTitlebar">
+        <span class="dyo-term-dot red"    id="dyoFeaturesClose" title="Close"></span>
+        <span class="dyo-term-dot yellow" id="dyoFeaturesMin"   title="Minimize"></span>
+        <span class="dyo-term-dot green"  id="dyoFeaturesMax"   title="Maximize"></span>
+        <span class="dyo-shell-title" data-label-win="📁 폴더">📁 Features</span>
       </div>
-      <div class="dyo-folder-popup-grid">
-        <div class="dyo-folder-item" id="fpBlogram" title="Blogram">
-          <div class="dyo-di-wrap" style="background:linear-gradient(135deg,#833ab4,#c13584 35%,#e1306c 60%,#f77737 85%,#fcaf45);border:1px solid rgba(225,48,108,.4);box-shadow:0 4px 12px rgba(193,53,132,.4),inset 0 1px 0 rgba(255,255,255,.15)">
-            <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="1.8"/><circle cx="12" cy="12" r="5" stroke="white" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.3" fill="white"/></svg>
-          </div>
-          <span>Blogram</span>
+      <div class="dyo-explorer-navbar" id="dyoFeaturesNavbar">
+        <button class="dyo-exp-navbtn" id="dyoFeatBack" disabled title="뒤로가기">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="dyo-exp-navbtn" id="dyoFeatForward" disabled title="앞으로가기">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="dyo-exp-addrbar" id="dyoFeatAddrBar"></div>
+        <div class="dyo-exp-view-btns">
+          <button class="dyo-exp-viewbtn active" id="dyoFeatViewGrid" title="Grid 뷰">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </button>
+          <button class="dyo-exp-viewbtn" id="dyoFeatViewList" title="List 뷰">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg>
+          </button>
         </div>
-        <div class="dyo-folder-item" id="fpMusic" title="Music">
-          <div class="dyo-di-wrap" style="background:linear-gradient(145deg,#fc3c44,#ff2d55);border:1px solid rgba(255,45,85,.4);box-shadow:0 4px 12px rgba(255,45,85,.4),inset 0 1px 0 rgba(255,255,255,.15)">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" stroke="white" stroke-width="1.8"/><circle cx="18" cy="16" r="3" stroke="white" stroke-width="1.8"/></svg>
-          </div>
-          <span>Music</span>
-        </div>
-        <div class="dyo-folder-item" id="fpGithub" title="GitHub">
-          <div class="dyo-di-wrap" style="background:linear-gradient(145deg,#24292e,#1a1e22);border:1px solid rgba(139,148,158,.3);box-shadow:0 4px 12px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)">
-            <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-          </div>
-          <span>GitHub</span>
-        </div>
-        <div class="dyo-folder-item" id="fpLinks" title="Links">
-          <div class="dyo-di-wrap" style="background:linear-gradient(145deg,#0c4a6e,#0284c7);border:1px solid rgba(56,189,248,.4);box-shadow:0 4px 12px rgba(2,132,199,.4),inset 0 1px 0 rgba(255,255,255,.1)">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="white" stroke-width="1.8" stroke-linecap="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </div>
-          <span>Links</span>
-        </div>
+      </div>
+      <div class="dyo-explorer-body">
+        <div class="dyo-explorer-sidebar" id="dyoFeatTree"></div>
+        <div class="dyo-explorer-main" id="dyoFeatMain"></div>
       </div>
     </div>
 
@@ -3555,83 +3560,15 @@
         });
       }
 
-      // Features 폴더 아이콘
-      var iconFeatures  = document.getElementById('desktopIconFeatures');
-      var featuresPopup = document.getElementById('dyoFeaturesPopup');
-      function openFeaturesPopup() {
-        if (!featuresPopup || !iconFeatures) return;
-        featuresPopup.classList.add('open');
-        var ir = iconFeatures.getBoundingClientRect();
-        var pw = featuresPopup.offsetWidth  || 244;
-        var ph = featuresPopup.offsetHeight || 130;
-        // 아이콘 오른쪽에 배치, 화면 밖이면 왼쪽으로
-        var left = ir.right + 10;
-        var top  = ir.top + ir.height / 2 - ph / 2;
-        if (left + pw > window.innerWidth - 8) left = ir.left - pw - 10;
-        left = Math.max(8, left);
-        top  = Math.max(8, Math.min(top, window.innerHeight - ph - 8));
-        featuresPopup.style.left = left + 'px';
-        featuresPopup.style.top  = top  + 'px';
-      }
-      function closeFeaturesPopup() {
-        if (featuresPopup) featuresPopup.classList.remove('open');
-      }
-      window.dyoOpenFeatures = openFeaturesPopup;
-
+      // Features 폴더 아이콘 → 폴더 창 열기 (File Explorer 스타일)
+      // 창 열기/드래그/리사이즈 및 내부 아이템 렌더링은 별도 IIFE(window.dyoOpenFeatures)에서 처리
+      var iconFeatures = document.getElementById('desktopIconFeatures');
       if (iconFeatures) {
         iconFeatures.addEventListener('click', function() {
-          featuresPopup && featuresPopup.classList.contains('open') ? closeFeaturesPopup() : openFeaturesPopup();
+          window._dyoAnimSrc = iconFeatures;
+          if (window.dyoOpenFeatures) window.dyoOpenFeatures();
         });
       }
-      var fpCloseBtn = document.getElementById('dyoFeaturePopupClose');
-      if (fpCloseBtn) fpCloseBtn.addEventListener('click', closeFeaturesPopup);
-
-      // 팝업 아이템 클릭 핸들러
-      var fpBlogram = document.getElementById('fpBlogram');
-      if (fpBlogram) fpBlogram.addEventListener('click', function() {
-        closeFeaturesPopup();
-        if (window.dyoOpenGallery) window.dyoOpenGallery();
-      });
-      var fpMusic = document.getElementById('fpMusic');
-      if (fpMusic) fpMusic.addEventListener('click', function() {
-        closeFeaturesPopup();
-        if (window.dyoOpenMusic) window.dyoOpenMusic();
-      });
-      var fpGithub = document.getElementById('fpGithub');
-      if (fpGithub) fpGithub.addEventListener('click', function() {
-        closeFeaturesPopup();
-        if (window.dyoOpenExternal) window.dyoOpenExternal('https://github.com/doyoungkim-code');
-      });
-      var fpLinks = document.getElementById('fpLinks');
-      if (fpLinks) fpLinks.addEventListener('click', function() {
-        closeFeaturesPopup();
-        window._dyoAnimSrc = fpLinks;
-        if (window.dyoOpenLinks) window.dyoOpenLinks();
-      });
-
-      // 팝업 아이템 우클릭 → 컨텍스트 메뉴 (오픈 후 처리를 위해 defer)
-      var fpCtxMap = {
-        fpBlogram: 'desktopIconGallery',
-        fpMusic:   'desktopIconMusic',
-        fpGithub:  'desktopIconGithub',
-        fpLinks:   'fpLinks'
-      };
-      ['fpBlogram', 'fpMusic', 'fpGithub', 'fpLinks'].forEach(function(id) {
-        var el = document.getElementById(id);
-        if (!el) return;
-        el.addEventListener('contextmenu', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          if (window.dyoShowIconCtxMenu) window.dyoShowIconCtxMenu(fpCtxMap[id], e.clientX, e.clientY);
-        });
-      });
-
-      document.addEventListener('click', function(e) {
-        if (!featuresPopup || !featuresPopup.classList.contains('open')) return;
-        if (iconFeatures && iconFeatures.contains(e.target)) return;
-        if (featuresPopup.contains(e.target)) return;
-        closeFeaturesPopup();
-      });
 
     })();
 
@@ -4933,6 +4870,307 @@
       document.addEventListener('touchend', function() { dragging = false; });
 
       // 리사이즈 핸들
+      w.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
+        handle.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized') || w.classList.contains('minimized')) return;
+          e.stopPropagation(); e.preventDefault();
+          resizing = true;
+          resizeDir = handle.getAttribute('data-dir');
+          resizeSX = e.clientX; resizeSY = e.clientY;
+          var rect = w.getBoundingClientRect();
+          resizeSRect = { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+          w.style.left = rect.left + 'px'; w.style.top = rect.top + 'px';
+          w.style.width = rect.width + 'px'; w.style.height = rect.height + 'px';
+          w.style.right = 'auto'; w.style.bottom = 'auto';
+        });
+      });
+    })();
+
+    // ============================================================
+    // Features 폴더 창 (File Explorer 스타일 — 드래그/리사이즈/최소화/최대화)
+    // ============================================================
+    (function() {
+      var w        = document.getElementById('dyoFeaturesWin');
+      var titlebar = document.getElementById('dyoFeaturesTitlebar');
+      var closeBtn = document.getElementById('dyoFeaturesClose');
+      var minBtn   = document.getElementById('dyoFeaturesMin');
+      var maxBtn   = document.getElementById('dyoFeaturesMax');
+      if (!w) return;
+
+      var dragging = false, dragOX = 0, dragOY = 0;
+      var resizing = false, resizeDir = '', resizeSX = 0, resizeSY = 0, resizeSRect = null;
+      var MIN_W = 420, MIN_H = 280;
+      var savedPos = null;
+
+      // ── 폴더 내용 (File Explorer 스타일 렌더링) ──
+      var treeEl     = document.getElementById('dyoFeatTree');
+      var mainEl     = document.getElementById('dyoFeatMain');
+      var addrBar    = document.getElementById('dyoFeatAddrBar');
+      var viewGridBtn = document.getElementById('dyoFeatViewGrid');
+      var viewListBtn = document.getElementById('dyoFeatViewList');
+      var viewMode   = 'grid';
+      var featBuilt  = false;
+
+      var FEAT_ITEMS = [
+        { id: 'fpBlogram', label: 'Blogram', type: 'App', ctxKey: 'desktopIconGallery',
+          icon: '<div class="dyo-di-wrap" style="background:linear-gradient(135deg,#833ab4,#c13584 35%,#e1306c 60%,#f77737 85%,#fcaf45);border:1px solid rgba(225,48,108,.4);box-shadow:0 4px 12px rgba(193,53,132,.4),inset 0 1px 0 rgba(255,255,255,.15)"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="1.8"/><circle cx="12" cy="12" r="5" stroke="white" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.3" fill="white"/></svg></div>',
+          open: function() { if (window.dyoOpenGallery) window.dyoOpenGallery(); } },
+        { id: 'fpMusic', label: 'Music', type: 'App', ctxKey: 'desktopIconMusic',
+          icon: '<div class="dyo-di-wrap" style="background:linear-gradient(145deg,#fc3c44,#ff2d55);border:1px solid rgba(255,45,85,.4);box-shadow:0 4px 12px rgba(255,45,85,.4),inset 0 1px 0 rgba(255,255,255,.15)"><svg viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" stroke="white" stroke-width="1.8"/><circle cx="18" cy="16" r="3" stroke="white" stroke-width="1.8"/></svg></div>',
+          open: function() { if (window.dyoOpenMusic) window.dyoOpenMusic(); } },
+        { id: 'fpGithub', label: 'GitHub', type: 'Link', ctxKey: 'desktopIconGithub', external: true,
+          icon: '<div class="dyo-di-wrap" style="background:linear-gradient(145deg,#24292e,#1a1e22);border:1px solid rgba(139,148,158,.3);box-shadow:0 4px 12px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)"><svg viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg></div>',
+          open: function() { if (window.dyoOpenExternal) window.dyoOpenExternal('https://github.com/doyoungkim-code'); } },
+        { id: 'fpLinks', label: 'Links', type: 'App', ctxKey: 'fpLinks',
+          icon: '<div class="dyo-di-wrap" style="background:linear-gradient(145deg,#0c4a6e,#0284c7);border:1px solid rgba(56,189,248,.4);box-shadow:0 4px 12px rgba(2,132,199,.4),inset 0 1px 0 rgba(255,255,255,.1)"><svg viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="white" stroke-width="1.8" stroke-linecap="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>',
+          open: function() { if (window.dyoOpenLinks) window.dyoOpenLinks(); } }
+      ];
+
+      function launchFeat(it, srcEl) {
+        if (!it.external) window._dyoAnimSrc = srcEl || null;
+        it.open();
+      }
+      function bindFeatItem(el, it) {
+        el.addEventListener('click', function() { launchFeat(it, el); });
+        el.addEventListener('contextmenu', function(e) {
+          e.preventDefault(); e.stopPropagation();
+          if (window.dyoShowIconCtxMenu) window.dyoShowIconCtxMenu(it.ctxKey, e.clientX, e.clientY);
+        });
+      }
+      function renderFeatMain() {
+        if (!mainEl) return;
+        mainEl.innerHTML = '';
+        if (viewMode === 'list') {
+          var list = document.createElement('div');
+          list.className = 'dyo-explorer-list';
+          var hdr = document.createElement('div');
+          hdr.className = 'dyo-exp-list-header';
+          hdr.innerHTML = '<span></span><span>Name</span><span>Type</span><span style="text-align:right">Items</span>';
+          list.appendChild(hdr);
+          FEAT_ITEMS.forEach(function(it) {
+            var row = document.createElement('div');
+            row.className = 'dyo-exp-list-item';
+            row.innerHTML =
+              '<span class="dyo-exp-list-icon">' + it.icon + '</span>' +
+              '<span class="dyo-exp-list-name">' + it.label + '</span>' +
+              '<span class="dyo-exp-list-type">' + it.type + '</span>' +
+              '<span class="dyo-exp-list-count">—</span>';
+            bindFeatItem(row, it);
+            list.appendChild(row);
+          });
+          mainEl.appendChild(list);
+        } else {
+          var grid = document.createElement('div');
+          grid.className = 'dyo-explorer-grid';
+          FEAT_ITEMS.forEach(function(it) {
+            var item = document.createElement('div');
+            item.className = 'dyo-exp-item';
+            item.innerHTML =
+              '<div class="dyo-exp-item-icon">' + it.icon + '</div>' +
+              '<div class="dyo-exp-item-label">' + it.label + '</div>';
+            bindFeatItem(item, it);
+            grid.appendChild(item);
+          });
+          mainEl.appendChild(grid);
+        }
+      }
+      // 현재 모드 라벨 — Windows: '📁 폴더', Linux: '📁 Features'
+      function featLabel() {
+        return document.documentElement.classList.contains('dyo-mode-windows') ? '📁 폴더' : '📁 Features';
+      }
+      function renderFeatAddr() {
+        if (!addrBar) return;
+        addrBar.innerHTML = '';
+        var crumb = document.createElement('span');
+        crumb.className = 'dyo-exp-crumb current';
+        crumb.textContent = '📁 Features';
+        crumb.setAttribute('data-label-win', '📁 폴더');
+        crumb.setAttribute('data-label-linux', '📁 Features');
+        crumb.textContent = featLabel();
+        addrBar.appendChild(crumb);
+      }
+      function buildFeatTree() {
+        if (!treeEl) return;
+        treeEl.innerHTML = '';
+        var rootItem = document.createElement('div');
+        rootItem.className = 'dyo-tree-item active';
+        rootItem.style.paddingLeft = '8px';
+        rootItem.innerHTML = '<span class="dyo-tree-arrow"> </span><span>📁 Features</span>';
+        var rootLbl = rootItem.querySelector('span:last-child');
+        if (rootLbl) {
+          rootLbl.setAttribute('data-label-win', '📁 폴더');
+          rootLbl.setAttribute('data-label-linux', '📁 Features');
+          rootLbl.textContent = featLabel();
+        }
+        treeEl.appendChild(rootItem);
+      }
+      function buildFeat() {
+        if (featBuilt) return;
+        featBuilt = true;
+        buildFeatTree();
+        renderFeatAddr();
+        renderFeatMain();
+      }
+      if (viewGridBtn) viewGridBtn.addEventListener('click', function() {
+        viewMode = 'grid';
+        viewGridBtn.classList.add('active');
+        if (viewListBtn) viewListBtn.classList.remove('active');
+        renderFeatMain();
+      });
+      if (viewListBtn) viewListBtn.addEventListener('click', function() {
+        viewMode = 'list';
+        viewListBtn.classList.add('active');
+        if (viewGridBtn) viewGridBtn.classList.remove('active');
+        renderFeatMain();
+      });
+
+      function openFeatures() {
+        buildFeat();
+        var wasOpen = w.classList.contains('open');
+        if (!wasOpen) {
+          var W = Math.min(600, window.innerWidth  - 40);
+          var H = Math.min(420, window.innerHeight - 40);
+          w.style.width  = W + 'px';
+          w.style.height = H + 'px';
+          w.style.left   = Math.round((window.innerWidth  - W) / 2) + 'px';
+          w.style.top    = Math.round((window.innerHeight - H) / 3) + 'px';
+          w.style.right  = 'auto';
+          w.style.bottom = 'auto';
+        }
+        w.classList.add('open');
+        w.classList.remove('minimized');
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+        if (!wasOpen && window.dyoAnimOpen) window.dyoAnimOpen(w);
+      }
+      function closeFeatures() {
+        if (window.dyoAnimDismiss) {
+          window.dyoAnimDismiss(w, function() {
+            w.classList.remove('open', 'minimized', 'maximized');
+            savedPos = null;
+          });
+        } else {
+          w.classList.remove('open', 'minimized', 'maximized');
+          savedPos = null;
+        }
+      }
+      function minimizeFeatures() {
+        if (w.classList.contains('minimized')) {
+          var tb = document.querySelector('.dyo-taskbtn[data-win-id="dyoFeaturesWin"]');
+          window._dyoAnimSrc = tb || null;
+          w.classList.remove('minimized');
+          if (window.dyoAnimOpen) window.dyoAnimOpen(w);
+        } else {
+          if (w.classList.contains('maximized')) {
+            w.classList.remove('maximized');
+            if (savedPos) {
+              w.style.left = savedPos.left; w.style.top = savedPos.top;
+              w.style.right = savedPos.right; w.style.bottom = savedPos.bottom;
+              w.style.width = savedPos.width; w.style.height = savedPos.height;
+              savedPos = null;
+            }
+          }
+          if (window.dyoAnimMinimize) {
+            window.dyoAnimMinimize(w, function() { w.classList.add('minimized'); });
+          } else {
+            w.classList.add('minimized');
+          }
+        }
+      }
+      function maximizeFeatures() {
+        if (w.classList.contains('maximized')) {
+          w.classList.remove('maximized');
+          if (savedPos) {
+            w.style.left   = savedPos.left;
+            w.style.top    = savedPos.top;
+            w.style.right  = savedPos.right;
+            w.style.bottom = savedPos.bottom;
+            w.style.width  = savedPos.width;
+            w.style.height = savedPos.height;
+            savedPos = null;
+          }
+          if (window.dyoAnimMaximizeOut) window.dyoAnimMaximizeOut(w);
+        } else {
+          w.classList.remove('minimized');
+          savedPos = {
+            left: w.style.left, top: w.style.top,
+            right: w.style.right, bottom: w.style.bottom,
+            width: w.style.width, height: w.style.height
+          };
+          w.classList.add('maximized');
+          w.style.left = w.style.top = w.style.right =
+          w.style.bottom = w.style.width = w.style.height = '';
+          if (window.dyoAnimMaximizeIn) window.dyoAnimMaximizeIn(w);
+        }
+      }
+
+      window.dyoOpenFeatures = openFeatures;
+
+      w.addEventListener('mousedown', function() {
+        window._dyoZTop = (window._dyoZTop || 9000) + 1;
+        w.style.zIndex = window._dyoZTop;
+      });
+      if (closeBtn) closeBtn.addEventListener('click', closeFeatures);
+      if (minBtn)   minBtn.addEventListener('click',   minimizeFeatures);
+      if (maxBtn)   maxBtn.addEventListener('click',   maximizeFeatures);
+
+      if (titlebar) {
+        titlebar.addEventListener('dblclick', function(e) {
+          if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+          maximizeFeatures();
+        });
+        titlebar.addEventListener('mousedown', function(e) {
+          if (w.classList.contains('maximized')) return;
+          if (e.target === closeBtn || e.target === minBtn || e.target === maxBtn) return;
+          var rect = w.getBoundingClientRect();
+          w.style.left = rect.left + 'px'; w.style.top = rect.top + 'px';
+          w.style.right = 'auto'; w.style.bottom = 'auto';
+          dragging = true;
+          dragOX = e.clientX - rect.left;
+          dragOY = e.clientY - rect.top;
+          e.preventDefault();
+        });
+        titlebar.addEventListener('touchstart', function(e) {
+          if (w.classList.contains('maximized')) return;
+          var t = e.touches[0];
+          var rect = w.getBoundingClientRect();
+          w.style.left = rect.left + 'px'; w.style.top = rect.top + 'px';
+          w.style.right = 'auto'; w.style.bottom = 'auto';
+          dragging = true;
+          dragOX = t.clientX - rect.left;
+          dragOY = t.clientY - rect.top;
+        }, { passive: true });
+      }
+
+      document.addEventListener('mousemove', function(e) {
+        if (dragging) {
+          var x = Math.max(0, Math.min(window.innerWidth  - w.offsetWidth,  e.clientX - dragOX));
+          var y = Math.max(0, Math.min(window.innerHeight - 40, e.clientY - dragOY));
+          w.style.left = x + 'px'; w.style.top = y + 'px';
+        }
+        if (resizing) {
+          var dx = e.clientX - resizeSX;
+          var dy = e.clientY - resizeSY;
+          var r = resizeSRect;
+          var nL = r.left, nT = r.top, nW = r.width, nH = r.height;
+          if (resizeDir.indexOf('e') !== -1) nW = Math.max(MIN_W, r.width + dx);
+          if (resizeDir.indexOf('s') !== -1) nH = Math.max(MIN_H, r.height + dy);
+          if (resizeDir.indexOf('w') !== -1) { nW = Math.max(MIN_W, r.width - dx); nL = r.left + r.width - nW; }
+          if (resizeDir.indexOf('n') !== -1) { nH = Math.max(MIN_H, r.height - dy); nT = r.top + r.height - nH; }
+          w.style.left = nL + 'px'; w.style.top = nT + 'px';
+          w.style.width = nW + 'px'; w.style.height = nH + 'px';
+        }
+      });
+      document.addEventListener('touchmove', function(e) {
+        if (!dragging) return;
+        var t = e.touches[0];
+        var x = Math.max(0, Math.min(window.innerWidth  - w.offsetWidth,  t.clientX - dragOX));
+        var y = Math.max(0, Math.min(window.innerHeight - 40, t.clientY - dragOY));
+        w.style.left = x + 'px'; w.style.top = y + 'px';
+      }, { passive: true });
+      document.addEventListener('mouseup',  function() { dragging = false; resizing = false; });
+      document.addEventListener('touchend', function() { dragging = false; });
+
       w.querySelectorAll('.dyo-brs-handle').forEach(function(handle) {
         handle.addEventListener('mousedown', function(e) {
           if (w.classList.contains('maximized') || w.classList.contains('minimized')) return;
