@@ -4173,16 +4173,66 @@ body:not(#tt-body-index) .dyo-source-link:hover {
   border-radius: 0;
 }
 
+/* 탭 바 (크롬식 윗줄 — 단일 탭) */
 .dyo-browser-titlebar {
   display: flex;
   align-items: center;
-  padding: 0 14px;
-  height: 40px;
-  background: #21262d;
-  border-bottom: 1px solid #30363d;
+  padding: 0 12px;
+  height: 42px;
+  background: #15191e;
   gap: 8px;
   cursor: move;
   user-select: none;
+  flex-shrink: 0;
+}
+
+.dyo-browser-tabs {
+  display: flex;
+  align-items: flex-end;
+  align-self: stretch;
+  gap: 4px;
+  margin-left: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.dyo-browser-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 14px;
+  min-width: 120px;
+  max-width: 260px;
+  background: #21262d;
+  border-radius: 10px 10px 0 0;
+  color: #e6edf3;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  overflow: hidden;
+}
+
+.dyo-browser-tab-ico {
+  display: flex;
+  align-items: center;
+  color: #8b949e;
+  flex-shrink: 0;
+}
+
+.dyo-browser-tab-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 주소 표시줄 (크롬식 아랫줄) */
+.dyo-browser-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  background: #21262d;
+  border-bottom: 1px solid #30363d;
   flex-shrink: 0;
 }
 
@@ -4203,15 +4253,6 @@ body:not(#tt-body-index) .dyo-source-link:hover {
 .dyo-shell-win.maximized .dyo-brs-handle { display: none; }
 
 .dyo-browser-win.maximized .dyo-browser-titlebar { cursor: default; }
-
-.dyo-browser-navarea {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  overflow: hidden;
-  margin-left: 8px;
-}
 
 .dyo-browser-navbtn {
   background: transparent;
@@ -4243,19 +4284,26 @@ body:not(#tt-body-index) .dyo-source-link:hover {
 
 .dyo-browser-urlbar {
   flex: 1;
+  min-width: 0;
   height: 26px;
   background: #0d1117;
+  border: 1px solid transparent;
   border-radius: 13px;
   padding: 0 12px;
+  margin: 0;
   font-family: var(--font-mono);
   font-size: 12px;
   color: #8b949e;
-  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 26px;
-  display: flex;
-  align-items: center;
+  line-height: 24px;
+  outline: none;
+  cursor: text;
+}
+
+.dyo-browser-urlbar::selection {
+  background: rgba(88, 166, 255, 0.35);
+  color: #fff;
 }
 
 .dyo-browser-frame {
@@ -8176,13 +8224,23 @@ html.dyo-mode-windows body#tt-body-index .dyo-win-tb { display: flex; }
   background: #fff;
 }
 .dyo-mode-windows .dyo-browser-titlebar {
-  background: linear-gradient(180deg, #dee1e6, #d2d5d9);
-  border-bottom: 1px solid #cbcdd0;
+  background: #eef0f2;
+  border-bottom: none;
+  height: 40px;
   padding: 0 0 0 10px;
   gap: 4px;
+  align-items: center;
 }
-.dyo-mode-windows .dyo-browser-navarea {
-  margin-left: 4px;
+.dyo-mode-windows .dyo-browser-tab {
+  background: #fff;
+  color: #1f1f1f;
+  border-radius: 9px 9px 0 0;
+  height: 34px;
+}
+.dyo-mode-windows .dyo-browser-tab-ico { color: #5b5b5b; }
+.dyo-mode-windows .dyo-browser-toolbar {
+  background: #fff;
+  border-bottom: 1px solid #e1e1e1;
   gap: 2px;
 }
 .dyo-mode-windows .dyo-browser-navbtn {
@@ -8204,12 +8262,12 @@ html.dyo-mode-windows body#tt-body-index .dyo-win-tb { display: flex; }
   border-radius: 6px;
 }
 .dyo-mode-windows .dyo-browser-urlbar {
-  background: #f1f3f4;
-  color: #202124;
-  border: 1px solid transparent;
+  background: #fff;
+  color: #1f1f1f;
+  border: 1px solid #d1d1d1;
   border-radius: 16px;
   height: 28px;
-  line-height: 28px;
+  line-height: 26px;
   padding: 0 14px;
   font-family: 'Segoe UI', 'Malgun Gothic', system-ui, sans-serif;
   font-size: 12px;
@@ -8243,6 +8301,11 @@ html.dyo-mode-windows body#tt-body-index .dyo-win-tb { display: flex; }
 .dyo-mode-windows .dyo-shell-titlebar .dyo-term-dot + .dyo-term-dot,
 .dyo-mode-windows .dyo-browser-titlebar .dyo-term-dot + .dyo-term-dot {
   margin-left: 0;
+}
+/* 브라우저 탭 바(40px)에서는 컨트롤이 높이를 꽉 채우도록 */
+.dyo-mode-windows .dyo-browser-titlebar .dyo-term-dot {
+  height: 40px;
+  align-self: stretch;
 }
 .dyo-mode-windows .dyo-shell-titlebar .dyo-term-dot.yellow,
 .dyo-mode-windows .dyo-browser-titlebar .dyo-term-dot.yellow { order: 1; }

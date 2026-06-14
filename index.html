@@ -1139,19 +1139,29 @@
 
     <!-- 가상 브라우저 창 (드래그 가능) -->
     <div class="dyo-browser-win" id="dyoBrowserWin">
+      <!-- 탭 바 (드래그 핸들 · 단일 탭 고정) -->
       <div class="dyo-browser-titlebar" id="dyoBrowserTitlebar">
         <span class="dyo-term-dot red"    id="dyoBrowserClose" title="닫기"></span>
         <span class="dyo-term-dot yellow" id="dyoBrowserMin"   title="최소화"></span>
         <span class="dyo-term-dot green"  id="dyoBrowserMax"   title="최대화"></span>
-        <div class="dyo-browser-navarea">
-          <button class="dyo-browser-navbtn" id="dyoBrowserBack"   title="뒤로">&#8592;</button>
-          <button class="dyo-browser-navbtn" id="dyoBrowserFwd"    title="앞으로">&#8594;</button>
-          <div class="dyo-browser-urlbar" id="dyoBrowserUrl">about:blank</div>
-          <button class="dyo-browser-navbtn" id="dyoBrowserReload" title="새로고침">&#8635;</button>
-          <button class="dyo-browser-navbtn dyo-browser-newtab" id="dyoBrowserNewTab" title="새 탭으로 열기">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </button>
+        <div class="dyo-browser-tabs">
+          <div class="dyo-browser-tab">
+            <span class="dyo-browser-tab-ico">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg>
+            </span>
+            <span class="dyo-browser-tab-title" id="dyoBrowserTabTitle">새 탭</span>
+          </div>
         </div>
+      </div>
+      <!-- 주소 표시줄 -->
+      <div class="dyo-browser-toolbar">
+        <button class="dyo-browser-navbtn" id="dyoBrowserBack"   title="뒤로">&#8592;</button>
+        <button class="dyo-browser-navbtn" id="dyoBrowserFwd"    title="앞으로">&#8594;</button>
+        <input class="dyo-browser-urlbar" id="dyoBrowserUrl" type="text" value="about:blank" readonly spellcheck="false" autocomplete="off" tabindex="-1">
+        <button class="dyo-browser-navbtn" id="dyoBrowserReload" title="새로고침">&#8635;</button>
+        <button class="dyo-browser-navbtn dyo-browser-newtab" id="dyoBrowserNewTab" title="새 탭으로 열기">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </button>
       </div>
       <iframe class="dyo-browser-frame" id="dyoBrowserFrame" src="about:blank"></iframe>
       <div class="dyo-brs-handle n"  data-dir="n"></div>
@@ -1682,24 +1692,6 @@
 
     <!-- 관리자 빠른 메뉴바 -->
     <div class="dyo-admin-bar">
-      <a href="/manage/newpost/?type=post&returnURL=%2Fmanage%2Fposts%2F" class="dyo-admin-btn" title="글쓰기">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-        </svg>
-      </a>
-      <a href="/manage" class="dyo-admin-btn" title="관리">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-        </svg>
-      </a>
-      <button class="dyo-admin-btn dyo-admin-home" id="btnLandingHome" title="홈으로">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m3 9 9-7 9 7"/>
-          <path d="M9 22V12h6v10"/>
-        </svg>
-      </button>
       <button class="dyo-admin-btn dyo-admin-mode" id="btnModeToggle" title="데스크탑 모드 전환">
         <!-- Windows 모드일 때: Linux(터미널) 아이콘 노출 -->
         <svg class="dyo-mode-ic dyo-mode-ic-linux" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2058,16 +2050,6 @@
       }
     })();
 
-    // ── 비인덱스 페이지: Home 버튼 클릭 시 메인으로 이동 ──
-    (function() {
-      if (document.body.id === 'tt-body-index') return;
-      var btn = document.getElementById('btnLandingHome');
-      if (btn) btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = '/';
-      });
-    })();
-
     // ── 데스크탑 초기화 ──
     (function() {
       if (document.body.id !== 'tt-body-index') return;
@@ -2075,7 +2057,6 @@
       var desktop    = document.getElementById('dyoDesktop');
       var desktopBar = document.getElementById('dyoDesktopBar');
       var dkWrap     = document.getElementById('dkWrap');
-      var homeBtn    = document.getElementById('btnLandingHome');
       if (!desktop) return;
 
       // 모드 적용 (Windows / Linux) — html 클래스는 early script가 이미 적용
@@ -2219,14 +2200,6 @@
       dkWrap.style.visibility = 'hidden';
       document.body.style.overflow = 'hidden';
       // 튜토리얼 자동 실행 제거 — 우클릭 컨텍스트 메뉴의 Tutorial 항목으로만 시작
-
-      // 관리자바 Home 버튼 → 홈으로 이동
-      if (homeBtn) {
-        homeBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          window.location.href = '/';
-        });
-      }
 
       // 관리자바 모드 토글 버튼 → Windows ↔ Linux 전환
       var modeBtn = document.getElementById('btnModeToggle');
@@ -4447,6 +4420,7 @@
       var bFwd     = document.getElementById('dyoBrowserFwd');
       var bReload  = document.getElementById('dyoBrowserReload');
       var bUrlBar  = document.getElementById('dyoBrowserUrl');
+      var bTabTitle = document.getElementById('dyoBrowserTabTitle');
       var bFrame   = document.getElementById('dyoBrowserFrame');
       if (!bwin || !bFrame || !bUrlBar) return;
       window._dyoBWin = bwin;
@@ -4469,7 +4443,10 @@
 
       function openBrowser(url) {
         var fullUrl = url.startsWith('http') ? url : (window.location.origin + url);
-        bUrlBar.textContent = window.location.hostname + (url.startsWith('/') ? url : '/' + url);
+        bUrlBar.value = url.startsWith('http')
+          ? url.replace(/^https?:\/\//, '')
+          : window.location.hostname + (url.startsWith('/') ? url : '/' + url);
+        if (bTabTitle) bTabTitle.textContent = '로딩 중…';
         var wasOpen = bwin.classList.contains('open');
         if (!wasOpen) {
           var W = Math.min(1200, window.innerWidth  - 40);
@@ -4509,17 +4486,18 @@
         bNavHistory = [];
         bNavIdx = -1;
         updateBrowserNavBtns();
+        if (bTabTitle) bTabTitle.textContent = '새 탭';
         if (window.dyoAnimDismiss) {
           window.dyoAnimDismiss(bwin, function() {
             bwin.classList.remove('open', 'minimized', 'maximized');
             bFrame.src = 'about:blank';
-            bUrlBar.textContent = 'about:blank';
+            bUrlBar.value = 'about:blank';
             savedPos = null;
           });
         } else {
           bwin.classList.remove('open', 'minimized', 'maximized');
           bFrame.src = 'about:blank';
-          bUrlBar.textContent = 'about:blank';
+          bUrlBar.value = 'about:blank';
           savedPos = null;
         }
       }
@@ -4579,22 +4557,31 @@
         var href = link.getAttribute('href');
         if (!href || href === '#' || href.startsWith('#') || href.startsWith('javascript:')) return;
 
-        var isExternal = false;
+        var isExternal = false, resolved = href;
         try {
           var linkUrl = new URL(href, bFrame.contentWindow.location.href);
-          if (linkUrl.origin !== window.location.origin) isExternal = true;
-          href = isExternal ? linkUrl.href : linkUrl.pathname + linkUrl.search + linkUrl.hash;
+          isExternal = (linkUrl.origin !== window.location.origin);
+          resolved = isExternal ? linkUrl.href : (linkUrl.pathname + linkUrl.search + linkUrl.hash);
         } catch(ex) {}
 
-        e.preventDefault();
-        e.stopPropagation();
-
         if (isExternal) {
-          if (window.dyoOpenExternal) window.dyoOpenExternal(href);
-          else window.open(href, '_blank', 'noopener');
-        } else {
-          openBrowser(href);
+          // 외부 링크 → 확인 다이얼로그(새 창)로 처리, 프레임 안에서는 열지 않음
+          e.preventDefault();
+          e.stopPropagation();
+          if (window.dyoOpenExternal) window.dyoOpenExternal(resolved);
+          else window.open(resolved, '_blank', 'noopener');
+          return;
         }
+
+        // 같은 출처(블로그 내부) 링크
+        var tgt = (link.getAttribute('target') || '').toLowerCase();
+        if (tgt && tgt !== '_self') {
+          // _blank 등 새 창 지정 링크도 프레임 안에서 이동
+          e.preventDefault();
+          e.stopPropagation();
+          openBrowser(resolved);
+        }
+        // target 미지정/_self → iframe이 자연스럽게 이동, load 이벤트가 주소·히스토리 추적
       }
 
       var _lastIframeDoc = null;
@@ -4603,7 +4590,7 @@
         try {
           var loc = bFrame.contentWindow.location.href;
           if (loc && loc !== 'about:blank' && loc !== 'about:srcdoc') {
-            bUrlBar.textContent = loc.replace(/^https?:\/\//, '');
+            if (document.activeElement !== bUrlBar) bUrlBar.value = loc.replace(/^https?:\/\//, '');
             // 뒤로/앞으로 버튼이 아닌 iframe 내부 네비게이션 추적
             if (!_bNavFromBtn && bNavHistory.length > 0 && loc !== bNavHistory[bNavIdx]) {
               bNavHistory = bNavHistory.slice(0, bNavIdx + 1);
@@ -4615,6 +4602,12 @@
           }
 
           var iframeDoc = bFrame.contentDocument || bFrame.contentWindow.document;
+          // 탭 제목을 현재 페이지 제목으로 갱신 (단일 탭)
+          if (bTabTitle) {
+            var pageTitle = (iframeDoc && iframeDoc.title) ? iframeDoc.title.trim() : '';
+            bTabTitle.textContent = pageTitle || '새 탭';
+            bTabTitle.parentNode.title = pageTitle || '';
+          }
           // 이전 문서의 리스너 제거 후 새 문서에 등록 (중복 방지)
           if (_lastIframeDoc && _lastIframeDoc !== iframeDoc) {
             try { _lastIframeDoc.removeEventListener('click', _bFrameClickHandler, true); } catch(ex) {}
@@ -4647,7 +4640,7 @@
         _bNavFromBtn = true;
         bFrame.src = bNavHistory[bNavIdx];
         updateBrowserNavBtns();
-        bUrlBar.textContent = bNavHistory[bNavIdx].replace(/^https?:\/\//, '');
+        bUrlBar.value = bNavHistory[bNavIdx].replace(/^https?:\/\//, '');
       });
       if (bFwd) bFwd.addEventListener('click', function() {
         if (bNavIdx >= bNavHistory.length - 1) return;
@@ -4655,12 +4648,20 @@
         _bNavFromBtn = true;
         bFrame.src = bNavHistory[bNavIdx];
         updateBrowserNavBtns();
-        bUrlBar.textContent = bNavHistory[bNavIdx].replace(/^https?:\/\//, '');
+        bUrlBar.value = bNavHistory[bNavIdx].replace(/^https?:\/\//, '');
       });
       if (bReload) bReload.addEventListener('click', function() { try { bFrame.contentWindow.location.reload(); } catch(e){ bFrame.src = bFrame.src; } });
+      // 현재 iframe이 실제로 보고 있는 URL 반환 (내부 네비게이션으로 stale 해진 bFrame.src 보정)
+      function currentBrowserUrl() {
+        var url = null;
+        try { url = bFrame.contentWindow.location.href; } catch(e) { url = null; }
+        if (!url || url === 'about:blank') url = bNavHistory[bNavIdx] || bFrame.src;
+        return url;
+      }
+
       var bNewTab = document.getElementById('dyoBrowserNewTab');
       if (bNewTab) bNewTab.addEventListener('click', function() {
-        var url = bFrame.src;
+        var url = currentBrowserUrl();
         if (url && url !== 'about:blank') window.open(url, '_blank', 'noopener');
       });
 
