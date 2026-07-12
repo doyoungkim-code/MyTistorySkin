@@ -2594,6 +2594,202 @@ html, body {
 
 .dyo-desktop.show { display: flex; }
 
+/* ── 인트로 랜딩 ── */
+#dyoLanding { display: none; }
+#tt-body-index #dyoLanding { display: block; }   /* 인덱스에서만, 첫 페인트부터 표시 */
+
+.dyo-landing {
+  position: fixed;
+  inset: 0;
+  z-index: 8600;               /* desktop(8000)·bar·source-link(8001) 위 */
+  overflow: hidden;
+  background: #14171c;         /* 이미지 로드 전/줌인 여백용 앰비언트 색 */
+}
+
+/* cover를 흉내내되 hotspot %가 항상 정렬되도록 원본 비율 래퍼를 중앙 배치 */
+.dyo-landing-scene {
+  --scene-ar: 1672/941;        /* 실제 main.png 비율 (1672×941) */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: var(--scene-ar);
+  width: max(100vw, calc(100vh * (1672 / 941)));   /* cover: 1672/941 비율 유지 */
+  background: url('./images/main.png') center/cover no-repeat;
+  /* 줌인 기준점 — JS가 'enter' 핫스팟 중심으로 --enter-origin 설정 */
+  transform-origin: var(--enter-origin, 45% 37%);
+  transition: transform 0.7s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.5s ease 0.15s;
+}
+
+/* ── 핫스팟 (JS가 LANDING_HOTSPOTS로부터 생성) ── */
+.dyo-ls-hot {
+  position: absolute;          /* left/top/width/height 는 JS 인라인 % */
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  animation: dyoLsIn 0.6s ease 0.6s forwards;   /* 로드 후 자연스럽게 등장 */
+}
+@keyframes dyoLsIn { to { opacity: 1; } }
+
+/* 호버 시 부드러운 하이라이트 링 */
+.dyo-ls-hot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+.dyo-ls-hot:hover::before,
+.dyo-ls-hot:focus-visible::before {
+  border-color: rgba(150, 205, 255, 0.6);
+  background: rgba(140, 195, 255, 0.1);
+  box-shadow: inset 0 0 26px 4px rgba(120, 190, 255, 0.18);
+}
+
+/* 다각형 핫스팟: clip-path로 모양 클리핑 → 테두리 링 대신 채움 하이라이트 */
+.dyo-ls-hot.poly::before { display: none; }
+.dyo-ls-hot.poly:hover,
+.dyo-ls-hot.poly:focus-visible { background: rgba(140, 195, 255, 0.16); }
+
+/* 중앙 마커 (점 + 툴팁) */
+.dyo-ls-marker {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+/* '여기 누를 수 있어요' 신호 — 은은한 호흡 점 */
+.dyo-ls-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(233, 244, 255, 0.95);
+  box-shadow: 0 0 0 0 rgba(150, 205, 255, 0.55), 0 1px 4px rgba(0, 0, 0, 0.4);
+  animation: dyoLsPulse 2.2s ease-out infinite;
+}
+@keyframes dyoLsPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(150, 205, 255, 0.55), 0 1px 4px rgba(0, 0, 0, 0.4); }
+  70%  { box-shadow: 0 0 0 15px rgba(150, 205, 255, 0), 0 1px 4px rgba(0, 0, 0, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(150, 205, 255, 0), 0 1px 4px rgba(0, 0, 0, 0.4); }
+}
+
+/* '누르면 뭐가 나오는지' — 호버 시 뜨는 작은 설명 */
+.dyo-ls-tip {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(12, 16, 22, 0.74);
+  color: #eaf2ff;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.dyo-ls-tip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(12, 16, 22, 0.74);
+}
+.dyo-ls-hot:hover .dyo-ls-tip,
+.dyo-ls-hot:focus-visible .dyo-ls-tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* 줌인 퇴장 상태 (클릭 시 JS가 클래스 부여) */
+.dyo-landing.is-leaving { pointer-events: none; }
+.dyo-landing.is-leaving .dyo-landing-scene { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
+.dyo-landing.is-leaving .dyo-ls-hot { opacity: 0; transition: opacity 0.3s ease; animation: none; }
+
+/* ── 좌표 보정 도구 (홈 URL 뒤에 ?calib 붙이면 활성) ── */
+.dyo-ls-calib {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  cursor: crosshair;
+}
+.dyo-landing.calib .dyo-ls-hot::before {
+  border-color: rgba(255, 176, 80, 0.75);   /* 보정 중엔 기존 박스 표시 */
+  background: rgba(255, 176, 80, 0.08);
+}
+.dyo-ls-calib-x, .dyo-ls-calib-y {
+  position: absolute;
+  background: rgba(127, 208, 255, 0.6);
+  pointer-events: none;
+}
+.dyo-ls-calib-x { left: 0; right: 0; height: 1px; }
+.dyo-ls-calib-y { top: 0; bottom: 0; width: 1px; }
+.dyo-ls-calib-rect {
+  position: absolute;
+  border: 1.5px dashed #7fd0ff;
+  background: rgba(120, 190, 255, 0.14);
+  pointer-events: none;
+}
+.dyo-ls-calib-read {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 20;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #9dffb0;
+  font: 12px/1.6 var(--font-mono);
+  white-space: pre;
+  pointer-events: none;
+}
+/* 보정 다각형 그리기 SVG */
+.dyo-ls-calib-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.dyo-ls-calib-poly {
+  fill: rgba(120, 190, 255, 0.18);
+  stroke: #7fd0ff;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+/* 보정 모드 전환 버튼 */
+.dyo-ls-calib-mode {
+  position: fixed;
+  top: 74px;
+  left: 12px;
+  z-index: 21;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(20, 24, 30, 0.9);
+  color: #eaf2ff;
+  font: 12px var(--font-sans);
+  cursor: pointer;
+}
+.dyo-ls-calib-mode:hover { background: rgba(40, 48, 60, 0.95); }
+
+/* 랜딩 떠 있는 동안 데스크탑 부속 UI 숨김 (Linux/Windows 태스크바·시작메뉴·소스링크·관리바) */
+.dyo-landing-active .dyo-source-link,
+.dyo-landing-active .dyo-admin-bar,
+.dyo-landing-active .dyo-desktop-bar,
+.dyo-landing-active .dyo-win-tb,
+.dyo-landing-active .dyo-win-startmenu { display: none !important; }
+
 /* 관리자바 Home 버튼 */
 .dyo-admin-home svg {
   width: 16px;
@@ -4250,6 +4446,7 @@ body:not(#tt-body-index) .dyo-source-link:hover {
   will-change: transform, opacity;
 }
 .dyo-browser-win.dyo-win-pop .dyo-browser-frame,
+.dyo-browser-win.dyo-win-pop-strong .dyo-browser-frame,
 .dyo-browser-win.dyo-win-dismissing .dyo-browser-frame,
 .dyo-browser-win.dyo-win-minimizing .dyo-browser-frame,
 .dyo-browser-win.dyo-win-zoom-in .dyo-browser-frame,
@@ -4268,6 +4465,17 @@ body:not(#tt-body-index) .dyo-source-link:hover {
 }
 .dyo-win-pop {
   animation: dyo-win-pop 0.18s ease-out forwards !important;
+}
+
+/* 강한 팝: 아이콘 지점에서 아주 작게 시작 → 살짝 오버슈트하며 튀어나옴 (인트로 후 자동 열기 전용) */
+@keyframes dyo-win-pop-strong {
+  0%   { opacity: 0; transform: scale(0.22); }
+  60%  { opacity: 1; transform: scale(1.05); }
+  80%  { transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.dyo-win-pop-strong {
+  animation: dyo-win-pop-strong 0.55s cubic-bezier(0.22, 0.7, 0.3, 1.1) forwards !important;
 }
 
 /* 닫기: 가볍게 줄어들며 페이드아웃 */

@@ -493,6 +493,12 @@
     </div>
 
 
+    <!-- 인트로 랜딩 (인덱스 전용) — 그림 속 오브젝트 클릭 시 진입/이동 -->
+    <!-- 핫스팟은 아래 JS의 LANDING_HOTSPOTS 배열로부터 생성됨 -->
+    <div class="dyo-landing" id="dyoLanding">
+      <div class="dyo-landing-scene" id="dyoLandingScene"></div>
+    </div>
+
     <!-- 데스크탑 홈화면 (인덱스 페이지 전용) -->
     <div class="dyo-desktop" id="dyoDesktop">
       <!-- 달 지형 -->
@@ -1709,6 +1715,12 @@
           <path d="M3 4h8v8H3zM13 4h8v8h-8zM3 14h8v8H3zM13 14h8v8h-8z"/>
         </svg>
       </button>
+      <button class="dyo-admin-btn" id="btnGoLanding" title="메인화면으로 돌아가기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 10.5 12 3l9 7.5"/>
+          <path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>
+        </svg>
+      </button>
       <div class="dyo-admin-sep"></div>
       <button class="dyo-admin-btn" id="btnFullscreen" title="전체화면">
         <!-- 전체화면 진입 아이콘 -->
@@ -2205,6 +2217,241 @@
       dkWrap.style.visibility = 'hidden';
       document.body.style.overflow = 'hidden';
       // 튜토리얼 자동 실행 제거 — 우클릭 컨텍스트 메뉴의 Tutorial 항목으로만 시작
+
+      // ── 인트로 랜딩 → 그림 속 오브젝트 클릭 시 진입/이동 ──
+      // 데스크탑은 위처럼 즉시 활성화되지만 랜딩이 그 위를 덮고 있다가,
+      // 모니터를 클릭하면 그 지점으로 줌인+페이드아웃되며 준비된 데스크탑이 드러난다.
+      //
+      // ★ 핫스팟 추가/수정: 아래 배열만 편집하면 됩니다. (좌표는 홈 URL 뒤 ?calib 로 측정)
+      //   모양은 3가지 중 택1:
+      //   ① 사각형        : left, top, width, height (이미지 기준 %)
+      //   ② 회전 사각형   : 위 + rotate: -12  (도 단위, 살짝 기운 물체)
+      //   ③ 자유 다각형   : points: [[x,y],[x,y],...]  (비스듬한 책 등 모양대로 — %)
+      //   tip     : 호버 시 뜨는 작은 설명
+      //   action  : 'enter'  → 그 지점으로 줌인 후 데스크탑 / { url, target } → 링크 열기
+      var LANDING_HOTSPOTS = [
+        // 모니터(화면+받침대 하나로 연결) → 클릭 시 데스크탑 진입. 점은 화면 중앙(markerAt)에.
+        { id: 'monitor', tip: '클릭해서 데스크탑 열기', markerAt: [48, 34],
+          points: [[23.2, 7.9], [72.8, 7.8], [72.3, 60.5], [50.8, 59.9], [50.8, 63], [57.8, 63.4],
+                   [58.5, 70.8], [38.5, 70.5], [39.9, 62.8], [46.5, 63.1], [46.5, 59.9], [23.9, 59.8]],
+          action: 'enter' },
+        // PORTFOLIO 책 → 포트폴리오 사이트
+        { id: 'book', tip: 'PORTFOLIO 보기',
+          points: [[74.6, 36.5], [76.1, 35.8], [89.3, 38.6], [87.9, 73.4], [86.1, 74.7], [73.9, 69.2]],
+          action: { url: 'https://dyomyo-portfolio.tistory.com/', target: '_blank' } },
+        // 위키(왼쪽 책) → 위키 사이트
+        { id: 'wiki', tip: 'Wiki 보기',
+          points: [[11.7, 63.4], [26.9, 64.3], [27.5, 70.9], [22.2, 92], [0.4, 92.1], [0.3, 85.8]],
+          action: { url: 'https://dyomyo-wiki.tistory.com/', target: '_blank' } }
+        // 예) 커피잔/램프/창밖 등 추가 시 위 형식대로 항목만 늘리면 됩니다.
+      ];
+
+      var landing = document.getElementById('dyoLanding');
+      var scene   = document.getElementById('dyoLandingScene');
+      if (landing && scene) {
+        document.documentElement.classList.add('dyo-landing-active');
+        var landingDismissed = false;
+
+        // 모니터로 줌인하며 데스크탑 진입
+        var enterDesktop = function(originStr) {
+          if (landingDismissed) return;
+          landingDismissed = true;
+          if (originStr) scene.style.setProperty('--enter-origin', originStr);
+          landing.classList.add('is-leaving');
+          document.documentElement.classList.remove('dyo-landing-active'); // bar/admin 복귀
+          setTimeout(function() { landing.remove(); }, 750);               // 줌인 종료 후 제거
+          // 진입 1.5초 뒤 개발 블로그 창이 '개발 블로그 아이콘'에서 튀어나오듯 자동 열기
+          setTimeout(function() {
+            if (!window.dyoOpenBrowser) return;
+            var icon = document.getElementById('desktopIconBlog');
+            window._dyoAnimSrc = icon || null;   // 팝 애니메이션 기준점 = 아이콘 위치
+            window.dyoOpenBrowser('/category');
+            // 기본 팝(약함)을 강한 팝으로 교체 — 아이콘 지점에서 작게 시작해 크게 튀어나옴
+            var bwin = document.getElementById('dyoBrowserWin');
+            if (bwin) {
+              bwin.classList.remove('dyo-win-pop');   // 기본 팝 제거(아이콘 origin은 인라인으로 유지됨)
+              void bwin.offsetWidth;
+              bwin.classList.add('dyo-win-pop-strong');
+              bwin.addEventListener('animationend', function() {
+                bwin.classList.remove('dyo-win-pop-strong');
+                bwin.style.transformOrigin = '';
+              }, { once: true });
+            }
+          }, 1500);
+        };
+
+        // 핫스팟 중심(%) — 줌인/마커 기준점.
+        //   markerAt: [x,y] 지정 시 그 좌표 사용 / 다각형은 무게중심 / 사각형은 중앙
+        function spotCenter(h) {
+          if (h.markerAt) return { x: h.markerAt[0], y: h.markerAt[1] };
+          if (h.points && h.points.length) {
+            var sx = 0, sy = 0;
+            h.points.forEach(function(p) { sx += p[0]; sy += p[1]; });
+            return { x: sx / h.points.length, y: sy / h.points.length };
+          }
+          return { x: h.left + h.width / 2, y: h.top + h.height / 2 };
+        }
+
+        // 핫스팟 생성
+        LANDING_HOTSPOTS.forEach(function(h) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'dyo-ls-hot';
+          btn.setAttribute('aria-label', h.tip || h.id);
+          var c = spotCenter(h);
+          var markerStyle = '';
+          if (h.points && h.points.length >= 3) {
+            // 다각형: scene 전체를 덮고 clip-path로 실제 모양만 클릭 영역이 됨
+            btn.classList.add('poly');
+            btn.style.left = '0'; btn.style.top = '0';
+            btn.style.width = '100%'; btn.style.height = '100%';
+            btn.style.clipPath = 'polygon(' +
+              h.points.map(function(p) { return p[0] + '% ' + p[1] + '%'; }).join(', ') + ')';
+            markerStyle = 'left:' + c.x + '%;top:' + c.y + '%;';   // 마커를 무게중심에
+          } else {
+            btn.style.left = h.left + '%';
+            btn.style.top = h.top + '%';
+            btn.style.width = h.width + '%';
+            btn.style.height = h.height + '%';
+            if (h.rotate) {
+              btn.style.transform = 'rotate(' + h.rotate + 'deg)';
+              // 툴팁은 수평 유지하도록 마커를 역회전
+              markerStyle = 'transform:translate(-50%,-50%) rotate(' + (-h.rotate) + 'deg);';
+            }
+          }
+          // noMarker: 점·툴팁 없이 클릭 영역만 (예: 모니터 받침대 — 화면과 동작 공유)
+          btn.innerHTML = h.noMarker ? '' :
+            '<span class="dyo-ls-marker"' + (markerStyle ? ' style="' + markerStyle + '"' : '') + '>' +
+              '<span class="dyo-ls-tip">' + (h.tip || '') + '</span>' +
+              '<span class="dyo-ls-dot"></span>' +
+            '</span>';
+          btn.addEventListener('click', function() {
+            if (h.action === 'enter') {
+              enterDesktop(c.x + '% ' + c.y + '%');
+            } else if (h.action && h.action.url) {
+              if (h.action.target === '_self') location.href = h.action.url;
+              else window.open(h.action.url, '_blank', 'noopener');
+            }
+          });
+          scene.appendChild(btn);
+        });
+
+        // 접근성/편의: Enter 키 → 첫 'enter' 핫스팟으로 진입
+        var enterSpot = LANDING_HOTSPOTS.filter(function(h) { return h.action === 'enter'; })[0];
+        if (enterSpot) {
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !landingDismissed) {
+              var ec = spotCenter(enterSpot);
+              enterDesktop(ec.x + '% ' + ec.y + '%');
+            }
+          });
+        }
+
+        // ── 좌표 보정 도구: 홈 URL 뒤에 ?calib 붙이면 활성 ──
+        //   사각형 모드: 드래그 → { left, top, width, height }
+        //   다각형 모드: 모서리를 순서대로 클릭 → points: [[x,y],...] (비스듬한 물체용)
+        //   우클릭 = 다각형 초기화, 버튼으로 모드 전환. 결과는 클립보드 자동 복사.
+        if (/[?&]calib/.test(location.search)) {
+          landing.classList.add('calib');
+          var cal = document.createElement('div');
+          cal.className = 'dyo-ls-calib';
+          var read = document.createElement('div');
+          read.className = 'dyo-ls-calib-read';
+          var modeBtn = document.createElement('button');
+          modeBtn.className = 'dyo-ls-calib-mode';
+          var vx = document.createElement('div'); vx.className = 'dyo-ls-calib-y';
+          var hy = document.createElement('div'); hy.className = 'dyo-ls-calib-x';
+          var rect = document.createElement('div'); rect.className = 'dyo-ls-calib-rect'; rect.style.display = 'none';
+          // 다각형 그리기용 SVG
+          var svgNS = 'http://www.w3.org/2000/svg';
+          var svg = document.createElementNS(svgNS, 'svg');
+          svg.setAttribute('class', 'dyo-ls-calib-svg');
+          svg.setAttribute('viewBox', '0 0 100 100');
+          svg.setAttribute('preserveAspectRatio', 'none');
+          var poly = document.createElementNS(svgNS, 'polygon');
+          poly.setAttribute('class', 'dyo-ls-calib-poly');
+          svg.appendChild(poly);
+          cal.appendChild(vx); cal.appendChild(hy); cal.appendChild(rect); cal.appendChild(svg);
+          scene.appendChild(cal);
+          landing.appendChild(read);
+          landing.appendChild(modeBtn);
+
+          var pct = function(e) {
+            var r = scene.getBoundingClientRect();
+            return { x: (e.clientX - r.left) / r.width * 100, y: (e.clientY - r.top) / r.height * 100 };
+          };
+          var round = function(n) { return Math.round(n * 10) / 10; };
+          var copy = function(t) { if (navigator.clipboard) navigator.clipboard.writeText(t).catch(function() {}); };
+          var mode = 'rect';          // 'rect' | 'poly'
+          var dragging = false, sx = 0, sy = 0;
+          var pts = [];               // 다각형 점 목록
+
+          function updateModeBtn() {
+            modeBtn.textContent = mode === 'rect' ? '■ 사각형 모드 (전환)' : '⬡ 다각형 모드 (전환)';
+            rect.style.display = 'none';
+            svg.style.display = mode === 'poly' ? 'block' : 'none';
+          }
+          function renderPoly() {
+            poly.setAttribute('points', pts.map(function(p) { return p[0] + ',' + p[1]; }).join(' '));
+            if (pts.length) {
+              var out = 'points: [' + pts.map(function(p) { return '[' + round(p[0]) + ', ' + round(p[1]) + ']'; }).join(', ') + ']';
+              read.textContent = out + '\n(점 ' + pts.length + '개 · 클립보드 복사됨 · 우클릭=초기화)';
+              copy(out);
+            } else {
+              read.textContent = '다각형: 모서리를 순서대로 클릭\n우클릭 = 초기화';
+            }
+          }
+          modeBtn.addEventListener('click', function() {
+            mode = mode === 'rect' ? 'poly' : 'rect';
+            pts = []; renderPoly(); updateModeBtn();
+            read.textContent = mode === 'rect' ? '사각형: 드래그해서 영역 지정' : '다각형: 모서리를 순서대로 클릭';
+          });
+
+          cal.addEventListener('mousemove', function(e) {
+            var p = pct(e);
+            vx.style.left = (e.clientX - scene.getBoundingClientRect().left) + 'px';
+            hy.style.top = (e.clientY - scene.getBoundingClientRect().top) + 'px';
+            if (mode === 'rect' && dragging) {
+              var l = Math.min(sx, p.x), t = Math.min(sy, p.y);
+              var w = Math.abs(p.x - sx), h = Math.abs(p.y - sy);
+              rect.style.left = l + '%'; rect.style.top = t + '%';
+              rect.style.width = w + '%'; rect.style.height = h + '%';
+              read.textContent = 'left: ' + round(l) + ', top: ' + round(t) + ', width: ' + round(w) + ', height: ' + round(h);
+            } else if (mode === 'rect') {
+              read.textContent = 'x: ' + round(p.x) + '%   y: ' + round(p.y) + '%\n사각형: 드래그 / 다각형: 버튼 전환';
+            }
+          });
+          cal.addEventListener('mousedown', function(e) {
+            if (mode !== 'rect' || e.button !== 0) return;
+            var p = pct(e); sx = p.x; sy = p.y; dragging = true;
+            rect.style.display = 'block';
+            rect.style.left = sx + '%'; rect.style.top = sy + '%'; rect.style.width = '0%'; rect.style.height = '0%';
+          });
+          cal.addEventListener('mouseup', function(e) {
+            if (mode !== 'rect' || !dragging) return;
+            dragging = false;
+            var p = pct(e);
+            var l = round(Math.min(sx, p.x)), t = round(Math.min(sy, p.y));
+            var w = round(Math.abs(p.x - sx)), h = round(Math.abs(p.y - sy));
+            var out = '{ left: ' + l + ', top: ' + t + ', width: ' + w + ', height: ' + h + ' }';
+            read.textContent = out + '\n(클립보드 복사됨)';
+            copy(out);
+          });
+          cal.addEventListener('click', function(e) {
+            if (mode !== 'poly') return;
+            var p = pct(e);
+            pts.push([round(p.x), round(p.y)]);
+            renderPoly();
+          });
+          cal.addEventListener('contextmenu', function(e) {
+            if (mode !== 'poly') return;
+            e.preventDefault();
+            pts = []; renderPoly();
+          });
+          updateModeBtn();
+          read.textContent = '사각형: 드래그해서 영역 지정';
+        }
+      }
 
       // 관리자바 모드 토글 버튼 → Windows ↔ Linux 전환
       var modeBtn = document.getElementById('btnModeToggle');
@@ -5954,6 +6201,19 @@
 
       document.addEventListener('fullscreenchange', updateIcons);
       document.addEventListener('webkitfullscreenchange', updateIcons);
+    })();
+
+    // ============================================================
+    // 메인화면(인트로 랜딩)으로 돌아가기 버튼
+    // ============================================================
+    (function() {
+      var btn = document.getElementById('btnGoLanding');
+      if (!btn) return;
+      btn.addEventListener('click', function() {
+        // 홈이면 새로고침(랜딩 재생), 다른 페이지면 홈으로 이동 → 랜딩 표시
+        if (document.body.id === 'tt-body-index') location.reload();
+        else location.href = '/';
+      });
     })();
 
     // ============================================================
