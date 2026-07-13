@@ -2787,11 +2787,37 @@ html, body {
   white-space: pre-line;   /* desc 안의 \n 을 줄바꿈으로 렌더 */
 }
 
+/* ── 그림 속 디지털 시계 (HH:MM) ── */
+/*   좌표 기준: 중심 (5%, 60.9%) · 크기 6.4%×6.2% · 기울기 -5° (아래 값만 조정하면 됨) */
+.dyo-ls-clock {
+  position: absolute;
+  left: 5.4%;
+  top: 60.9%;
+  width: 6.4%;
+  height: 6.2%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 3;
+}
+/* 7-세그먼트 SVG */
+.dyo-ls-seg { width: 100%; height: 100%; overflow: visible; }
+.dyo-ls-seg .seg-off polygon { fill: rgba(45, 115, 65, 0.20); }   /* 꺼진 막대(고스트) */
+.dyo-ls-seg .seg-on polygon,
+.dyo-ls-seg .seg-colon rect { fill: #2bff5f; }                    /* 점등 막대 */
+.dyo-ls-seg .seg-on,
+.dyo-ls-seg .seg-colon { filter: drop-shadow(0 0 2px rgba(60, 255, 120, 0.9)); }
+.dyo-ls-seg .seg-colon { animation: dyoLsClockBlink 1s step-start infinite; }
+@keyframes dyoLsClockBlink { 50% { opacity: 0.25; } }
+
 /* 줌인 퇴장 상태 (클릭 시 JS가 클래스 부여) */
 .dyo-landing.is-leaving { pointer-events: none; }
 .dyo-landing.is-leaving .dyo-landing-scene { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
 .dyo-landing.is-leaving .dyo-ls-hot { opacity: 0; transition: opacity 0.3s ease; animation: none; }
 .dyo-landing.is-leaving .dyo-ls-info { opacity: 0; }
+.dyo-landing.is-leaving .dyo-ls-clock { opacity: 0; transition: opacity 0.3s ease; }
 
 /* ── 좌표 보정 도구 (홈 URL 뒤에 ?calib 붙이면 활성) ── */
 .dyo-ls-calib {

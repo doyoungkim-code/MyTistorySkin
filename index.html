@@ -2359,6 +2359,69 @@
           scene.appendChild(btn);
         });
 
+        // ── 그림 속 작은 기기에 7-세그먼트 디지털 시계 (HH:MM) ──
+        //   위치·크기·기울기·색은 style.css 의 .dyo-ls-clock / .dyo-ls-seg 에서 조정
+        var clock = document.createElement('div');
+        clock.className = 'dyo-ls-clock';
+        scene.appendChild(clock);
+        var clockTimer = null;
+        (function buildSevenSeg() {
+          var NS = 'http://www.w3.org/2000/svg';
+          var Wd = 30, Hd = 54, ht = 3.5, m = 2, gp = 1.2;
+          var xa = m + ht + gp, xb = Wd - m - ht - gp;   // 가로 세그먼트 x 범위
+          var uy1 = m + ht + gp, uy2 = Hd / 2 - gp;      // 위쪽 세로 세그먼트
+          var ly1 = Hd / 2 + gp, ly2 = Hd - m - ht - gp; // 아래쪽 세로 세그먼트
+          var ca = m + ht, cg = Hd / 2, cd = Hd - m - ht; // a/g/d 중심 y
+          var cl = m + ht, cr = Wd - m - ht;              // f·e / b·c 중심 x
+          function hseg(cy) { return [[xa,cy],[xa+ht,cy-ht],[xb-ht,cy-ht],[xb,cy],[xb-ht,cy+ht],[xa+ht,cy+ht]]; }
+          function vseg(cx,y1,y2) { return [[cx,y1],[cx+ht,y1+ht],[cx+ht,y2-ht],[cx,y2],[cx-ht,y2-ht],[cx-ht,y1+ht]]; }
+          var SEG = { a:hseg(ca), b:vseg(cr,uy1,uy2), c:vseg(cr,ly1,ly2), d:hseg(cd), e:vseg(cl,ly1,ly2), f:vseg(cl,uy1,uy2), g:hseg(cg) };
+          var MAP = { '0':'abcdef','1':'bc','2':'abged','3':'abgcd','4':'fgbc','5':'afgcd','6':'afgecd','7':'abc','8':'abcdefg','9':'abcdfg' };
+          var OFF = [0, 35, 82, 117];   // 4자리 x-오프셋 (가운데에 콜론 공간)
+          var colonX = 73.5;
+          function poly(shape, ox) {
+            var el = document.createElementNS(NS, 'polygon');
+            el.setAttribute('points', shape.map(function(p) { return (p[0] + ox) + ',' + p[1]; }).join(' '));
+            return el;
+          }
+          var svg = document.createElementNS(NS, 'svg');
+          svg.setAttribute('class', 'dyo-ls-seg');
+          svg.setAttribute('viewBox', '-6 -3 160 60');
+          svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+          var grp = document.createElementNS(NS, 'g');
+          grp.setAttribute('transform', 'skewX(-8)');   // 살짝 이탤릭
+          svg.appendChild(grp);
+          // 꺼진 세그먼트(고스트) — 모든 자리의 7세그먼트 전체
+          var offG = document.createElementNS(NS, 'g'); offG.setAttribute('class', 'seg-off');
+          OFF.forEach(function(ox) { 'abcdefg'.split('').forEach(function(s) { offG.appendChild(poly(SEG[s], ox)); }); });
+          grp.appendChild(offG);
+          // 점등 세그먼트 — 매 갱신마다 재생성
+          var onG = document.createElementNS(NS, 'g'); onG.setAttribute('class', 'seg-on');
+          grp.appendChild(onG);
+          // 콜론(깜빡임)
+          var colonG = document.createElementNS(NS, 'g'); colonG.setAttribute('class', 'seg-colon');
+          [18, 34].forEach(function(cy) {
+            var r = document.createElementNS(NS, 'rect');
+            r.setAttribute('x', colonX - 2.6); r.setAttribute('y', cy - 2.6);
+            r.setAttribute('width', 5.2); r.setAttribute('height', 5.2); r.setAttribute('rx', 1);
+            colonG.appendChild(r);
+          });
+          grp.appendChild(colonG);
+          clock.appendChild(svg);
+          function renderOn() {
+            if (!clock.isConnected) { if (clockTimer) clearInterval(clockTimer); return; }
+            var now = new Date();
+            var t = String(now.getHours()).padStart(2, '0') + String(now.getMinutes()).padStart(2, '0');
+            onG.textContent = '';
+            for (var i = 0; i < 4; i++) {
+              var lit = MAP[t.charAt(i)] || '';
+              for (var k = 0; k < lit.length; k++) onG.appendChild(poly(SEG[lit.charAt(k)], OFF[i]));
+            }
+          }
+          renderOn();
+          clockTimer = setInterval(renderOn, 1000);
+        })();
+
         // 접근성/편의: Enter 키 → 첫 'enter' 핫스팟으로 진입
         var enterSpot = LANDING_HOTSPOTS.filter(function(h) { return h.action === 'enter'; })[0];
         if (enterSpot) {
