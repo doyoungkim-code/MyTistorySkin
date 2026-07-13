@@ -2207,20 +2207,26 @@
       //   ① 사각형        : left, top, width, height (이미지 기준 %)
       //   ② 회전 사각형   : 위 + rotate: -12  (도 단위, 살짝 기운 물체)
       //   ③ 자유 다각형   : points: [[x,y],[x,y],...]  (비스듬한 책 등 모양대로 — %)
-      //   tip     : 호버 시 뜨는 작은 설명
+      //   icon/title/desc/hint : 호버 시 하단 정보 패널에 표시 (아이콘·제목·상세설명·동작배지)
       //   action  : 'enter'  → 그 지점으로 줌인 후 데스크탑 / { url, target } → 링크 열기
       var LANDING_HOTSPOTS = [
         // 모니터(화면+받침대 하나로 연결) → 클릭 시 데스크탑 진입. 점은 화면 중앙(markerAt)에.
-        { id: 'monitor', tip: '클릭해서 데스크탑 열기', markerAt: [48, 34],
+        { id: 'monitor', markerAt: [48, 34],
+          icon: '🖥️', title: 'Desktop', hint: '클릭하여 진입',
+          desc: '모니터 화면 속으로 들어가 데스크탑 환경을 실행합니다.\n터미널 · 파일 탐색기 · 보드 · 뮤직 등 앱을 자유롭게 사용해보세요.',
           points: [[23.2, 7.9], [72.8, 7.8], [72.3, 60.5], [50.8, 59.9], [50.8, 63], [57.8, 63.4],
                    [58.5, 70.8], [38.5, 70.5], [39.9, 62.8], [46.5, 63.1], [46.5, 59.9], [23.9, 59.8]],
           action: 'enter' },
         // PORTFOLIO 책 → 포트폴리오 사이트
-        { id: 'book', tip: 'PORTFOLIO 보기',
+        { id: 'book',
+          icon: '💼', title: 'Do You Coding? : Portfolio', hint: '새 탭에서 열기',
+          desc: '개발자 포트폴리오 사이트로 이동합니다.\n진행한 프로젝트와 경력, 기술 스택을 한눈에 확인할 수 있어요.',
           points: [[74.6, 36.5], [76.1, 35.8], [89.3, 38.6], [87.9, 73.4], [86.1, 74.7], [73.9, 69.2]],
           action: { url: 'https://dyomyo-portfolio.tistory.com/', target: '_blank' } },
         // 위키(왼쪽 책) → 위키 사이트
-        { id: 'wiki', tip: 'Wiki 보기',
+        { id: 'wiki',
+          icon: '📖', title: 'Do You Coding? : Wiki', hint: '새 탭에서 열기',
+          desc: 'doyoucode가 아는 것을, 아는 만큼만 적어두는 개인 위키입니다.\n개발·음악을 비롯해 여러 분야를 조금씩 정리하고 있습니다.',
           points: [[11.7, 63.4], [26.9, 64.3], [27.5, 70.9], [22.2, 92], [21.4, 95.3], [0.8, 93.6], [0.4, 92.1], [0.3, 85.8]],
           action: { url: 'https://dyomyo-wiki.tistory.com/', target: '_blank' } }
         // 예) 커피잔/램프/창밖 등 추가 시 위 형식대로 항목만 늘리면 됩니다.
@@ -2272,12 +2278,43 @@
           return { x: h.left + h.width / 2, y: h.top + h.height / 2 };
         }
 
+        // 하단 상세 정보 패널 (호버/포커스 시 표시)
+        var info = document.createElement('div');
+        info.className = 'dyo-ls-info';
+        info.innerHTML =
+          '<div class="dyo-ls-info-icon"></div>' +
+          '<div class="dyo-ls-info-body">' +
+            '<div class="dyo-ls-info-head">' +
+              '<span class="dyo-ls-info-title"></span>' +
+              '<span class="dyo-ls-info-hint"></span>' +
+            '</div>' +
+            '<div class="dyo-ls-info-desc"></div>' +
+          '</div>';
+        landing.appendChild(info);
+        var infoIcon  = info.querySelector('.dyo-ls-info-icon');
+        var infoTitle = info.querySelector('.dyo-ls-info-title');
+        var infoHint  = info.querySelector('.dyo-ls-info-hint');
+        var infoDesc  = info.querySelector('.dyo-ls-info-desc');
+        var infoHideT = null;
+        function showInfo(h) {
+          if (infoHideT) { clearTimeout(infoHideT); infoHideT = null; }
+          infoIcon.textContent  = h.icon  || '';
+          infoTitle.textContent = h.title || '';
+          infoHint.textContent  = h.hint  || '';
+          infoHint.style.display = h.hint ? '' : 'none';
+          infoDesc.textContent  = h.desc  || '';
+          info.classList.add('show');
+        }
+        function hideInfo() {
+          infoHideT = setTimeout(function() { info.classList.remove('show'); }, 120);
+        }
+
         // 핫스팟 생성
         LANDING_HOTSPOTS.forEach(function(h) {
           var btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'dyo-ls-hot';
-          btn.setAttribute('aria-label', h.tip || h.id);
+          btn.setAttribute('aria-label', h.title || h.id);
           var c = spotCenter(h);
           var markerStyle = '';
           if (h.points && h.points.length >= 3) {
@@ -2299,12 +2336,18 @@
               markerStyle = 'transform:translate(-50%,-50%) rotate(' + (-h.rotate) + 'deg);';
             }
           }
-          // noMarker: 점·툴팁 없이 클릭 영역만 (예: 모니터 받침대 — 화면과 동작 공유)
+          // noMarker: 점 없이 클릭 영역만 (예: 보조 영역)
           btn.innerHTML = h.noMarker ? '' :
             '<span class="dyo-ls-marker"' + (markerStyle ? ' style="' + markerStyle + '"' : '') + '>' +
-              '<span class="dyo-ls-tip">' + (h.tip || '') + '</span>' +
               '<span class="dyo-ls-dot"></span>' +
             '</span>';
+          // 호버/포커스 → 하단 상세 정보 패널
+          if (!h.noMarker) {
+            btn.addEventListener('mouseenter', function() { showInfo(h); });
+            btn.addEventListener('mouseleave', hideInfo);
+            btn.addEventListener('focus',      function() { showInfo(h); });
+            btn.addEventListener('blur',        hideInfo);
+          }
           btn.addEventListener('click', function() {
             if (h.action === 'enter') {
               enterDesktop(c.x + '% ' + c.y + '%');
