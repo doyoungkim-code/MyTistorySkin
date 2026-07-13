@@ -1245,6 +1245,15 @@
             </div>
           </div>
 
+          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 인트로 화면 <span style="color:#5c6370;font-weight:400;font-size:12px">(메인 첫 화면)</span></div>
+          <div style="padding-left:12px;margin-bottom:22px">
+            <div>메인에 들어오면 데스크 일러스트가 먼저 표시됩니다</div>
+            <div><b style="color:#58a6ff">모니터</b> 클릭 → 화면 속으로 줌인하며 데스크탑 진입 <span style="color:#5c6370">(잠시 후 개발 블로그 창 자동 열림)</span></div>
+            <div><b style="color:#58a6ff">PORTFOLIO 책</b> 클릭 → 개발자 포트폴리오 사이트</div>
+            <div><b style="color:#58a6ff">Wiki 책</b> 클릭 → 위키 사이트</div>
+            <div style="color:#5c6370">데스크탑에서 우하단 🏠 버튼으로 언제든 이 화면으로 돌아올 수 있습니다</div>
+          </div>
+
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 데스크탑 모드 <span style="color:#5c6370;font-weight:400;font-size:12px">(Windows / Linux)</span></div>
           <div style="padding-left:12px;margin-bottom:22px">
             <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin-bottom:8px">
@@ -1391,18 +1400,9 @@
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 관리자 메뉴 <span style="color:#5c6370;font-weight:400;font-size:12px">(메인화면 우하단)</span></div>
           <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding-left:12px;margin-bottom:22px">
-            <span style="color:#61afef">✏️ 글쓰기</span><span>새 포스트 작성 페이지로 이동</span>
-            <span style="color:#61afef">⚙️ 관리</span><span>Tistory 관리 페이지</span>
-            <span style="color:#61afef">🏠 홈으로</span><span>메인 데스크탑 화면으로 이동</span>
             <span style="color:#61afef">🖥️ 모드 전환</span><span>Windows ↔ Linux 데스크탑 모드 토글</span>
-            <span style="color:#61afef">⛶ 전체화면</span><span>브라우저 전체화면 진입/종료</span>
-          </div>
-
-          <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 우상단: 스킨 소스 보러가기</div>
-          <div style="padding-left:12px;margin-bottom:22px">
-            <div>화면 우상단의 <b style="color:#58a6ff">Tistory Skin 개발 보러가기</b> 버튼</div>
-            <div>GitHub 저장소(<span style="color:#5c6370">doyoungkim-code/MyTistorySkin</span>)로 새 탭 이동</div>
-            <div style="color:#5c6370">스킨의 전체 소스 코드를 확인하고 직접 커스터마이징할 수 있습니다</div>
+            <span style="color:#61afef">🏠 메인화면으로</span><span>인트로(데스크 일러스트) 화면으로 돌아가기</span>
+            <span style="color:#61afef">⛶ 전체화면</span><span>브라우저 전체화면 진입 / 종료</span>
           </div>
 
           <div style="color:#98c379;font-weight:600;margin-bottom:8px">## 장식 테마 <span style="color:#5c6370;font-weight:400;font-size:12px">(Linux 모드 전용 · 바탕화면 우클릭 → Theme)</span></div>
@@ -1419,7 +1419,7 @@
           </div>
 
           <div style="margin-top:24px;padding-top:14px;border-top:1px solid #21262d;color:#5c6370;font-size:11px;text-align:center">
-            🎮 데스크탑처럼 즐기는 개발자 블로그 · <span style="color:#58a6ff">github.com/doyoungkim-code/MyTistorySkin</span>
+            🎮 데스크탑처럼 즐기는 개발자 블로그
           </div>
 
         </div>
@@ -1680,26 +1680,6 @@
       <div class="dyo-brs-handle w"  data-dir="w"></div>
       <div class="dyo-brs-handle nw" data-dir="nw"></div>
     </div>
-
-    <!-- 우상단: 스킨 소스 보러가기 -->
-    <a class="dyo-source-link" href="https://github.com/doyoungkim-code/MyTistorySkin"
-       target="_blank" rel="noopener noreferrer"
-       title="Tistory Skin 개발 보러가기">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.92.57.1.78-.25.78-.55v-1.93c-3.2.7-3.87-1.54-3.87-1.54-.52-1.32-1.28-1.67-1.28-1.67-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.16 1.17a10.95 10.95 0 0 1 5.74 0c2.2-1.48 3.16-1.17 3.16-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.37-5.25 5.66.41.35.78 1.06.78 2.14v3.17c0 .31.21.66.79.55 4.57-1.53 7.85-5.84 7.85-10.92C23.5 5.65 18.35.5 12 .5Z"/>
-      </svg>
-      <span>Tistory Skin 개발 보러가기</span>
-    </a>
-
-    <!-- 우상단: 개발자 포트폴리오 (스킨 소스 링크 바로 아래) -->
-    <a class="dyo-source-link dyo-portfolio-link" href="https://dyomyo-portfolio.tistory.com/"
-       target="_blank" rel="noopener noreferrer"
-       title="개발자 포트폴리오 보러가기">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M20 7h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Zm-9-2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2h-4V5Zm9 14H4V13h4v1a1 1 0 0 0 2 0v-1h4v1a1 1 0 0 0 2 0v-1h4v6Zm0-8h-4v-1a1 1 0 0 0-2 0v1h-4v-1a1 1 0 0 0-2 0v1H4V9h16v2Z"/>
-      </svg>
-      <span>개발자 포트폴리오 보러가기</span>
-    </a>
 
     <!-- 관리자 빠른 메뉴바 -->
     <div class="dyo-admin-bar">
@@ -2241,7 +2221,7 @@
           action: { url: 'https://dyomyo-portfolio.tistory.com/', target: '_blank' } },
         // 위키(왼쪽 책) → 위키 사이트
         { id: 'wiki', tip: 'Wiki 보기',
-          points: [[11.7, 63.4], [26.9, 64.3], [27.5, 70.9], [22.2, 92], [0.4, 92.1], [0.3, 85.8]],
+          points: [[11.7, 63.4], [26.9, 64.3], [27.5, 70.9], [22.2, 92], [21.4, 95.3], [0.8, 93.6], [0.4, 92.1], [0.3, 85.8]],
           action: { url: 'https://dyomyo-wiki.tistory.com/', target: '_blank' } }
         // 예) 커피잔/램프/창밖 등 추가 시 위 형식대로 항목만 늘리면 됩니다.
       ];
