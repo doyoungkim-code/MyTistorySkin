@@ -31,6 +31,20 @@
         document.documentElement.classList.add('dyo-mode-windows');
       }
     })();
+
+    /* 저녁 시간대에는 랜딩 배경을 main_evening.png 로 교체 — paint 전 적용(깜빡임 방지).
+       ★ 저녁 판정 조정: EVENING_START(포함)~EVENING_END(미포함) 시각(24h).
+         기본 = 18시~다음날 6시(그 외는 낮 배경 main.png). */
+    (function() {
+      try {
+        var EVENING_START = 18, EVENING_END = 6;
+        var h = new Date().getHours();
+        var isEvening = (EVENING_START <= EVENING_END)
+          ? (h >= EVENING_START && h < EVENING_END)
+          : (h >= EVENING_START || h < EVENING_END);
+        if (isEvening) document.documentElement.classList.add('dyo-evening');
+      } catch (e) {}
+    })();
   </script>
   <style>
     /* 홈화면: 블로그 본문 숨김, 데스크탑 표시 */

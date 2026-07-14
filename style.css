@@ -2621,6 +2621,12 @@ html, body {
   transition: transform 0.7s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.5s ease 0.15s;
 }
 
+/* 저녁 시간대: <head> early script가 html.dyo-evening 부여 → 배경 이미지만 교체.
+   (main_evening.png 는 main.png 와 같은 1672×941 비율이어야 핫스팟 좌표가 맞습니다) */
+html.dyo-evening .dyo-landing-scene {
+  background-image: url('./images/main_evening.png');
+}
+
 /* ── 핫스팟 (JS가 LANDING_HOTSPOTS로부터 생성) ── */
 .dyo-ls-hot {
   position: absolute;          /* left/top/width/height 는 JS 인라인 % */
