@@ -3797,7 +3797,9 @@
       var winSmPower = document.getElementById('dyoWinSmPower');
       if (winSmPower) winSmPower.addEventListener('click', function() {
         closeWinStartMenu();
-        if (window.dyoToast) window.dyoToast('시스템 종료 — 데모용 입니다 😉', 'info', 1800);
+        // 시스템 종료 → 메인화면(인트로 랜딩)으로 복귀 (btnGoLanding 과 동일 동작)
+        if (document.body.id === 'tt-body-index') location.reload();  // 홈이면 새로고침 → 랜딩 재생
+        else location.href = '/';                                     // 그 외엔 홈으로 이동
       });
 
       var winBoardBtn = document.getElementById('dyoWinBoard');
