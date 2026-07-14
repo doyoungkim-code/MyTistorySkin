@@ -2621,10 +2621,17 @@ html, body {
   transition: transform 0.7s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.5s ease 0.15s;
 }
 
-/* 저녁 시간대: <head> early script가 html.dyo-evening 부여 → 배경 이미지만 교체.
-   (main_evening.png 는 main.png 와 같은 1672×941 비율이어야 핫스팟 좌표가 맞습니다) */
-html.dyo-evening .dyo-landing-scene {
+/* 시간대별 배경: <head> early script가 html.dyo-tod-{night|dawn|day|evening} 부여 → 이미지만 교체.
+   기본(.dyo-landing-scene)은 낮(main.png). 밤=main_dawn, 새벽=main_morning, 저녁=main_evening.
+   (모든 배경은 main.png 와 같은 1672×941 비율이어야 핫스팟 좌표가 맞습니다) */
+html.dyo-tod-evening .dyo-landing-scene {
   background-image: url('./images/main_evening.png');
+}
+html.dyo-tod-dawn .dyo-landing-scene {
+  background-image: url('./images/main_morning.png');
+}
+html.dyo-tod-night .dyo-landing-scene {
+  background-image: url('./images/main_dawn.png');
 }
 
 /* ── 핫스팟 (JS가 LANDING_HOTSPOTS로부터 생성) ── */

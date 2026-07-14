@@ -32,17 +32,19 @@
       }
     })();
 
-    /* 저녁 시간대에는 랜딩 배경을 main_evening.png 로 교체 — paint 전 적용(깜빡임 방지).
-       ★ 저녁 판정 조정: EVENING_START(포함)~EVENING_END(미포함) 시각(24h).
-         기본 = 18시~다음날 6시(그 외는 낮 배경 main.png). */
+    /* 랜딩 배경을 시간대별로 교체 — paint 전 <html>에 dyo-tod-* 클래스 부여(깜빡임 방지).
+       ★ 시간 경계 조정: 아래 숫자(24h)만 바꾸면 됩니다.
+         밤(22~06) → main_dawn / 새벽(06~10) → main_morning / 낮(10~18) → main(기본) / 저녁(18~22) → main_evening.
+         실제 이미지 매핑은 style.css 의 html.dyo-tod-* 규칙 참고. */
     (function() {
       try {
-        var EVENING_START = 18, EVENING_END = 6;
         var h = new Date().getHours();
-        var isEvening = (EVENING_START <= EVENING_END)
-          ? (h >= EVENING_START && h < EVENING_END)
-          : (h >= EVENING_START || h < EVENING_END);
-        if (isEvening) document.documentElement.classList.add('dyo-evening');
+        var tod =
+          (h >= 22 || h < 6) ? 'night' :    // 22:00–05:59  → main_dawn
+          (h < 10)           ? 'dawn'  :     // 06:00–09:59  → main_morning
+          (h < 18)           ? 'day'   :     // 10:00–17:59  → main (기본)
+                               'evening';    // 18:00–21:59  → main_evening
+        document.documentElement.classList.add('dyo-tod-' + tod);
       } catch (e) {}
     })();
   </script>
