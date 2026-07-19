@@ -8926,3 +8926,11 @@ html.dyo-mode-windows body#tt-body-index .dyo-admin-bar {
    END WINDOWS 11 FLUENT MODE
    ──────────────────────────────────────────────────────────────────── */
 
+
+/* ============================================
+   ADMIN MODE  (관리자 UI 게이팅)
+   ============================================ */
+
+/* 관리자 감지(html.dyo-admin — index.html 감지 IIFE가 부여) 전에는 관리자 UI 전부 숨김.
+   보안 경계가 아닌 UX 게이팅 — 실제 권한은 티스토리 서버가 강제. */
+html:not(.dyo-admin) .dyo-admin-only { display: none !important; }

@@ -76,7 +76,8 @@ tistory/
     #dyoWinTaskbar             ← Windows 태스크바 (Windows 모드 전용, mica)
     [각종 .dyo-shell-win 창들]
     .dyo-source-link           ← 우상단 GitHub 소스 링크 (z-index 8001 — 배경 위/창 아래)
-    .dyo-admin-bar             ← 관리자 버튼 (우하단) — 글쓰기/관리/홈/모드토글/전체화면
+    .dyo-admin-bar             ← 관리자 버튼 (우하단) — 모드토글/메인화면/전체화면
+    #dyoAdminWin               ← 제어판 창 (관리자 로그인 감지 시 전용 — 글쓰기/관리자 홈/스킨 편집)
     #dyoConfirmOverlay         ← 외부 링크 확인 다이얼로그
     #dyoCtxMenu                ← 우클릭 컨텍스트 메뉴 (모드별 한/영 라벨)
   </s_t3>
@@ -148,7 +149,8 @@ tistory/
 | `#dyoConfirmOverlay` | 외부 링크 다이얼로그 | 중앙 모달 | `dyoOpenExternal()` 로 호출 |
 | `#dyoCtxMenu` | 컨텍스트 메뉴 | 동적 | 우클릭 위치 기준 — 모드별 한/영 라벨 |
 | `.dyo-source-link` | 우상단 GitHub 링크 | top:14 right:16 | "Tistory Skin 개발 보러가기" — z-index 8001 (창에 가려짐) |
-| `.dyo-admin-bar` | 관리자 바 | 우하단 고정 | 글쓰기 / 관리 / 홈 / 모드 토글 (`#btnModeToggle`) / 전체화면 |
+| `.dyo-admin-bar` | 관리자 바 | 우하단 고정 | 모드 토글 (`#btnModeToggle`) / 메인화면 (`#btnGoLanding`) / 전체화면 |
+| `#dyoAdminWin` | 제어판 창 (관리자 전용) | 중앙 (520×360) | **Features 폴더 창과 동일 레이아웃** — 글쓰기 / 관리자 홈 / 스킨 편집 3개 링크(새 탭). 관리자 로그인 감지(`html.dyo-admin`) 시에만 진입점 노출 |
 
 ### 데스크탑 아이콘 ID → 열리는 창
 
@@ -222,6 +224,31 @@ SVG 아이콘도 `applyModeIcons()` 가 모드별로 교체 (`WIN_DESKTOP_ICONS`
   - 팝업 위치: 아이콘 오른쪽, 화면 밖이면 왼쪽으로 전환
   - 팝업 외부 클릭 시 자동 닫힘
   - 팝업 아이템 우클릭 → `dyoShowIconCtxMenu()` 호출
+
+#### 2-1. 관리자 모드 (제어판 · `#dyoAdminWin`)
+
+관리자 로그인이 감지될 때만 나타나는 관리 UI. **보안 경계가 아닌 UX 게이팅** — 실제 권한은 티스토리 서버(`/manage` 접근 제어)가 강제.
+
+**감지 IIFE** (데스크탑 초기화 직전, 독립 모듈):
+- `GET /m/api/me` → 실패 시 `/m/api/guestbook?limit=3`의 `writer.isRequestUser` fallback (Blogram `detectLoginState`와 동일 패턴, 코드는 독립)
+- 성공 시 `window.dyoIsAdmin = true` + `<html>.dyo-admin` 클래스 부여
+- `sessionStorage['dyo_admin_state']` 캐시 → 재방문 시 즉시 표시(깜빡임 방지), 백그라운드 재검증으로 회수
+- 가드: iframe 내부(`self !== top`)·홈 외 페이지 스킵
+- 한계: `/m/api/me`는 "티스토리 로그인 여부"이지 소유자 판별이 아님 — 로그인한 타인에게도 보일 수 있으나 클릭 시 티스토리가 권한을 막으므로 실해 없음
+
+**CSS 게이팅** (style.css 말미): `html:not(.dyo-admin) .dyo-admin-only { display:none !important; }` — `.dyo-admin-only` 클래스만 붙이면 일괄 게이팅.
+
+**진입점 3곳** (전부 관리자 감지 시에만):
+1. **바탕화면 "제어판" 아이콘** (`#desktopIconAdmin`, `.dyo-admin-only`) → `dyoOpenAdminPanel()`. Linux(슬라이더 SVG)/Windows(기어 SVG, `WIN_DESKTOP_ICONS.desktopIconAdmin`) 모드별 아이콘·라벨(`data-label-win="제어판"`) 자동 스왑
+2. **시작 메뉴 앱** — `WIN_APP_DEFS`의 `adminOnly: true` 항목. 검색 필터가 `adminOnly && !dyoIsAdmin`이면 검색 대상에서도 제외 (Enter 실행 로직이 인라인 display만 보므로 CSS 게이팅만으론 불충분)
+3. **배경 우클릭 메뉴** — `if (window.dyoIsAdmin)` 조건부 push: 글쓰기(`admin-write`) / 제어판(`admin-panel`)
+
+**제어판 창** (`#dyoAdminWin`): Features 폴더 창 IIFE를 복제한 독립 인스턴스(클래스 `dyo-features-win` 재사용 → 추가 CSS 0줄). `ADMIN_ITEMS` 3개 — 전부 새 탭 `window.open` (iframe은 로그인 만료 시 크로스오리진 리다이렉트로 차단됨):
+- ✏️ 글쓰기 `/manage/newpost/?type=post&returnURL=%2Fmanage%2Fposts%2F`
+- ⚙️ 관리자 홈 `/manage`
+- 🎨 스킨 편집 `/manage/design/skin`
+
+`iconMeta`에 `desktopIconAdmin`/`apWrite`/`apManage`/`apSkin` 등록 — 우클릭 속성(Properties) 창 지원.
 
 #### 3. TOC 자동 생성
 - `document.body.id === 'tt-body-page'` 일 때만 실행
