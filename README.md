@@ -1,7 +1,8 @@
 # doyoucode Tistory 스킨 — 코드 레퍼런스
 
-> 이 문서는 `index.html` 및 `style.css` 전체를 분석한 개발용 참고문서입니다.
+> 이 문서는 `index.html` + `style.css` + `images/app-*.js` 전체를 분석한 개발용 참고문서입니다.
 > 매번 소스를 열지 않고 이 파일만으로 구조·로직·수정 포인트를 파악할 수 있도록 작성했습니다.
+> ⚠️ 배포 방법과 편집기 용량 제한(§1-1)을 먼저 읽을 것.
 
 ---
 
@@ -28,15 +29,33 @@
 
 ```
 tistory/
-├── index.html          # 스킨 메인 (~10,400 줄) — 모든 HTML + JS 인라인
-├── style.css           # 전체 스타일 (~8,700 줄, 외부 파일)
-├── images/
-│   ├── font.css        # 커스텀 폰트 정의
-│   └── script.js       # 외부 공통 유틸 (dyoAnimOpen 등 일부 정의 가능)
-└── README.md           # 이 문서
+├── index.html            # 스킨 마크업 + <head> early script만 (~2,100 줄, 140KB)
+│                         #   → HTML 탭에 붙여넣기
+├── style.css             # 전체 스타일 (~8,900 줄) → CSS 탭에 붙여넣기
+├── images/               # 전부 [파일업로드] 탭으로 업로드
+│   ├── app-desktop.js    # JS 1/4 — 데스크탑 초기화·랜딩·터미널·브라우저 (145KB)
+│   ├── app-windows.js    # JS 2/4 — README·Features·제어판·방명록 창 (62KB)
+│   ├── app-system.js     # JS 3/4 — 애니메이션·태스크바·Dock·우클릭 메뉴·탐색기·Links (98KB)
+│   ├── app-apps.js       # JS 4/4 — Blogram·튜토리얼·뮤직·캘린더·Board (115KB)
+│   ├── main.png          # 랜딩 배경 — 낮 (10~18시, 기본)
+│   ├── main_morning.png  # 랜딩 배경 — 새벽 (06~10시)
+│   ├── main_evening.png  # 랜딩 배경 — 저녁 (18~22시)
+│   ├── main_dawn.png     # 랜딩 배경 — 밤 (22~06시)
+│   ├── font.css          # 커스텀 폰트 정의 (서버에만 존재)
+│   └── script.js         # 외부 공통 유틸 (서버에만 존재)
+└── README.md             # 이 문서 (업로드 안 함)
 ```
 
-> `images/` 폴더는 실제 경로에 있어야 하며, `script.js`는 `index.html` 끝에서 가장 먼저 로드됩니다.
+로드 순서 (index.html 끝): `script.js` → `app-desktop.js` → `app-windows.js` → `app-system.js` → `app-apps.js` (전부 동기 로드 — 순서 보장됨).
+
+### 1-1. ⚠️ 배포 제약 — HTML 편집기 1 MiB 인코딩 한계
+
+티스토리 스킨 편집기의 HTML 저장 요청에는 **URL 인코딩 후 약 1 MiB(1,048,576 B) 제한**이 있다. 한글은 인코딩 시 9배로 부풀기 때문에, JS가 인라인이던 시절 파일 532KB(인코딩 1,042KB)에서 이미 한계 직전이었고 초과 시 **"일시적인 문제로 처리할 수 없습니다"** 에러로 저장이 거부됐다. 이것이 JS를 `app-*.js` 4개 파일로 분리한 이유 — 파일업로드는 인코딩 없이 올라가 이 제한과 무관하다. 현재 index.html은 인코딩 269KB로 여유 충분.
+
+**JS 수정 워크플로:**
+1. 로컬 `images/app-*.js` 수정
+2. 스킨편집 → 파일업로드에서 해당 파일 **삭제 후 재업로드**
+3. index.html의 해당 `<script src=".../app-*.js?v=N">` 버전 번호를 올려 저장 (브라우저 캐시 무효화)
 
 ---
 
@@ -68,6 +87,7 @@ tistory/
     #scrollProgress            ← 스크롤 진행바
     #btnScrollTop              ← 맨 위로 가기 버튼
     #dyoTutorial               ← 튜토리얼 오버레이
+    #dyoLanding                ← 인트로 랜딩 (홈 전용 — 방 일러스트 + 핫스팟, 시간대별 배경)
     #dyoDesktop                ← 바탕화면 (홈 전용)
     #dyoCalPopup               ← 태스크바 캘린더 팝업 (시계 클릭으로 열기)
     #dyoFeaturesWin            ← Features 폴더 창 (File Explorer 스타일, Blogram/Music/GitHub/Links)
@@ -82,7 +102,10 @@ tistory/
     #dyoCtxMenu                ← 우클릭 컨텍스트 메뉴 (모드별 한/영 라벨)
   </s_t3>
   <script src="./images/script.js">
-  <script> ...인라인 JS... </script>
+  <script src="./images/app-desktop.js?v=N">   ← JS 4분할 외부 파일 (§1-1 참고)
+  <script src="./images/app-windows.js?v=N">
+  <script src="./images/app-system.js?v=N">
+  <script src="./images/app-apps.js?v=N">
 ```
 
 ### 3-1. #dkHead 헤더 구성
@@ -191,7 +214,16 @@ SVG 아이콘도 `applyModeIcons()` 가 모드별로 교체 (`WIN_DESKTOP_ICONS`
 
 ## 5. JavaScript 모듈 상세
 
-모든 모듈은 즉시실행함수(IIFE) 패턴. `<script>` 블록은 총 6개.
+모든 모듈은 즉시실행함수(IIFE) 패턴. 과거 index.html 인라인 `<script>` 블록이었으나 편집기 용량 한계(§1-1) 때문에 **외부 파일 4개로 분리**됨. 아래 절 제목의 `[Script N]` 라벨은 분리 전 블록 번호 — 현재 파일 매핑:
+
+| 옛 라벨 | 현재 파일 | 주요 모듈 |
+|---------|----------|----------|
+| [Script 1 인라인] | `images/app-desktop.js` | 타이핑, iframe 숨김, **관리자 감지**, 데스크탑 초기화(랜딩·별·우주인·침공·시작 메뉴·아이콘 핸들러), TOC, 코드블럭, 스크롤, Terminal 창, Browser 창 |
+| [Script 2] | `images/app-windows.js` | README 창, Features 폴더 창, **제어판 창**, Guestbook 창 |
+| [Script 3] | `images/app-system.js` | 외부 링크 다이얼로그, Toast, 창 애니메이션 헬퍼, 전체화면, 랜딩 복귀, 태스크바 버튼, macOS Dock, 우클릭 메뉴(iconMeta), Properties 창, File Explorer, Links 창 |
+| [Script 4]·[Script 5]·[Script 6] | `images/app-apps.js` | Blogram, 전역 ESC, 튜토리얼, Music Player, 캘린더 팝업, Board, 태스크바 배지 |
+
+`<head>`의 early script(모드 클래스 + **시간대별 배경 클래스** — paint 전 적용)만 index.html 인라인으로 유지.
 
 ---
 
@@ -200,7 +232,7 @@ SVG 아이콘도 `applyModeIcons()` 가 모드별로 교체 (`WIN_DESKTOP_ICONS`
 
 ---
 
-### [Script 1 인라인] 기본 UI 모듈들
+### [Script 1 인라인] 기본 UI 모듈들 → `app-desktop.js`
 
 #### 1. 타이핑 애니메이션
 ```
@@ -225,11 +257,26 @@ SVG 아이콘도 `applyModeIcons()` 가 모드별로 교체 (`WIN_DESKTOP_ICONS`
   - 팝업 외부 클릭 시 자동 닫힘
   - 팝업 아이템 우클릭 → `dyoShowIconCtxMenu()` 호출
 
-#### 2-1. 관리자 모드 (제어판 · `#dyoAdminWin`)
+#### 2-1. 인트로 랜딩 (`#dyoLanding`) & 시간대별 배경
+
+홈 진입 시 방 일러스트(핫스팟 클릭형) 랜딩이 데스크탑 위를 덮음. 모니터 클릭 → 줌인하며 데스크탑 진입(1.5초 뒤 개발 블로그 창 자동 오픈). 핫스팟은 `app-desktop.js`의 `LANDING_HOTSPOTS` 배열로 관리(사각형/회전 사각형/자유 다각형 3종), 좌표는 홈 URL 뒤 `?calib` 붙여 보정 도구로 측정(클립보드 자동 복사). 그림 속 7-세그먼트 SVG 시계 포함. 우하단 `#btnGoLanding` 또는 시작 메뉴 전원 버튼으로 복귀.
+
+**시간대별 배경**: `<head>` early script가 접속 시각(방문자 로컬 기준)에 따라 `<html>`에 `dyo-tod-{night|dawn|day|evening}` 클래스를 paint 전에 부여 → style.css가 배경 이미지만 교체.
+
+| 시간 | 클래스 | 이미지 |
+|------|--------|--------|
+| 22:00–05:59 | `dyo-tod-night` | `images/main_dawn.png` |
+| 06:00–09:59 | `dyo-tod-dawn` | `images/main_morning.png` |
+| 10:00–17:59 | `dyo-tod-day` | `images/main.png` (기본) |
+| 18:00–21:59 | `dyo-tod-evening` | `images/main_evening.png` |
+
+시간 경계는 index.html `<head>` early script의 숫자만 수정. 모든 배경은 main.png와 같은 **1672×941 비율**이어야 핫스팟 좌표가 맞음. 게이팅: `#dyoLanding { display:none }` + `#tt-body-index #dyoLanding { display:block }` — 홈에서만 첫 페인트부터 표시.
+
+#### 2-2. 관리자 모드 (제어판 · `#dyoAdminWin`)
 
 관리자 로그인이 감지될 때만 나타나는 관리 UI. **보안 경계가 아닌 UX 게이팅** — 실제 권한은 티스토리 서버(`/manage` 접근 제어)가 강제.
 
-**감지 IIFE** (데스크탑 초기화 직전, 독립 모듈):
+**감지 IIFE** (`app-desktop.js`, 데스크탑 초기화 직전의 독립 모듈):
 - `GET /m/api/me` → 실패 시 `/m/api/guestbook?limit=3`의 `writer.isRequestUser` fallback (Blogram `detectLoginState`와 동일 패턴, 코드는 독립)
 - 성공 시 `window.dyoIsAdmin = true` + `<html>.dyo-admin` 클래스 부여
 - `sessionStorage['dyo_admin_state']` 캐시 → 재방문 시 즉시 표시(깜빡임 방지), 백그라운드 재검증으로 회수
@@ -239,16 +286,16 @@ SVG 아이콘도 `applyModeIcons()` 가 모드별로 교체 (`WIN_DESKTOP_ICONS`
 **CSS 게이팅** (style.css 말미): `html:not(.dyo-admin) .dyo-admin-only { display:none !important; }` — `.dyo-admin-only` 클래스만 붙이면 일괄 게이팅.
 
 **진입점 3곳** (전부 관리자 감지 시에만):
-1. **바탕화면 "제어판" 아이콘** (`#desktopIconAdmin`, `.dyo-admin-only`) → `dyoOpenAdminPanel()`. Linux(슬라이더 SVG)/Windows(기어 SVG, `WIN_DESKTOP_ICONS.desktopIconAdmin`) 모드별 아이콘·라벨(`data-label-win="제어판"`) 자동 스왑
-2. **시작 메뉴 앱** — `WIN_APP_DEFS`의 `adminOnly: true` 항목. 검색 필터가 `adminOnly && !dyoIsAdmin`이면 검색 대상에서도 제외 (Enter 실행 로직이 인라인 display만 보므로 CSS 게이팅만으론 불충분)
-3. **배경 우클릭 메뉴** — `if (window.dyoIsAdmin)` 조건부 push: 글쓰기(`admin-write`) / 제어판(`admin-panel`)
+1. **바탕화면 "제어판" 아이콘** (`#desktopIconAdmin`, `.dyo-admin-only`) → `dyoOpenAdminPanel()`. Linux(슬라이더 SVG)/Windows(기어 SVG, `WIN_DESKTOP_ICONS.desktopIconAdmin` — `app-desktop.js`) 모드별 아이콘·라벨(`data-label-win="제어판"`) 자동 스왑
+2. **시작 메뉴 앱** (`app-desktop.js`) — `WIN_APP_DEFS`의 `adminOnly: true` 항목. 검색 필터가 `adminOnly && !dyoIsAdmin`이면 검색 대상에서도 제외 (Enter 실행 로직이 인라인 display만 보므로 CSS 게이팅만으론 불충분)
+3. **배경 우클릭 메뉴** (`app-system.js`) — `if (window.dyoIsAdmin)` 조건부 push: 글쓰기(`admin-write`) / 제어판(`admin-panel`)
 
-**제어판 창** (`#dyoAdminWin`): Features 폴더 창 IIFE를 복제한 독립 인스턴스(클래스 `dyo-features-win` 재사용 → 추가 CSS 0줄). `ADMIN_ITEMS` 3개 — 전부 새 탭 `window.open` (iframe은 로그인 만료 시 크로스오리진 리다이렉트로 차단됨):
+**제어판 창** (`#dyoAdminWin`, `app-windows.js`): Features 폴더 창 IIFE를 복제한 독립 인스턴스(클래스 `dyo-features-win` 재사용 → 추가 CSS 0줄). `ADMIN_ITEMS` 3개 — 전부 새 탭 `window.open` (iframe은 로그인 만료 시 크로스오리진 리다이렉트로 차단됨):
 - ✏️ 글쓰기 `/manage/newpost/?type=post&returnURL=%2Fmanage%2Fposts%2F`
 - ⚙️ 관리자 홈 `/manage`
-- 🎨 스킨 편집 `/manage/design/skin`
+- 🎨 스킨 편집 `/manage/design/skin/edit`
 
-`iconMeta`에 `desktopIconAdmin`/`apWrite`/`apManage`/`apSkin` 등록 — 우클릭 속성(Properties) 창 지원.
+`iconMeta`(`app-system.js`)에 `desktopIconAdmin`/`apWrite`/`apManage`/`apSkin` 등록 — 우클릭 속성(Properties) 창 지원.
 
 #### 3. TOC 자동 생성
 - `document.body.id === 'tt-body-page'` 일 때만 실행
@@ -875,8 +922,8 @@ MIN_W = 728, MIN_H = 416
 ## 7. 카테고리 트리 (FS / Explorer 공용)
 
 **수정 시 두 곳 동시 업데이트 필요:**
-- Terminal: `index.html` ~line 1776 — `var FS = { ... }`
-- File Explorer: `index.html` ~line 4341 — `var tree = [ ... ]`
+- Terminal: `images/app-desktop.js` — `var FS = { ... }`
+- File Explorer: `images/app-system.js` — `var tree = [ ... ]`
 
 **트리 구조:**
 ```
@@ -924,22 +971,27 @@ blueimp-md5가 없으면 `encodeURIComponent()` 값을 그대로 SHA-256 처리.
 
 ### 9-1. 개인 정보 (하드코딩된 값들)
 
-| 위치(약) | 값 | 변수/ID |
-|---------|-----|---------|
-| index.html | `'Do You Coding?'` | 타이핑 텍스트 |
-| index.html | `'https://github.com/doyoungkim-code'` | GitHub URL (Features 폴더 아이콘 클릭) |
+> JS 값 수정 후에는 §1-1 워크플로대로 해당 `app-*.js` 재업로드 + `?v=` 버전 올리기.
+
+| 위치 | 값 | 변수/ID |
+|------|-----|---------|
+| app-desktop.js | `'Do You Coding?'` | 타이핑 텍스트 |
+| app-desktop.js | `LANDING_HOTSPOTS` 배열 | 랜딩 핫스팟 (모니터/포트폴리오/위키 좌표·링크) |
+| app-windows.js | `'https://github.com/doyoungkim-code'` | GitHub URL (Features 폴더 아이콘 클릭) |
 | index.html | `https://github.com/doyoungkim-code/MyTistorySkin` | 우상단 `.dyo-source-link` href |
-| index.html | FS 객체 전체 | Terminal 가상 파일시스템 |
-| index.html | `'doyoucode'` | Guestbook ADMIN_NICK |
-| index.html | tree[] 전체 | File Explorer 카테고리 트리 |
-| index.html | `'/category/Pictures'` | Blogram 파싱 카테고리 |
-| index.html | PLAYLIST[] 4개 | 뮤직 플레이어 YouTube ID |
-| index.html | `'/notice/130'` | Board 데이터 게시글 URL (`BOARD_URL`) |
-| index.html | `'/notice/133'` | Links 데이터 게시글 URL (`LINKS_POST_URL`) |
-| index.html | `WIN_APP_DEFS` 의 `keywords` | 시작 메뉴 검색 키워드 (한/영) |
-| index.html | `WIN_DESKTOP_ICONS` 맵 | Windows 모드 데스크탑 아이콘 SVG |
+| app-desktop.js | FS 객체 전체 | Terminal 가상 파일시스템 |
+| app-windows.js | `'doyoucode'` | Guestbook ADMIN_NICK |
+| app-system.js | tree[] 전체 | File Explorer 카테고리 트리 |
+| app-apps.js | `'/category/Pictures'` | Blogram 파싱 카테고리 (`GALLERY_CATEGORY`) |
+| app-apps.js | PLAYLIST[] 4개 | 뮤직 플레이어 YouTube ID |
+| app-apps.js | `'/notice/130'` | Board 데이터 게시글 URL (`BOARD_URL`) |
+| app-system.js | `'/notice/133'` | Links 데이터 게시글 URL (`LINKS_POST_URL`) |
+| app-desktop.js | `WIN_APP_DEFS` 의 `keywords` | 시작 메뉴 검색 키워드 (한/영) |
+| app-desktop.js | `WIN_DESKTOP_ICONS` 맵 | Windows 모드 데스크탑 아이콘 SVG |
 | index.html | `data-label-win` 속성 | 데스크탑 아이콘 Windows 모드 한글 라벨 |
 | index.html | img src (긴 CDN URL) | Blogram 프로필 아바타 이미지 |
+| index.html `<head>` | 시간대 경계 숫자 (22/6/10/18) | 랜딩 배경 `dyo-tod-*` 스위칭 |
+| app-windows.js / app-system.js | `/manage/...` URL 3종 | 제어판 링크 (글쓰기·관리자 홈·스킨 편집) |
 
 ### 9-2. 뮤직 플레이어 곡 추가/변경
 ```js
@@ -958,12 +1010,12 @@ var GALLERY_CATEGORY = '';  // 빈 문자열로 변경 필요
 ```
 
 ### 9-4. 카테고리 트리 수정
-1. Terminal FS 객체 (line ~1776) 수정
-2. File Explorer tree 배열 (line ~4341) 동일하게 수정
-3. README 창 내부 HTML 텍스트 (line ~793) 에도 명령어 설명이 하드코딩되어 있음
+1. Terminal FS 객체 (`app-desktop.js`) 수정
+2. File Explorer tree 배열 (`app-system.js`) 동일하게 수정
+3. README 창 내부 HTML 텍스트 (index.html)에도 명령어 설명이 하드코딩되어 있음
 
 ### 9-5. Board 데이터 변경
-게시물 URL 변경: `BOARD_URL` (line ~6703)
+게시물 URL 변경: `BOARD_URL` (`app-apps.js`)
 게시물 텍스트 형식: `"컬럼번호, 제목[, 라벨[, 우선순위[, 설명[, 마감일]]]]"`
 - 컬럼번호: 1=Todo, 2=InProgress, 3=Done
 - 라벨: `bug`, `feature`, `docs`, `infra`
@@ -1032,7 +1084,7 @@ var GALLERY_CATEGORY = '';  // 빈 문자열로 변경 필요
 - **아이콘 스왑**: `applyModeIcons()` 가 `WIN_DESKTOP_ICONS` 맵에서 Windows 평면 SVG로 교체. Linux 모드 SVG는 `data-svg-linux` 속성에 백업되어 복원 가능. `window.WIN_TASKBAR_ICONS` 가 시작 메뉴 + 태스크바에서 재사용.
 - **창 크롬**: 흰 그라데이션 타이틀바, 검정 stroke traffic-light 아이콘, close hover 시에만 빨강 + 흰색 X
 - **속성 창**: Windows 클래식 다이얼로그 풍 — 흰 배경, `#0078d4` 섹션 헤더
-- **모드 인식 애니메이션**: `getModeAwareTaskbarItem(winId)` 헬퍼가 Windows 모드에선 `.dyo-win-app` 우선, Linux 모드에선 `.dyo-dock-item` 우선 선택 → 최소화/복원 애니메이션이 항상 보이는 태스크바 쪽으로 향함 ([index.html:5555-5567](index.html#L5555-L5567))
+- **모드 인식 애니메이션**: `getModeAwareTaskbarItem(winId)` 헬퍼가 Windows 모드에선 `.dyo-win-app` 우선, Linux 모드에선 `.dyo-dock-item` 우선 선택 → 최소화/복원 애니메이션이 항상 보이는 태스크바 쪽으로 향함 (`app-system.js` 창 애니메이션 헬퍼)
 
 - `localStorage.dyo_desktop_mode` 에 `'windows'` 또는 `'linux'` 저장
 - `<head>` 내 early script가 paint 전에 모드 클래스를 `<html>` 에 적용 → 깜빡임 방지
