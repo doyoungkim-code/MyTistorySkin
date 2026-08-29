@@ -279,7 +279,7 @@
           icon: '💼', title: 'Do You Coding? : Portfolio', hint: '새 탭에서 열기',
           desc: '개발자 포트폴리오 사이트로 이동합니다.\n진행한 프로젝트와 경력, 기술 스택을 한눈에 확인할 수 있어요.',
           points: [[74.6, 36.5], [76.1, 35.8], [89.3, 38.6], [87.9, 73.4], [86.1, 74.7], [73.9, 69.2]],
-          action: { url: 'https://dyomyo-portfolio.tistory.com/', target: '_blank' } },
+          action: { url: 'https://doyoungkim-code.github.io/Portfolio/', target: '_blank' } },
         // 위키(왼쪽 책) → 위키 사이트
         { id: 'wiki',
           icon: '📖', title: 'Do You Coding? : Wiki', hint: '새 탭에서 열기',
